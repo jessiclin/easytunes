@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/login.css">
+    <title>Login</title>
+</head>
+    <body>
+        <header class="header">
+            <h1> EasyTunes</h1>
+        </header>
+
+        <div class="container">
+
+            <!-- Table to Contain the Sign Up/Sign In button options  -->
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <button id="sign_in" class="button" style="width : 200px; float: left; outline:none; background: #c2c2c2">
+                                Sign In
+                            </button>
+                        </td>
+                        <td>
+                            <button id="sign_up" class="button" style="width : 200px; float: left; outline:none">
+                                Sign Up
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Contains HTML for Sign In -->
+            <div id = "sign-in-container"class="sign-in-container" style = "position:absolute">
+                <div id = "login-cred" class="input">
+                    <div class="email" style="height:50px; text-align: center;">
+                        Email 
+                        <input type="text" id = "email" style="float: right;">
+                    </div>
+
+                    <div class="password" style="height:50px; text-align: center;">
+                        Password
+                        <input type="text" id = "password" style="float: right;">
+                    </div>
+                </div>
+                <button id="sign-in-btn" class="button">Sign In</button>
+            </div>
+
+            <!-- Contains HTML for Sign Up -->
+            <div id = "sign-up-container" class="sign-up-container" style = "visibility: hidden; position: absolute;">
+                <div class="input" id = "login-cred" style="padding: 55px 50px" >
+                    <div class="email" style="height:50px; text-align: center;">
+                        Email 
+                        <input type="text" id = "email" style="float: right;">
+                    </div>
+
+                    <div class="username" style="height:50px; text-align: center;">
+                        Username
+                        <input type="text" id = "email" style="float: right;">
+                    </div>
+
+                    <div class="password" style="height:50px; text-align: center;">
+                        Password
+                        <input type="text" id = "email" style="float: right; ">
+                    </div>
+
+                    <div class="confirm-password" style="height:50px; text-align: center;">
+                        Confirm Password
+                        <input type="text" id = "email" style="float: right; ">
+                    </div>
+                </div>
+                <button id="sign-up-btn" class="button">Sign Up</button>
+            </div>
+        </div>
+
+        <script src = "../script/sign_in.js"></script>
+    </body>
+</html>
