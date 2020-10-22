@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./login.css";
 
 
 class Login extends Component {
@@ -12,14 +13,9 @@ class Login extends Component {
             <div>
                 <h1>EasyTunes</h1>
 
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div onClick = {this.setLoginVisible} className="col-sm-4"> Sign In</div>
-                        <div onClick = {this.setSignUpVisible }className="col-sm-4"> Sign Up</div>
-                    </div>
-
+                <div className="container login-container">
                     {this.state.loginVisible ? this.renderLogin() : null}
-                    {this.state.signUpVisible ? this.rengerSignUp() : null}
+                    {this.state.signUpVisible ? this.renderSignUp() : null}
                 </div>
             </div>
         );
@@ -38,11 +34,17 @@ class Login extends Component {
              signUpVisible : true}
         )
     }
-    renderLogin = () => {
+    
+    renderLogin (){
         const x = 
             <div>
-                <div className="row justify-content-center">
-                    <div className="col-sm-8">
+                <div className="row justify-content-center signin-row">  
+                    <div onClick = {this.setLoginVisible} className="col-sm-6 signin-col"> Sign In</div>
+                    <div onClick = {this.setSignUpVisible }className="col-sm-6 signup-col"> Sign Up</div>
+                </div>
+
+                <div id = "credentials" className="row justify-content-center login-row">  
+                    <div className="col-sm-12 cred">
                         Email 
                         <input type="text"/>
                         <br/>
@@ -51,8 +53,8 @@ class Login extends Component {
                     </div>
                 </div>
 
-                <div className="row justify-content-center">
-                    <div className="col-sm-8">
+                <div className="row justify-content-center login-row">  
+                    <div className="col-sm-12 login-col">
                         Sign In
                     </div>
                 </div>
@@ -60,11 +62,16 @@ class Login extends Component {
         return x 
     }
 
-    rengerSignUp = () => {
+    renderSignUp () {
         const x = 
         <div>
-            <div className="row justify-content-sm-center">
-                <div className="col-sm-8">
+            <div className="row justify-content-center signup-row">  
+                <div onClick = {this.setLoginVisible} className="col-sm-6 signin-col"> Sign In</div>
+                <div onClick = {this.setSignUpVisible }className="col-sm-6 signup-col"> Sign Up</div>
+            </div>
+
+            <div className="row justify-content-sm-center login-row">
+                <div className="col-sm-12 cred">
                     Email 
                     <input type="text"/>
                     <br/>
@@ -79,8 +86,8 @@ class Login extends Component {
                 </div>
             </div>
 
-            <div className="row justify-content-center">
-                <div className="col-sm-8">
+            <div className="row justify-content-center login-row">
+                <div className="col-sm-12 login-col">
                     Sign Up
                 </div>
             </div>

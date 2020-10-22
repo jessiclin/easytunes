@@ -1,0 +1,61 @@
+.signin-row .signin-col {
+  background: gray;
+  text-align: center;
+}
+
+.signin-row .signup-col {
+  background: lightgray;
+  text-align: center;
+}
+
+.signup-row .signin-col {
+  background: lightgray;
+  text-align: center;
+}
+
+.signup-row .signup-col {
+  background: gray;
+  text-align: center;
+}
+
+.login-row {
+  background: gray;
+  text-align: center;
+}
+
+.cred {
+  height: 300px;
+  background: gray;
+}
+
+/* .login-container {
+  background: yellow;
+} */
+
+/*  Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .login-container {
+    max-width: 400px;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .login-container {
+    max-width: 400px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .login-container {
+    max-width: 400px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .clogin-container {
+    max-width: 400px;
+  }
+}
