@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 // import {Link} from 'react-router-dom';
 
 // Import css 
-import 'bootstrap/dist/css/bootstrap.css'
 import "./ResetPassword.css";
 
 class Reset extends Component {
@@ -17,9 +16,17 @@ class Reset extends Component {
                 </div>
 
                 <div className="container login-container">
-                    <div className="row justify-content-center ">
-                        <div className="col-sm-12 login-col"> Forgot Password</div>
-                        
+                    <div className="row justify-content-center">
+                        <div className="col-sm-12"> Forgot Password</div>
+                    </div>
+
+                    <div className="row justify-content-center">
+                        <div className="col-sm-12">
+                            <div className="input-group">
+                                <input type="email" required/>
+                                <label>Email</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
