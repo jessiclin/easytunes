@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 // Import css 
 import 'bootstrap/dist/css/bootstrap.css'
-import "./login.css";
+import "./Login.css";
 
 
 
@@ -18,7 +18,9 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <h1>EasyTunes</h1>
+                <div className="container">
+                    <h1>EasyTunes</h1>
+                </div>
 
                 <div className="container login-container">
                     {this.state.loginVisible ? this.renderSignIn() : null}
@@ -68,7 +70,7 @@ class Login extends Component {
                             <label>Password</label>
                         </div>
 
-                        <Link to='/' className="forgot-password">
+                        <Link to='/forgotpassword' className="forgot-password">
                             Forgot Password
                         </Link>
                     </div>
