@@ -36,7 +36,7 @@ class Login extends Component {
     }
     
     renderLogin (){
-        const x = 
+        return (
             <div>
                 <div className="row justify-content-center signin-row">  
                     <div onClick = {this.setLoginVisible} className="col-sm-6 signin-col"> Sign In</div>
@@ -45,11 +45,15 @@ class Login extends Component {
 
                 <div id = "credentials" className="row justify-content-center login-row">  
                     <div className="col-sm-12 cred">
-                        Email 
-                        <input type="text"/>
-                        <br/>
-                        Password 
-                        <input type="text"/>
+                        <div className="input-group">
+                            <input type="email" required/>
+                            <label>Email</label>
+                        </div>
+
+                        <div className="input-group">
+                            <input type="password" required/>
+                            <label>Password</label>
+                        </div>
                     </div>
                 </div>
 
@@ -59,11 +63,11 @@ class Login extends Component {
                     </div>
                 </div>
             </div>
-        return x 
+        );
     }
 
     renderSignUp () {
-        const x = 
+        return (
         <div>
             <div className="row justify-content-center signup-row">  
                 <div onClick = {this.setLoginVisible} className="col-sm-6 signin-col"> Sign In</div>
@@ -72,17 +76,25 @@ class Login extends Component {
 
             <div className="row justify-content-sm-center login-row">
                 <div className="col-sm-12 cred">
-                    Email 
-                    <input type="text"/>
-                    <br/>
-                    Username
-                    <input type="text"/>
-                    <br/>
-                    Password 
-                    <input type="text"/>
-                    <br/>
-                    Confirm Password
-                    <input type="text"/>
+                    <div className="input-group">
+                        <input type="email" required/>
+                        <label>Email</label>
+                    </div>
+
+                    <div className="input-group">
+                        <input type="username" required/>
+                        <label>Username</label>
+                    </div>
+
+                    <div className="input-group">
+                        <input type="password" required/>
+                        <label>Password</label>
+                    </div>
+
+                     <div className="input-group">
+                        <input type="confirm-password" required/>
+                        <label>Confirm Password</label>
+                    </div>
                 </div>
             </div>
 
@@ -92,8 +104,7 @@ class Login extends Component {
                 </div>
             </div>
         </div>
-
-    return x        
+        );    
     }
 
 }

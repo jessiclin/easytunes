@@ -1,37 +1,77 @@
+* {
+  background-color: gray;
+}
+
+.signin-row {
+  height: 45px;
+}
+
 .signin-row .signin-col {
-  background: gray;
+  background: lightgrey;
   text-align: center;
+  padding: 10px;
+  border-radius: 5px 0px 0px 0px;
+  border-left: 1px solid;
+  border-top: 1px solid;
 }
 
 .signin-row .signup-col {
-  background: lightgray;
+  background: #e8e8e8;
   text-align: center;
+  padding: 10px;
+  border-radius: 0px 5px 0px 0px;
+  border: 1px solid;
+}
+
+.signup-row {
+  height: 45px;
 }
 
 .signup-row .signin-col {
-  background: lightgray;
+  background: #e8e8e8;
   text-align: center;
+  padding: 10px;
+  border-radius: 5px 0px 0px 0px;
+  border: 1px solid;
 }
 
 .signup-row .signup-col {
-  background: gray;
+  background: lightgray;
   text-align: center;
-}
-
-.login-row {
-  background: gray;
-  text-align: center;
+  padding: 10px;
+  border-radius: 0px 5px 0px 0px;
+  border: 1px solid;
 }
 
 .cred {
-  height: 300px;
-  background: gray;
+  height: 400px;
+  background-color: lightgrey;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  /* display: flex; */
+  /* align-items: center; */
+
+  /* justify-content: center; */
 }
 
-/* .login-container {
-  background: yellow;
-} */
+.login-col {
+  background: #e8e8e8;
+  text-align: center;
+  height: 45px;
+  padding: 10px;
+  border-radius: 0px 0px 5px 5px;
+  border: 1px solid;
+}
 
+/* input {
+  background-color: lightgrey;
+  height: 40px;
+  border-radius: 5px;
+}
+
+input:focus::-webkit-input-placeholder label {
+  background-color: lightgrey;
+} */
 /*  Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .login-container {
@@ -58,4 +98,44 @@
   .clogin-container {
     max-width: 400px;
   }
+}
+
+.input-group {
+  position: relative;
+  margin: 40px 0px 20px;
+  background-color: lightgrey;
+  padding: 0px 10px;
+}
+
+input {
+  background-color: lightgrey;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+label {
+  background-color: transparent;
+  color: gray;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 15px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+  top: -20px;
+  font-size: 14px;
 }
