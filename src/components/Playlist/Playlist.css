@@ -1,0 +1,78 @@
+.playlist-container {
+  margin: 0px;
+}
+
+.playlist-row {
+  height: 100px;
+  padding: 5px;
+}
+
+.playlist-row button {
+  background: transparent;
+}
+
+.playlist-col {
+  background: transparent;
+  padding: 0px;
+}
+
+.navigation-row {
+  height: 50px;
+}
+
+.navigation-row button {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  padding: 0px;
+  outline: none;
+}
+
+.navigation-row .song-btn,
+.navigation-row .like-comment-btn,
+.navigation-row .setting-btn {
+  border: 1px solid;
+}
+
+.home {
+  border: none;
+  outline: none;
+}
+
+.home:focus {
+  outline: none;
+}
+
+.likes {
+  font-size: 30px;
+}
+
+.settings-row button {
+  border-radius: 5px;
+  background-color: gray;
+  border-color: gray;
+  border: 1px solid;
+  width: 100px;
+  color: white;
+}
+
+.settings-row {
+  margin: 50px;
+}
+.settings-row input {
+  background: transparent;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  margin: 0px 0px 0px 50px;
+  display: block;
+  width: 200px;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+.settings-row input:focus {
+  outline: none;
+  border: 2px solid;
+}

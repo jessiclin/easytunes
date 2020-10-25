@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // npm install react-router-dom to use Router 
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 // Import css 
 import "./ResetPassword.css";
@@ -16,16 +16,28 @@ class Reset extends Component {
                 </div>
 
                 <div className="container login-container">
-                    <div className="row justify-content-center">
-                        <div className="col-sm-12"> Forgot Password</div>
+
+                    <div className="row justify-content-center forgot-banner-row">
+                        <div className="col-sm-12 text-center align-self-center forgot-banner"> Reset Your Password</div>
                     </div>
 
                     <div className="row justify-content-center">
-                        <div className="col-sm-12">
+                        <div className="col-sm-12 cred">        
+                            Plase the email to your email to your account
                             <div className="input-group">
-                                <input type="email" required/>
+                                <input type="text" required/>
                                 <label>Email</label>
                             </div>
+                            <Link to="/" className="sign-in">
+                                Sign In
+                            </Link>
+                            
+                        </div>
+                    </div>
+
+                    <div className="row justify-content-center next">
+                        <div className="col-sm-12 text-center align-self-center login-col">
+                            <button> Reset Password</button>
                         </div>
                     </div>
                 </div>

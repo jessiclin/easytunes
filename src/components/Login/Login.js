@@ -21,7 +21,6 @@ class Login extends Component {
                 <div className="container">
                     <h1>EasyTunes</h1>
                 </div>
-
                 <div className="container login-container">
                     {this.state.loginVisible ? this.renderSignIn() : null}
                     {this.state.signUpVisible ? this.renderSignUp() : null}
@@ -50,28 +49,32 @@ class Login extends Component {
     renderSignIn (){
         return (
             <div>
-
+                
                 {/* Sign In / Sign Up Options on Top */}
                 <div className="row justify-content-center signin-row">  
-                    <div onClick = {this.setLoginVisible} className="col-sm-6 signin-col"> Sign In</div>
-                    <div onClick = {this.setSignUpVisible }className="col-sm-6 signup-col"> Sign Up</div>
+                    <div className="col-sm-6 signin-col">
+                        <button onClick = {this.setLoginVisible}>Sign In</button>
+                    </div>
+                    <div onClick = {this.setSignUpVisible }className="col-sm-6 signup-col">
+                        <button onClick = {this.setLoginVisible}> Sign Up</button>
+                    </div>
                 </div>
 
                 {/* Sign In Inputs */}
                 <div id = "credentials" className="row justify-content-center login-row">  
                     <div className="col-sm-12 cred">
                         <div className="input-group">
-                            <input type="email" required/>
+                            <input type="text" placeholder = " " required/>
                             <label>Email</label>
                         </div>
 
                         <div className="input-group">
-                            <input type="password" required/>
+                            <input type="password" placeholder = " "  required/>
                             <label>Password</label>
                         </div>
 
                         <Link to='/forgotpassword' className="forgot-password">
-                            Forgot Password
+                            Forgot Password?
                         </Link>
                     </div>
                 </div>
@@ -79,7 +82,7 @@ class Login extends Component {
                 {/* Sign In button */}
                 <div className="row justify-content-center login-row">  
                     <div className="col-sm-12 login-col">
-                        Sign In
+                        <button> Sign In </button>
                     </div>
                 </div>
             </div>
@@ -93,15 +96,19 @@ class Login extends Component {
 
             {/* Sign In / Sign Up Options on Top */}
             <div className="row justify-content-center signup-row">  
-                <div onClick = {this.setLoginVisible} className="col-sm-6 signin-col"> Sign In</div>
-                <div onClick = {this.setSignUpVisible }className="col-sm-6 signup-col"> Sign Up</div>
+                <div className="col-sm-6 signin-col">
+                    <button onClick = {this.setLoginVisible}>Sign In</button>
+                </div>
+                <div onClick = {this.setSignUpVisible }className="col-sm-6 signup-col">
+                    <button onClick = {this.setLoginVisible}> Sign Up</button>
+                </div>
             </div>
 
             {/* Sign Up components */}
-            <div className="row justify-content-sm-center login-row">
+            <div className="row justify-content-sm-center login-row ">
                 <div className="col-sm-12 cred">
                     <div className="input-group">
-                        <input type="email" required/>
+                        <input type="text" required/>
                         <label>Email</label>
                     </div>
 
@@ -123,9 +130,9 @@ class Login extends Component {
             </div>
             
             {/* Sign Up Button */}
-            <div className="row justify-content-center login-row">
+            <div className="row justify-content-center login-row ">
                 <div className="col-sm-12 login-col">
-                    Sign Up
+                    <button> Sign Up </button>
                 </div>
             </div>
         </div>
