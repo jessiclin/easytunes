@@ -1,0 +1,220 @@
+[
+    {    
+        "user_id": 1,
+        "username" : "user",
+        "email" : "username@gmail.com",
+        "password" : "$2b$10$VH2.yQmWb3h8n5cr.duHy.kedyIe63FEbotiYgz0ab7ccraImsSl6",
+        "joined" : {
+            "month" : "October",
+            "day" : 1,
+            "year" : 2020
+        },
+        "url" : "easytunes.com/user",
+        "current_song_id" : 1,
+        "current_playlist_id" : 1,
+        "saved_playlists" : [
+            {
+                "playlist_id" : 2,
+                "name" : "my favorites"
+            }
+        ],
+        "following" :[
+            {
+                "user_id" : 2,
+                "following_since" : {
+                    "month" : "October",
+                    "day" : 2,
+                    "year" : 2020
+                }
+            }
+        ],
+        "followers" : [
+            {
+                "user_id" : 2,
+                "following_since" : {
+                    "month" : "October",
+                    "day" : 2,
+                    "year" : 2020
+                }
+            }
+        ],
+        "follow_requests" : [
+            {
+                "user_id" : 3,
+                "request_date" : {
+                    "month" : "October",
+                    "day" : 3,
+                    "year" : 2020
+                }
+            }
+        ]
+    },
+
+    {    
+        "user_id": 2,
+        "username" : "user2",
+        "email" : "john.doe@gmail.com",
+        "password" : "$2b$10$vJdlkGZ6fM4W5Vt2MhbyROwZhnp7.8wucT8ikQVDOo/KO39JfFdgi",
+        "joined" : {
+            "month" : "October",
+            "day" : 1,
+            "year" : 2020
+        },
+        "url" : "easytunes.com/user2",
+        "current_song_id" : 1,
+        "current_playlist_id" : 1,
+        "saved_playlists" : [
+            {
+                "playlist_id" : 1,
+                "name" : "good songs"
+            }
+        ],
+        "following" :[
+            {
+                "user_id" : 1,
+                "following_since" : {
+                    "month" : "October",
+                    "day" : 2,
+                    "year" : 2020
+                }
+            }
+        ],
+        "followers" : [
+            {
+                "user_id" : 1,
+                "following_since" : {
+                    "month" : "October",
+                    "day" : 2,
+                    "year" : 2020
+                }
+            }
+        ],
+        "follow_requests" : [
+            {
+                "user_id" : 3,
+                "request_date" : {
+                    "month" : "October",
+                    "day" : 3,
+                    "year" : 2020
+                }
+            }
+        ]
+    },
+    
+    {    
+        "user_id": 3,
+        "username" : "jane",
+        "email" : "jane.doe@gmail.com",
+        "password" : "$2b$10$sDN4uCj0PQb4nY5QIA5FN.vjQ9Y/UI40l9q9tg6QYE1d531M0Bxnq",
+        "joined" : {
+            "month" : "October",
+            "day" : 1,
+            "year" : 2020
+        },
+        "url" : "easytunes.com/jane",
+        "current_song_id" : 1,
+        "current_playlist_id" : 1,
+        "saved_playlists" : [
+            {
+                "playlist_id" : 1,
+                "name" : "good songs"
+            },
+            {
+                "playlist_id": 2,
+                "name" : "my favorites"
+            }
+        ],
+        "following" :[
+        ],
+        "followers" : [
+        ],
+        "follow_requests" : [
+        ]
+    },
+
+    {
+        "playlist_id" : 1,
+        "user_id" : 1,
+        "name" : "good songs",
+        "date_created" : {
+            "month" : "October",
+            "day" : 4,
+            "year" : 2020
+        },
+        "public" : true,
+        "likes" : 1,
+        "comments" : [
+            {
+                "username" : "user2",
+                "date" : {
+                    "month" : "October",
+                    "day" : 5,
+                    "year" : 2020
+                },
+                "message" : "Great playlist!",
+                "replies" : [
+                    {
+                        "username" : "user",
+                        "date" : {
+                            "month" : "October",
+                            "day" : 5,
+                            "year" : 2020
+                        },
+                        "message" : "Thanks!"
+                    }
+                ]
+            }
+        ],
+
+        "songs" : [
+            {
+                "song_id" : 1,
+                "name" : "<song>",
+                "uploaded" : false
+            }
+        ]
+    },
+
+    {
+        "playlist_id" : 2,
+        "user_id" : 2,
+        "name" : "my favorites",
+        "date_created" : {
+            "month" : "October",
+            "day" : 3,
+            "year" : 2020
+        },
+        "public" : true,
+        "likes" : 2,
+        "comments" : [
+            {
+                "username" : "user",
+                "date" : {
+                    "month" : "October",
+                    "day" : 4,
+                    "year" : 2020
+                },
+                "message" : "Nice!",
+                "replies" : [
+                    {
+                        "username" : "user2",
+                        "date" : {
+                            "month" : "October",
+                            "day" : 4,
+                            "year" : 2020
+                        },
+                        "message" : "Thanks!"
+                    }
+                ]    
+            }
+        ],
+        "songs" : [
+            {
+                "song_id" : 1,
+                "name" : "<>",
+                "uploaded" : false
+            }
+        ]
+    }
+]
+
