@@ -7,8 +7,6 @@ import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 import "./Login.css";
 
-
-
 class Login extends Component {
     state = {
         loginVisible: true,
