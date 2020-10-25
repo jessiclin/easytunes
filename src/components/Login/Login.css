@@ -1,7 +1,4 @@
 /* Background color */
-* {
-  background-color: transparent;
-}
 
 .login-container {
   box-shadow: 5px 0px 10px lightgray;
@@ -177,7 +174,7 @@ input:valid {
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-  .clogin-container {
+  .login-container {
     max-width: 400px;
   }
 }
