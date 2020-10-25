@@ -1,4 +1,7 @@
 /* Background color */
+* {
+  background-color: transparent;
+}
 
 .login-container {
   box-shadow: 5px 0px 10px lightgray;

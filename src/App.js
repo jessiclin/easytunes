@@ -3,17 +3,19 @@ import { BrowserRouter as Router, Switch, Route,} from 'react-router-dom';
 import './App.css';
 import Login from './components/Login/Login';
 import Reset from './components/ResetPassword/ResetPassword'
-import Home from './components/Home/Home'
+
 import Playlist from './components/Playlist/Playlist'
+
+import Home from "./components/pages/HomePage/Home";
 
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path='/' exact component={Login} />
+        <Route path='/' exact component={Home} />
+        <Route path='/sign-up' component={Login} />
         <Route path='/forgotpassword' component={Reset}/>
-        <Route path='/home' component={Home} />
         <Route path='/:userid/playlists/:playlistid' component={Playlist}/> 
       </Switch>
     </Router>
