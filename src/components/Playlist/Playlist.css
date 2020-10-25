@@ -35,13 +35,17 @@
   border: 1px solid;
 }
 
-.home {
+.home,
+.play-btn {
   border: none;
   outline: none;
+  background: transparent;
 }
 
-.home:focus {
+.home:focus,
+.play-btn:focus {
   outline: none;
+  background: transparent;
 }
 
 .likes {
@@ -75,4 +79,22 @@
 .settings-row input:focus {
   outline: none;
   border: 2px solid;
+}
+
+.comments {
+  background: lightskyblue;
+  margin: 5px;
+}
+
+.username-row {
+  margin: 0px 0px 0px -10px;
+  font-weight: bold;
+}
+.comment-row,
+.reply {
+  margin: 0px 0px 0px 10px;
+}
+
+.replies {
+  margin: 0px 0px 0px 10px;
 }
