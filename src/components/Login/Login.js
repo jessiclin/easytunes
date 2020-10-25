@@ -13,20 +13,6 @@ class Login extends Component {
         signUpVisible: false
    }
 
-    render() {
-        return (
-            <div>
-                <div className="container">
-                    <h1>EasyTunes</h1>
-                </div>
-                <div className="container login-container">
-                    {this.state.loginVisible ? this.renderSignIn() : null}
-                    {this.state.signUpVisible ? this.renderSignUp() : null}
-                </div>
-            </div>
-        );
-    }
-    
     // Set the Sign In components visible 
     setLoginVisible = () => {
         this.setState(
@@ -41,6 +27,40 @@ class Login extends Component {
             {loginVisible : false,
              signUpVisible : true}
         )
+    }
+    
+    element = (id) => {
+        return document.getElementById(id)
+    }
+
+    handleSignIn = () => {
+        console.log(this.element('email').value)
+        console.log(this.element('password').value)
+
+        // Load the data in 
+    }
+
+    handleSignUp = () =>{
+        console.log(this.element('email').value)
+        console.log(this.element('username').value)
+        console.log(this.element('password').value)
+        console.log(this.element('confirm-password').value)
+
+        // Load the data in 
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="container">
+                    <h1>EasyTunes</h1>
+                </div>
+                <div className="container login-container">
+                    {this.state.loginVisible ? this.renderSignIn() : null}
+                    {this.state.signUpVisible ? this.renderSignUp() : null}
+                </div>
+            </div>
+        );
     }
     
     // Sign In components 
@@ -62,12 +82,12 @@ class Login extends Component {
                 <div id = "credentials" className="row justify-content-center login-row">  
                     <div className="col-sm-12 cred">
                         <div className="input-group">
-                            <input type="text" placeholder = " " required/>
+                            <input id = "email" type="text" placeholder = " " required/>
                             <label>Email</label>
                         </div>
 
                         <div className="input-group">
-                            <input type="password" placeholder = " "  required/>
+                            <input id = "password" type="password" placeholder = " "  required/>
                             <label>Password</label>
                         </div>
 
@@ -80,7 +100,7 @@ class Login extends Component {
                 {/* Sign In button */}
                 <div className="row justify-content-center login-row">  
                     <div className="col-sm-12 login-col">
-                        <button> Sign In </button>
+                        <button onClick = {this.handleSignIn}> Sign In </button>
                     </div>
                 </div>
             </div>
@@ -106,22 +126,22 @@ class Login extends Component {
             <div className="row justify-content-sm-center login-row ">
                 <div className="col-sm-12 cred">
                     <div className="input-group">
-                        <input type="text" required/>
+                        <input id = "email" type="text" required/>
                         <label>Email</label>
                     </div>
 
                     <div className="input-group">
-                        <input type="username" required/>
+                        <input id = "username" type="username" required/>
                         <label>Username</label>
                     </div>
 
                     <div className="input-group">
-                        <input type="password" required/>
+                        <input id = "password" type="password" required/>
                         <label>Password</label>
                     </div>
 
                      <div className="input-group">
-                        <input type="confirm-password" required/>
+                        <input id = "confirm-password" type="confirm-password" required/>
                         <label>Confirm Password</label>
                     </div>
                 </div>
@@ -130,7 +150,7 @@ class Login extends Component {
             {/* Sign Up Button */}
             <div className="row justify-content-center login-row ">
                 <div className="col-sm-12 login-col">
-                    <button> Sign Up </button>
+                    <button onClick = {this.handleSignUp}> Sign Up </button>
                 </div>
             </div>
         </div>

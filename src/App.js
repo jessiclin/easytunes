@@ -6,7 +6,7 @@ import Reset from './components/ResetPassword/ResetPassword'
 
 import Playlist from './components/Playlist/Playlist'
 
-import Home from "./components/pages/HomePage/Home";
+import Home from "./components/HomePage/Home";
 
 
 function App() {
