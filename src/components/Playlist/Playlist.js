@@ -54,7 +54,7 @@ class Playlist extends Component {
         return id
     }
 
-    // Get the user name 
+    // Get the username 
     getUserName = () => {
         const user = this.props.match.params.userid;
         return user
