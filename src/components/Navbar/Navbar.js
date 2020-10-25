@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "./Button";
+import { Button } from "../Button/Button";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { BsMusicNoteList } from "react-icons/bs";
@@ -28,17 +28,22 @@ function Navbar() {
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
+
         <nav className="navbar">
+
           <div className="navbar-container container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
               <BsMusicNoteList className="navbar-icon" />
               Easy Tunes
             </Link>
+
             <div className="menu-icon" onClick={handleClick}>
               {click ? <FaTimes /> : <FaBars />}
             </div>
+
             <ul className={click ? "nav-menu active" : "nav-menu"}>
               <li className="nav-btn">
+
                 {button ? (
                   <Link to="/sign-up" className="btn-link">
                     <Button buttonStyle="btn--outline">SIGN UP</Button>
@@ -55,6 +60,7 @@ function Navbar() {
                   </Link>
                 )}
               </li>
+              
               <li className="nav-btn">
                 {button ? (
                   <Link to="/sign-up" className="btn-link">
@@ -72,6 +78,7 @@ function Navbar() {
                   </Link>
                 )}
               </li>
+              
             </ul>
           </div>
         </nav>

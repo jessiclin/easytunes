@@ -6,8 +6,19 @@ import {Link} from 'react-router-dom';
 // Import css 
 import "./ResetPassword.css";
 
+
+
 class Reset extends Component {
     state = {  }
+    
+    element = (id) => {
+        return document.getElementById(id)
+    }
+
+    handleReset = () =>{
+        console.log(this.element('email'))
+    }
+
     render() { 
         return ( 
             <div>
@@ -25,7 +36,7 @@ class Reset extends Component {
                         <div className="col-sm-12 cred">        
                             Plase the email to your email to your account
                             <div className="input-group">
-                                <input type="text" required/>
+                                <input id = "email" type="text" required/>
                                 <label>Email</label>
                             </div>
                             <Link to="/" className="sign-in">
@@ -37,7 +48,7 @@ class Reset extends Component {
 
                     <div className="row justify-content-center next">
                         <div className="col-sm-12 text-center align-self-center login-col">
-                            <button> Reset Password</button>
+                            <button onClick = {this.handleReset}> Reset Password</button>
                         </div>
                     </div>
                 </div>
