@@ -54,7 +54,7 @@ class Playlist extends Component {
     }
 
     // Redirect to Home when home button is pressed 
-    handleHistory = () => {
+    handleHome = () => {
         const {history } = this.props;
         console.log(history);
         history.push('/')
@@ -84,7 +84,7 @@ class Playlist extends Component {
                     {/* Home Button, Playlist Name, Account Icon */}
                     <div className="row">
                     <div className="col">
-                            <button className="home" onClick = {this.handleHistory}>
+                            <button className="home" onClick = {this.handleHome}>
                                 <AiFillHome size={24}/>
                             </button>
                         </div>
@@ -133,16 +133,6 @@ class Playlist extends Component {
                 </div>
             </div>
          );
-    }
-
-    renderHomeButton = () => {
-        return (
-            <div className="col">
-                <button className="home" onClick = {this.handleClick()}>
-                    <AiFillHome/>
-                </button>
-            </div>
-        );
     }
 
     renderSongSection() {
