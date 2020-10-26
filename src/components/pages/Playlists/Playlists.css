@@ -1,0 +1,13 @@
+.playlist-btn:focus {
+  outline: none;
+}
+
+.playlist-btn {
+  width: 31%;
+  outline: none;
+}
+
+.song-btn {
+  text-align: left;
+  padding: 10px;
+}
