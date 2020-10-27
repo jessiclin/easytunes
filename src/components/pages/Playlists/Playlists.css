@@ -1,0 +1,80 @@
+.playlist-container {
+  margin: 0px;
+}
+
+.playlist-row {
+  height: 100px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.playlist-row:after {
+  content: "";
+  width: 80%;
+  height: 1px;
+  background: lightgray;
+  position: absolute;
+  bottom: -4px;
+  margin-left: 15%;
+}
+
+.playlist-row button {
+  background: transparent;
+}
+
+.playlist-btn:focus {
+  outline: none;
+}
+
+.playlist-row .playlist-btn {
+  width: 80%;
+  height: 60px;
+  outline: none;
+  border: none;
+
+  text-align: left;
+  position: absolute;
+  display: inline-block;
+}
+
+.delete-btn {
+  display: inline-block;
+  border: none;
+  justify-content: center;
+  margin-right: 4%;
+  background: transparent;
+}
+
+.play-btn {
+  display: inline-block;
+  border: none;
+  justify-content: center;
+  margin-right: 4%;
+}
+
+.following button {
+  background: transparent;
+  border: 1px solid;
+  align-items: center;
+  text-align: center;
+}
+
+.my-playlists-btn,
+.saved-playlists-btn {
+  border: none;
+  /* border-bottom: 2px solid #faed26; */
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  padding: 0px;
+  outline: none;
+}
+
+.my-playlists-btn:focus,
+.saved-playlists-btn:focus {
+  outline: none;
+}
