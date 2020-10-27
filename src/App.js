@@ -6,6 +6,7 @@ import Reset from './components/pages/ResetPassword/ResetPassword'
 import Playlists from './components/pages/Playlists/Playlists'
 import Playlist from './components/pages/Playlist/Playlist'
 import Home from "./components/pages/HomePage/Home";
+import HomeScreen from "./components/pages/HomeScreen/HomeScreen"
 //import mockData from "./mock_data.json"
 
 // const users = mockData.users
@@ -30,6 +31,7 @@ function App() {
         <Route path='/forgotpassword' component={Reset}/>
         <Route path='/:userid/playlists/:playlistid' component={Playlist}/> 
         <Route path='/:userid/playlists' component={Playlists}/>
+        <Route path='/home-screen' component={HomeScreen} />
         
       </Switch>
     </Router>
