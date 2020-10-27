@@ -1,0 +1,29 @@
+.result-container {
+  margin: 5px;
+}
+
+.username-row {
+  margin: 0px 0px 0px -10px;
+  font-weight: bold;
+}
+
+.comment-row,
+.reply {
+  margin: 0px 0px 0px 10px;
+}
+
+.replies {
+  margin: 0px 0px 0px 10px;
+}
+
+.view-replies-btn {
+  border: none;
+  background: transparent;
+}
+
+.reply-btn {
+  margin-left: 10px;
+  background: none;
+  outline: none;
+  border: 1px solid;
+}

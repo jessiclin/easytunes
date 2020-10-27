@@ -1,0 +1,35 @@
+.settings-row button {
+  border-radius: 5px;
+  background-color: gray;
+  border-color: gray;
+  border: 1px solid;
+  width: 100px;
+  color: white;
+}
+
+.settings-row {
+  margin: 50px;
+}
+.settings-row input {
+  background: transparent;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  margin: 0px 0px 0px 50px;
+  display: block;
+  width: 200px;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+.settings-row input:focus {
+  outline: none;
+  border: 2px solid;
+}
+
+.settings-row .delete-btn {
+  background-color: #faed26;
+  color: black;
+  border: none;
+  outline: none;
+}
