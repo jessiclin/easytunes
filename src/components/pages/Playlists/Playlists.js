@@ -129,8 +129,30 @@ class Playlists extends Component {
 
     // Go to playlist page 
     handlePlaylistClick = (event) => {
-        console.log(event)
-        const url = this.props.location.pathname + '/' + event.target.id.replace(/\s/g, '%20')
+        const id = event.target.id
+
+        // Find playlist name and user
+        let name = null
+        let username = null
+        for (var i = 0; i < this.myPlaylist.length; i++){
+            if (this.myPlaylist[i].playlist_id == id){
+                name = this.myPlaylist[i].name;
+                username = this.myPlaylist[i].username;
+                break;
+            }
+        }
+
+        if (name === null) {
+            for (var i = 0; i < this.savedPlaylists.length; i++){
+                if (this.savedPlaylists[i].playlist_id == id){
+                    name = this.savedPlaylists[i].name;
+                    username = this.savedPlaylists[i].username;
+                    break;
+                } 
+            }
+        }
+
+        const url = '/' + username.replace(/\s/g, '%20') + '/playlists/' + name.replace(/\s/g, '%20')
         const {history } = this.props;
         history.push(url)
     }
@@ -233,7 +255,7 @@ class Playlists extends Component {
                         <AiFillHeart id={playlist.name} size = {24}/>{playlist.likes} 
                     </div>
   
-                    <button className="playlist-btn" id={playlist.name} onClick = {this.handlePlaylistClick}/>
+                    <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.handlePlaylistClick}/>
                     
                     <button className="play-btn">
                         <CgPlayButtonO style={{color: '#faed26'}} size = {30}/>
@@ -274,7 +296,7 @@ class Playlists extends Component {
                         {playlist.username}
                     </div>
 
-                    <button className="playlist-btn" id={playlist.name} onClick = {this.handlePlaylistClick}/>
+                    <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.handlePlaylistClick}/>
                     
                     <button className="play-btn">
                         <CgPlayButtonO size = {30}/>
