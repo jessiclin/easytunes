@@ -5,9 +5,20 @@ import Login from './components/pages/Login/Login';
 import Reset from './components/pages/ResetPassword/ResetPassword'
 import Playlists from './components/pages/Playlists/Playlists'
 import Playlist from './components/pages/Playlist/Playlist'
-
 import Home from "./components/pages/HomePage/Home";
+//import mockData from "./mock_data.json"
 
+// const users = mockData.users
+// const playlists = mockData.playlists
+
+// console.log(users)
+
+// function findUser(id){
+//   for (let i = 0; i < users.length; i++){
+//     if (users[i].user_id === id)
+//       return users[i]
+//   }
+// }
 
 function App() {
   return (
