@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.css'
-import Login from './components/login'
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
-  </React.StrictMode>,
+    <App />
+  </React.StrictMode>, 
   document.getElementById('root')
 );
 

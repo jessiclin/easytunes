@@ -1,0 +1,71 @@
+.public-col {
+  align-items: center;
+  text-align: center;
+}
+
+.playlist-col {
+  background: transparent;
+  padding: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.information-row {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.information-row:after {
+  content: "";
+  width: 90%;
+  height: 2px;
+  background: lightgray;
+  position: absolute;
+  bottom: -4px;
+  margin-top: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.navigation-row {
+  height: 50px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.songs-btn,
+.comments-btn,
+.settings-btn {
+  border: none;
+  /* border-bottom: 2px solid #faed26; */
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  padding: 0px;
+  outline: none;
+}
+
+.songs-btn:focus,
+.comments-btn:focus,
+.settings-btn:focus {
+  outline: none;
+}
+
+.home,
+.play-btn {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.home:focus,
+.play-btn:focus {
+  outline: none;
+  background: transparent;
+}
+
+.likes {
+  font-size: 30px;
+}

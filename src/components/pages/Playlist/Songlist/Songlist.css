@@ -1,0 +1,29 @@
+.song-row {
+  height: 100px;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.song-row:after {
+  content: "";
+  width: 80%;
+  height: 1px;
+  background: lightgray;
+  position: absolute;
+  bottom: -4px;
+  margin-left: 15%;
+}
+
+.play-btn {
+  background: transparent;
+  border: none;
+}
+.play-btn:focus {
+  outline: none;
+}
+
+.song-col {
+  display: inline-block;
+}
