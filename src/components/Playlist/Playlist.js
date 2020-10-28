@@ -5,7 +5,7 @@ import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
-import AccountButton from '../AccountButton/AccountButton'
+import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlist.css'
 
 // A playlist page 
@@ -95,17 +95,7 @@ class Playlist extends Component {
         return ( 
             <div className="container-fluid playlist-container">
                 {/* Home and Profile Icons */}
-                <div className="row">
-                    <div className="col">
-                        <button className="home" onClick = {this.handleHome}>
-                            <AiFillHome size={24}/>
-                        </button>
-                    </div>
-
-                    <div className="col text-right account-col">
-                            <AccountButton userid={this.props.match.params.userid}/>
-                    </div>
-                </div>
+                <HeaderNavbar/>
             
                 {/* Information about the Playlist */}
                 <div className="row information-row">

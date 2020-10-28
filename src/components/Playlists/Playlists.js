@@ -8,7 +8,7 @@ import {AiOutlineDelete} from 'react-icons/ai'
 import {FaRegPlayCircle} from 'react-icons/fa'
 
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
-import AccountButton from '../AccountButton/AccountButton'
+import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlists.css'
 
 class Playlists extends Component {
@@ -213,17 +213,7 @@ class Playlists extends Component {
             <div>
                 <div className="container-fluid playlist-container">
                     {/* Home Button, Username, Account Icon */}
-                    <div className="row">
-                        <div className="col">
-                            <button className="home" onClick = {this.handleHome}>
-                                <AiFillHome size={24}/>
-                            </button>
-                        </div>
-                        
-                        <div className="col text-right account-col">
-                                <AccountButton userid={this.props.match.params.userid}/>
-                        </div>
-                    </div>
+                    <HeaderNavbar/>
 
                     {/* Information Bar about the user */}
                     <div className="row information-row">
@@ -257,25 +247,27 @@ class Playlists extends Component {
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
-                    {this.state.showSavedPlaylists ? this.renderSavedPlaylists() : null}
-                    {this.state.showMyPlaylists ? this.renderMyPlaylists() : null}
+                    {this.state.showSavedPlaylists ? this.renderPlaylists() : null}
+                    {this.state.showMyPlaylists ? this.renderPlaylists() : null}
                 </div>
                 <PlaylistNavbar/>
             </div>
          );
     }
 
-    renderMyPlaylists = () => {
-        let playlists = this.myPlaylist.map(function(playlist) {
+    renderPlaylists = () => {
+        let playlists = this.state.showMyPlaylists ? this.myPlaylist : this.savedPlaylists;
+        const showMine = this.state.showSavedPlaylists
+        playlists = playlists.map(function(playlist) {
             return (
                 <div key = {playlist.playlist_id} className="row playlist-row">
                     <div className="col">
-                     <RiPlayListLine size = {50}/>
+                        <RiPlayListLine size = {50}/>
                     </div>
 
                     <div className="col text-left">
                         {playlist.name}
-                        <span>  {playlist.public ? <AiFillEye/> : < AiFillEyeInvisible/>} </span>
+                        {showMine ? <span>  {playlist.public ? <AiFillEye/> : < AiFillEyeInvisible/>} </span> : null}
                     </div>
 
                     <div className="col text-left">
@@ -283,60 +275,19 @@ class Playlists extends Component {
                     </div>
 
                     <div className="col text-left">
-                        <AiFillHeart id={playlist.name} size = {24}/>{playlist.likes} 
+                        {showMine ? <><AiFillHeart id={playlist.name} size = {24}/> {playlist.likes} </>:
+                        <>{playlist.username}</>}
                     </div>
   
                     <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.handlePlaylistClick}/>
                     
                     <button className="play-btn">
-                        <FaRegPlayCircle style={{color: '#faed26'}} size = {30}/>
-                    </button>
-
-                    <button className="delete-btn">
-                        <AiOutlineDelete size = {24}/>
-                    </button>
-                </div>
-            )
-        }, this)
-
-        return (
-            <>
-            {playlists}
-            </>
-        );
-    }
-
-    renderSavedPlaylists = () => {
-        let playlists = this.savedPlaylists.map(function(playlist) {
-            return (
-                <div key = {playlist.playlist_id} className="row playlist-row">
-                   
-                    <div className="col">
-                         <RiPlayListLine size = {50}/>
-                    </div>
-                    
-                    <div className="col text-left">
-                        {playlist.name} 
-                    </div>
-                    
-                    <div className="col text-left">
-                        {playlist.songs.length} {playlist.songs.length > 1 ? "songs" : "song"} 
-                    </div>
-                    
-                    <div className="col text-left">
-                        {playlist.username}
-                    </div>
-
-                    <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.handlePlaylistClick}/>
-                    
-                    <button className="play-btn">
                         <FaRegPlayCircle size = {30}/>
                     </button>
-                    
+
                     <button className="delete-btn">
                         <AiOutlineDelete size = {24}/>
                     </button>
- 
                 </div>
             )
         }, this)

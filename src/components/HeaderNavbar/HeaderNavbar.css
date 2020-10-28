@@ -14,10 +14,12 @@
    
 }
 
-.account-options button {
+/* .account-options button {
     width: 100%;
     height: 100%;
-}  
+}   */
+
+
 .account-options li:hover {
     background-color: rgba(0, 0, 0, 0.14);
     cursor: pointer;
@@ -32,9 +34,14 @@
     background: transparent;
     padding: 0;
     width: 50px;
-    border: 0;
+    border: none;
     color: #333;
     cursor: pointer;
     outline: none;
     font-size: 40px;
+}
+
+.account button:focus {
+    outline:none;
+    border:none
 }

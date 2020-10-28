@@ -7,7 +7,7 @@ import '../Navbar/Navbar.css';
 import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import "./HomeScreen.css"
 import Logo from "./am4a.png"
-import AccountButton from '../AccountButton/AccountButton'
+import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 class HomeScreen extends Component {
 
     
@@ -38,7 +38,7 @@ class HomeScreen extends Component {
                         </div>
 
                         <img src={Logo} alt="website logo" />     
-                        <AccountButton />                 
+                        {/* <AccountButton />                  */}
                     </div>    
                     
                     
