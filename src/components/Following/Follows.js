@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import {AiFillHome} from 'react-icons/ai'
 import {RiUserFollowLine, RiUserAddLine, RiUserUnfollowLine} from 'react-icons/ri'
-import AccountButton from '../AccountButton/AccountButton'
+import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Follows.css'
 
 class Followers extends Component {
@@ -121,18 +120,9 @@ handleHome = () => {
             <>
                 <div className="container-fluid followers-container">
                     {/* Home Button, Username, Account Icon */}
-                    <div className="row">
-                        <div className="col">
-                            <button className="home" onClick = {this.handleHome}>
-                                <AiFillHome size={24}/>
-                            </button>
-                        </div>
-                        
-                        <div className="col text-right account-col">
-                                <AccountButton userid={this.props.match.params.userid}/>
-                        </div>
-                    </div>
-
+                    
+                    <HeaderNavbar/>
+                    
                     {/* Information Bar about the user */}
                     <div className="row information-row">
                         <div className="col text-center">

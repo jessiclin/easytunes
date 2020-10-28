@@ -103,7 +103,7 @@
   padding: 0px 10px;
 }
 
-input {
+.input-group input {
   background: white;
   font-size: 18px;
   padding: 10px 10px 10px 5px;
@@ -113,12 +113,12 @@ input {
   border: 1px solid;
 }
 
-input:focus {
+.input-group input:focus {
   outline: none;
   border: 2px solid;
 }
 
-label {
+.input-group label {
   background-color: transparent;
   color: gray;
   font-size: 18px;
@@ -132,8 +132,8 @@ label {
   -webkit-transition: 0.2s ease all;
 }
 
-input:focus ~ label,
-input:valid ~ label {
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
   top: -14px;
   font-size: 14px;
   background: white;
@@ -141,8 +141,8 @@ input:valid ~ label {
   color: #1e82fc;
 }
 
-input:focus,
-input:valid {
+.input-group input:focus,
+.input-group input:valid {
   border-color: #1e82fc;
 }
 
