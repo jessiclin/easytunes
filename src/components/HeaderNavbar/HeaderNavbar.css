@@ -41,7 +41,41 @@
     font-size: 40px;
 }
 
-.account button:focus {
+.account-col button:focus {
     outline:none;
-    border:none
+    border:none;
+    background: transparent;
+}
+
+.search-bar{
+    justify-content: center;
+    align-items: center;
+}
+.search-bar input {
+    width: 100%;
+    height: 25px;
+    border-radius: 15px;
+    border: 2px solid;
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+.search-bar input:focus {
+    border-radius: 15px;
+    outline:none
+}
+
+.search-bar button {
+    position: absolute;
+    right: -13px;
+    top: 0px;
+    width: 50px;
+    height: 27px;
+    border: 2px solid;
+    border-radius: 0px 15px 15px 0px;
+    background: black;
+}
+
+.search-bar button:focus{
+    outline: none;
 }
