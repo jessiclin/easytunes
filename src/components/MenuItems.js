@@ -20,4 +20,3 @@ export const MenuItems = [
       cName: 'dropdown-link'
     }
   ];
-  

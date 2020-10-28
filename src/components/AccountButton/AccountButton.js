@@ -36,7 +36,7 @@ class AccountButton extends Component {
         return ( 
             <div className="col text-right account-col">
                 <button className="account" onClick = {this.handleButtonClick}>
-                <MdAccountCircle size={24}/>
+                    <MdAccountCircle size={24}/>
                 </button>
 
                 {this.state.open && (
