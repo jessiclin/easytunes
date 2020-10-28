@@ -36,8 +36,12 @@ class Login extends Component {
     handleSignIn = () => {
         console.log(this.element('email').value)
         console.log(this.element('password').value)
-
+        
         // Load the data in 
+        const url = '/home'
+        const {history } = this.props;
+        history.push(url)
+        
     }
 
     handleSignUp = () =>{
