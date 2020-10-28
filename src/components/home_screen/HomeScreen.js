@@ -1,7 +1,15 @@
 import React, { useState, Component } from 'react'
+<<<<<<< HEAD:src/components/pages/HomeScreen/HomeScreen.js
 import { Button } from '../../Button/Button';
 import '../../Navbar/Navbar.css';
 import Dropdown from '../../Dropdown';
+=======
+import { Button } from '../Button/Button';
+import { NavLink, Link } from 'react-router-dom';
+import '../Navbar/Navbar.css';
+import Dropdown from '../Dropdown';
+import { BsMusicNoteList } from "react-icons/bs";
+>>>>>>> a594391d99022ff73b04b7e517658cc8da24892d:src/components/home_screen/HomeScreen.js
 import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import "./HomeScreen.css"
 import Logo from "./am4a.png"

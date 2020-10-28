@@ -45,11 +45,11 @@ function Navbar() {
               <li className="nav-btn">
 
                 {button ? (
-                  <Link to="/sign-up" className="btn-link">
+                  <Link to="/register" className="btn-link">
                     <Button buttonStyle="btn--outline">SIGN UP</Button>
                   </Link>
                 ) : (
-                  <Link to="/sign-up" className="btn-link">
+                  <Link to="/register" className="btn-link">
                     <Button
                       buttonStyle="btn--outline"
                       buttonSize="btn--mobile"
@@ -63,11 +63,11 @@ function Navbar() {
               
               <li className="nav-btn">
                 {button ? (
-                  <Link to="/sign-in" className="btn-link">
+                  <Link to="/login" className="btn-link">
                     <Button buttonStyle="btn--outline">LOG IN</Button>
                   </Link>
                 ) : (
-                  <Link to="/sign-in" className="btn-link">
+                  <Link to="/login" className="btn-link">
                     <Button
                       buttonStyle="btn--outline"
                       buttonSize="btn--mobile"

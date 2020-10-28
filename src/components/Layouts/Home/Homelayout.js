@@ -16,7 +16,6 @@ function Homelayout({
 }) {
   return (
     <>
-      <Navbar />
       <div className={lightBg ? "home__hero-section" : "home__hero-section darkBg"}>
         <div className="container home-container">
           <div className="row home__hero-row home-row"
@@ -34,7 +33,7 @@ function Homelayout({
                 <p className={lightTextDesc ? "home__hero-subtitle" : "home__hero-subtitle dark"}>
                   {description}
                 </p>
-                <Link to="/sign-up">
+                <Link to="/register">
                   <Button buttonSize="btn--wide" buttonColor="blue">
                     {buttonLabel}
                   </Button>
