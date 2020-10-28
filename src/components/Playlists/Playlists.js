@@ -2,9 +2,12 @@ import React, { Component} from 'react'
 import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import {MdAccountCircle} from 'react-icons/md'
 import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
-import {CgPlayButtonO, CgPlayPauseO} from 'react-icons/cg'
 import {RiPlayListLine} from 'react-icons/ri'
 import {AiOutlineDelete} from 'react-icons/ai'
+// FaRegPauseCircle
+import {FaRegPlayCircle} from 'react-icons/fa'
+
+import PlaylistNavbar from '../../PlaylistNavbar/PlaylistNavbar'
 import './Playlists.css'
 
 class Playlists extends Component {
@@ -106,6 +109,7 @@ class Playlists extends Component {
     state = { 
         showSavedPlaylists: false,
         showMyPlaylists: true,
+        showUploadedSongs: false,
         self: false,
         following: true
     }
@@ -129,13 +133,13 @@ class Playlists extends Component {
 
     // Go to playlist page 
     handlePlaylistClick = (event) => {
-        const id = event.target.id
+        const id = parseInt(event.target.id)
 
         // Find playlist name and user
         let name = null
         let username = null
         for (var i = 0; i < this.myPlaylist.length; i++){
-            if (this.myPlaylist[i].playlist_id == id){
+            if (parseInt(this.myPlaylist[i].playlist_id) === id){
                 name = this.myPlaylist[i].name;
                 username = this.myPlaylist[i].username;
                 break;
@@ -143,8 +147,8 @@ class Playlists extends Component {
         }
 
         if (name === null) {
-            for (var i = 0; i < this.savedPlaylists.length; i++){
-                if (this.savedPlaylists[i].playlist_id == id){
+            for (i = 0; i < this.savedPlaylists.length; i++){
+                if (parseInt(this.savedPlaylists[i].playlist_id) === id){
                     name = this.savedPlaylists[i].name;
                     username = this.savedPlaylists[i].username;
                     break;
@@ -161,25 +165,45 @@ class Playlists extends Component {
     handleMyPlaylistView = () => {
         this.setState({
             showSavedPlaylists: false,
-            showMyPlaylists: true
+            showMyPlaylists: true,
+            showUploadedSongs: false
         })
 
         document.getElementById('my-playlists-btn').style.borderBottom = "2px solid #faed26"
-        document.getElementById('saved-playlists-btn').style.border = "none";
+        document.getElementById('saved-playlists-btn').style.borderBottom = "none";
+        document.getElementById('uploaded-songs-btn').style.borderBottom = "none";
         document.getElementById('my-playlists-btn').style.fontWeight = "bold"
         document.getElementById('saved-playlists-btn').style.fontWeight = "normal"
+        document.getElementById('uploaded-songs-btn').style.fontWeight = "normal"
     }
 
     // Button click on "Saved Playlists"
     handleSavedPlaylistView = () =>{
         this.setState({
             showSavedPlaylists: true,
-            showMyPlaylists: false
+            showMyPlaylists: false,
+            showUploadedSongs: false
         })
-        document.getElementById('my-playlists-btn').style.border = "none";
+        document.getElementById('my-playlists-btn').style.borderBottom = "none";
         document.getElementById('saved-playlists-btn').style.borderBottom = "2px solid #faed26"
+        document.getElementById('uploaded-songs-btn').style.borderBottom = "none";
         document.getElementById('my-playlists-btn').style.fontWeight = "normal"
         document.getElementById('saved-playlists-btn').style.fontWeight = "bold"
+        document.getElementById('uploaded-songs-btn').style.fontWeight = "normal"
+    }
+
+    handleUploadView = () => {
+        this.setState({
+            showSavedPlaylists: false,
+            showMyPlaylists: false,
+            showUploadedSongs: true
+        })
+        document.getElementById('my-playlists-btn').style.borderBottom = "none";
+        document.getElementById('saved-playlists-btn').style.borderBottom= "none"
+        document.getElementById('uploaded-songs-btn').style.borderBottom = "2px solid #faed26";
+        document.getElementById('my-playlists-btn').style.fontWeight = "normal"
+        document.getElementById('saved-playlists-btn').style.fontWeight = "normal"
+        document.getElementById('uploaded-songs-btn').style.fontWeight = "bold"
     }
     
     render() { 
@@ -224,12 +248,17 @@ class Playlists extends Component {
                         <div className="col">
                             <button id = "saved-playlists-btn" className = "saved-playlists-btn" onClick = {this.handleSavedPlaylistView}> Saved Playlists </button>
                         </div>
+                        
+                        <div className="col">
+                        <button id = "uploaded-songs-btn" className = "uploaded-songs-btn" onClick = {this.handleUploadView}> Uploaded Songs </button>
+                        </div>
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
                     {this.state.showSavedPlaylists ? this.renderSavedPlaylists() : null}
                     {this.state.showMyPlaylists ? this.renderMyPlaylists() : null}
                 </div>
+                <PlaylistNavbar/>
             </div>
          );
     }
@@ -258,7 +287,7 @@ class Playlists extends Component {
                     <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.handlePlaylistClick}/>
                     
                     <button className="play-btn">
-                        <CgPlayButtonO style={{color: '#faed26'}} size = {30}/>
+                        <FaRegPlayCircle style={{color: '#faed26'}} size = {30}/>
                     </button>
 
                     <button className="delete-btn">
@@ -299,7 +328,7 @@ class Playlists extends Component {
                     <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.handlePlaylistClick}/>
                     
                     <button className="play-btn">
-                        <CgPlayButtonO size = {30}/>
+                        <FaRegPlayCircle size = {30}/>
                     </button>
                     
                     <button className="delete-btn">

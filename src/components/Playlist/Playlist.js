@@ -4,7 +4,7 @@ import {MdAccountCircle} from 'react-icons/md'
 import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
-
+import PlaylistNavbar from '../../PlaylistNavbar/PlaylistNavbar'
 import './Playlist.css'
 
 // A playlist page 
@@ -149,7 +149,7 @@ class Playlist extends Component {
                 {this.state.songsVisible ? <Songlist /> : null}
                 {this.state.commentsVisible ? <Comments /> : null}
                 {this.state.settingsVisible ? <PlaylistSetting playlist_name = {this.getPlaylistName()} public = {this.state.public}/> : null}
-                
+                <PlaylistNavbar/>
             </div>
             
          );
