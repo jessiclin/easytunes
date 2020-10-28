@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
 // Import css 
-import "./ResetPassword.css";
+import "./ResetPasswordScreen.css";
 
 
 
@@ -39,7 +39,7 @@ class Reset extends Component {
                                 <input id = "email" type="text" required/>
                                 <label>Email</label>
                             </div>
-                            <Link to="/" className="sign-in">
+                            <Link to="/" className="login">
                                 Sign In
                             </Link>
                             

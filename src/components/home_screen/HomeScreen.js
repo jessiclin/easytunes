@@ -1,8 +1,8 @@
 import React, { useState, Component } from 'react'
-import { Button } from '../../Button/Button';
+import { Button } from '../Button/Button';
 import { NavLink, Link } from 'react-router-dom';
-import '../../Navbar/Navbar.css';
-import Dropdown from '../../Dropdown';
+import '../Navbar/Navbar.css';
+import Dropdown from '../Dropdown';
 import { BsMusicNoteList } from "react-icons/bs";
 import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import {MdAccountCircle} from 'react-icons/md'

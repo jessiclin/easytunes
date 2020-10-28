@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SearchListCard from './SearchListCard.js'
 
-import './Songlist.css'
+import './Search.css'
 class SearchList extends React.Component {
     state = { 
         
@@ -13,6 +13,7 @@ class SearchList extends React.Component {
 
         return (
             <div>
+                
                 {items && items.map(function(item) {
                     return (
                         <SearchListCard searchList={searchList} item={item}/>
