@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { BsFillCaretDownFill, BsFillCaretUpFill} from 'react-icons/bs'
+// BsFillCaretDownFill
+import { BsFillCaretUpFill} from 'react-icons/bs'
 import './Comments.css'
 class Comments extends Component {
     state = {  }
