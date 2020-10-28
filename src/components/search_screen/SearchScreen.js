@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import SearchList from './SearchList.js/index.js'
+import SearchList from './SearchList.js'
 
-import './Songlist.css'
+import './Search.css'
 class Search extends React.Component {
     state = { 
         searchbar: '',
@@ -12,9 +12,11 @@ class Search extends React.Component {
     }
 
     render() {
-        const searchList;
+        const searchList = this.props;
         return (
-            <SearchListLinks searchList={searchList}/>
+            <div>
+                <SearchList searchList={searchList}/>
+            </div> 
         );
     }
 }

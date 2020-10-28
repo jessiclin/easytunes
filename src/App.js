@@ -1,12 +1,17 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route,} from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route,} from 'react-router-dom';
+
 import './App.css';
-import Login from './components/pages/Login/Login';
-import Reset from './components/pages/ResetPassword/ResetPassword'
-import Playlists from './components/pages/Playlists/Playlists'
-import Playlist from './components/pages/Playlist/Playlist'
-import Home from "./components/pages/HomePage/Home";
-import HomeScreen from "./components/pages/HomeScreen/HomeScreen"
+
+import Navbar from './components/Navbar/Navbar';
+import LoginScreen from './components/login_screen/LoginScreen.js';
+import ResetPasswordScreen from './components/reset_password_screen/ResetPasswordScreen.js'
+import Playlists from './components/Playlists/Playlists'
+import Playlist from './components/Playlist/Playlist'
+import Home from "./components/HomePage/Home";
+import HomeScreen from "./components/home_screen/HomeScreen"
+import SearchScreen from "./components/search_screen/SearchScreen.js"
+
 //import mockData from "./mock_data.json"
 
 // const users = mockData.users
@@ -21,21 +26,27 @@ import HomeScreen from "./components/pages/HomeScreen/HomeScreen"
 //   }
 // }
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/sign-up' component={Login} />
-        <Route path='/sign-in' component={Login} />
-        <Route path='/forgotpassword' component={Reset}/>
-        <Route path='/:userid/playlists/:playlistid' component={Playlist}/> 
-        <Route path='/:userid/playlists' component={Playlists}/>
-        <Route path='/home-screen' component={HomeScreen} />
-        
-      </Switch>
-    </Router>
-  );
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Navbar />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/login' component={LoginScreen} />
+            <Route path='/register' component={LoginScreen} />
+            <Route path='/forgotpassword' component={ResetPasswordScreen}/>
+            <Route path='/:userid/playlists/:playlistid' component={Playlist}/> 
+            <Route path='/:userid/playlists' component={Playlists}/>
+            <Route path='/home-screen' component={HomeScreen} />
+            <Route path='/search' component={SearchScreen} />
+            <Route path='/:any' component={HomeScreen} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

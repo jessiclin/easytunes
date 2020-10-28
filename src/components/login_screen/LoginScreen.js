@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 // Import css 
 import 'bootstrap/dist/css/bootstrap.css'
-import "./Login.css";
+import "./LoginScreen.css";
 
 class Login extends Component {
     state = {

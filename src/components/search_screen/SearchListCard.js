@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import './Songlist.css'
+import './Search.css'
 class SearchListCard extends React.Component {
     state = { 
         
