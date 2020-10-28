@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import './Search.css'
 class SearchListCard extends React.Component {
     state = { 
         
