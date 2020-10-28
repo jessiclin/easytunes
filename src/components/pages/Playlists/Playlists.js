@@ -8,6 +8,7 @@ import {AiOutlineDelete} from 'react-icons/ai'
 import {FaRegPlayCircle} from 'react-icons/fa'
 
 import PlaylistNavbar from '../../PlaylistNavbar/PlaylistNavbar'
+import AccountButton from '../../AccountButton/AccountButton'
 import './Playlists.css'
 
 class Playlists extends Component {
@@ -219,7 +220,7 @@ class Playlists extends Component {
                         </div>
                         
                         <div className="col text-right account-col">
-                            <MdAccountCircle size={24}/>
+                                <AccountButton/>
                         </div>
                     </div>
 
