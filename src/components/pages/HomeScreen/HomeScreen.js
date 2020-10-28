@@ -52,7 +52,7 @@ class HomeScreen extends Component {
         
         return ( 
             <div>
-                <div className="container home-container" ref={this.container}>
+                <div className="container user-home-container" ref={this.container}>
                     {/* Home Button and Account Icon */}
                     <div className="row">
                         <div className="col">
