@@ -7,7 +7,7 @@ import {AiOutlineDelete} from 'react-icons/ai'
 // FaRegPauseCircle
 import {FaRegPlayCircle} from 'react-icons/fa'
 
-import PlaylistNavbar from '../../PlaylistNavbar/PlaylistNavbar'
+import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import './Playlists.css'
 
 class Playlists extends Component {

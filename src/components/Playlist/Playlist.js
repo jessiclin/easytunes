@@ -4,7 +4,7 @@ import {MdAccountCircle} from 'react-icons/md'
 import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
-import PlaylistNavbar from '../../PlaylistNavbar/PlaylistNavbar'
+import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
 import './Playlist.css'
 
 // A playlist page 
