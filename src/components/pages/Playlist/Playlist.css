@@ -14,25 +14,29 @@
   margin-bottom: 10px;
   padding-bottom: 10px;
   position: relative;
+  border-bottom: 1px solid lightgray;
 }
 
-.information-row:after {
+/* .information-row:after {
   content: "";
-  width: 90%;
+  width: 100%;
   height: 2px;
   background: lightgray;
   position: absolute;
   bottom: -4px;
+
   margin-top: 20px;
   margin-left: 5%;
   margin-right: 5%;
-}
+} */
 
 .navigation-row {
   height: 50px;
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 5px;
+  padding-bottom: 1px;
+  border-bottom: 1px solid lightgray;
 }
 
 .songs-btn,

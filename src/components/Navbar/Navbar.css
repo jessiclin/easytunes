@@ -1,4 +1,4 @@
-.navbar {
+.top-nav {
   background: #6e4e39;
   height: 80px;
   display: flex;
@@ -22,16 +22,6 @@
   padding-right: 50px;
   padding-left: 50px;
 }
-
-/* .container {
-  z-index: 1;
-  width: 100%;
-  max-width: 1300px;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 50px;
-  padding-left: 50px;
-} */
 
 .navbar-logo {
   color: #f5f50a;
