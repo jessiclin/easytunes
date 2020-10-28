@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import SearchList from './SearchList.js'
 
-import './Search.css'
-class Search extends React.Component {
+class SearchScreen extends Component {
     state = { 
         searchbar: '',
     }
@@ -14,7 +13,7 @@ class Search extends React.Component {
     render() {
         const searchList = this.props;
         return (
-            <div>
+            <div className="container black">
                 <SearchList searchList={searchList}/>
             </div> 
         );
@@ -26,4 +25,4 @@ const mapStateToProps = (state, ownProps) => {
 
     };
 }
-export default Search;
+export default SearchScreen;
