@@ -32,7 +32,9 @@ class AccountButton extends Component {
         });
     };
 
+
     render() { 
+        // console.log(this.props.userid)
         return ( 
             <div className="col text-right account-col">
                 <button className="account" onClick = {this.handleButtonClick}>
@@ -43,13 +45,15 @@ class AccountButton extends Component {
                     <div className="container home-container">
                     <ul className = "account-options">
                         <li>
-                            <NavLink to="/:userid/playlists" exact activeClassName="link-active">
+                            <NavLink to={"/" + this.props.userid + "/playlists"} exact activeClassName="link-active">
                                 Playlists
-
                             </NavLink>
-                    
                         </li>
-                        <li>Followers</li>
+                        <li>
+                            <NavLink to={"/" + this.props.userid + "/followers"} exact activeClassName="link-active">
+                                Followers
+                            </NavLink>
+                        </li>
                         <li>Following</li>
                         <li>Settings</li>
                         <li>

@@ -7,12 +7,8 @@ import {AiOutlineDelete} from 'react-icons/ai'
 // FaRegPauseCircle
 import {FaRegPlayCircle} from 'react-icons/fa'
 
-<<<<<<< HEAD:src/components/pages/Playlists/Playlists.js
-import PlaylistNavbar from '../../PlaylistNavbar/PlaylistNavbar'
-import AccountButton from '../../AccountButton/AccountButton'
-=======
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
->>>>>>> a594391d99022ff73b04b7e517658cc8da24892d:src/components/Playlists/Playlists.js
+import AccountButton from '../AccountButton/AccountButton'
 import './Playlists.css'
 
 class Playlists extends Component {
@@ -123,7 +119,7 @@ class Playlists extends Component {
     handleHome = () => {
         const {history } = this.props;
         console.log(history);
-        history.push('/')
+        history.push('/home')
     }
 
     // Get the username 
@@ -212,6 +208,7 @@ class Playlists extends Component {
     }
     
     render() { 
+
         return ( 
             <div>
                 <div className="container-fluid playlist-container">
@@ -224,7 +221,7 @@ class Playlists extends Component {
                         </div>
                         
                         <div className="col text-right account-col">
-                                <AccountButton/>
+                                <AccountButton userid={this.props.match.params.userid}/>
                         </div>
                     </div>
 
@@ -349,6 +346,13 @@ class Playlists extends Component {
             {playlists}
             </>
         );
+    }
+
+    renderUploads = () => {
+        return (
+            <>
+            </>
+        )
     }
 }
  
