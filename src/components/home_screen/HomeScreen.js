@@ -52,7 +52,7 @@ class HomeScreen extends Component {
         
         return ( 
             <div>
-                <div className="container" ref={this.container}>
+                <div className="container user-home-container" ref={this.container}>
                     {/* Home Button and Account Icon */}
                     <div className="row">
                         <div className="col">
@@ -69,20 +69,20 @@ class HomeScreen extends Component {
                             <MdAccountCircle size={24}/>
                             </button>
                             {this.state.open && (
-                                <div class="container">
-                                <ul>
-                                  <li>
-                                      <NavLink to="/:userid/playlists" exact activeClassName="link-active">
-                                          Playlists
+                                <div className="container home-container">
+                                  <ul className = "account-options">
+                                    <li>
+                                        <NavLink to="/:userid/playlists" exact activeClassName="link-active">
+                                            Playlists
 
-                                      </NavLink>
-                               
-                                  </li>
-                                  <li>Followers</li>
-                                  <li>Following</li>
-                                  <li>Settings</li>
-                                  <li>
-                                  <NavLink to="/" exact activeClassName="link-active">
+                                        </NavLink>
+                                
+                                    </li>
+                                    <li>Followers</li>
+                                    <li>Following</li>
+                                    <li>Settings</li>
+                                    <li>
+                                      <NavLink to="/" exact activeClassName="link-active">
                                       
                                       Log Out
                                       </NavLink>

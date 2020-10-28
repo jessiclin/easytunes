@@ -29,7 +29,7 @@ function Navbar() {
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
 
-        <nav className="navbar">
+        <nav className="navbar top-nav">
 
           <div className="navbar-container container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>

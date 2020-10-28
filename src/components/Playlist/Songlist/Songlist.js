@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {AiOutlineDelete} from 'react-icons/ai'
-import {CgPlayButtonO, CgPlayPauseO} from 'react-icons/cg'
-
+// FaRegPauseCircle
+import {FaRegPlayCircle} from 'react-icons/fa'
 import './Songlist.css'
 class Songlist extends Component {
     state = { 
@@ -43,7 +43,7 @@ class Songlist extends Component {
                     </div>
                     <div className="col song-col text-left">
                     <button className="play-btn" onClick = {this.handlePlayClick}>
-                        <CgPlayButtonO size= {24}/>
+                        <FaRegPlayCircle size= {24}/>
                     </button>
                     </div>
                     <div className="col song-col text-left">
