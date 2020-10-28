@@ -69,20 +69,20 @@ class HomeScreen extends Component {
                             <MdAccountCircle size={24}/>
                             </button>
                             {this.state.open && (
-                                <div class="container home-container">
-                                <ul>
-                                  <li>
-                                      <NavLink to="/:userid/playlists" exact activeClassName="link-active">
-                                          Playlists
+                                <div className="container home-container">
+                                  <ul className = "account-options">
+                                    <li>
+                                        <NavLink to="/:userid/playlists" exact activeClassName="link-active">
+                                            Playlists
 
-                                      </NavLink>
-                               
-                                  </li>
-                                  <li>Followers</li>
-                                  <li>Following</li>
-                                  <li>Settings</li>
-                                  <li>
-                                  <NavLink to="/" exact activeClassName="link-active">
+                                        </NavLink>
+                                
+                                    </li>
+                                    <li>Followers</li>
+                                    <li>Following</li>
+                                    <li>Settings</li>
+                                    <li>
+                                      <NavLink to="/" exact activeClassName="link-active">
                                       
                                       Log Out
                                       </NavLink>
