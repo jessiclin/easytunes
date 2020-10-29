@@ -11,40 +11,43 @@ import Home from "./components/HomePage/Home";
 import HomeScreen from "./components/home_screen/HomeScreen"
 import SearchScreen from "./components/search_screen/SearchScreen.js"
 import Follows from './components/Following/Follows'
-
-//import mockData from "./mock_data.json"
-
-// const users = mockData.users
-// const playlists = mockData.playlists
-
-// console.log(users)
-
-// function findUser(id){
-//   for (let i = 0; i < users.length; i++){
-//     if (users[i].user_id === id)
-//       return users[i]
-//   }
-// }
+import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
+import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
+import Navbar from './components/Navbar/Navbar'
 
 class App extends Component {
+  state = {
+    logged_in : false
+  }
+
+  changeLoginState = () =>{
+    this.setState({logged_in : !this.state.logged_in})
+  }
   render() {
     return (
       <BrowserRouter>
         <div className="App">
+          {/* {this.state.logged_in ? <HeaderNavbar/> :  <Navbar/>} */}
 
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/login' component={LoginScreen} />
-            <Route path='/register' component={LoginScreen} />
-            <Route path='/forgotpassword' component={ResetPasswordScreen}/>
-            <Route path='/:userid/playlists/:playlistid' component={Playlist}/> 
-            <Route path='/:userid/playlists' component={Playlists}/>
-            <Route path='/home' component={HomeScreen} />
-            <Route path='/search' component={SearchScreen} />
+            <Route exact path='/login' component={LoginScreen} /> 
+
+            <Route exact path='/register' component={LoginScreen} />
+            <Route exact path='/forgotpassword' component={ResetPasswordScreen}/>
+            <Route exact path='/home' component={HomeScreen} />
+            <Route exact path='/search' component={SearchScreen} />
+            <Route exact path='/:userid/followers' component={Follows}/>
+            <Route exact path='/:userid/playlist=:playlistid' component={Playlist}/> 
+            
+            <Route exact path='/:userid' component={Playlists}/>
+            
+            
             {/* <Route path='/:userid/following' component={Following}/> */}
-            <Route path='/:userid/followers' component={Follows}/>
+            
             {/* <Route path='/:any' component={HomeScreen} /> */}
           </Switch>
+          {/* {this.state.logged_in ?  <PlaylistNavbar/> :  null} */}
         </div>
       </BrowserRouter>
     );

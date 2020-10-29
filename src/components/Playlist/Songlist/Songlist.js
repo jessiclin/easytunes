@@ -3,39 +3,32 @@ import {AiOutlineDelete} from 'react-icons/ai'
 // FaRegPauseCircle
 import {FaRegPlayCircle} from 'react-icons/fa'
 import './Songlist.css'
+
+import mockData from '../../../mock_data.json'
 class Songlist extends Component {
-    state = { 
-        edit : true
-    }
+    users = mockData.users 
+    playlists = mockData.playlists
+    state = {}
+
 
     handlePlayClick = (event) =>{
         console.log(event)
     }
     
+    getPlaylist() {
+        const {playlist} = this.props
+        return playlist
+    }
     render() {
-        let lists = [
-            {
-                "song_id" : 1,
-                "name" : "American Idiot",
-                "artist" : "Green Day",
-                "uploaded" : false
-            },
-            {
-                "song_id" : 2,
-                "name" : "21 Guns",
-                "artist" : "Green Day",
-                "uploaded" : false
-            }
-        ]
         return (
             <>
-                {this.renderSongs(lists)}
+                {this.renderSongs(this.getPlaylist())}
             </>
         );
     }
 
-    renderSongs(list){
-        let songs = list.map(function(song, i){
+    renderSongs(playlist){  
+        let songs = playlist.songs.map(function(song, i){
             return (
                 <div key = {song.name + song.song_id} className="row song-row">
                     <div className="col song-col text-left">

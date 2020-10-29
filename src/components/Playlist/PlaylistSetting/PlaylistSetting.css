@@ -21,10 +21,10 @@
   border-radius: 5px;
   border: 1px solid;
 }
-
+  
 .settings-row input:focus {
   outline: none;
-  border: 2px solid;
+  border: 2px solid black;
 }
 
 .settings-row .delete-btn {
@@ -32,4 +32,8 @@
   color: black;
   border: none;
   outline: none;
+}
+
+.playlist-name-input{
+  width: 100px
 }

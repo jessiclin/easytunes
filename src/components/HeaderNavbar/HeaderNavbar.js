@@ -5,6 +5,7 @@ import {MdAccountCircle} from 'react-icons/md'
 import {AiFillHome} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
 import './HeaderNavbar.css'
+import mockData from '../../mock_data.json'
 class HeaderNavbar extends Component {
     container = React.createRef();
     state = {
@@ -65,12 +66,12 @@ class HeaderNavbar extends Component {
                         <div className="container home-container">
                             <ul className = "account-options">
                                 <li>
-                                    <NavLink to={"/" + this.props.userid + "/playlists"} exact activeClassName="link-active">
+                                    <NavLink to={"/" + mockData.users[0].username} exact activeClassName="link-active">
                                         Playlists
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to={"/" + this.props.userid + "/followers"} exact activeClassName="link-active">
+                                    <NavLink to={"/" + mockData.users[0].username+ "/followers"} exact activeClassName="link-active">
                                         Followers
                                     </NavLink>
                                 </li>

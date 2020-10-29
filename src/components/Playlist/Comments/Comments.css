@@ -21,6 +21,10 @@
   background: transparent;
 }
 
+.view-replies-btn:focus{
+  outline:none
+}
+
 .reply-btn {
   margin-left: 10px;
   background: none;
