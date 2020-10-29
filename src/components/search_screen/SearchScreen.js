@@ -11,9 +11,12 @@ class SearchScreen extends Component {
     }
 
     render() {
-        const searchList = this.props;
+        const searchList = {};
         return (
-            <div className="container black">
+            <div className="container navy">
+                <div class="row">
+                    <h2 class="col s11">Results</h2>
+                </div>
                 <SearchList searchList={searchList}/>
             </div> 
         );
