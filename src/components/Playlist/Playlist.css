@@ -55,6 +55,7 @@
 .comments-btn:focus,
 .settings-btn:focus {
   outline: none;
+  background: transparent;
 }
 
 .home,
