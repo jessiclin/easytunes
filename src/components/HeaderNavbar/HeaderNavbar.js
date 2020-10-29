@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import { NavLink, Link } from 'react-router-dom';
+import {BsFillCaretDownFill} from 'react-icons/bs'
 import {MdAccountCircle} from 'react-icons/md'
 import {AiFillHome} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
@@ -38,6 +39,49 @@ class HeaderNavbar extends Component {
 
     render() { 
         // console.log(this.props.userid)
+
+        function SearchOptions() {
+            const [visible, setVisibility] = React.useState(false);
+            const [text, setText] = React.useState("All");
+
+            function toggleVisibility () {
+                setVisibility(visible => !visible)
+            }
+            
+            function toggleText(selected) {
+                setText(selected)
+            }
+
+            function Options() {
+
+                return (
+                    <ul className="search-options-ul">
+                        <li>
+                            <button onClick = {() => toggleText("All")}> All </button>
+                        </li>
+                        <li>
+                            <button onClick = {() => toggleText("Artists")}> Artists </button>
+                        </li>
+                        <li> 
+                            <button onClick = {() => toggleText("Songs")}> Songs </button>
+                        </li>
+                        <li>
+                            <button onClick = {() => toggleText("Playlists")}> Playlists </button>
+                        </li>
+                        <li>
+                            <button onClick = {() => toggleText("User")}> User </button>
+                        </li>
+                    </ul>
+                )
+            }
+            return (
+                <div className="search-options">
+                    <button onClick = {toggleVisibility}> {text} <BsFillCaretDownFill size = {10}/> </button>
+                    {visible ? <Options/> : null }
+                </div>
+                
+            )
+        }
         return ( 
             <div className="row home-navbar">
                 {/* Home button */}
@@ -50,8 +94,10 @@ class HeaderNavbar extends Component {
                 {/* Search bar */}
                 <div className="col search-bar">
                     <input placeholder="Search"></input>
-                    
-                    <button>
+
+                    <SearchOptions/>
+
+                    <button className = "search-btn">
                         <RiSearch2Line size ={18} style = {{color: "#faed36"}}/>
                     </button>
                 </div>

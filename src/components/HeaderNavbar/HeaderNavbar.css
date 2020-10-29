@@ -59,21 +59,64 @@
     outline:none
 }
 
-.search-bar button {
+.search-bar .search-btn {
     position: absolute;
     right: -13px;
     top: 0px;
     width: 50px;
-    height: 27px;
+    height: 29px;
     border: 2px solid;
     border-radius: 0px 15px 15px 0px;
     background: black;
 }
 
-.search-bar button:focus{
+.search-bar .search-btn:focus, 
+.search-options-btn:focus{
     outline: none;
 }
 
 .home-navbar{
     margin-bottom: 0px;
+}
+
+.search-options {
+    width: 100px;
+    height: 100px;
+}
+.search-options button {
+    border: 1px solid;
+    position: absolute;
+    height: 29px;
+    padding-left: 2px;
+    padding-right: 2px;
+    /* width: 35px; */
+    min-width:35px;
+    right: 37px;
+    top: 0px;
+    background: transparent;
+    font-size: 12px;
+}
+
+.search-options ul {
+    /* border: 1px solid; */
+    width: 100px;
+    text-align: left;
+    position: absolute;
+    right: 0px;
+    top: 28px;
+    
+}
+.search-options li {
+    padding: 0px;
+    margin: 0px
+}
+.search-options-ul button {
+    width: 100%;
+    background: white;
+    border: 1px solid;
+    position: relative;
+    outline: none
+}
+.search-options-ul button:focus {
+    outline: none
 }
