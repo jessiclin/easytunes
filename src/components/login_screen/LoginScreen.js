@@ -7,6 +7,8 @@ import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 import "./LoginScreen.css";
 
+import mockData from '../../mock_data.json'
+
 class Login extends Component {
     state = {
         loginVisible: true,
@@ -41,7 +43,6 @@ class Login extends Component {
         const url = '/home'
         const {history } = this.props;
         history.push(url)
-        
     }
 
     handleSignUp = () =>{

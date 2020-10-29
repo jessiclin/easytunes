@@ -14,15 +14,16 @@ class PlaylistSetting extends Component {
     render(){
         return (
             <>
-                <div className="row settings-row">
+                <div className="settings-row">
                     <button>{this.state.public ? "Public" : "Private"}</button>
+                    
                 </div>
-                <div className="row settings-row">
+                <div className="settings-row">
                     Playlist Name 
                     <input type="text" value={this.state.playlist_name} required/>
                 </div>
 
-                <div className="row settings-row">
+                <div className="settings-row">
                     <button onClick={this.handleSave}> Save </button>
                     <button onClick = {this.handleEditClick}> Edit </button>
                     <button className="delete-btn">Delete</button>

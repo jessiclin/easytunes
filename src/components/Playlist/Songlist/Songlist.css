@@ -8,11 +8,12 @@
 
 .song-row:after {
   content: "";
-  width: 80%;
+  width: 85%;
   height: 1px;
   background: lightgray;
   position: absolute;
   bottom: -4px;
+  right: -10px;
   margin-left: 15%;
 }
 

@@ -1,61 +1,84 @@
 import React, { Component } from 'react'
-// BsFillCaretDownFill
-import { BsFillCaretUpFill} from 'react-icons/bs'
+import { BsFillCaretUpFill, BsFillCaretDownFill, BsLayoutThreeColumns} from 'react-icons/bs'
 import './Comments.css'
+
+import mockData from '../../../mock_data.json'
 class Comments extends Component {
-    state = {  }
+    playlists = mockData.playlists
 
+    state = { 
+        playlist : this.props.playlist,
+     }
+
+    
+
+    getComments = () => {
+        console.log(this.state.playlist)
+        return this.state.playlist.comments
+    }
     render() {
-        let list = [];
-        
-        for (let i = 0; i < 2; i++){
-            let user = "user" + i
-            list.push(
-                {
-                    username : user,
-                    comment : "This is a great playlist",
-                    replies : [
-                        {
-                            username : user + 1,
-                            comment: "Great playlist to listen to"
-                        },
-                        {
-                            username: "user",
-                            comment: "Thank you"
-                        }
-
-                    ]
-                }
-            )
-        }
-
         return (
             <>
-                {this.renderComments(list)}
+                {this.renderComments(this.getComments())}
             </>
         );
     }
 
-    handleRenderReplies = (id) =>{
-       
-    }
 
     renderComments(list){
-        let comments = list.map(function(elem, i){
+        console.log(list)
+        function ReplyButton(elem){
+            const [showReplyVisible, setVisibility] = React.useState(true);
+            
+            function toggleVisibility(){
+                setVisibility(showReplyVisible => !showReplyVisible)
+            }
+
             let res = elem.replies.map(function(reply, j){
                 return (
-                    <div key = {elem.username + " " + i + " " + reply.username + " " + j} id = {"comment " + i + " replies"} className="container reply">
-                  
-                            <div className="row username-row">
-                            {reply.username}
-                            </div>
-                            <div className="row comment-row">
-                                {reply.comment}
-                            </div>
-                     
-                    </div>
+                    <li key = {reply.username + j}>
+                        <div className="username-row">{reply.username}</div>
+                        <div className="comment-row">{reply.message}</div>
+                        
+                    </li>
                 )
-            })
+            }, this)
+
+            return (
+                <div>
+                    {
+                        showReplyVisible ? 
+                        <>
+                        <button className = "view-replies-btn" onClick={toggleVisibility}> 
+                                <BsFillCaretDownFill/> 
+                                Show Replies 
+                        </button>
+                        {/* {document.getElementById(id).style.display = "none"} */}
+                        </>
+                        :
+                        <>
+                        <button className = "view-replies-btn" onClick={toggleVisibility}> 
+                                <BsFillCaretUpFill/> 
+                                Hide Replies 
+                        </button>
+                         
+                            <div className="container replies-container"  >
+                                <ul>
+                                    {res}
+                                </ul>
+                            </div> 
+                            
+                      
+                        </>
+                    }
+                </div>
+            );
+        }
+
+ 
+
+        let comments = list.map(function(elem, i){
+            
             return (
                     <div key = {elem.username + " " + i.toString()}  className="container result-container">
                         <div className="row username-row">
@@ -63,24 +86,16 @@ class Comments extends Component {
                         </div>
 
                         <div className="row comment-row">
-                            {elem.comment}
+                            {elem.message}
                         </div>
                         
-                        <div className="row replies">
-                            <button className = "view-replies-btn"> <BsFillCaretUpFill/> Hide Replies </button>
-                       
-                            <button className="reply-btn">Reply</button>
-                      
-                            {res}
+                        <div className="row replies-row">
+                            <ReplyButton replies = {elem.replies}/>
+        
                         </div>
-                            
-
-
                     </div>
-              
             )
-        })
-    
+        }, this)
         return (
             <>
                 {comments}

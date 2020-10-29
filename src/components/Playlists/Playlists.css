@@ -3,24 +3,23 @@
 }
 
 .playlist-row {
-  border-left: 1px solid lightgray;
-  border-right: 1px solid lightgray;
+  display: flex;
+  flex-wrap: wrap;
   height: 100px;
-  /* margin-top: 10px; */
-  margin-left: 5px;
-  margin-right: 5px;
-  align-items: center;
-  text-align: center;
   position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-items: center;  
 }
 
 .playlist-row:after {
   content: "";
-  width: 80%;
+  width: 85%;
   height: 1px;
   background: lightgray;
   position: absolute;
   bottom: -4px;
+  right: -10px;
   margin-left: 15%;
 }
 
@@ -37,7 +36,6 @@
   height: 60px;
   outline: none;
   border: none;
-
   text-align: left;
   position: absolute;
   display: inline-block;
@@ -84,4 +82,16 @@
 .uploaded-songs-btn:focus {
   outline: none;
   background: transparent;
+}
+
+.playlist-container {
+  height:100%
+}
+
+.playlist-data-container{
+  height: 100%;
+  width: 100%;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 0px;
 }

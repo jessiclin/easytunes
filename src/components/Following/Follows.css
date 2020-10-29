@@ -2,6 +2,7 @@
     border: 1px solid
 }
 
+
 .followers-btn,
 .following-btn,
 .requests-btn {
@@ -24,26 +25,26 @@
 }
 
 .follower-row {
-  border-left: 1px solid lightgray;
-  border-right: 1px solid lightgray;
+  /* border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray; */
+  display: flex;
+  flex-wrap: wrap;
   height: 100px;
-  margin-left: 5px;
-  margin-right: 5px;
   align-items: center;
   text-align: center;
   position: relative;
+  border-bottom: 1px solid lightgray;
 }
   
-.follower-row:after {
+/* .follower-row:after {
   content: "";
-  width: 80%;
+  width: 100%;
   height: 1px;
   background: lightgray;
   position: absolute;
   bottom: -4px;
-  margin-left: 15%;
 }
-  
+   */
 .follower-row button {
   background: transparent;
 }
@@ -66,3 +67,23 @@
   padding-bottom: 10px;
 }
 
+.followers-container {
+  height: 100%
+}
+
+.follow-data-container {
+  height: 100%;
+  width: 100%;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 0px;
+}
+
+.user-btn{
+  border: none;
+  background: transparent;
+}
+
+.user-btn:focus{
+  outline:none
+}

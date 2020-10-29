@@ -11,101 +11,12 @@ import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlists.css'
 
-class Playlists extends Component {
-    savedPlaylists = [
-        {
-            playlist_id : 2,
-            user_id : 2,
-            username : "playlist maker",
-            name : "My Favorites",
-            date_created : {
-                month : "October",
-                day : 3,
-                year : 2020
-            },
-            public : true,
-            likes : 2,
-            comments : [
-                {
-                    username : "user",
-                    date : {
-                        month : "October",
-                        day : 4,
-                        year : 2020
-                    },
-                    message : "Nice!",
-                    replies : [
-                        {
-                            username : "user2",
-                            date : {
-                                month : "October",
-                                day : 4,
-                                year : 2020
-                            },
-                            message : "Thanks!"
-                        }
-                    ]    
-                }
-            ],
-            songs : [
-                {
-                    song_id : 1,
-                    name : "<>",
-                    uploaded : false
-                }
-            ]
-        }
-    ]
+import mockData from '../../mock_data.json'
 
-    myPlaylist = [
-        {
-            playlist_id : 1,
-            user_id : 1,
-            username : "user",
-            name : "Good Songs",
-            date_created : {
-                month : "October",
-                day : 4,
-                year : 2020
-            },
-            public : true,
-            likes : 1,
-            comments : [
-                {
-                    username : "user2",
-                    date : {
-                        month : "October",
-                        day : 5,
-                        year : 2020
-                    },
-                    message : "Great Playlist!",
-                    replies : [
-                        {
-                            username : "user",
-                            date : {
-                                month : "October",
-                                day : 5,
-                                year : 2020
-                            },
-                            message : "Thanks!"
-                        }
-                    ]
-                }
-            ],
-            songs : [
-                {
-                    song_id : 1,
-                    name : "Placeholder",
-                    uploaded : false
-                },
-                {
-                    song_id : 2,
-                    name : "Placeholder",
-                    uploaded : false
-                }
-            ]
-        }
-    ]
+class Playlists extends Component {
+    users = mockData.users
+    playlists = mockData.playlists
+
 
     state = { 
         showSavedPlaylists: false,
@@ -126,40 +37,69 @@ class Playlists extends Component {
     getUserName = () => {
         const user = this.props.match.params.userid;
         return user
+        // const users = mockData.users
+        // console.log(users[0].username)
+        // return users[0].username)
     }
 
     handleDelete = (event) => {
         console.log("Delete Playlist")
     }
 
-    // Go to playlist page 
-    handlePlaylistClick = (event) => {
-        const id = parseInt(event.target.id)
-
-        // Find playlist name and user
-        let name = null
-        let username = null
-        for (var i = 0; i < this.myPlaylist.length; i++){
-            if (parseInt(this.myPlaylist[i].playlist_id) === id){
-                name = this.myPlaylist[i].name;
-                username = this.myPlaylist[i].username;
-                break;
+    getUserInfoById = (id) => {
+        for (var i = 0; i < this.users.length; i++){
+            if (parseInt(this.users[i].user_id) == id){
+                return this.users[i]
             }
         }
+    }
 
-        if (name === null) {
-            for (i = 0; i < this.savedPlaylists.length; i++){
-                if (parseInt(this.savedPlaylists[i].playlist_id) === id){
-                    name = this.savedPlaylists[i].name;
-                    username = this.savedPlaylists[i].username;
-                    break;
-                } 
-            }
+    getAccountCreationDate = () => {
+        const user = this.getUserName()
+        
+        for (let i = 0; i < this.users.length; i++){
+           
+            if (this.users[i].username === user)
+           
+                return this.users[i].joined.month + " " + this.users[i].joined.day + ", " + this.users[i].joined.year
+        }
+        
+    }
+
+    getPlaylistsByUsername = (username) => {
+        let playlists = this.playlists
+        let myPlaylists = []
+        
+        for (let i = 0; i < playlists.length; i++){
+            if (playlists[i].username === username)
+                myPlaylists.push(playlists[i])
+        }
+        return myPlaylists
+    }
+    getPlaylistById = (playlist_id) => {
+
+        let playlists = this.playlists 
+
+        for (let i = 0; i < playlists.length; i++){
+            if (parseInt(playlists[i].playlist_id) === playlist_id)
+                return playlists[i]
         }
 
-        const url = '/' + username.replace(/\s/g, '%20') + '/playlists/' + name.replace(/\s/g, '%20')
-        const {history } = this.props;
-        history.push(url)
+      
+    }
+    getSavedPlaylists = (username) => {
+        let users = this.users
+        let playlistInfo = null
+        for(let i = 0; i < users.length; i++){
+            if (users[i].username === username)
+                playlistInfo = users[i].saved_playlists
+        }
+
+        let playlists = []
+        for (let i = 0; i < playlistInfo.length; i++){
+            playlists.push(this.getPlaylistById(parseInt(playlistInfo[i].playlist_id)))
+        }
+        return playlists
     }
     
     // Button click on "My Playlists"
@@ -208,31 +148,30 @@ class Playlists extends Component {
     }
     
     render() { 
-
         return ( 
-            <div>
+           
                 <div className="container-fluid playlist-container">
                     {/* Home Button, Username, Account Icon */}
                     <HeaderNavbar/>
-
-                    {/* Information Bar about the user */}
-                    <div className="row information-row">
+                    <div className="container-fluid playlist-data-container">
+                        {/* Information Bar about the user */}
+                    <div className="information-row">
                         <div className="col text-center">
                             <h2>{this.getUserName()}                            
                              
-                             {!this.state.self ?
+                             {/* {!this.state.self ?
                                 !this.state.following ? 
                                 <span> <RiUserAddLine size= {24}/> </span> :
                                 <span> <RiUserFollowLine size={24}/></span>
-                            : null}
+                            : null} */}
 
                             </h2>
-                            <h5> User Since:</h5>
+                             <h5> User Since: {this.getAccountCreationDate()}</h5>
                         </div>
                     </div>
                     
                     {/* Navigation bar between "My Playlist" and "Saved Playlists" */}
-                    <div className="row navigation-row">
+                    <div className="navigation-row">
                         <div className="col">
                            <button id = "my-playlists-btn" className = "my-playlists-btn" onClick = {this.handleMyPlaylistView} style = {{borderBottom : "2px solid #faed26", fontWeight : "bold"}}>  My Playlists </button>
                         </div>
@@ -252,15 +191,23 @@ class Playlists extends Component {
                 </div>
                 <PlaylistNavbar/>
             </div>
+                    
+                
+      
          );
     }
 
     renderPlaylists = () => {
-        let playlists = this.state.showMyPlaylists ? this.myPlaylist : this.savedPlaylists;
-        const showMine = this.state.showSavedPlaylists
-        playlists = playlists.map(function(playlist) {
+        let playlists = this.state.showMyPlaylists ? this.getPlaylistsByUsername(this.getUserName()) : this.getSavedPlaylists(this.getUserName());
+        const showMine = this.state.showMyPlaylists
+
+        function PlaylistButton({playlist,history}) {
+            function toPlaylist(){
+                history.history.push('/' + playlist.username.replace(/\s/g, '%20') + '/playlist='+ playlist.name.replace(/\s/g, '%20'))
+            }
+
             return (
-                <div key = {playlist.playlist_id} className="row playlist-row">
+                <div className="playlist-row">
                     <div className="col">
                         <RiPlayListLine size = {50}/>
                     </div>
@@ -279,7 +226,7 @@ class Playlists extends Component {
                         <>{playlist.username}</>}
                     </div>
   
-                    <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.handlePlaylistClick}/>
+                    <button className="playlist-btn" id={playlist.playlist_id} onClick = {toPlaylist}/>
                     
                     <button className="play-btn">
                         <FaRegPlayCircle size = {30}/>
@@ -289,6 +236,11 @@ class Playlists extends Component {
                         <AiOutlineDelete size = {24}/>
                     </button>
                 </div>
+            )
+        }
+        playlists = playlists.map(function(playlist) {
+            return (
+                <PlaylistButton playlist = {playlist} history = {this.props} key = {playlist.playlist_id} />
             )
         }, this)
 
