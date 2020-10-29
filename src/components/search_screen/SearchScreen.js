@@ -15,7 +15,7 @@ class SearchScreen extends Component {
         return (
             <div className="container navy">
                 <div class="row">
-                    <h2 class="col s11">Results</h2>
+                    <h2 class="col s1">Results</h2>
                 </div>
                 <SearchList searchList={searchList}/>
             </div> 
