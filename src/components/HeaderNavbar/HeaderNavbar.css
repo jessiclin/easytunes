@@ -81,7 +81,7 @@
 
 .search-options {
     width: 100px;
-    height: 100px;
+    /* height: 100px; */
 }
 .search-options button {
     border: 1px solid;
@@ -97,6 +97,9 @@
     font-size: 12px;
 }
 
+.search-options button:focus{
+    outline:none
+}
 .search-options ul {
     /* border: 1px solid; */
     width: 100px;
@@ -115,8 +118,10 @@
     background: white;
     border: 1px solid;
     position: relative;
-    outline: none
+    outline: none;
+    z-index: 2;
 }
 .search-options-ul button:focus {
-    outline: none
+    outline: none;
+    background: white;
 }
