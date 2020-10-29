@@ -83,4 +83,5 @@
 .saved-playlists-btn:focus,
 .uploaded-songs-btn:focus {
   outline: none;
+  background: transparent;
 }

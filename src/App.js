@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route,} from 'react-router-dom';
 
 import './App.css';
 
-import Navbar from './components/Navbar/Navbar';
 import LoginScreen from './components/login_screen/LoginScreen.js';
 import ResetPasswordScreen from './components/reset_password_screen/ResetPasswordScreen.js'
 import Playlists from './components/Playlists/Playlists'
@@ -11,6 +10,7 @@ import Playlist from './components/Playlist/Playlist'
 import Home from "./components/HomePage/Home";
 import HomeScreen from "./components/home_screen/HomeScreen"
 import SearchScreen from "./components/search_screen/SearchScreen.js"
+import Follows from './components/Following/Follows'
 
 //import mockData from "./mock_data.json"
 
@@ -31,7 +31,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Navbar />
+
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/login' component={LoginScreen} />
@@ -39,9 +39,11 @@ class App extends Component {
             <Route path='/forgotpassword' component={ResetPasswordScreen}/>
             <Route path='/:userid/playlists/:playlistid' component={Playlist}/> 
             <Route path='/:userid/playlists' component={Playlists}/>
-            <Route path='/home-screen' component={HomeScreen} />
+            <Route path='/home' component={HomeScreen} />
             <Route path='/search' component={SearchScreen} />
-            <Route path='/:any' component={HomeScreen} />
+            {/* <Route path='/:userid/following' component={Following}/> */}
+            <Route path='/:userid/followers' component={Follows}/>
+            {/* <Route path='/:any' component={HomeScreen} /> */}
           </Switch>
         </div>
       </BrowserRouter>

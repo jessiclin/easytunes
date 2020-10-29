@@ -1,13 +1,13 @@
 import React, { useState, Component } from 'react'
-import { Button } from '../Button/Button';
-import { NavLink, Link } from 'react-router-dom';
+// import { Button } from '../Button/Button';
+// import { NavLink, Link } from 'react-router-dom';
 import '../Navbar/Navbar.css';
-import Dropdown from '../Dropdown';
-import { BsMusicNoteList } from "react-icons/bs";
+// import Dropdown from '../Dropdown';
+// import { BsMusicNoteList } from "react-icons/bs";
 import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import "./HomeScreen.css"
 import Logo from "./am4a.png"
-import AccountButton from '../AccountButton/AccountButton'
+import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 class HomeScreen extends Component {
 
     
@@ -15,7 +15,7 @@ class HomeScreen extends Component {
     handleHome = () => {
         const {history } = this.props;
         console.log(history);
-        history.push('/')
+        history.replace('/home')
     }
 
     goPlaylists = () => {
@@ -38,7 +38,7 @@ class HomeScreen extends Component {
                         </div>
 
                         <img src={Logo} alt="website logo" />     
-                        <AccountButton/>                 
+                        {/* <AccountButton />                  */}
                     </div>    
                     
                     
