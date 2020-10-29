@@ -16,12 +16,12 @@ class SearchList extends React.Component {
         console.log(items)
 
         return (
-            <div className="container gray">
+            <div className='section'>
                 <div class='row'>
                     <div class='col s3'>Song</div>
                     <div class='col s3'>Artist</div>
                     <div class='col s3'>Length</div>
-                    <div class='col s3'>x</div>
+                    <div class='col s3'></div>
                 </div>
                 {items && items.map(function(item) {
                     console.log(item)

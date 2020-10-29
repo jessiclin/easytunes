@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './Search.css'
 
 class SearchListCard extends React.Component {
     state = { 
@@ -14,13 +15,21 @@ class SearchListCard extends React.Component {
         const { item } = this.props;
 
         return (
-            <div class="row">
-                <div class='col s3'>{item.song_title}</div>
-                <div class='col s3'>{item.artist}</div>
-                <div class='col s3'>{item.song_length}</div>
-                <div class='col s3'>
-                    <a class="btn-floating brown" ><i class='material-icons'>favorite</i></a>
-                    <a class="btn-floating brown" ><i class='material-icons'>add_circle</i></a>
+            <div>
+                <div className='card z-depth-0 grey text'>
+                    <div className='card-content col s3'>
+                        <span className='card-title'>{item.song_title}</span>
+                    </div>
+                    <div className='card-content col s3'>
+                        <span className='card-title'>{item.artist}</span>
+                    </div>
+                    <div className='card-content col s3'>
+                        <span className='card-title'>{item.song_length}</span>
+                    </div>
+                    <div className='card-content col s3'>
+                        <a className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></a>
+                        <a className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></a>
+                    </div>
                 </div>
             </div>
         );
