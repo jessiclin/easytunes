@@ -12,6 +12,12 @@ class SearchList extends React.Component {
 
         return (
             <div className="container gray">
+                <div class='row'>
+                    <div class='col s3'>Song</div>
+                    <div class='col s3'>Artist</div>
+                    <div class='col s3'>Length</div>
+                    <div class='col s3'>x</div>
+                </div>
                 {items && items.map(function(item) {
                     return (
                         <SearchListCard searchList={searchList} item={item}/>
