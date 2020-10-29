@@ -7,14 +7,26 @@ class SearchList extends React.Component {
     }
     
     render() {
-        const searchList = this.props.searchList;
+        const searchList = {"items": [
+            {"song_title":"21 Guns", "artist":"Green Day", "song_length":"2:34"},
+            {"song_title":"Money Machine", "artist":"100 Gecs", "song_length":"9:59"},
+            {"song_title":"Static Buzz", "artist":"Snail Mail", "song_length":"1:56"}
+        ]};
         const items = searchList.items;
+        console.log(items)
 
         return (
-            <div className="container gray">
+            <div className='section'>
+                <div class='row'>
+                    <div class='col s3'>Song</div>
+                    <div class='col s3'>Artist</div>
+                    <div class='col s3'>Length</div>
+                    <div class='col s3'></div>
+                </div>
                 {items && items.map(function(item) {
+                    console.log(item)
                     return (
-                        <SearchListCard searchList={searchList} item={item}/>
+                        <SearchListCard item={item}/>
                     );})
                 }
             </div>
