@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import Switch from 'react-input-switch';
@@ -86,6 +87,65 @@ class Setting extends Component {
 
     renderAccount(){
 
+        function Update({text, original}) {
+            const [visible, setVisibility] = React.useState(false)
+
+            function toggleVisibilityTrue(){
+                setVisibility(visible => true)
+            }
+
+            function toggleVisibilityFalse() {
+                setVisibility(visible => false)
+            }
+            return (
+                <>
+
+                    <button className = "user-settings-content-btn" onClick = {toggleVisibilityTrue}>{text}</button>   
+
+                    {
+                        visible ? 
+                            <div className="update-box">
+                                {text}
+                                <input type="text" placeholder = {original} required/>
+                                <button className = "confirm-change-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
+                                 <button className = "cancel-change-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
+                            </div>
+                        :
+                        
+                        null
+                    }    
+                </>
+            )
+
+        }
+
+        function UpdatePassword (){
+            const [visible, setVisibility] = React.useState(false)
+
+            function toggleVisibilityTrue() {
+                setVisibility(visible => true)
+            }
+
+            function toggleVisibilityFalse() {
+                setVisibility(visible => false)
+            }
+
+            return (
+                <>
+                    <button className = "user-settings-content-btn" onClick = {toggleVisibilityTrue}> Update Password </button>
+                    {visible ? 
+                    <div className="update-pass-box">
+                        New Password
+                        <input type="password" required/>
+                        Confirm Password
+                        <input type="password" required/>
+                        <button className = "confirm-pass-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
+                        <button className = "cancel-pass-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
+                    </div>
+                    : null}
+                </>
+            )
+        }
         return (
             <div className="user-settings-container">
                 <div className="settings-header">Account</div>
@@ -96,7 +156,7 @@ class Setting extends Component {
                         {this.user.email}
                     </div>
                     
-                    <button>Update Email</button>
+                    <Update text = {"Update Email"} original = {this.user.email}/>
                 </div>
 
                 <div className="user-settings-content">
@@ -105,7 +165,7 @@ class Setting extends Component {
                     <div className="user-setting-info">
                         {this.user.username}
                     </div>
-                        <button>Change Username</button>
+                    <Update text = {"Update Username"} original = {this.user.username}/>
                     
                     
                 </div>
@@ -113,7 +173,7 @@ class Setting extends Component {
                 <div className="user-settings-content"> 
                     <h5>Change Password</h5>
  
-                       <button>Change Password</button>
+                     <UpdatePassword/>
                    
                 </div>
             </div>
