@@ -183,7 +183,7 @@ class Playlists extends Component {
                              
                              {!this.isSelf() ?
                                 !this.isFollowing() ? 
-                                <span> <RiUserAddLine size= {24}/> </span> :
+                                <button> <RiUserAddLine size= {24}/> </button> :
                                 <span> <RiUserFollowLine size={24}/></span>
                             : null}
 

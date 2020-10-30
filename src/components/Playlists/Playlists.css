@@ -31,6 +31,14 @@
   outline: none;
 }
 
+.information-row button {
+  background: white;
+  border: none
+}
+
+.information-row button:focus{
+  outline:none
+}
 .playlist-row .playlist-btn {
   width: 80%;
   height: 60px;
