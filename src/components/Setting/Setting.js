@@ -130,6 +130,11 @@ class Setting extends Component {
                     <h6> <Switch/> Keep saved playlists private</h6>
                     <h6> <Switch/> Keep my playlists private</h6>
                 </div>
+
+                <div className="user-settings-content">
+                    <h5>Verify Follow Requests</h5>
+                    <h6><Switch/> Automatically allow others to follow me</h6>
+                </div>
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SearchList from './SearchList.js'
-
+import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
+import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 class SearchScreen extends Component {
     state = { 
         searchbar: '',
@@ -13,12 +14,16 @@ class SearchScreen extends Component {
     render() {
         const searchList = {};
         return (
-            <div className="container navy">
+            <>
+            <HeaderNavbar props = {this.props}/>
+            <div className="container navy search-results-container">
                 <div class="row">
                     <h2 class="col s1">Results</h2>
                 </div>
                 <SearchList searchList={searchList}/>
             </div> 
+            <PlaylistNavbar/>
+            </>
         );
     }
 }
