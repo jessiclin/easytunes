@@ -1,5 +1,6 @@
 .user-home-container {
-  height: 100%
+  height: 100%;
+  margin-top: 60px
 }
 .home button {
   padding: 0;

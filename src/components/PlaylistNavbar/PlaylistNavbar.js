@@ -60,7 +60,7 @@ class PlaylistNavbar extends Component {
                           customProgressBarSection={
                             [RHAP_UI.PROGRESS_BAR,
                             RHAP_UI.CURRENT_TIME,
-                            <div>/</div>,
+                            <div style={{color : "black"}}>/</div>,
                             RHAP_UI.DURATION]
                           }
                             customIcons={{

@@ -35,11 +35,11 @@ class HomeScreen extends Component {
         
         return ( 
             
-                <div className="container-fluid text-center user-home-container" ref={this.container}>
+                <div className="container-fluid  user-home-container" ref={this.container}>
                     {/* Home Button and Account Icon */}
-                    <HeaderNavbar/>
+                    <HeaderNavbar props = {this.props}/>
 
-                    <div className="container-fluid playlist-info-row">
+                    <div className="container-fluid text-center playlist-info-row">
                               <div className="current-playlist">
                                 CURRENT PLAYLIST
                               </div>
@@ -52,7 +52,7 @@ class HomeScreen extends Component {
                         <img src = "https://www.afghansmart.com/assets/fronend/images/default_album_art.png" size = {100}/>
                     </div>
                     
-                    <div className="container-fluid song-info-row">
+                    <div className="container-fluid text-center song-info-row">
                         <div className="song-name">
                             {this.playlists[0].songs[0].name}
                         </div>

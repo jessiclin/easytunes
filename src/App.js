@@ -11,6 +11,7 @@ import Home from "./components/HomePage/Home";
 import HomeScreen from "./components/home_screen/HomeScreen"
 import SearchScreen from "./components/search_screen/SearchScreen.js"
 import Follows from './components/Following/Follows'
+import Setting from './components/Setting/Setting'
 import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
 import Navbar from './components/Navbar/Navbar'
@@ -39,7 +40,7 @@ class App extends Component {
             <Route exact path='/search' component={SearchScreen} />
             <Route exact path='/:userid/followers' component={Follows}/>
             <Route exact path='/:userid/playlist=:playlistid' component={Playlist}/> 
-            
+            <Route exact path='/:userid/settings' component={Setting}/>
             <Route exact path='/:userid' component={Playlists}/>
             
             

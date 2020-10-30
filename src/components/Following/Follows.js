@@ -110,7 +110,7 @@ class Followers extends Component {
                 <div className="container-fluid followers-container">
                     {/* Home Button, Username, Account Icon */}
                     
-                    <HeaderNavbar/>
+                    <HeaderNavbar  props = {this.props}/>
                     <div className="container-fluid follow-data-container">
                         {/* Information Bar about the user */}
                         <div className="information-row">
