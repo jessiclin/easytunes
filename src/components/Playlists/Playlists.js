@@ -152,7 +152,7 @@ class Playlists extends Component {
            
                 <div className="container-fluid playlist-container">
                     {/* Home Button, Username, Account Icon */}
-                    <HeaderNavbar/>
+                    <HeaderNavbar  props = {this.props}/>
                     <div className="container-fluid playlist-data-container">
                         {/* Information Bar about the user */}
                     <div className="information-row">

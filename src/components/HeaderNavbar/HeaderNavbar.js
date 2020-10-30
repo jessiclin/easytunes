@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom';
 import {BsFillCaretDownFill} from 'react-icons/bs'
 import {MdAccountCircle} from 'react-icons/md'
-import {AiFillHome} from 'react-icons/ai'
+import {AiFillHome, AiOutlineConsoleSql} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
 import './HeaderNavbar.css'
 import mockData from '../../mock_data.json'
@@ -82,8 +82,65 @@ class HeaderNavbar extends Component {
                 
             )
         }
+
+        function SearchButton({props}){
+
+            function toggleSearch(){
+                props.history.push('/search')
+            }
+            return (
+                <button className = "search-btn" onClick = {toggleSearch}>
+                    <RiSearch2Line size ={18} style = {{color: "#faed36"}}/>
+                </button>
+            )
+        }
+        function Playlist({props}){
+      
+            function togglePlaylist (){
+                props.history.push("/" + mockData.users[0].username)
+            }
+            return (
+                <button onClick = {togglePlaylist}>Playlist</button>
+            )
+        }
+
+        function Followers({props}){
+            function toggleFollower (){
+                props.history.push("/" + mockData.users[0].username+ "/followers")
+            }
+            return (
+                <button onClick = {toggleFollower}>Followers</button>
+            )
+        }
+
+        function Following({props}){
+            function toggleFollower (){
+                props.history.push("/" + mockData.users[0].username+ "/followers")
+            }
+            return (
+                <button onClick = {toggleFollower}>Following</button>
+            )
+        }
+
+        function Settings({props}){
+            function toggleSetting (){
+                props.history.push("/" + mockData.users[0].username+ "/settings")
+            }
+            return (
+                <button onClick = {toggleSetting}>Settings</button>
+            )
+        }
+
+        function LogOut({props}){
+            function toggleLogOut (){
+                props.history.push("/")
+            }
+            return (
+                <button onClick = {toggleLogOut}>Log Out</button>
+            )
+        }
         return ( 
-            <div className="row home-navbar">
+            <div className="row home-navbar fixed-top">
                 {/* Home button */}
                 <div className="col">
                     <button className="home" onClick = {this.handleHome}>
@@ -96,10 +153,7 @@ class HeaderNavbar extends Component {
                     <input placeholder="Search"></input>
 
                     <SearchOptions/>
-
-                    <button className = "search-btn">
-                        <RiSearch2Line size ={18} style = {{color: "#faed36"}}/>
-                    </button>
+                    <SearchButton props = {this.props.props}/>
                 </div>
                 
                 {/* Account button */}
@@ -112,22 +166,19 @@ class HeaderNavbar extends Component {
                         <div className="container home-container">
                             <ul className = "account-options">
                                 <li>
-                                    <NavLink to={"/" + mockData.users[0].username} exact activeClassName="link-active">
-                                        Playlists
-                                    </NavLink>
+                                        <Playlist props = {this.props.props}/>
                                 </li>
                                 <li>
-                                    <NavLink to={"/" + mockData.users[0].username+ "/followers"} exact activeClassName="link-active">
-                                        Followers
-                                    </NavLink>
+                                        <Followers props = {this.props.props}/>
                                 </li>
-                                <li>Following</li>
-                                <li>Settings</li>
                                 <li>
-                                    <NavLink to="/" exact activeClassName="link-active">
-                                    
-                                        Log Out
-                                    </NavLink>
+                                        <Following props = {this.props.props}/>
+                                </li>
+                                <li>
+                                    <Settings props = {this.props.props}/>
+                                </li>
+                                <li>
+                                    <LogOut props = {this.props.props}/>
                                 </li>
                             </ul>
                         </div>
