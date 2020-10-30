@@ -95,3 +95,79 @@
   border-right: 1px solid lightgray;
   padding: 0px;
 }
+
+/* .add-new {
+  display: "flex"
+} */
+
+.add-btn {
+  background: white;
+  border: none;
+  margin-left: 90%;
+  margin-right: 50px;
+  margin-top: 20px
+}
+
+.add-btn:focus { 
+  outline: none
+
+}
+
+.new-playlist-box {
+  border: 1px solid lightgray;
+  height: 250px;
+  width: 400px;
+  position: absolute;
+  background: white;
+  top: 200px;
+  right: 35%;
+  border-radius: 15px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px
+}
+.confirm-new-btn {
+  background: white;
+  border: none;
+  margin-right: 150px;
+  margin-top: 100px
+}
+
+.confirm-new-btn:focus { 
+  outline: none
+
+}
+
+.confirm-new-upload-btn {
+  background: white;
+  border: none;
+  margin-right: 150px;
+  margin-top: 30px
+}
+
+.confirm-new-upload-btn:focus { 
+  outline: none
+
+}
+.cancel-new-btn{
+  background: white;
+  border: none;
+  margin-left: 150px;
+}
+
+.cancel-new-btn:focus { 
+  outline: none
+
+}
+
+.cancel-new-upload-btn{
+  background: white;
+  border: none;
+  margin-left: 150px;
+}
+
+.cancel-new-upload-btn:focus { 
+  outline: none
+
+}

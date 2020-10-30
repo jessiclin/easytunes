@@ -3,10 +3,10 @@ import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons
 import {MdAccountCircle} from 'react-icons/md'
 import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
 import {RiPlayListLine} from 'react-icons/ri'
-import {AiOutlineDelete} from 'react-icons/ai'
+import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 // FaRegPauseCircle
 import {FaRegPlayCircle} from 'react-icons/fa'
-
+import {IoMdAddCircleOutline}from 'react-icons/io'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlists.css'
@@ -147,6 +147,28 @@ class Playlists extends Component {
         document.getElementById('uploaded-songs-btn').style.fontWeight = "bold"
     }
     
+    isSelf = () => {
+        let viewing = this.getUserName()
+        let user = this.users[0]
+
+        if (viewing === user.username)
+            return true
+        return false 
+    }
+
+    isFollowing = () =>{
+        let user = this.users[0]
+        let viewing = this.getUserName()
+        for (let i = 0; i < user.following.length; i++){
+            console.log(user.following[i].user_id)
+            console.log(viewing.user_id)
+            if (user.following[i].username === viewing){
+                return true
+            }
+                
+        }
+        return false
+    }
     render() { 
         return ( 
            
@@ -159,11 +181,11 @@ class Playlists extends Component {
                         <div className="col text-center">
                             <h2>{this.getUserName()}                            
                              
-                             {/* {!this.state.self ?
-                                !this.state.following ? 
+                             {!this.isSelf() ?
+                                !this.isFollowing() ? 
                                 <span> <RiUserAddLine size= {24}/> </span> :
                                 <span> <RiUserFollowLine size={24}/></span>
-                            : null} */}
+                            : null}
 
                             </h2>
                              <h5> User Since: {this.getAccountCreationDate()}</h5>
@@ -188,6 +210,7 @@ class Playlists extends Component {
                     {/* Renders "My Playlist" and "Saved Playlists" */}
                     {this.state.showSavedPlaylists ? this.renderPlaylists() : null}
                     {this.state.showMyPlaylists ? this.renderPlaylists() : null}
+                    {this.state.showUploadedSongs ? this.renderUploads() : null}
                 </div>
                 <PlaylistNavbar/>
             </div>
@@ -244,16 +267,76 @@ class Playlists extends Component {
             )
         }, this)
 
+        function NewButton({text}) {
+            const [visible, setVisibility] = React.useState(false)
+
+            function toggleVisibilityTrue() {
+                setVisibility(visible => true)
+            }
+
+            function toggleVisibilityFalse() {
+                setVisibility(visible => false)
+            }
+
+            return (
+                <>
+                    <button className = "add-btn" onClick = {toggleVisibilityTrue}> <IoMdAddCircleOutline size = {24}/> </button>
+                    {visible ? 
+                    <div className="new-playlist-box">
+                       {text}
+                        <input type="text" required/>
+                        <button className = "confirm-new-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
+                        <button className = "cancel-new-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
+                    </div>
+                    : null}
+                </>
+            )
+        }
         return (
             <>
             {playlists}
+            <div className="add-new">
+
+                <NewButton text = {"Playlist Name"}/>
+            </div>
             </>
         );
     }
 
     renderUploads = () => {
+        function NewButton({text}) {
+            const [visible, setVisibility] = React.useState(false)
+
+            function toggleVisibilityTrue() {
+                setVisibility(visible => true)
+            }
+
+            function toggleVisibilityFalse() {
+                setVisibility(visible => false)
+            }
+
+            return (
+                <>
+                    <button className = "add-btn" onClick = {toggleVisibilityTrue}> <IoMdAddCircleOutline size = {24}/> </button>
+                    {visible ? 
+                    <div className="new-playlist-box">
+                       {text}
+                        <input type="text" required/>
+                        Name 
+                        <input type="text" required/>
+                        <button className = "confirm-new-upload-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
+                        <button className = "cancel-new-upload-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
+                    </div>
+                    : null}
+                </>
+            )
+        }
         return (
             <>
+            <div className="add-new">
+
+                <NewButton text = {"Upload Your Audio File"}/>
+            </div>
             </>
         )
     }
