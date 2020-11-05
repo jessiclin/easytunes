@@ -16,11 +16,17 @@ import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
 import Navbar from './components/Navbar/Navbar'
 
+const UsernameContext = React.createContext('');
 class App extends Component {
-  state = {
-    logged_in : false
+
+  constructor(props){
+    super(props)
+    this.state = {username: ''}
   }
 
+  onUsernameChange = (username) => {
+    this.setState({username: username})
+  }
   changeLoginState = () =>{
     this.setState({logged_in : !this.state.logged_in})
   }
@@ -32,11 +38,22 @@ class App extends Component {
 
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path='/login' component={LoginScreen} login = {true}/> 
-
-            <Route exact path='/register' component={LoginScreen} login = {false}/>
+            <Route exact path='/login' 
+              render = {(props) => (
+                <LoginScreen {...props} login = {true} onUsernameChange={this.onUsernameChange}/>
+              )}
+              /> 
+            <Route exact path='/register' 
+              render = {(props) => (
+                <LoginScreen {...props} login = {false} onUsernameChange={this.onUsernameChange}/>
+              )}
+            />
             <Route exact path='/forgotpassword' component={ResetPasswordScreen}/>
-            <Route exact path='/home' component={HomeScreen} />
+            <Route exact path='/home' 
+              render = {(props) => (
+                <HomeScreen {...props} username = {this.username}/>
+              )}
+            />
             <Route exact path='/search' component={SearchScreen} />
             <Route exact path='/:userid/followers' component={Follows}/>
             <Route exact path='/:userid/playlist=:playlistid' component={Playlist}/> 
@@ -55,3 +72,4 @@ class App extends Component {
   }
 }
 
+export default App
