@@ -1,49 +1,43 @@
 import mongoose from 'mongoose'
 
-const userSchema = mongoose.Schema({
-    user_id: Number,
-    username: String, 
-    email: String, 
-    password: String, 
-    joined: {
-        type: Date, 
-        default: new Date()
-    },
-    url: String, 
-    current_song_id: Number, 
-    current_playlist_id: Number,
-    saved_playlists: [
+const Schema = mongoose.Schema
+
+const UserSchema = new Schema({
+    username: {type: String, required: true, unique: true},
+    email: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+    joined: {type: Date, required: true},
+    url: {type: String, required: true, unique:true},
+    current_song_id: {type: String, default: null},
+    current_playlist_id: {type: String, default: null},
+    savedPlaylists : [
         {
-            playlist_id: Number,
-            name: String
+            playlist_id: {type: Schema.Types.ObjectId, ref: 'Playlist', required: true},
+            name: {type: String, required: true},
         }
     ],
-    following: [{
-        user_id: Number,
-        username: String, 
-        following_since : {
-            type: Date,
-            default: new Date()
+    following : [
+        {
+            user_id: {type:Schema.Types.ObjectId, ref: 'User',  required: true},
+            username: {type:String, required: true},
+            following_since: {type:Date, required: true},
         }
-    }],
-    followers: [{
-        user_id: Number,
-        username: String, 
-        following_since : {
-            type: Date,
-            default: new Date()
+    ],
+    followers : [
+        {
+            user_id: {type:Schema.Types.ObjectId, ref: 'User', required: true},   
+            username: {type:String, required: true},
+            following_since: {type:Date, required: true},
         }
-    }],
-    follow_requests: [{
-        user_id: Number,
-        username: String, 
-        request_date : {
-            type: Date,
-            default: new Date()
+    ],   
+    follow_requests : [
+        {
+            user_id: {type:Schema.Types.ObjectId, ref: 'User',required: true},
+            username: {type:String, required: true},
+            request_date: {type:Date, required: true},
         }
-    }]
-})
+    ], 
+});
 
-const User = mongoose.model('User',  userSchema);
-
-export default User
+const User = mongoose.model('User', UserSchema);
+export default User 

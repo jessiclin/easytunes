@@ -1,30 +1,47 @@
 import express from 'express'
+import bodyParser from 'body-parser'
+import graphqlHTTP from 'express-graphql'
 import mongoose from 'mongoose'
-import cors from 'cors'
 
+import resolver from './graphql/resolver/index.js'
+import schema from './graphql/schema/index.js'
+import isAuth from './middleware/is-auth.js'
 
-import userRouter from './routes/users.js'
+const app = express() ;
 
-const app = express()
-app.use(express.json())
-app.use(cors())
+app.use(bodyParser.json());
 
-// Connect to MongoDB
-const CONNECTION_URL = 'mongodb+srv://jessiclin:jessiclin@cluster0.qjshq.mongodb.net/EasyTunes?retryWrites=true&w=majority'
-const PORT = process.env.PORT || 5000; 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS'){
+        return res.sendStatus(200);
+    }
+    next();
+});
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+const saltRounds = 10;
+// Query is fetch data. Mutation is changing data String! --> Cannot be null 
 
-const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log('MongoDB database connection established')
+app.use(isAuth);
+
+app.use('/graphql', graphqlHTTP.graphqlHTTP({
+    schema: schema,
+    rootValue:  resolver,
+    graphiql: true
+}))
+
+const PORT = 5000
+const MONGO_DB= "EasyTunes"
+const MONGO_USER= "jessiclin"
+const MONGO_PASSWORD="jessiclin"
+mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@easytunes.q6gty.mongodb.net/${MONGO_DB}?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server listening on port: ${PORT}`)
+    })
 })
-
-
-
-
-// app.use('/users', userRouter);
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
+.catch(err => {
+    console.log(err)
 })

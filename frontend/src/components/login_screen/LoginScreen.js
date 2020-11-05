@@ -10,6 +10,13 @@ import "./LoginScreen.css";
 import mockData from '../../mock_data.json'
 
 class Login extends Component {
+    constructor(props){
+        super(props);
+        this.emailEl = React.createRef();
+        this.passwordEl = React.createRef();
+        this.username = ''
+        this.onUsernameChange = this.props.onUsernameChange
+    }
     state = {
         loginVisible: this.props.login,
         signUpVisible: !this.props.login
@@ -35,14 +42,63 @@ class Login extends Component {
         return document.getElementById(id)
     }
 
-    handleSignIn = () => {
-        console.log(this.element('email').value)
-        console.log(this.element('password').value)
-        
+    handleSignIn = async (event) => {
+        event.preventDefault();
+        const email = this.emailEl.current.value;
+        const password = this.passwordEl.current.value;
+
+        if (email.trim().length === 0 || password.trim().length === 0)
+            return;
+
+        console.log(email, password)
+
+        // Request backened 
+        let requestBody = {
+            query: `
+              query {
+                login(email: "${email}", password: "${password}") {
+                  userId
+                  username
+                  token
+                  tokenExpiration
+                }
+              }
+            `
+          };
+
+        const results = await  fetch('http://localhost:5000/graphql', {
+                                    method: 'POST',
+                                    body: JSON.stringify(requestBody),
+                                    headers: {
+                                    'content-type': 'application/json'
+                                    }
+                                })
+                                .then(res => {
+                                    if (res.status !== 200 && res.status !== 201) 
+                                        throw new Error('Failed!');
+                                    
+                                    return res.json();
+                                })
+                                .then(resData => {
+                                    return resData
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+
+        console.log(results.data.login.username)
         // Load the data in 
+        this.state.username = results.data.login.username
+        console.log(this.onUsernameChange)
+        this.onUsernameChange(this.state.username)
         const url = '/home'
-        const {history } = this.props;
-        history.push(url)
+        const {history} = this.props;
+        history.push({
+            pathname: url,
+            state: {
+                username: results.data.login.username
+            }
+        })
     }
 
     handleSignUp = () =>{
@@ -87,12 +143,12 @@ class Login extends Component {
                 <div id = "credentials" className="row justify-content-center login-row">  
                     <div className="col-sm-12 cred">
                         <div className="input-group">
-                            <input id = "email" type="text" placeholder = " " required/>
+                            <input id = "email" ref = {this.emailEl} type="text" placeholder = " " required/>
                             <label>Email</label>
                         </div>
 
                         <div className="input-group">
-                            <input id = "password" type="password" placeholder = " "  required/>
+                            <input id = "password" ref = {this.passwordEl} type="password" placeholder = " "  required/>
                             <label>Password</label>
                         </div>
 

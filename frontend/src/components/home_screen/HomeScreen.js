@@ -32,7 +32,7 @@ class HomeScreen extends Component {
     }
 
     render() { 
-        
+        console.log(this.props)
         return ( 
             
                 <div className="container-fluid  user-home-container" ref={this.container}>

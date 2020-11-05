@@ -1,51 +1,40 @@
 import mongoose from 'mongoose'
-const Schema = mongoose.Schema; 
+
+const Schema = mongoose.Schema
 
 const playlistSchema = new Schema({
-   playlist_id: Number,
-   user_id: Number,
-   username: String,
-   name: String, 
-   img: String, 
-   date_created : {
-       type: Date,
-       default: new Date()
-   },
-   public : Boolean,
-   likes: {
-       type: Number, 
-       default: 0
-   },
-   comments: [
-       {
-           username: String, 
-           date : {
-               type: Date,
-               default: new Date()
-           },
-           message: String, 
-           replies: [
-               {
-                   username: String, 
-                   date : {
-                    type: Date,
-                    default: new Date()
-                    },
-                    message: String, 
-               }
-           ]
-       }
-   ],
-   songs : [
-       {
-           song_id : String,
-           name: String, 
-           artist: String, 
-           uploaded: false  
-       }
-   ]
+    user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
+    username: {type: String, required: true},
+    name: {type:String, required:true},
+    img: {type:String, default: ""},
+    date_created: {type: Date, required:true},
+    public: {type: Boolean, default: false},
+    likes: {type: Number, default: 0},
+    comments: [
+        {
+            user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
+            username: {type: String, required: true},
+            date: {type: Date, required: true},
+            message: {type: String, required: true},
+            replies: [
+                {
+                    user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
+                    username: {type: String, required: true},
+                    date: {type: Date, required: true},
+                    message: {type: String, required: true},
+                }
+            ]
+        }
+    ],
+    songs: [
+        {
+            song_id : {type: Schema.Types.ObjectId, required: true},
+            name: {type: String, required: true},
+            artist: {type: String, required: true},
+            uploaded: {type: Boolean, required: true}
+        }
+    ]
 })
 
-
-const Playlist = mongoose.model('Playlist', playlistSchema)
+const Playlist = mongoose.model('Playlist', PlaylistSchema);
 export default Playlist
