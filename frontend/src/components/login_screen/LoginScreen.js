@@ -8,14 +8,18 @@ import 'bootstrap/dist/css/bootstrap.css'
 import "./LoginScreen.css";
 
 import mockData from '../../mock_data.json'
+import HeaderNavbar from '../HeaderNavbar/HeaderNavbar';
 
 class Login extends Component {
     constructor(props){
         super(props);
         this.emailEl = React.createRef();
         this.passwordEl = React.createRef();
+        this.usernameEl = React.createRef();
+        this.confirmEl = React.createRef()
         this.username = ''
         this.onUsernameChange = this.props.onUsernameChange
+
     }
     state = {
         loginVisible: this.props.login,
@@ -50,7 +54,6 @@ class Login extends Component {
         if (email.trim().length === 0 || password.trim().length === 0)
             return;
 
-        console.log(email, password)
 
         // Request backened 
         let requestBody = {
@@ -85,32 +88,78 @@ class Login extends Component {
                                 .catch(err => {
                                     console.log(err);
                                 });
-
+        
         console.log(results.data.login.username)
         // Load the data in 
         this.state.username = results.data.login.username
-        console.log(this.onUsernameChange)
+
         this.onUsernameChange(this.state.username)
+
         const url = '/home'
         const {history} = this.props;
-        history.push({
-            pathname: url,
-            state: {
-                username: results.data.login.username
-            }
-        })
+        history.push(url)
     }
 
-    handleSignUp = () =>{
-        console.log(this.element('email').value)
-        console.log(this.element('username').value)
-        console.log(this.element('password').value)
-        console.log(this.element('confirm-password').value)
+    handleSignUp = async (event) =>{
+        event.preventDefault();
+        const email = this.emailEl.current.value;
+        const password = this.passwordEl.current.value;
+        const username = this.usernameEl.current.value;
+        const confirm = this.confirmEl.current.value;
+        const userUrl = "easytunes.com/" + username;
+        if (email.trim().length === 0 || password.trim().length === 0 || username.trim().length === 0 || confirm.trim().length === 0)
+            return;
 
+        
+        if (password !== confirm)
+            throw new Error('Passwords do not match')
+            
+        // Request backened 
+        let requestBody = {
+            mutation: `
+            mutation{
+                createUser(userInput: {email: "${email}", password:"${password}", username:"${username}", url:"${userUrl}" })  {
+                                  email
+                                  password
+                                  username
+                                  url
+                }
+              }
+            `
+          };
+
+        const results = await  fetch('http://localhost:5000/graphql', {
+                                    method: 'POST',
+                                    body: JSON.stringify(requestBody),
+                                    headers: {
+                                    'content-type': 'application/json'
+                                    }
+                                })
+                                .then(res => {
+                                    if (res.status !== 200 && res.status !== 201) 
+                                        throw new Error('Failed!');
+                                    
+                                    return res.json();
+                                })
+                                .then(resData => {
+                                    return resData
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+        
+        console.log(results.data.login.username)
         // Load the data in 
+        this.state.username = results.data.login.username
+
+        this.onUsernameChange(this.state.username)
+
+        const url = '/home'
+        const {history} = this.props;
     }
 
     render() {
+
         return (
             <div>
                 <div className="container">
@@ -128,7 +177,7 @@ class Login extends Component {
     renderSignIn (){
         return (
             <div>
-                
+    
                 {/* Sign In / Sign Up Options on Top */}
                 <div className="row justify-content-center signin-row">  
                     <div className="col-sm-6 signin-col">
@@ -187,22 +236,22 @@ class Login extends Component {
             <div className="row justify-content-sm-center login-row ">
                 <div className="col-sm-12 cred">
                     <div className="input-group">
-                        <input id = "email" type="text" required/>
+                        <input id = "email"  ref = {this.emailEl} type="text" required/>
                         <label>Email</label>
                     </div>
 
                     <div className="input-group">
-                        <input id = "username" type="username" required/>
+                        <input id = "username"  ref = {this.usernameEl} type="username" required/>
                         <label>Username</label>
                     </div>
 
                     <div className="input-group">
-                        <input id = "password" type="password" required/>
+                        <input id = "password"  ref = {this.passwordEl} type="password" required/>
                         <label>Password</label>
                     </div>
 
                      <div className="input-group">
-                        <input id = "confirm-password" type="confirm-password" required/>
+                        <input id = "confirm-password"  ref = {this.confirmEl} type="confirm-password" required/>
                         <label>Confirm Password</label>
                     </div>
                 </div>

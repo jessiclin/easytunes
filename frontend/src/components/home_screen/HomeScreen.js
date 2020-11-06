@@ -16,6 +16,7 @@ import AudioPlayer, { RHAP_UI }  from "react-h5-audio-player";
 import mockData from '../../mock_data.json'
 
 class HomeScreen extends Component {
+
     playlists = mockData.playlists
     
     // Redirect to Home when home button is pressed 
@@ -32,7 +33,7 @@ class HomeScreen extends Component {
     }
 
     render() { 
-        console.log(this.props)
+ 
         return ( 
             
                 <div className="container-fluid  user-home-container" ref={this.container}>

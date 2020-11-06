@@ -7,7 +7,15 @@ import {AiFillHome, AiOutlineConsoleSql} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
 import './HeaderNavbar.css'
 import mockData from '../../mock_data.json'
+
+
+
+
 class HeaderNavbar extends Component {
+    constructor(props){
+        super(props)
+        this.onSearchResults = this.props.onSearchResults
+    }
     container = React.createRef();
     state = {
         open: false,
@@ -38,11 +46,11 @@ class HeaderNavbar extends Component {
 
 
     render() { 
-        // console.log(this.props.userid)
-
-        function SearchOptions() {
+        function Search({props}) {
+ 
             const [visible, setVisibility] = React.useState(false);
             const [text, setText] = React.useState("All");
+            const [keyword, searchText] = React.useState("Search")
 
             function toggleVisibility () {
                 setVisibility(visible => !visible)
@@ -52,8 +60,11 @@ class HeaderNavbar extends Component {
                 setText(selected)
             }
 
+            function inputOnChange(event){
+                searchText(event.target.value)
+            }
             function Options() {
-
+    
                 return (
                     <ul className="search-options-ul">
                         <li>
@@ -74,26 +85,122 @@ class HeaderNavbar extends Component {
                     </ul>
                 )
             }
-            return (
-                <div className="search-options">
-                    <button onClick = {toggleVisibility}> {text} <BsFillCaretDownFill size = {10}/> </button>
-                    {visible ? <Options/> : null }
-                </div>
-                
-            )
-        }
 
-        function SearchButton({props}){
+            async function toggleSearch(){
+                let requestBody;
+                let results = [];
+                if (text === 'Artists'){
+                    requestBody = { artist: keyword}
+                    let result = await fetch('http://localhost:5000/v1/search?', {
+                                        method: 'POST',
+                                        body: JSON.stringify(requestBody),
+                                        headers: {
+                                            'content-type': 'application/json'
+                                        }})
+                                        .then(res => {
+                                            if (res.status != 200 && res.status != 201)
+                                                throw new Error ('Failed')
 
-            function toggleSearch(){
-                props.history.push('/search')
+                                            return res.json()
+                                        })
+                                        .then(resData => {
+                                            return resData
+                                        })
+                                        .catch(error => {
+                                            console.log(error)
+                                        })
+                    results.push(result)
+                }
+
+                if (text == 'Songs'){
+                    requestBody = {track: keyword}
+                    let result = await fetch('http://localhost:5000/v1/search?', {
+                                        method: 'POST',
+                                        body: JSON.stringify(requestBody),
+                                        headers: {
+                                            'content-type': 'application/json'
+                                        }})
+                                        .then(res => {
+                                            if (res.status != 200 && res.status != 201)
+                                                throw new Error ('Failed')
+
+                                            return res.json()
+                                        })
+                                        .then(resData => {
+                                            return resData
+                                        })
+                                        .catch(error => {
+                                            console.log(error)
+                                        })
+                    results.push(result)
+                }
+                    
+                if (text == 'All'){
+                    // Search Spotify API 
+                    requestBody = {track : keyword}
+                    let songResult = await fetch('http://localhost:5000/v1/search?', {
+                                        method: 'POST',
+                                        body: JSON.stringify(requestBody),
+                                        headers: {
+                                            'content-type': 'application/json'
+                                        }})
+                                        .then(res => {
+                                            if (res.status != 200 && res.status != 201)
+                                                throw new Error ('Failed')
+
+                                            return res.json()
+                                        })
+                                        .then(resData => {
+                                            return resData
+                                        })
+                                        .catch(error => {
+                                            console.log(error)
+                                        })
+                    requestBody = {artist : keyword}
+                    let artistResult = await fetch('http://localhost:5000/v1/search?', {
+                        method: 'POST',
+                        body: JSON.stringify(requestBody),
+                        headers: {
+                            'content-type': 'application/json'
+                        }})
+                        .then(res => {
+                            if (res.status != 200 && res.status != 201)
+                                throw new Error ('Failed')
+
+                            return res.json()
+                        })
+                        .then(resData => {
+                            return resData
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                    results.push(songResult)
+                    results.push(artistResult)
+                }
+
+                const url = '/search'
+                const {history} = props;
+                props.onSearchResults(results)
+                history.push(url)
             }
+
             return (
-                <button className = "search-btn" onClick = {toggleSearch}>
-                    <RiSearch2Line size ={18} style = {{color: "#faed36"}}/>
-                </button>
+                <>
+                    <input placeholder="Search" onChange={ inputOnChange }></input>
+                    <div className="search-options">
+                        <button onClick = {toggleVisibility}> {text} <BsFillCaretDownFill size = {10}/> </button>
+                        {visible ? <Options/> : null }
+                    </div>
+                    <button className = "search-btn" onClick = {toggleSearch}>
+                        <RiSearch2Line size ={18} style = {{color: "#faed36"}}/>
+                    </button>
+                </>
             )
         }
+        
+
+        
         function Playlist({props}){
       
             function togglePlaylist (){
@@ -139,6 +246,7 @@ class HeaderNavbar extends Component {
                 <button onClick = {toggleLogOut}>Log Out</button>
             )
         }
+
         return ( 
             <div className="row home-navbar fixed-top">
                 {/* Home button */}
@@ -150,10 +258,9 @@ class HeaderNavbar extends Component {
                 
                 {/* Search bar */}
                 <div className="col search-bar">
-                    <input placeholder="Search"></input>
-
-                    <SearchOptions/>
-                    <SearchButton props = {this.props.props}/>
+                    
+                    <Search props ={this.props.props}/>
+                    
                 </div>
                 
                 {/* Account button */}
