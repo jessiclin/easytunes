@@ -2,31 +2,74 @@ import React, { Component } from 'react'
 import SearchListCard from './SearchListCard.js'
 
 class SearchList extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            searchList: this.props.searchList
-        }
-    }
+
 
     render() {
 
-        const items = this.state.searchList;
-        
-
+        const items = this.props.searchList;
+        const tracks = items.tracks
+        const artists = items.artists
+        const users = items.users
+ 
         return (
             <div className='section'>
-                <div class='row'>
-                    <div className='col s3'>Song</div>
-                    <div className='col s3'>Artist</div>
-                    <div className='col s3'>Length</div>
-                    <div className='col s3'></div>
-                </div>
-                {items && items.map(function(item) {
-                    console.log(item)
+                {/* Display the tracks */}
+                {tracks ? 
+                    <>
+                    <div className='row'>
+                        <div className='col s3'>Song</div>
+                        <div className='col s3'>Artist</div>
+                        <div className='col s3'>Length</div>
+                        <div className='col s3'></div>
+                    </div>
+                    {tracks.tracks.items && tracks.tracks.items.map(function(item) {
+                        return (
+                            <SearchListCard key = {item.id} item={item} type="track"/>
+                        );})
+                    }
+                    </>
+                    : null
+                }
+
+                {/* Display the artists */}
+                {artists ? 
+                <>
+                <div className='row'>
+                        <div className='col s3'>Artist</div>
+                        <div className='col s3'>Genres</div>
+                        <div className='col s3'></div>
+                    </div>
+                    {artists.artists.items && artists.artists.items.map(function(item) {
                     return (
-                        <SearchListCard item={item}/>
+                        <SearchListCard key = {item.id} item={item} type="artist"/>
                     );})
+                     }
+                
+                </>
+                :
+                null
+                }
+
+                {/* Display the playlists */}
+
+
+                {/* Display the Users */}
+                {users ? 
+                <>
+                    <div className='row'>
+                        <div className='col s3'>User</div>
+                        <div className='col s3'>Followers</div>
+                        <div className='col s3'>Playlists</div>
+                        <div className='col s3'></div>
+                    </div>
+                    {users.users && users.users.map(function(item) {
+                    return (
+                        <SearchListCard key = {item.id} item={item} type="user"/>
+                    );})
+                    }
+                </>
+                :
+                null
                 }
             </div>
         );

@@ -36,8 +36,8 @@ class Reset extends Component {
                         <div className="col-sm-12 cred">        
                             Plase the email to your email to your account
                             <div className="input-group">
-                                <input id = "email" type="text" required/>
-                                <label>Email</label>
+                                <input className = "input" id = "email" type="text" required/>
+                                <label className = "label">Email</label>
                             </div>
                             <Link to="/" className="login">
                                 Sign In

@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
-const playlistSchema = new Schema({
+const PlaylistSchema = new Schema({
     user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
     username: {type: String, required: true},
     name: {type:String, required:true},

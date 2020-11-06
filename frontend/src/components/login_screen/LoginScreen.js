@@ -19,7 +19,7 @@ class Login extends Component {
         this.confirmEl = React.createRef()
         this.username = ''
         this.onUsernameChange = this.props.onUsernameChange
-
+        this.errorMess = null
     }
     state = {
         loginVisible: this.props.login,
@@ -46,9 +46,13 @@ class Login extends Component {
         return document.getElementById(id)
     }
 
+    setErrmess = (err) => {
+        this.setState({errorMess : err})
+    }
+
     handleSignIn = async (event) => {
         event.preventDefault();
-        const email = this.emailEl.current.value;
+        const email = this.emailEl.current.value.toLowerCase();
         const password = this.passwordEl.current.value;
 
         if (email.trim().length === 0 || password.trim().length === 0)
@@ -69,7 +73,7 @@ class Login extends Component {
             `
           };
 
-        const results = await  fetch('http://localhost:5000/graphql', {
+        fetch('http://localhost:5000/graphql', {
                                     method: 'POST',
                                     body: JSON.stringify(requestBody),
                                     headers: {
@@ -78,31 +82,30 @@ class Login extends Component {
                                 })
                                 .then(res => {
                                     if (res.status !== 200 && res.status !== 201) 
-                                        throw new Error('Failed!');
-                                    
-                                    return res.json();
+                                        throw new Error('Email and password do not match');
+                                    return res.json()
                                 })
-                                .then(resData => {
-                                    return resData
+                                .then(result => {
+                               
+                                    console.log(result.data.login.username)
+                                    // Load the data in 
+                                    this.state.username = result.data.login.username
+
+                                    this.onUsernameChange(this.state.username)
+
+                                    const url = '/home'
+                                    const {history} = this.props;
+                                    history.push(url)
                                 })
                                 .catch(err => {
                                     console.log(err);
+                                    this.setErrmess(err.message)
                                 });
-        
-        console.log(results.data.login.username)
-        // Load the data in 
-        this.state.username = results.data.login.username
-
-        this.onUsernameChange(this.state.username)
-
-        const url = '/home'
-        const {history} = this.props;
-        history.push(url)
     }
 
     handleSignUp = async (event) =>{
         event.preventDefault();
-        const email = this.emailEl.current.value;
+        const email = this.emailEl.current.value.toLowerCase();
         const password = this.passwordEl.current.value;
         const username = this.usernameEl.current.value;
         const confirm = this.confirmEl.current.value;
@@ -111,12 +114,14 @@ class Login extends Component {
             return;
 
         
-        if (password !== confirm)
-            throw new Error('Passwords do not match')
+        if (password !== confirm){
+            this.setErrmess("Passwords do not match")
+            return;
+        }
             
         // Request backened 
         let requestBody = {
-            mutation: `
+            query: `
             mutation{
                 createUser(userInput: {email: "${email}", password:"${password}", username:"${username}", url:"${userUrl}" })  {
                                   email
@@ -141,21 +146,23 @@ class Login extends Component {
                                     
                                     return res.json();
                                 })
-                                .then(resData => {
-                                    return resData
+                                .then(result => {
+        
+                                            // console.log(results.data)
+                                    // Load the data in 
+                                    this.state.username = result.data.createUser.username
+
+                                    this.onUsernameChange(this.state.username)
+
+                                    const url = '/home'
+                                    const {history} = this.props;
+                                    history.push(url)
                                 })
                                 .catch(err => {
                                     console.log(err);
+                                    this.setErrmess("Email or username already in use")
                                 });
         
-        console.log(results.data.login.username)
-        // Load the data in 
-        this.state.username = results.data.login.username
-
-        this.onUsernameChange(this.state.username)
-
-        const url = '/home'
-        const {history} = this.props;
     }
 
     render() {
@@ -192,13 +199,13 @@ class Login extends Component {
                 <div id = "credentials" className="row justify-content-center login-row">  
                     <div className="col-sm-12 cred">
                         <div className="input-group">
-                            <input id = "email" ref = {this.emailEl} type="text" placeholder = " " required/>
-                            <label>Email</label>
+                            <input className="input" id = "email" ref = {this.emailEl} type="text" placeholder = " " required/>
+                            <label className="label">Email</label>
                         </div>
 
                         <div className="input-group">
-                            <input id = "password" ref = {this.passwordEl} type="password" placeholder = " "  required/>
-                            <label>Password</label>
+                            <input className="input" id = "password" ref = {this.passwordEl} type="password" placeholder = " "  required/>
+                            <label className="label">Password</label>
                         </div>
 
                         <Link to='/forgotpassword' className="forgot-password">
@@ -236,23 +243,23 @@ class Login extends Component {
             <div className="row justify-content-sm-center login-row ">
                 <div className="col-sm-12 cred">
                     <div className="input-group">
-                        <input id = "email"  ref = {this.emailEl} type="text" required/>
-                        <label>Email</label>
+                        <input className="input" id = "email"  ref = {this.emailEl} type="text" required/>
+                        <label className="label">Email</label>
                     </div>
 
                     <div className="input-group">
-                        <input id = "username"  ref = {this.usernameEl} type="username" required/>
-                        <label>Username</label>
+                        <input className="input" id = "username"  ref = {this.usernameEl} type="text" required/>
+                        <label className="label">Username</label>
                     </div>
 
                     <div className="input-group">
-                        <input id = "password"  ref = {this.passwordEl} type="password" required/>
-                        <label>Password</label>
+                        <input className="input" id = "password"  ref = {this.passwordEl} type="password" required/>
+                        <label className="label">Password</label>
                     </div>
 
                      <div className="input-group">
-                        <input id = "confirm-password"  ref = {this.confirmEl} type="confirm-password" required/>
-                        <label>Confirm Password</label>
+                        <input className="input" id = "confirm-password"  ref = {this.confirmEl} type="password" required/>
+                        <label className="label">Confirm Password</label>
                     </div>
                 </div>
             </div>
@@ -263,6 +270,8 @@ class Login extends Component {
                     <button onClick = {this.handleSignUp}> Sign Up </button>
                 </div>
             </div>
+
+            {this.state.loginError ? <div>{this.state.errorMess} </div> : null}
         </div>
         );    
     }

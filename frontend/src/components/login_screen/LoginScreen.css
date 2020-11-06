@@ -103,22 +103,22 @@
   padding: 0px 10px;
 }
 
-.input-group input {
+.cred .input-group .input {
   background: white;
   font-size: 18px;
-  padding: 10px 10px 10px 5px;
+  padding: 0px 0px 0px 5px;
   display: block;
   width: 100%;
   border-radius: 5px;
   border: 1px solid;
 }
 
-.input-group input:focus {
+.cred .input-group .input:focus {
   outline: none;
   border: 2px solid;
 }
 
-.input-group label {
+.cred .input-group .label {
   background-color: transparent;
   color: gray;
   font-size: 18px;
@@ -132,8 +132,8 @@
   -webkit-transition: 0.2s ease all;
 }
 
-.input-group input:focus ~ label,
-.input-group input:valid ~ label {
+.cred .input-group .input:focus ~ .label,
+.cred .input-group .input:valid ~ .label {
   top: -14px;
   font-size: 14px;
   background: white;
@@ -141,8 +141,8 @@
   color: #1e82fc;
 }
 
-.input-group input:focus,
-.input-group input:valid {
+.cred .input-group .input:focus,
+.cred .input-group .input:valid {
   border-color: #1e82fc;
 }
 
