@@ -14,6 +14,7 @@ import './Playlists.css'
 import mockData from '../../mock_data.json'
 
 class Playlists extends Component {
+
     users = mockData.users
     playlists = mockData.playlists
 
@@ -170,6 +171,7 @@ class Playlists extends Component {
         return false
     }
     render() { 
+
         return ( 
            
                 <div className="container-fluid playlist-container">

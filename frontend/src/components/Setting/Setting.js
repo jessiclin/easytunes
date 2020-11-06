@@ -9,6 +9,7 @@ import './Setting.css'
 import mockData from '../../mock_data.json'
 
 class Setting extends Component {
+ 
     user = mockData.users[0]
 
     state = { 

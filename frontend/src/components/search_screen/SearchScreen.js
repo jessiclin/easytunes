@@ -3,8 +3,9 @@ import SearchList from './SearchList.js'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 class SearchScreen extends Component {
+
     state = { 
-        searchbar: '',
+        searchResult: this.props.results
     }
     
     handleSearchChange = (e) => {
@@ -12,15 +13,15 @@ class SearchScreen extends Component {
     }
 
     render() {
-        const searchList = {};
+        
         return (
             <>
             <HeaderNavbar props = {this.props}/>
             <div className="container navy search-results-container">
-                <div class="row">
+                <div className="row">
                     <h2 class="col s1">Results</h2>
                 </div>
-                <SearchList searchList={searchList}/>
+                <SearchList searchList={this.state.searchResult}/>
             </div> 
             <PlaylistNavbar/>
             </>

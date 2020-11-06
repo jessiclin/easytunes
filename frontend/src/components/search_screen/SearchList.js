@@ -2,26 +2,25 @@ import React, { Component } from 'react'
 import SearchListCard from './SearchListCard.js'
 
 class SearchList extends React.Component {
-    state = { 
-        
+    constructor(props){
+        super(props)
+        this.state = {
+            searchList: this.props.searchList
+        }
     }
-    
+
     render() {
-        const searchList = {"items": [
-            {"song_title":"21 Guns", "artist":"Green Day", "song_length":"2:34"},
-            {"song_title":"Money Machine", "artist":"100 Gecs", "song_length":"9:59"},
-            {"song_title":"Static Buzz", "artist":"Snail Mail", "song_length":"1:56"}
-        ]};
-        const items = searchList.items;
-        console.log(items)
+
+        const items = this.state.searchList;
+        
 
         return (
             <div className='section'>
                 <div class='row'>
-                    <div class='col s3'>Song</div>
-                    <div class='col s3'>Artist</div>
-                    <div class='col s3'>Length</div>
-                    <div class='col s3'></div>
+                    <div className='col s3'>Song</div>
+                    <div className='col s3'>Artist</div>
+                    <div className='col s3'>Length</div>
+                    <div className='col s3'></div>
                 </div>
                 {items && items.map(function(item) {
                     console.log(item)

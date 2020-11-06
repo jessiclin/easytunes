@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import User from '../../models/user.model.js'
 import jwt from 'jsonwebtoken'
-
+const saltRounds = 10;
 const resolver = {
     // Gets Users 
     users: async () => {
@@ -16,6 +16,7 @@ const resolver = {
     },
     // Adds a user 
     createUser: async (args) => {
+        console.log("HERE")
         const hashed = await bcrypt.hash(args.userInput.password, saltRounds)
         const user= new User({
             email: args.userInput.email,

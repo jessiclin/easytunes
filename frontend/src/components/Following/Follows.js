@@ -4,6 +4,7 @@ import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Follows.css'
 import mockData from '../../mock_data.json'
 class Followers extends Component {
+
     state = {  
         showFollowers: true,
         showFollowing: false,

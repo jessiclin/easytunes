@@ -11,6 +11,7 @@ import './Playlist.css'
 import mockData from '../../mock_data.json'
 // A playlist page 
 class Playlist extends Component {
+
     users = mockData.users 
     playlists = mockData.playlists 
 
@@ -107,6 +108,7 @@ class Playlist extends Component {
     
     
     render() { 
+
         function User ({username, history}){
             function toUserProfile(){
                 history.history.push('/' + username)

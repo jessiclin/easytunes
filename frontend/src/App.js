@@ -16,49 +16,95 @@ import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
 import Navbar from './components/Navbar/Navbar'
 
-const UsernameContext = React.createContext('');
+
 class App extends Component {
 
   constructor(props){
     super(props)
-    this.state = {username: ''}
+    this.state = {
+      username: '',
+      results: null,
+      atHome: true
+    }
+
   }
 
   onUsernameChange = (username) => {
     this.setState({username: username})
   }
-  changeLoginState = () =>{
-    this.setState({logged_in : !this.state.logged_in})
+
+  onSearchResults = (results) => {
+    this.setState({results: results})
   }
+
+  atHome = () => {
+    this.setState({atHome : true})
+  }
+
+  notAtHome = () => {
+    this.setState({atHome : false})
+  }
+
+
   render() {
     return (
       <BrowserRouter>
         <div className="App">
-          {/* {this.state.logged_in ? <HeaderNavbar/> :  <Navbar/>} */}
+          {!this.state.atHome ? 
+              null
+          :  <Navbar notAtHome = {this.notAtHome} />}
 
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' component = {Home}/>
+
             <Route exact path='/login' 
               render = {(props) => (
-                <LoginScreen {...props} login = {true} onUsernameChange={this.onUsernameChange}/>
+                <LoginScreen {...props} login = {true} onUsernameChange={this.onUsernameChange} />
               )}
               /> 
+
             <Route exact path='/register' 
               render = {(props) => (
-                <LoginScreen {...props} login = {false} onUsernameChange={this.onUsernameChange}/>
+                <LoginScreen {...props} login = {false} onUsernameChange={this.onUsernameChange} />
               )}
             />
+
             <Route exact path='/forgotpassword' component={ResetPasswordScreen}/>
+
             <Route exact path='/home' 
               render = {(props) => (
-                <HomeScreen {...props} username = {this.username}/>
+                <HomeScreen {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
               )}
             />
-            <Route exact path='/search' component={SearchScreen} />
-            <Route exact path='/:userid/followers' component={Follows}/>
-            <Route exact path='/:userid/playlist=:playlistid' component={Playlist}/> 
-            <Route exact path='/:userid/settings' component={Setting}/>
-            <Route exact path='/:userid' component={Playlists}/>
+
+            <Route exact path='/search' 
+              render = {(props) => (
+              <SearchScreen {...props} username = {this.state.username} onSearchResults = {this.onSearchResults} results = {this.state.results}/> 
+            )}/>
+
+            <Route exact path='/:userid/followers' 
+              render = {(props => (
+                <Follows {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+              ))}
+            />
+
+            <Route exact path='/:userid/playlist=:playlistid'
+              render = {(props) => (
+                <Playlist {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+              )}
+            /> 
+
+            <Route exact path='/:userid/settings'
+              render = {(props) => (
+                <Setting {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+              )}
+            />
+
+            <Route exact path='/:userid'
+              render = {(props) => (
+                <Playlists {...props} username = {this.state.username} searchResults = {this.onSearchResults}/>
+              )}
+            />
             
             
             {/* <Route path='/:userid/following' component={Following}/> */}
