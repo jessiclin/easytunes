@@ -1,10 +1,37 @@
 import {buildSchema} from 'graphql'
 
 const schema = buildSchema (`
-type PlaylistRef {
-    playlist_id: String!
-    name: String
+type SongRef {
+    _id: ID!
+    name: String!
+    artists: [String!]!
+    uploaded: Boolean!
 }
+type ReplyRef {
+    user_id: ID!
+    username: String!
+    date: String!
+    message: String!
+}
+type CommentRef {
+    user_id: ID!
+    username: String!
+    date: String!
+    message: String!
+    replies:  [ReplyRef!]!
+}
+type Playlist {
+    _id: ID!
+    username: String!
+    name: String!
+    img: String!
+    date_created: String!
+    public: Boolean! 
+    likes: Int!
+    Comments: [CommentRef!]!
+    Songs: [SongRef!]!
+}
+
 
 type UserRef {
     user_id: String!
@@ -21,12 +48,16 @@ type User {
     url: String!
     current_song_id: String
     current_playlist_id: String 
-    savedPlaylists: [PlaylistRef!]! 
+    savedPlaylists: [Playlist!]! 
     following: [UserRef!]! 
     followers: [UserRef!]! 
     follow_requests: [UserRef!]! 
 }
 
+type User_Playlists {
+    user: User!
+    playlists: [Playlist!]! 
+}
 type AuthData {
     userId: ID!
     username: String!
@@ -42,8 +73,9 @@ input UserInput {
 }
 
 type RootQuery {
-    users: [User!]!
+    users(username: String!): [User_Playlists!]!
     getUser(username: String!) : User
+    getUserByEmail(email: String) : User
     login(email: String!, password: String!) : AuthData!
 }
 

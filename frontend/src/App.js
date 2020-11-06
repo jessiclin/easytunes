@@ -24,7 +24,7 @@ class App extends Component {
     this.state = {
       username: '',
       results: null,
-      atHome: true
+
     }
 
   }
@@ -35,6 +35,7 @@ class App extends Component {
 
   onSearchResults = (results) => {
     this.setState({results: results})
+    console.log(results)
   }
 
   atHome = () => {
@@ -50,10 +51,6 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          {!this.state.atHome ? 
-              null
-          :  <Navbar notAtHome = {this.notAtHome} />}
-
           <Switch>
             <Route exact path='/' component = {Home}/>
 

@@ -1,14 +1,17 @@
 import bcrypt from 'bcrypt'
 import User from '../../models/user.model.js'
 import jwt from 'jsonwebtoken'
+import Playlist from '../../models/playlist.model.js';
 const saltRounds = 10;
 const resolver = {
     // Gets Users 
-    users: async () => {
+    users: async ({username}) => {
         try {
-            const users = await User.find().populate('user_id')
-            return users.map(user => {
-                return { ...user._doc, password: null, _id: result.id }
+            const users = await User.find({ username: { "$regex": username, "$options": "i" }}).populate('user_id')
+        
+            return users.map(async user => {
+                const playlists = await Playlist.find({user_id: user._id})
+                return {user: { ...user._doc, password: null, _id: user.id}, playlists : playlists.map(playlist => {return {...playlist._doc}}) }
             })
         } catch (err) {
             throw err
@@ -16,7 +19,7 @@ const resolver = {
     },
     // Adds a user 
     createUser: async (args) => {
-        console.log("HERE")
+    
         const hashed = await bcrypt.hash(args.userInput.password, saltRounds)
         const user= new User({
             email: args.userInput.email,
@@ -39,6 +42,14 @@ const resolver = {
     // Get one User 
     getUser: async (username) => {
         const user = await User.findOne({username: username})
+
+        if (!user)
+            throw new Error('Id not found')
+
+        return {...user._doc}
+    },
+    getUserByEmail: async (email) => {
+        const user = await User.findOne({email : email})
         if (!user)
             throw new Error('Id not found')
         return {...user._doc}

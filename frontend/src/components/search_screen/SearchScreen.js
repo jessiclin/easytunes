@@ -4,24 +4,20 @@ import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 class SearchScreen extends Component {
 
-    state = { 
-        searchResult: this.props.results
-    }
-    
     handleSearchChange = (e) => {
 
     }
 
     render() {
-        
+        console.log(this.props.results)
         return (
             <>
             <HeaderNavbar props = {this.props}/>
-            <div className="container navy search-results-container">
+            <div className="container navy search-results-container" style={{paddingBotton: "50px"}}>
                 <div className="row">
-                    <h2 class="col s1">Results</h2>
+                    <h2 className="col s1">Results</h2>
                 </div>
-                <SearchList searchList={this.state.searchResult}/>
+                <SearchList searchList={this.props.results}/>
             </div> 
             <PlaylistNavbar/>
             </>
