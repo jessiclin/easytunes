@@ -99,7 +99,7 @@ class App extends Component {
 
             <Route exact path='/:userid'
               render = {(props) => (
-                <Playlists {...props} username = {this.state.username} searchResults = {this.onSearchResults}/>
+                <Playlists {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
               )}
             />
             

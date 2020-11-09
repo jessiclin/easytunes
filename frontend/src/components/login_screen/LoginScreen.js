@@ -67,7 +67,7 @@ class Login extends Component {
                   userId
                   username
                   token
-                  tokenExpiration
+                  token_expiration
                 }
               }
             `

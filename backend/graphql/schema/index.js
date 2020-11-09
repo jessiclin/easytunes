@@ -8,13 +8,13 @@ type SongRef {
     uploaded: Boolean!
 }
 type ReplyRef {
-    user_id: ID!
+    _id: ID!
     username: String!
     date: String!
     message: String!
 }
 type CommentRef {
-    user_id: ID!
+    _id: ID!
     username: String!
     date: String!
     message: String!
@@ -28,13 +28,13 @@ type Playlist {
     date_created: String!
     public: Boolean! 
     likes: Int!
-    Comments: [CommentRef!]!
-    Songs: [SongRef!]!
+    comments: [CommentRef!]!
+    songs: [SongRef!]!
 }
 
 
 type UserRef {
-    user_id: String!
+    _id: ID!
     username: String!
     following_since: String!
 }
@@ -48,7 +48,7 @@ type User {
     url: String!
     current_song_id: String
     current_playlist_id: String 
-    savedPlaylists: [Playlist!]! 
+    saved_playlists: [Playlist!]! 
     following: [UserRef!]! 
     followers: [UserRef!]! 
     follow_requests: [UserRef!]! 
@@ -59,10 +59,10 @@ type User_Playlists {
     playlists: [Playlist!]! 
 }
 type AuthData {
-    userId: ID!
+    _id: ID!
     username: String!
     token: String!
-    tokenExpiration: Int!
+    token_expiration: Int!
 }
 
 input UserInput {
@@ -74,8 +74,8 @@ input UserInput {
 
 type RootQuery {
     users(username: String!): [User_Playlists!]!
-    getUser(username: String!) : User
-    getUserByEmail(email: String) : User
+    getUserByUsername(username: String!) : User_Playlists!
+    getUserByEmail(email: String) : User_Playlists!
     login(email: String!, password: String!) : AuthData!
 }
 
