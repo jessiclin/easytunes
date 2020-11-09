@@ -11,14 +11,8 @@ import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlists.css'
 
-import mockData from '../../mock_data.json'
 
 class Playlists extends Component {
-
-    users = mockData.users
-    playlists = mockData.playlists
-
-
     state = { 
         showSavedPlaylists: false,
         showMyPlaylists: true,
@@ -62,6 +56,7 @@ class Playlists extends Component {
                         playlists {
                             _id
                             name
+                            username
                             likes 
                             songs {
                                 _id
@@ -158,7 +153,8 @@ class Playlists extends Component {
     }
 
     renderPlaylists = (playlists) => {
-        function PlaylistButton({playlist,history}) {
+        function PlaylistButton({playlist,history, username}) {
+            console.log(playlist)
             function toPlaylist(){
                 history.history.push('/' + playlist.username.replace(/\s/g, '%20') + '/playlist='+ playlist.name.replace(/\s/g, '%20'))
             }
@@ -171,15 +167,15 @@ class Playlists extends Component {
 
                     <div className="col text-left">
                         {playlist.name}
-                        {this.props.username === this.state.profileUsername ? <span>  {playlist.public ? <AiFillEye/> : < AiFillEyeInvisible/>} </span> : null}
+                        {history.history.username === username ? <span>  {playlist.public ? <AiFillEye/> : < AiFillEyeInvisible/>} </span> : null}
                     </div>
 
                     <div className="col text-left">
-                        {playlist.songs.length} {playlist.songs.length > 1 ? "songs" : "song"} 
+                        {playlist.songs.length} {playlist.songs.length == 1 ? "song" : "songs"} 
                     </div>
 
                     <div className="col text-left">
-                        {this.props.username === this.state.profileUsername ? <><AiFillHeart id={playlist.name} size = {24}/> {playlist.likes} </>:
+                        {history.history.username === username ? <><AiFillHeart id={playlist.name} size = {24}/> {playlist.likes} </>:
                         <>{playlist.username}</>}
                     </div>
   
@@ -195,15 +191,17 @@ class Playlists extends Component {
                 </div>
             )
         }
+
         playlists = playlists.map(function(playlist) {
+            
             return (
-                <PlaylistButton playlist = {playlist} history = {this.props} key = {playlist.playlist_id} />
+                <PlaylistButton playlist = {playlist} history = {this.props} key = {playlist._id} username = {this.state.profileUsername}/>
             )
         }, this)
 
-        function NewButton({text}) {
+        function NewButton({text, username, user_id, setPlaylists}) {
             const [visible, setVisibility] = React.useState(false)
-
+            const [name, setName] = React.useState("")
             function toggleVisibilityTrue() {
                 setVisibility(visible => true)
             }
@@ -212,14 +210,88 @@ class Playlists extends Component {
                 setVisibility(visible => false)
             }
 
+            function inputOnChange(event){
+                setName(event.target.value)
+            }
+
+            function createNewPlaylist(){
+                toggleVisibilityFalse()
+                let requestBody = {
+                    query: `
+                        mutation {
+                            createPlaylist (username : "${username}", name : "${name.trim()}", user_id: "${user_id}") {
+                                _id 
+                            }
+                        }
+                    `
+                }
+
+                // Create 
+                fetch('http://localhost:5000/graphql', {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                    })
+                    .then(res => {
+                        if (res.status !== 200 && res.status !== 201) 
+                            throw new Error('Failed');
+                        return res.json()
+                    })
+                    .then(result => {
+
+                         // Update 
+                        requestBody = {
+                            query: `
+                                query {
+                                    getPlaylists(username: "${username}"){
+                                        _id
+                                        name
+                                        username
+                                        likes 
+                                        songs {
+                                            _id
+                                            name
+                                        }
+                                    }
+                                }
+                            `
+                        }
+
+                        fetch("http://localhost:5000/graphql", {
+                            method: 'POST',
+                            body: JSON.stringify(requestBody),
+                            headers: {
+                            'content-type': 'application/json'
+                            }})
+                        .then(res => {
+                            if (res.status !== 200 && res.status !== 201) 
+                                throw new Error('Failed');
+                            return res.json()
+                        })
+                        .then(result => {
+                            console.log(result.data.getPlaylists)
+                            setPlaylists(result.data.getPlaylists)
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+
+               
+            }
             return (
                 <>
                     <button className = "add-btn" onClick = {toggleVisibilityTrue}> <IoMdAddCircleOutline size = {24}/> </button>
                     {visible ? 
                     <div className="new-playlist-box">
                        {text}
-                        <input type="text" required/>
-                        <button className = "confirm-new-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
+                        <input type="text" required onChange={inputOnChange}/>
+                        <button className = "confirm-new-btn" onClick={createNewPlaylist}> <AiOutlineCheckCircle size = {24}/></button>
                         <button className = "cancel-new-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
                     </div>
                     : null}
@@ -231,7 +303,7 @@ class Playlists extends Component {
             {playlists}
             {this.props.username === this.state.profileUsername ?
                 <div className="add-new">
-                    <NewButton text = {"Playlist Name"}/>
+                    <NewButton text = {"Playlist Name"} username = {this.state.profileUsername} user_id = {this.state.profileUserInfo._id} setPlaylists = {this.setPlaylists}/>
                 </div> : null 
             }
             
@@ -277,6 +349,10 @@ class Playlists extends Component {
 
             </>
         )
+    }
+
+    setPlaylists = (playlists) => {
+        this.setState({profilePlaylists : playlists})
     }
     isFollowing = () =>{
         let followers = this.state.profileFollowers

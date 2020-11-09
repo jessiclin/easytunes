@@ -77,10 +77,12 @@ type RootQuery {
     getUserByUsername(username: String!) : User_Playlists!
     getUserByEmail(email: String) : User_Playlists!
     login(email: String!, password: String!) : AuthData!
+    getPlaylists(username: String!) : [Playlist!]!
 }
 
 type RootMutation {
     createUser(userInput: UserInput!): User
+    createPlaylist(username: String!, user_id: ID!,  name: String!): Playlist
 }
 
 schema {
