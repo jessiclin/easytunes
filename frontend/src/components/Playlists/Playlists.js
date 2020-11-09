@@ -23,174 +23,109 @@ class Playlists extends Component {
         showSavedPlaylists: false,
         showMyPlaylists: true,
         showUploadedSongs: false,
-        self: false,
-        following: true
+        profileUsername: this.props.match.params.userid,
+        profileUserInfo: null,
+        profileAccountCreationDate: null,
+        profileFollowers: null, 
+        profilePlaylists: null,
+        profileSavedPlaylists: null,
+        loading: true,
     }
 
-    // Redirect to Home when home button is pressed 
-    handleHome = () => {
-        const {history } = this.props;
-        console.log(history);
-        history.push('/home')
-    }
+    componentDidMount = () => {
+        this.setState({loading : true})
+        const username = this.state.profileUsername
+        console.log(username)
+        let requestBody = {
+            query: `
+                query {
+                    getUserByUsername(username: "${username}"){
+                        user {
+                            _id
+                            username
+                            joined
+                            followers {
+                                _id
+                                username
+                            }
+                            saved_playlists {
+                                _id 
+                                username 
+                                name 
+                                likes 
+                                songs {
+                                    _id 
+                                    name
+                                }
+                            }
+                        }
+                        playlists {
+                            _id
+                            name
+                            likes 
+                            songs {
+                                _id
+                                name
+                            }
+                        }
 
-    // Get the username 
-    getUserName = () => {
-        const user = this.props.match.params.userid;
-        return user
-        // const users = mockData.users
-        // console.log(users[0].username)
-        // return users[0].username)
-    }
-
-    handleDelete = (event) => {
-        console.log("Delete Playlist")
-    }
-
-    getUserInfoById = (id) => {
-        for (var i = 0; i < this.users.length; i++){
-            if (parseInt(this.users[i].user_id) == id){
-                return this.users[i]
-            }
+                    }
+                }
+            `
         }
-    }
-
-    getAccountCreationDate = () => {
-        const user = this.getUserName()
+        fetch ('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }})
+            .then(res => {
+                if (res.status != 200 && res.status != 201)
+                    throw new Error ('Failed')
+                return res.json()
+            })
+            .then(data => {
+                data = data.data.getUserByUsername
+                const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                const date = new Date(parseInt(data.user.joined))
+                this.setState({
+                    profileUserInfo: data.user,
+                    profileFollowers: data.user.followers, 
+                    profilePlaylists: data.playlists,
+                    profileSavedPlaylists: data.user.saved_playlists,
+                    profileAccountCreationDate: months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
+                    loading: false
+                })        
+            })
+            .catch(error => {
+                console.log(error)
+            })
         
-        for (let i = 0; i < this.users.length; i++){
-           
-            if (this.users[i].username === user)
-           
-                return this.users[i].joined.month + " " + this.users[i].joined.day + ", " + this.users[i].joined.year
-        }
-        
-    }
-
-    getPlaylistsByUsername = (username) => {
-        let playlists = this.playlists
-        let myPlaylists = []
-        
-        for (let i = 0; i < playlists.length; i++){
-            if (playlists[i].username === username)
-                myPlaylists.push(playlists[i])
-        }
-        return myPlaylists
-    }
-    getPlaylistById = (playlist_id) => {
-
-        let playlists = this.playlists 
-
-        for (let i = 0; i < playlists.length; i++){
-            if (parseInt(playlists[i].playlist_id) === playlist_id)
-                return playlists[i]
-        }
-
-      
-    }
-    getSavedPlaylists = (username) => {
-        let users = this.users
-        let playlistInfo = null
-        for(let i = 0; i < users.length; i++){
-            if (users[i].username === username)
-                playlistInfo = users[i].saved_playlists
-        }
-
-        let playlists = []
-        for (let i = 0; i < playlistInfo.length; i++){
-            playlists.push(this.getPlaylistById(parseInt(playlistInfo[i].playlist_id)))
-        }
-        return playlists
     }
     
-    // Button click on "My Playlists"
-    handleMyPlaylistView = () => {
-        this.setState({
-            showSavedPlaylists: false,
-            showMyPlaylists: true,
-            showUploadedSongs: false
-        })
-
-        document.getElementById('my-playlists-btn').style.borderBottom = "2px solid #faed26"
-        document.getElementById('saved-playlists-btn').style.borderBottom = "none";
-        document.getElementById('uploaded-songs-btn').style.borderBottom = "none";
-        document.getElementById('my-playlists-btn').style.fontWeight = "bold"
-        document.getElementById('saved-playlists-btn').style.fontWeight = "normal"
-        document.getElementById('uploaded-songs-btn').style.fontWeight = "normal"
-    }
-
-    // Button click on "Saved Playlists"
-    handleSavedPlaylistView = () =>{
-        this.setState({
-            showSavedPlaylists: true,
-            showMyPlaylists: false,
-            showUploadedSongs: false
-        })
-        document.getElementById('my-playlists-btn').style.borderBottom = "none";
-        document.getElementById('saved-playlists-btn').style.borderBottom = "2px solid #faed26"
-        document.getElementById('uploaded-songs-btn').style.borderBottom = "none";
-        document.getElementById('my-playlists-btn').style.fontWeight = "normal"
-        document.getElementById('saved-playlists-btn').style.fontWeight = "bold"
-        document.getElementById('uploaded-songs-btn').style.fontWeight = "normal"
-    }
-
-    handleUploadView = () => {
-        this.setState({
-            showSavedPlaylists: false,
-            showMyPlaylists: false,
-            showUploadedSongs: true
-        })
-        document.getElementById('my-playlists-btn').style.borderBottom = "none";
-        document.getElementById('saved-playlists-btn').style.borderBottom= "none"
-        document.getElementById('uploaded-songs-btn').style.borderBottom = "2px solid #faed26";
-        document.getElementById('my-playlists-btn').style.fontWeight = "normal"
-        document.getElementById('saved-playlists-btn').style.fontWeight = "normal"
-        document.getElementById('uploaded-songs-btn').style.fontWeight = "bold"
-    }
-    
-    isSelf = () => {
-        let viewing = this.getUserName()
-        let user = this.users[0]
-
-        if (viewing === user.username)
-            return true
-        return false 
-    }
-
-    isFollowing = () =>{
-        let user = this.users[0]
-        let viewing = this.getUserName()
-        for (let i = 0; i < user.following.length; i++){
-            console.log(user.following[i].user_id)
-            console.log(viewing.user_id)
-            if (user.following[i].username === viewing){
-                return true
-            }
-                
-        }
-        return false
-    }
     render() { 
+        if (this.state.loading)
+            return (<> </>);
 
         return ( 
-           
-                <div className="container-fluid playlist-container">
-                    {/* Home Button, Username, Account Icon */}
-                    <HeaderNavbar  props = {this.props}/>
-                    <div className="container-fluid playlist-data-container">
-                        {/* Information Bar about the user */}
+        
+            <div className="container-fluid playlist-container">
+                {/* Home Button, Username, Account Icon */}
+                <HeaderNavbar  props = {this.props}/>
+                <div className="container-fluid playlist-data-container">
+                    {/* Information Bar about the user */}
                     <div className="information-row">
                         <div className="col text-center">
-                            <h2>{this.getUserName()}                            
+                            <h2>{this.state.profileUsername}                            
                              
-                             {!this.isSelf() ?
+                             {this.state.profileUsername !== this.props.username ?
                                 !this.isFollowing() ? 
                                 <button> <RiUserAddLine size= {24}/> </button> :
                                 <span> <RiUserFollowLine size={24}/></span>
                             : null}
 
                             </h2>
-                             <h5> User Since: {this.getAccountCreationDate()}</h5>
+                             <h5> User Since: {this.state.profileAccountCreationDate}</h5>
                         </div>
                     </div>
                     
@@ -210,8 +145,8 @@ class Playlists extends Component {
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
-                    {this.state.showSavedPlaylists ? this.renderPlaylists() : null}
-                    {this.state.showMyPlaylists ? this.renderPlaylists() : null}
+                    {this.state.showSavedPlaylists ? this.renderPlaylists(this.state.profileSavedPlaylists) : null}
+                    {this.state.showMyPlaylists ? this.renderPlaylists(this.state.profilePlaylists) : null}
                     {this.state.showUploadedSongs ? this.renderUploads() : null}
                 </div>
                 <PlaylistNavbar/>
@@ -222,10 +157,7 @@ class Playlists extends Component {
          );
     }
 
-    renderPlaylists = () => {
-        let playlists = this.state.showMyPlaylists ? this.getPlaylistsByUsername(this.getUserName()) : this.getSavedPlaylists(this.getUserName());
-        const showMine = this.state.showMyPlaylists
-
+    renderPlaylists = (playlists) => {
         function PlaylistButton({playlist,history}) {
             function toPlaylist(){
                 history.history.push('/' + playlist.username.replace(/\s/g, '%20') + '/playlist='+ playlist.name.replace(/\s/g, '%20'))
@@ -239,7 +171,7 @@ class Playlists extends Component {
 
                     <div className="col text-left">
                         {playlist.name}
-                        {showMine ? <span>  {playlist.public ? <AiFillEye/> : < AiFillEyeInvisible/>} </span> : null}
+                        {this.props.username === this.state.profileUsername ? <span>  {playlist.public ? <AiFillEye/> : < AiFillEyeInvisible/>} </span> : null}
                     </div>
 
                     <div className="col text-left">
@@ -247,7 +179,7 @@ class Playlists extends Component {
                     </div>
 
                     <div className="col text-left">
-                        {showMine ? <><AiFillHeart id={playlist.name} size = {24}/> {playlist.likes} </>:
+                        {this.props.username === this.state.profileUsername ? <><AiFillHeart id={playlist.name} size = {24}/> {playlist.likes} </>:
                         <>{playlist.username}</>}
                     </div>
   
@@ -297,10 +229,12 @@ class Playlists extends Component {
         return (
             <>
             {playlists}
-            <div className="add-new">
-
-                <NewButton text = {"Playlist Name"}/>
-            </div>
+            {this.props.username === this.state.profileUsername ?
+                <div className="add-new">
+                    <NewButton text = {"Playlist Name"}/>
+                </div> : null 
+            }
+            
             </>
         );
     }
@@ -335,13 +269,111 @@ class Playlists extends Component {
         }
         return (
             <>
-            <div className="add-new">
+            {this.props.username === this.state.profileUsername ?
+                <div className="add-new">
+                    <NewButton text = {"Upload Your Audio File"}/>
+                </div> : null 
+            }
 
-                <NewButton text = {"Upload Your Audio File"}/>
-            </div>
             </>
         )
     }
+    isFollowing = () =>{
+        let followers = this.state.profileFollowers
+        let following = false 
+        followers.forEach(follower => {
+            if (follower.username === this.props.username)
+                following = true 
+        })
+        
+        return following
+    }
+
+    // Button click on "My Playlists"
+    handleMyPlaylistView = () => {
+        this.setState({
+            showSavedPlaylists: false,
+            showMyPlaylists: true,
+            showUploadedSongs: false
+        })
+
+        document.getElementById('my-playlists-btn').style.borderBottom = "2px solid #faed26"
+        document.getElementById('saved-playlists-btn').style.borderBottom = "none";
+        document.getElementById('uploaded-songs-btn').style.borderBottom = "none";
+        document.getElementById('my-playlists-btn').style.fontWeight = "bold"
+        document.getElementById('saved-playlists-btn').style.fontWeight = "normal"
+        document.getElementById('uploaded-songs-btn').style.fontWeight = "normal"
+    }
+
+    // Button click on "Saved Playlists"
+    handleSavedPlaylistView = () =>{
+        this.setState({
+            showSavedPlaylists: true,
+            showMyPlaylists: false,
+            showUploadedSongs: false
+        })
+        document.getElementById('my-playlists-btn').style.borderBottom = "none";
+        document.getElementById('saved-playlists-btn').style.borderBottom = "2px solid #faed26"
+        document.getElementById('uploaded-songs-btn').style.borderBottom = "none";
+        document.getElementById('my-playlists-btn').style.fontWeight = "normal"
+        document.getElementById('saved-playlists-btn').style.fontWeight = "bold"
+        document.getElementById('uploaded-songs-btn').style.fontWeight = "normal"
+    }
+
+    handleUploadView = () => {
+        this.setState({
+            showSavedPlaylists: false,
+            showMyPlaylists: false,
+            showUploadedSongs: true
+        })
+        document.getElementById('my-playlists-btn').style.borderBottom = "none";
+        document.getElementById('saved-playlists-btn').style.borderBottom= "none"
+        document.getElementById('uploaded-songs-btn').style.borderBottom = "2px solid #faed26";
+        document.getElementById('my-playlists-btn').style.fontWeight = "normal"
+        document.getElementById('saved-playlists-btn').style.fontWeight = "normal"
+        document.getElementById('uploaded-songs-btn').style.fontWeight = "bold"
+    }
+        
+    // handleDelete = (event) => {
+    //     console.log("Delete Playlist")
+    // }
+
+    // getUserInfoById = (id) => {
+    //     for (var i = 0; i < this.users.length; i++){
+    //         if (parseInt(this.users[i].user_id) == id){
+    //             return this.users[i]
+    //         }
+    //     }
+    // }
+
+
+    // getPlaylistsByUsername = (username) => {
+    //     let playlists = this.playlists
+    //     let myPlaylists = []
+        
+    //     for (let i = 0; i < playlists.length; i++){
+    //         if (playlists[i].username === username)
+    //             myPlaylists.push(playlists[i])
+    //     }
+    //     return myPlaylists
+    // }
+    // getPlaylistById = (playlist_id) => {
+
+    //     let playlists = this.playlists 
+
+    //     for (let i = 0; i < playlists.length; i++){
+    //         if (parseInt(playlists[i].playlist_id) === playlist_id)
+    //             return playlists[i]
+    //     }
+
+      
+    // }
+
+    
+
+    
+
+    
 }
  
 export default Playlists;

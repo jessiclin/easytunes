@@ -7,7 +7,7 @@ const resolver = {
     // Gets Users 
     users: async ({username}) => {
         try {
-            const users = await User.find({ username: { "$regex": username, "$options": "i" }}).populate('user_id')
+            const users = await User.find({ username: { "$regex": username, "$options": "i" }})
         
             return users.map(async user => {
                 const playlists = await Playlist.find({user_id: user._id})
@@ -40,23 +40,32 @@ const resolver = {
 
     },
     // Get one User 
-    getUser: async (username) => {
-        const user = await User.findOne({username: username})
+    getUserByUsername: async ({username}) => {
+        console.log(username)
+        try {
+            const user = await User.findOne({ username: username})
+            if (user === null)
+                throw new Error ("User not found")
+            
+            const playlists = await Playlist.find({user_id: user._id})
+            return {user: { ...user._doc, password: null, _id: user.id}, playlists : playlists.map(playlist => {return {...playlist._doc}}) }
 
-        if (!user)
-            throw new Error('Id not found')
-
-        return {...user._doc}
+        } catch (err) {
+            console.log(err)
+            throw err
+        }
+        
     },
-    getUserByEmail: async (email) => {
+    getUserByEmail: async ({email}) => {
         const user = await User.findOne({email : email})
         if (!user)
             throw new Error('Id not found')
         return {...user._doc}
     },
     login: async ({email, password}) => {
-       
+ 
         const user = await User.findOne({email: email})
+
         if (!user)
             throw new Error('Email not found')
         
@@ -68,7 +77,8 @@ const resolver = {
         const token = jwt.sign({userId: user._id, username: user.username}, 'somesupersecretkey',{
             expiresIn: '1h'
         });
-        return {userId: user._id, username: user.username, token: token, tokenExpiration: 1}
+
+        return {_id: user._id, username: user.username, token: token, token_expiration: 1}
     }   
 }
 
