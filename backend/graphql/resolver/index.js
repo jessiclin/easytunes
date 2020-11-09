@@ -30,7 +30,6 @@ const resolver = {
         })
         try {
             const result = await user.save()
-            console.log(result)
             return { ...result._doc }
         } catch (error) {
             console.log(error)
@@ -41,7 +40,6 @@ const resolver = {
     },
     // Get one User 
     getUserByUsername: async ({username}) => {
-        console.log(username)
         try {
             const user = await User.findOne({ username: username})
             if (user === null)
@@ -79,7 +77,36 @@ const resolver = {
         });
 
         return {_id: user._id, username: user.username, token: token, token_expiration: 1}
-    }   
+    },
+    createPlaylist: async ({username, user_id, name}) => {
+        const playlist = new Playlist({
+            user_id: user_id,
+            name: name, 
+            username: username,
+            date_created: new Date()
+        })
+
+        try {
+            const result = await playlist.save()
+            return { ...result._doc }
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+
+    },
+    getPlaylists: async ({username}) => {
+
+        try {
+            const playlists = await Playlist.find({username: username})
+            return playlists.map(playlist => {
+                return {...playlist._doc}
+            })
+
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 export default resolver
