@@ -62,7 +62,7 @@ class Followers extends Component {
 
         // Get the username 
     getUserName = () => {
-        const user = this.props.match.params.userid;
+        const user = this.props.match.params.username;
         return user
     }
 

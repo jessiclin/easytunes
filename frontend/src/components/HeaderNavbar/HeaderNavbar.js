@@ -90,107 +90,108 @@ class HeaderNavbar extends Component {
             }
 
             async function toggleSearch(){
-                let requestBody;
-                let searchRes = {};
-                props.onSearchResults("")
-                if (text === 'Artists' || text === 'All'){
+                // let requestBody;
+                // let searchRes = {};
+                // props.onSearchResults("")
+                // if (text === 'Artists' || text === 'All'){
                    
-                    requestBody = { artist: keyword}
-                    let result = await fetch('http://localhost:5000/v1/search?', {
-                                        method: 'POST',
-                                        body: JSON.stringify(requestBody),
-                                        headers: {
-                                            'content-type': 'application/json'
-                                        }})
-                                        .then(res => {
-                                            if (res.status != 200 && res.status != 201)
-                                                throw new Error ('Failed')
+                //     requestBody = { artist: keyword}
+                //     let result = await fetch('http://localhost:5000/v1/search?', {
+                //                         method: 'POST',
+                //                         body: JSON.stringify(requestBody),
+                //                         headers: {
+                //                             'content-type': 'application/json'
+                //                         }})
+                //                         .then(res => {
+                //                             if (res.status != 200 && res.status != 201)
+                //                                 throw new Error ('Failed')
 
-                                            return res.json()
-                                        })
-                                        .then(resData => {
-                                            return resData
-                                        })
-                                        .catch(error => {
-                                            console.log(error)
-                                        })
-                                        searchRes['artists'] = result
-                }
+                //                             return res.json()
+                //                         })
+                //                         .then(resData => {
+                //                             return resData
+                //                         })
+                //                         .catch(error => {
+                //                             console.log(error)
+                //                         })
+                //                         searchRes['artists'] = result
 
-                if (text == 'Songs' || text == 'All'){
+                // }
+
+                // if (text == 'Songs' || text == 'All'){
                 
-                    requestBody = {track: keyword}
-                    let result = await fetch('http://localhost:5000/v1/search?', {
-                                        method: 'POST',
-                                        body: JSON.stringify(requestBody),
-                                        headers: {
-                                            'content-type': 'application/json'
-                                        }})
-                                        .then(res => {
-                                            if (res.status != 200 && res.status != 201)
-                                                throw new Error ('Failed')
+                //     requestBody = {track: keyword}
+                //     let result = await fetch('http://localhost:5000/v1/search?', {
+                //                         method: 'POST',
+                //                         body: JSON.stringify(requestBody),
+                //                         headers: {
+                //                             'content-type': 'application/json'
+                //                         }})
+                //                         .then(res => {
+                //                             if (res.status != 200 && res.status != 201)
+                //                                 throw new Error ('Failed')
 
-                                            return res.json()
-                                        })
-                                        .then(resData => {
-                                            return resData
-                                        })
-                                        .catch(error => {
-                                            console.log(error)
-                                        })
-                                        searchRes['tracks'] = result
-                }
+                //                             return res.json()
+                //                         })
+                //                         .then(resData => {
+                //                             return resData
+                //                         })
+                //                         .catch(error => {
+                //                             console.log(error)
+                //                         })
+                //                         searchRes['tracks'] = result
+                // }
                     
-                if (text == 'User' || text == 'All'){
-                    requestBody = {
-                        query: `
-                            query {
-                                users(username: "${keyword}"){
-                                    user {
-                                        _id
-                                        username
-                                        followers {
-                                            user_id
-                                            username
-                                        }
-                                    }
-                                    playlists {
-                                        _id
-                                        name
-                                    }
+                // if (text == 'User' || text == 'All'){
+                //     requestBody = {
+                //         query: `
+                //             query {
+                //                 users(username: "${keyword}"){
+                //                     user {
+                //                         _id
+                //                         username
+                //                         followers {
+                //                             user_id
+                //                             username
+                //                         }
+                //                     }
+                //                     playlists {
+                //                         _id
+                //                         name
+                //                     }
 
-                                }
-                            }
-                        `
-                    }
-                    let result = await fetch ('http://localhost:5000/graphql', {
-                                            method: 'POST',
-                                            body: JSON.stringify(requestBody),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }})
-                                            .then(res => {
-                                                if (res.status != 200 && res.status != 201)
-                                                    throw new Error ('Failed')
+                //                 }
+                //             }
+                //         `
+                //     }
+                //     let result = await fetch ('http://localhost:5000/graphql', {
+                //                             method: 'POST',
+                //                             body: JSON.stringify(requestBody),
+                //                             headers: {
+                //                                 'content-type': 'application/json'
+                //                             }})
+                //                             .then(res => {
+                //                                 if (res.status != 200 && res.status != 201)
+                //                                     throw new Error ('Failed')
     
-                                                return res.json()
-                                            })
-                                            .then(resData => {
-                                                return resData
-                                            })
-                                            .catch(error => {
-                                                console.log(error)
-                                            })
+                //                                 return res.json()
+                //                             })
+                //                             .then(resData => {
+                //                                 return resData
+                //                             })
+                //                             .catch(error => {
+                //                                 console.log(error)
+                //                             })
                   
-                                            searchRes['users'] = result.data
-                }
+                //                             searchRes['users'] = result.data
+                // }
 
                 
 
-                const url = '/search'
+                const url = '/searchq=' +  encodeURIComponent(keyword)+ "/type=" + text.toLowerCase()
                 const {history} = props;
                 
-                props.onSearchResults(searchRes)
+        
                 history.push(url)
             }
 
@@ -213,7 +214,7 @@ class HeaderNavbar extends Component {
         function Playlist({props}){
       
             function togglePlaylist (){
-                props.history.push("/" + mockData.users[0].username)
+                props.history.push("/" + props.username)
             }
             return (
                 <button onClick = {togglePlaylist}>Playlist</button>

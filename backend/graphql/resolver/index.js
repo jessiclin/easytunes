@@ -5,7 +5,7 @@ import Playlist from '../../models/playlist.model.js';
 const saltRounds = 10;
 const resolver = {
     // Gets Users 
-    users: async ({username}) => {
+    searchUsers: async ({username}) => {
         try {
             const users = await User.find({ username: { "$regex": username, "$options": "i" }})
         
@@ -95,7 +95,7 @@ const resolver = {
         }
 
     },
-    getPlaylists: async ({username}) => {
+    getUserPlaylists: async ({username}) => {
 
         try {
             const playlists = await Playlist.find({username: username})
@@ -103,6 +103,27 @@ const resolver = {
                 return {...playlist._doc}
             })
 
+        } catch (err) {
+            throw err
+        }
+    },
+    getPlaylistByID: async ({id}) => {
+        try{
+            const playlist = await Playlist.findOne({_id : id})
+            console.log(playlist)
+            return {...playlist._doc}
+        }
+        catch (err){
+            throw err
+        }
+    },
+    searchPlaylists: async ({name}) => {
+        try {
+            const playlists = await Playlist.find({ name: { "$regex": name, "$options": "i" }, public : true})
+        
+            return playlists.map(async user => {
+                return {...playlist._doc}
+            })
         } catch (err) {
             throw err
         }

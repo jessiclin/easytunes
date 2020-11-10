@@ -17,7 +17,7 @@ class Playlists extends Component {
         showSavedPlaylists: false,
         showMyPlaylists: true,
         showUploadedSongs: false,
-        profileUsername: this.props.match.params.userid,
+        profileUsername: this.props.match.params.username,
         profileUserInfo: null,
         profileAccountCreationDate: null,
         profileFollowers: null, 
@@ -26,10 +26,10 @@ class Playlists extends Component {
         loading: true,
     }
 
+    // Get the user information and their playlists 
     componentDidMount = () => {
         this.setState({loading : true})
         const username = this.state.profileUsername
-        console.log(username)
         let requestBody = {
             query: `
                 query {
@@ -99,6 +99,7 @@ class Playlists extends Component {
     }
     
     render() { 
+        console.log(this.props)
         if (this.state.loading)
             return (<> </>);
 
@@ -154,9 +155,24 @@ class Playlists extends Component {
 
     renderPlaylists = (playlists) => {
         function PlaylistButton({playlist,history, username}) {
-            console.log(playlist)
+            const [confirmationVisible, setConfirmationPopup] = React.useState(false)
             function toPlaylist(){
-                history.history.push('/' + playlist.username.replace(/\s/g, '%20') + '/playlist='+ playlist.name.replace(/\s/g, '%20'))
+                history.history.push('/' + encodeURIComponent(playlist.username) + '/playlist='+ playlist._id)
+            }
+
+            function confirmationPopup (){
+                setConfirmationPopup(true)
+
+                // Delete the playlist 
+                let requestBody = {
+                    query : `
+                        query {
+                            deletePlaylistByID (id : ${playlist._id}){
+                                _id
+                            }
+                        }
+                    `
+                }
             }
 
             return (
@@ -175,7 +191,7 @@ class Playlists extends Component {
                     </div>
 
                     <div className="col text-left">
-                        {history.history.username === username ? <><AiFillHeart id={playlist.name} size = {24}/> {playlist.likes} </>:
+                        {history.history.username === username ? <><AiFillHeart id={playlist._id} size = {24}/> {playlist.likes} </>:
                         <>{playlist.username}</>}
                     </div>
   
@@ -185,7 +201,8 @@ class Playlists extends Component {
                         <FaRegPlayCircle size = {30}/>
                     </button>
 
-                    <button className="delete-btn">
+                    
+                    <button className="delete-btn" onClick = {confirmationPopup}> 
                         <AiOutlineDelete size = {24}/>
                     </button>
                 </div>
@@ -226,7 +243,7 @@ class Playlists extends Component {
                     `
                 }
 
-                // Create 
+                // Create the playlist 
                 fetch('http://localhost:5000/graphql', {
                     method: 'POST',
                     body: JSON.stringify(requestBody),
@@ -241,11 +258,11 @@ class Playlists extends Component {
                     })
                     .then(result => {
 
-                         // Update 
+                         // Update the playlists on the UI 
                         requestBody = {
                             query: `
                                 query {
-                                    getPlaylists(username: "${username}"){
+                                    getUserPlaylists(username: "${username}"){
                                         _id
                                         name
                                         username
@@ -444,11 +461,6 @@ class Playlists extends Component {
 
       
     // }
-
-    
-
-    
-
     
 }
  

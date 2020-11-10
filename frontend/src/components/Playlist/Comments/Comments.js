@@ -4,17 +4,11 @@ import './Comments.css'
 
 import mockData from '../../../mock_data.json'
 class Comments extends Component {
-    playlists = mockData.playlists
-
-    state = { 
-        playlist : this.props.playlist,
-     }
-
-    
 
     getComments = () => {
-        console.log(this.state.playlist)
-        return this.state.playlist.comments
+        const {comments} = this.props
+        console.log(this.props)
+        return comments
     }
     render() {
         return (
