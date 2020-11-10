@@ -46,6 +46,7 @@ type User {
     username: String!
     joined: String!
     url: String!
+    default_public: Boolean!
     current_song_id: String
     current_playlist_id: String 
     saved_playlists: [Playlist!]! 
@@ -73,11 +74,14 @@ input UserInput {
 }
 
 type RootQuery {
-    users(username: String!): [User_Playlists!]!
+    searchUsers(username: String!): [User_Playlists!]!
+    searchPlaylists(name: String!): [Playlist!]!
     getUserByUsername(username: String!) : User_Playlists!
     getUserByEmail(email: String) : User_Playlists!
     login(email: String!, password: String!) : AuthData!
-    getPlaylists(username: String!) : [Playlist!]!
+    getUserPlaylists(username: String!) : [Playlist!]!
+    getPlaylistByID(id : ID!) : Playlist
+    
 }
 
 type RootMutation {

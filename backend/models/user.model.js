@@ -10,6 +10,7 @@ const UserSchema = new Schema({
     url: {type: String, required: true, unique:true},
     current_song_id: {type: String, default: null},
     current_playlist_id: {type: String, default: null},
+    default_public: {type: Boolean, default: false},
     saved_playlists : [
         {
             playlist_id: {type: Schema.Types.ObjectId, ref: 'Playlist', required: true},

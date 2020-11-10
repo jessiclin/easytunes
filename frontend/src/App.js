@@ -70,34 +70,34 @@ class App extends Component {
 
             <Route exact path='/home' 
               render = {(props) => (
-                <HomeScreen {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+                <HomeScreen {...props} username = {this.state.username} />
               )}
             />
 
-            <Route exact path='/search' 
+            <Route exact path='/searchq=:query/type=:type' 
               render = {(props) => (
-              <SearchScreen {...props} username = {this.state.username} onSearchResults = {this.onSearchResults} results = {this.state.results}/> 
+              <SearchScreen {...props} username = {this.state.username} results = {this.state.results}/> 
             )}/>
 
-            <Route exact path='/:userid/followers' 
+            <Route exact path='/:username/followers' 
               render = {(props => (
-                <Follows {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+                <Follows {...props} username = {this.state.username} />
               ))}
             />
 
-            <Route exact path='/:userid/playlist=:playlistid'
+            <Route exact path='/:username/playlist=:playlistid'
               render = {(props) => (
-                <Playlist {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+                <Playlist {...props} username = {this.state.username}/>
               )}
             /> 
 
-            <Route exact path='/:userid/settings'
+            <Route exact path='/:username/settings'
               render = {(props) => (
                 <Setting {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
               )}
             />
 
-            <Route exact path='/:userid'
+            <Route exact path='/:username'
               render = {(props) => (
                 <Playlists {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
               )}

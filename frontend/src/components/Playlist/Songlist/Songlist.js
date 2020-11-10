@@ -6,9 +6,6 @@ import './Songlist.css'
 
 import mockData from '../../../mock_data.json'
 class Songlist extends Component {
-    users = mockData.users 
-    playlists = mockData.playlists
-    state = {}
 
 
     handlePlayClick = (event) =>{
@@ -16,8 +13,9 @@ class Songlist extends Component {
     }
     
     getPlaylist() {
-        const {playlist} = this.props
-        return playlist
+        console.log(this.props)
+        const {songs} = this.props
+        return songs
     }
     render() {
         return (
@@ -28,7 +26,7 @@ class Songlist extends Component {
     }
 
     renderSongs(playlist){  
-        let songs = playlist.songs.map(function(song, i){
+        let songs = playlist.map(function(song, i){
             return (
                 <div key = {song.name + song.song_id} className="row song-row">
                     <div className="col song-col text-left">

@@ -7,10 +7,10 @@ class SearchList extends React.Component {
     render() {
 
         const items = this.props.searchList;
-        const tracks = items.tracks
+        const tracks = items.songs
         const artists = items.artists
         const users = items.users
- 
+        console.log(users)
         return (
             <div className='section'>
                 {/* Display the tracks */}
@@ -22,7 +22,7 @@ class SearchList extends React.Component {
                         <div className='col s3'>Length</div>
                         <div className='col s3'></div>
                     </div>
-                    {tracks.tracks.items && tracks.tracks.items.map(function(item) {
+                    {tracks && tracks.map(function(item) {
                         return (
                             <SearchListCard key = {item.id} item={item} type="track"/>
                         );})
@@ -39,7 +39,7 @@ class SearchList extends React.Component {
                         <div className='col s3'>Genres</div>
                         <div className='col s3'></div>
                     </div>
-                    {artists.artists.items && artists.artists.items.map(function(item) {
+                    {artists && artists.map(function(item) {
                     return (
                         <SearchListCard key = {item.id} item={item} type="artist"/>
                     );})
@@ -62,9 +62,9 @@ class SearchList extends React.Component {
                         <div className='col s3'>Playlists</div>
                         <div className='col s3'></div>
                     </div>
-                    {users.users && users.users.map(function(item) {
+                    {users && users.map(function(item) {
                     return (
-                        <SearchListCard key = {item.id} item={item} type="user"/>
+                        <SearchListCard key = {item.user._id} item={item} type="user"/>
                     );})
                     }
                 </>
