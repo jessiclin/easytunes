@@ -33,7 +33,8 @@ const resolver = {
             return { ...result._doc }
         } catch (error) {
             console.log(error)
-            throw error
+            console.log(error.keyPattern)
+            throw error.keyPattern
         }
 
 

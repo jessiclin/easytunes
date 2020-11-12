@@ -12,7 +12,7 @@ class SearchScreen extends Component {
         searchQuery : this.props.match.params.query,
         searchResults : {},
         searchType : this.props.match.params.type,
-        loading : true,
+        loading : false,
     }
 
     fetchData = (requestBody, type, url, last) => {
@@ -48,11 +48,11 @@ class SearchScreen extends Component {
             })
     }
 
-    fetchPlaylists = (last) => {
+    fetchPlaylists = (last, query) => {
         const requestBody = {
             query: `
                 query {
-                    searchPlaylists(name :"${this.state.searchQuery}"){
+                    searchPlaylists(name :"${query}"){
                         _id 
                         name 
                         likes 
@@ -67,11 +67,11 @@ class SearchScreen extends Component {
         this.fetchData(requestBody, 'playlists', 'http://localhost:5000/graphql', last)
     }
 
-    fetchUsers = (last) => {
+    fetchUsers = (last, query) => {
         let requestBody = {
             query: `
                 query {
-                    searchUsers(username: "${this.state.searchQuery}"){
+                    searchUsers(username: "${query}"){
                         user {
                             _id
                             username
@@ -91,32 +91,67 @@ class SearchScreen extends Component {
         this.fetchData(requestBody, 'users', 'http://localhost:5000/graphql', last)
     }
 
-    fetchSpotify = (type, last) => {
+    fetchSpotify = (type, query, last) => {
         let requestBody;
+        console.log(query)
         if (type === 'artists')
-            requestBody = { artist: this.state.searchQuery}
+            requestBody = { artist: query}
         else 
-            requestBody = { track: this.state.searchQuery}
+            requestBody = { track: query}
             
         this.fetchData(requestBody, type, 'http://localhost:5000/v1/search?', last)
     }
 
-    componentDidMount = () => {
-        this.setState({loading: true})
-        const type = this.state.searchType;
+    componentDidUpdate = () => {
+        if (this.state.searchType !== this.props.match.params.type || this.state.searchQuery !== this.props.match.params.query){
+            console.log("Update")
+            this.setState({
+                searchType : this.props.match.params.type,
+                searchQuery : this.props.match.params.query,
+                loading: true,
+                searchResults: {}
+            }, () => {
+                const type = this.state.searchType;
+                const query = this.state.searchQuery;
+                console.log(type, query, this.state.loading, this.props.match.params.type, this.props.match.params.query)
+                if (type === 'artists' || type === 'songs')
+                this.fetchSpotify(type,query, true)    
+                else if (type === 'user')
+                    this.fetchUsers(true, query)
+                else if (type === 'playlists')
+                    this.fetchPlaylists(true, query)
+                else {
+                    this.fetchSpotify('artists',query, false) 
+                    this.fetchSpotify('songs',query, false)
+                    this.fetchUsers(false, query)
+                    this.fetchPlaylists(true, query)   
+                }
+            })
 
-        if (type === 'artists' || type === 'songs')
-            this.fetchSpotify(type, true)    
-        else if (type === 'users')
-            this.fetchUsers(true)
-        else if (type === 'playlists')
-            this.fetchPlaylists(true)
-        else {
-            this.fetchSpotify('artists', false) 
-            this.fetchSpotify('songs', false)
-            this.fetchUsers(false)
-            this.fetchPlaylists(true)   
+            
         }
+    }
+    componentDidMount = () => {
+        
+
+        if (!this.state.loading){
+            this.setState({loading: true})
+            const type = this.state.searchType;
+            const query = this.state.searchQuery;
+            if (type === 'artists' || type === 'songs')
+            this.fetchSpotify(type, query, true)    
+            else if (type === 'user')
+                this.fetchUsers(true, query)
+            else if (type === 'playlists')
+                this.fetchPlaylists(true, query)
+            else {
+                this.fetchSpotify('artists', query, false) 
+                this.fetchSpotify('songs', query, false)
+                this.fetchUsers(false, query)
+                this.fetchPlaylists(true, query)   
+            }
+        }
+        
     }
 
     render() {

@@ -8,8 +8,12 @@
 .signin-row {
   height: 45px;
   padding: 0px;
+  margin-bottom: 0px
 }
 
+.login-row {
+  margin-bottom: 0px
+}
 .signin-row .signin-col {
   background: white;
   text-align: center;
@@ -45,6 +49,7 @@
 .signup-row {
   height: 45px;
   padding: 0px;
+  margin-bottom:0px
 }
 
 .signup-row .signin-col {
@@ -103,6 +108,13 @@
   padding: 0px 10px;
 }
 
+.input-group-signup {
+  position: relative;
+  margin: 35px 0px 20px;
+  background: white;
+  padding: 0px 10px;
+}
+
 .cred .input-group .input {
   background: white;
   font-size: 18px;
@@ -149,6 +161,13 @@
 .login-col button {
   border: none;
   outline: none;
+}
+
+.error-message {
+  height: 20px;
+  margin-top: 15px;
+  text-align: center;
+  color: red;
 }
 /* Change max container sizes */
 /*  Small devices (landscape phones, 576px and up) */

@@ -110,13 +110,23 @@ class Login extends Component {
         const username = this.usernameEl.current.value;
         const confirm = this.confirmEl.current.value;
         const userUrl = "easytunes.com/" + username;
-        if (email.trim().length === 0 || password.trim().length === 0 || username.trim().length === 0 || confirm.trim().length === 0)
+        if (email.trim().length === 0 || password.trim().length === 0 || username.trim().length === 0 || confirm.trim().length === 0){
+            this.setErrmess("Fill out all inputs")
             return;
+        }
+            
 
         
         if (password !== confirm){
             this.setErrmess("Passwords do not match")
             return;
+        }
+        
+        const pattern = /.*@.*\.com/i
+        console.log(pattern.test(email))
+        if (!pattern.test(email)){
+            this.setErrmess("Input a valid email")
+            return 
         }
             
         // Request backened 
@@ -141,14 +151,20 @@ class Login extends Component {
                                     }
                                 })
                                 .then(res => {
-                                    if (res.status !== 200 && res.status !== 201) 
-                                        throw new Error('Failed!');
+                                    
+                                    // if (res.status !== 200 && res.status !== 201) 
+                                    //     throw new Error('Failed!');
                                     
                                     return res.json();
                                 })
                                 .then(result => {
-        
-                                            // console.log(results.data)
+                                    if (result.errors) {
+                                        if (/.*email.*/.test(result.errors[0].message))
+                                            throw new Error('Email already in use')
+                                        if (/.*username.*/.test(result.errors[0].message))
+                                            throw new Error('Username already in use')
+                                    }
+
                                     // Load the data in 
                                     this.state.username = result.data.createUser.username
 
@@ -160,7 +176,7 @@ class Login extends Component {
                                 })
                                 .catch(err => {
                                     console.log(err);
-                                    this.setErrmess("Email or username already in use")
+                                    this.setErrmess(err.message)
                                 });
         
     }
@@ -198,6 +214,9 @@ class Login extends Component {
                 {/* Sign In Inputs */}
                 <div id = "credentials" className="row justify-content-center login-row">  
                     <div className="col-sm-12 cred">
+                        <div className="error-message justify-content-center"> 
+                            {!this.state.errorMess ? null : "Password and Email do not match"}
+                        </div>
                         <div className="input-group">
                             <input className="input" id = "email" ref = {this.emailEl} type="text" placeholder = " " required/>
                             <label className="label">Email</label>
@@ -211,6 +230,7 @@ class Login extends Component {
                         <Link to='/forgotpassword' className="forgot-password">
                             Forgot Password?
                         </Link>
+                       
                     </div>
                 </div>
 
@@ -242,22 +262,25 @@ class Login extends Component {
             {/* Sign Up components */}
             <div className="row justify-content-sm-center login-row ">
                 <div className="col-sm-12 cred">
-                    <div className="input-group">
+                    <div className="error-message justify-content-center"> 
+                            {!this.state.errorMess ? null : this.state.errorMess}
+                        </div>
+                    <div className="input-group-signup input-group">
                         <input className="input" id = "email"  ref = {this.emailEl} type="text" required/>
                         <label className="label">Email</label>
                     </div>
 
-                    <div className="input-group">
+                    <div className="input-group-signup input-group">
                         <input className="input" id = "username"  ref = {this.usernameEl} type="text" required/>
                         <label className="label">Username</label>
                     </div>
 
-                    <div className="input-group">
+                    <div className="input-group-signup input-group">
                         <input className="input" id = "password"  ref = {this.passwordEl} type="password" required/>
                         <label className="label">Password</label>
                     </div>
 
-                     <div className="input-group">
+                     <div className="input-group-signup input-group">
                         <input className="input" id = "confirm-password"  ref = {this.confirmEl} type="password" required/>
                         <label className="label">Confirm Password</label>
                     </div>

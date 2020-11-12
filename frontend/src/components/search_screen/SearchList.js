@@ -10,7 +10,7 @@ class SearchList extends React.Component {
         const tracks = items.songs
         const artists = items.artists
         const users = items.users
-        console.log(users)
+
         return (
             <div className='section'>
                 {/* Display the tracks */}
