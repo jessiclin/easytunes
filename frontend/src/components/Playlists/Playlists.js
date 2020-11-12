@@ -154,25 +154,88 @@ class Playlists extends Component {
     }
 
     renderPlaylists = (playlists) => {
-        function PlaylistButton({playlist,history, username}) {
-            const [confirmationVisible, setConfirmationPopup] = React.useState(false)
-            function toPlaylist(){
+        function PlaylistButton({playlist,history, username, setPlaylists}) {
+            const [visible, setVisibility] = React.useState(false)
+            function toggleVisibilityTrue() {
+                setVisibility(visible => true)
+            }
+
+            function toggleVisibilityFalse() {
+                setVisibility(visible => false)
+            }
+            function toPlaylist() {
                 history.history.push('/' + encodeURIComponent(playlist.username) + '/playlist='+ playlist._id)
             }
 
-            function confirmationPopup (){
-                setConfirmationPopup(true)
-
+            function deletePlaylist() {
+                toggleVisibilityFalse()
                 // Delete the playlist 
                 let requestBody = {
-                    query : `
-                        query {
-                            deletePlaylistByID (id : ${playlist._id}){
-                                _id
+                    query: `
+                        mutation {
+                            deletePlaylist (id : "${playlist._id}") {
+                                _id 
                             }
                         }
                     `
                 }
+        
+                // Create the playlist 
+                fetch('http://localhost:5000/graphql', {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                    })
+                    .then(res => {
+                        if (res.status !== 200 && res.status !== 201) 
+                            throw new Error('Failed');
+                        return res.json()
+                    })
+                    .then(result => {
+
+                         // Update the playlists on the UI 
+                        requestBody = {
+                            query: `
+                                query {
+                                    getUserPlaylists(username: "${username}"){
+                                        _id
+                                        name
+                                        username
+                                        likes 
+                                        songs {
+                                            _id
+                                            name
+                                        }
+                                    }
+                                }
+                            `
+                        }
+
+                        fetch("http://localhost:5000/graphql", {
+                            method: 'POST',
+                            body: JSON.stringify(requestBody),
+                            headers: {
+                            'content-type': 'application/json'
+                            }})
+                        .then(res => {
+                            if (res.status !== 200 && res.status !== 201) 
+                                throw new Error('Failed');
+                            return res.json()
+                        })
+                        .then(result => {
+                            console.log(result.data.getPlaylists)
+                            setPlaylists(result.data.getPlaylists)
+                            //error here
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
 
             return (
@@ -202,9 +265,18 @@ class Playlists extends Component {
                     </button>
 
                     
-                    <button className="delete-btn" onClick = {confirmationPopup}> 
+                    <button className="delete-btn" onClick = {toggleVisibilityTrue}> 
                         <AiOutlineDelete size = {24}/>
                     </button>
+                    {visible ?
+                    <div className="delete-playlist-box">
+                        <div>
+                            Delete the playlist?
+                        </div>
+                        <button className = "confirm-new-btn" onClick={deletePlaylist}> <AiOutlineCheckCircle size = {24}/></button>
+                        <button className = "cancel-new-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
+                    </div>
+                    : null }
                 </div>
             )
         }
@@ -371,6 +443,7 @@ class Playlists extends Component {
     setPlaylists = (playlists) => {
         this.setState({profilePlaylists : playlists})
     }
+    
     isFollowing = () =>{
         let followers = this.state.profileFollowers
         let following = false 
@@ -381,6 +454,7 @@ class Playlists extends Component {
         
         return following
     }
+
 
     // Button click on "My Playlists"
     handleMyPlaylistView = () => {
@@ -426,10 +500,7 @@ class Playlists extends Component {
         document.getElementById('saved-playlists-btn').style.fontWeight = "normal"
         document.getElementById('uploaded-songs-btn').style.fontWeight = "bold"
     }
-        
-    // handleDelete = (event) => {
-    //     console.log("Delete Playlist")
-    // }
+    
 
     // getUserInfoById = (id) => {
     //     for (var i = 0; i < this.users.length; i++){

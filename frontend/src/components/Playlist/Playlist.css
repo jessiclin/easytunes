@@ -87,3 +87,7 @@
 .user-btn:focus {
   outline:none
 }
+
+.share:hover {
+  cursor: pointer;
+}
