@@ -87,6 +87,8 @@ type RootQuery {
 type RootMutation {
     createUser(userInput: UserInput!): User
     createPlaylist(username: String!, user_id: ID!,  name: String!): Playlist
+    deletePlaylist(id: ID!): Playlist
+    deleteSong(id: ID!): SongRef
 }
 
 schema {
