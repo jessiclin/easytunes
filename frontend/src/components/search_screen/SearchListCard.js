@@ -5,6 +5,7 @@ class SearchListCard extends React.Component {
     constructor(props){
         super(props)
     }
+    
     handleAddToPlaylist = (e) => {
 
     }
@@ -32,7 +33,7 @@ class SearchListCard extends React.Component {
 
         return(
             <div>
-                <div className='card z-depth-0 grey text'>
+                <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
                         <span className='card-title'>{this.props.item.user.username}</span>
                     </div>
@@ -63,7 +64,7 @@ class SearchListCard extends React.Component {
         genres = genres.substring(0, genres.length - 2)
         return(
             <div>
-                <div className='card z-depth-0 grey text'>
+                <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
                         <span className='card-title'>{this.props.item.name}</span>
                     </div>
@@ -92,7 +93,7 @@ class SearchListCard extends React.Component {
 
         return (
             <div>
-                <div className='card z-depth-0 grey text'>
+                <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
                         <span className='card-title'>{this.props.item.name}</span>
                     </div>

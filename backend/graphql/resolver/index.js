@@ -127,6 +127,22 @@ const resolver = {
         } catch (err) {
             throw err
         }
+    }, 
+    deletePlaylist: async ({id}) => {
+        try {
+            const result = await Playlist.findByIdAndRemove(id)
+            return {...result._doc}
+        } catch(err) {
+            throw err
+        }
+    },
+    deleteSong: async ({id}) => {
+        try {
+            const result = await Playlist.findByIdAndRemove(id)
+            return {...result._doc}
+        } catch(err) {
+            throw err
+        }
     }
 }
 
