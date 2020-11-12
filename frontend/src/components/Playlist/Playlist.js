@@ -9,6 +9,7 @@ import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlist.css'
 
 import mockData from '../../mock_data.json'
+import { FaShare } from 'react-icons/fa'
 // A playlist page 
 class Playlist extends Component {
 
@@ -120,8 +121,10 @@ class Playlist extends Component {
 
                                 <h5> Playlist By: <User username = {this.state.playlistUser} history = {this.props} /> </h5>
                             </div>
-                            <div className="col public-col">
-
+                            <div className="col text-center align-self-center playlist-col">
+                                <div onClick={() => {navigator.clipboard.writeText(window.location.href)}}>
+                                    <FaShare size={34} className="share"/>
+                                </div>
                             </div>
                         </div>
 
@@ -152,7 +155,7 @@ class Playlist extends Component {
                         }
 
                         {/* Render "Songs", "Comments", "Settings" */}
-                        {this.state.songsVisible ? <Songlist songs = {this.state.songs}/> : null}
+                        {this.state.songsVisible ? <Songlist songs = {this.state.songs} playlistId = {this.state.playlistId}/> : null}
                         {this.state.commentsVisible ? <Comments comments = {this.state.comments}  /> : null}
                         {this.state.settingsVisible ? <PlaylistSetting playist = {this.state.playlistInfo} updatePlaylist = {this.updatePlaylist}/> : null}
                     </div>
@@ -162,9 +165,12 @@ class Playlist extends Component {
             );
         }
 
+<<<<<<< HEAD
     updatePlaylist = () => {
 
     }
+=======
+>>>>>>> 110c4a9a9f9310dd353341b97aeeaba2a0a7c0d6
     // Button click on "Songs"
     setSongsVisible = () =>{
         this.setState(
