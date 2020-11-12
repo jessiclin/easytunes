@@ -20,7 +20,7 @@ class Playlist extends Component {
         playlistUser : null, 
         playlistInfo : null,
         playlistId : this.props.match.params.playlistid,
-        userId : this.props.match.params.username,
+        username : this.props.match.params.username,
         songs: null,
         comments: null,
         public : false,
@@ -126,7 +126,7 @@ class Playlist extends Component {
                         </div>
 
                         {/* Songs, Likes and Comments, Settings Navbar */}
-                        {this.state.owner ? 
+                        {this.state.username === this.props.username ? 
                             <div className="navigation-row">
                                 <div className="col text-center playlist-col">
                                     <button id = "songs-btn" className = "songs-btn" onClick = {this.setSongsVisible} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}} > Songs </button>
@@ -154,7 +154,7 @@ class Playlist extends Component {
                         {/* Render "Songs", "Comments", "Settings" */}
                         {this.state.songsVisible ? <Songlist songs = {this.state.songs}/> : null}
                         {this.state.commentsVisible ? <Comments comments = {this.state.comments}  /> : null}
-                        {this.state.settingsVisible ? <PlaylistSetting playlist_name = {this.state.playlistName} public = {this.state.public}/> : null}
+                        {this.state.settingsVisible ? <PlaylistSetting playist = {this.state.playlistInfo} updatePlaylist = {this.updatePlaylist}/> : null}
                     </div>
                     <PlaylistNavbar/>
                 </div>
@@ -162,7 +162,9 @@ class Playlist extends Component {
             );
         }
 
+    updatePlaylist = () => {
 
+    }
     // Button click on "Songs"
     setSongsVisible = () =>{
         this.setState(

@@ -257,7 +257,7 @@ class Playlists extends Component {
                         return res.json()
                     })
                     .then(result => {
-
+                        console.log(result, username)
                          // Update the playlists on the UI 
                         requestBody = {
                             query: `
@@ -283,13 +283,14 @@ class Playlists extends Component {
                             'content-type': 'application/json'
                             }})
                         .then(res => {
+                            console.log("HERE")
                             if (res.status !== 200 && res.status !== 201) 
                                 throw new Error('Failed');
                             return res.json()
                         })
                         .then(result => {
-                            console.log(result.data.getPlaylists)
-                            setPlaylists(result.data.getPlaylists)
+                            console.log(result.data.getUserPlaylists)
+                            setPlaylists(result.data.getUserPlaylists)
                         })
                         .catch(err => {
                             console.log(err);
