@@ -12,6 +12,7 @@ class SearchScreen extends Component {
         searchQuery : this.props.match.params.query,
         searchResults : {},
         searchType : this.props.match.params.type,
+        username: this.props.username,
         loading : false,
     }
 
@@ -28,7 +29,6 @@ class SearchScreen extends Component {
                 return res.json()
             })
             .then(data => {
-                console.log(data)
                 let searchRes = this.state.searchResults 
                 if (type === 'artists')
                     searchRes[type] = data.artists.items 
@@ -93,7 +93,6 @@ class SearchScreen extends Component {
 
     fetchSpotify = (type, query, last) => {
         let requestBody;
-        console.log(query)
         if (type === 'artists')
             requestBody = { artist: query}
         else 
@@ -165,7 +164,7 @@ class SearchScreen extends Component {
                 <div className="row">
                     <h2 className="col s1">Results</h2>
                 </div>
-                <SearchList searchList={this.state.searchResults}/>
+                <SearchList searchList={this.state.searchResults} username={this.state.username}/>
             </div> 
             <PlaylistNavbar/>
             </>

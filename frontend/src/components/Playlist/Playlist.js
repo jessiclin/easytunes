@@ -15,14 +15,9 @@ class Playlist extends Component {
         songsVisible : true,
         commentsVisible : false,
         settingsVisible : false,
-        playlistName : null,
-        playlistUser : null, 
         playlistInfo : null,
         playlistId : this.props.match.params.playlistid,
         username : this.props.match.params.username,
-        songs: null,
-        comments: null,
-        public : false,
         loading: true
     }
 
@@ -74,12 +69,7 @@ class Playlist extends Component {
                 data = data.data.getPlaylistByID
                 console.log(data)
                 this.setState({
-                    playlistName : data.name,
                     playlistInfo: data,
-                    playlistUser: data.username,
-                    public: data.public,
-                    songs: data.songs,
-                    comments: data.comments,
                     loading: false
                 })
             })
@@ -110,14 +100,14 @@ class Playlist extends Component {
                             <div className="col text-center align-self-center playlist-col">
                                 <div className="likes">
                                     <AiFillHeart size={34} />
-                                    {this.state.likes} 
+                                    {this.state.playlistInfo.likes} 
                                 </div>
                             </div>
 
                             <div className="col text-center align-self-left playlist-col">
-                                <h2>{this.state.playlistName} {this.state.public ? <AiFillEye size={24}/> : <AiFillEyeInvisible size={24}/>}</h2>
+                                <h2>{this.state.playlistInfo.name} {this.state.playlistInfo.public ? <AiFillEye size={24}/> : <AiFillEyeInvisible size={24}/>}</h2>
 
-                                <h5> Playlist By: <User username = {this.state.playlistUser} history = {this.props} /> </h5>
+                                <h5> Playlist By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div onClick={() => {navigator.clipboard.writeText(window.location.href)}}>
@@ -127,7 +117,7 @@ class Playlist extends Component {
                         </div>
 
                         {/* Songs, Likes and Comments, Settings Navbar */}
-                        {this.state.username === this.props.username ? 
+                        {this.state.playlistInfo.username === this.props.username ? 
                             <div className="navigation-row">
                                 <div className="col text-center playlist-col">
                                     <button id = "songs-btn" className = "songs-btn" onClick = {this.changeView} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}} > Songs </button>
@@ -153,8 +143,8 @@ class Playlist extends Component {
                         }
 
                         {/* Render "Songs", "Comments", "Settings" */}
-                        {this.state.songsVisible ? <Songlist songs = {this.state.songs} playlistId = {this.state.playlistId}/> : null}
-                        {this.state.commentsVisible ? <Comments comments = {this.state.comments}  /> : null}
+                        {this.state.songsVisible ? <Songlist playlist_id = {this.state.playlistInfo._id} songs = {this.state.playlistInfo.songs}/> : null}
+                        {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments}  /> : null}
                         {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} updatePlaylist = {this.updatePlaylist}/> : null}
                     </div>
                     <PlaylistNavbar/>
@@ -163,6 +153,9 @@ class Playlist extends Component {
             );
         }
 
+        changePlaylist = (playlist) => {
+            this.setState({playlistInfo : playlist})
+        }
 
         changeView = (event) => {
             let invisible = [];

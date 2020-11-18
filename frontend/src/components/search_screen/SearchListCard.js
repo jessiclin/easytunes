@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import './Search.css'
-
+import AddSong from './AddSongs'
 class SearchListCard extends Component {
-
-    handleAddToPlaylist = (e) => {
-        console.log(e)
+    state = {
+        item : this.props.item,
+        type : this.props.type,
     }
+
     handleFavorite = (e) => {
 
     }
@@ -17,44 +18,47 @@ class SearchListCard extends Component {
     }
 
     render() {
+
         return (
             <>
-            {this.props.type === "track" ? this.renderSongs() : 
-            this.props.type === "artist" ? this.renderArtists(): 
-            this.props.type === "playlist" ? this.renderPlaylists():
-            this.renderUsers()}
+            {this.state.type === "track" ? this.renderSong() : 
+            this.state.type === "artist" ? this.renderArtist(): 
+            this.state.type === "playlist" ? this.renderPlaylist():
+            this.renderUser()}
             </>
         )
     }
-    renderUsers(){
+
+
+    renderUser(){
 
         return(
             <div>
                 <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{this.props.item.user.username}</span>
+                        <span className='card-title'>{this.state.item.user.username}</span>
                     </div>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{this.props.item.user.followers.length}</span>
+                        <span className='card-title'>{this.state.item.user.followers.length}</span>
                     </div>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{this.props.item.playlists.length}</span>
+                        <span className='card-title'>{this.state.item.playlists.length}</span>
                     </div>
 
                     <div className='card-content col s3'>
-                        <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
-                        <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button>
+                        {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
+                        {/* <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button> */}
                     </div>
                 </div>
             </div>
         );
     }
-    renderArtists(){
+    renderArtist(){
  
 
         let genres = ""
      
-            this.props.item.genres.forEach(genre => {
+            this.state.item.genres.forEach(genre => {
                 genres = genres + genre + ", "
             })
 
@@ -63,22 +67,23 @@ class SearchListCard extends Component {
             <div>
                 <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{this.props.item.name}</span>
+                        <span className='card-title'>{this.state.item.name}</span>
                     </div>
                     <div className='card-content col s3'>
                         <span className='card-title'>{genres}</span>
                     </div>
 
                     <div className='card-content col s3'>
-                        <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
-                        <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button>
+                        {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
+                        
+                        {/* <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button> */}
                     </div>
                 </div>
             </div>
         );
     }
-    renderSongs(){
-        const artists = this.props.item.artists
+    renderSong(){
+        const artists = this.state.item.artists
 
         let artistNames = ""
         artists.forEach(artist => {
@@ -86,13 +91,13 @@ class SearchListCard extends Component {
 
         })
 
-        const songLength = this.millisToMinutesAndSeconds(this.props.item.duration_ms)
+        const songLength = this.millisToMinutesAndSeconds(this.state.item.duration_ms)
 
         return (
             <div>
                 <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{this.props.item.name}</span>
+                        <span className='card-title'>{this.state.item.name}</span>
                     </div>
                     <div className='card-content col s3'>
                         <span className='card-title'>{artistNames}</span>
@@ -100,9 +105,9 @@ class SearchListCard extends Component {
                     <div className='card-content col s3'>
                         <span className='card-title'>{songLength}</span>
                     </div>
-                    <div className='card-content col s3'>
-                        <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
-                        <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button>
+                    <div className='card-content col s3 '>
+                        {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
+                        <AddSong username ={this.props.username} song = {this.state.item}/>
                     </div>
                 </div>
             </div>

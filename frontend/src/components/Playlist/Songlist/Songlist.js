@@ -5,7 +5,10 @@ import {FaRegPlayCircle} from 'react-icons/fa'
 import './Songlist.css'
 
 class Songlist extends Component {
-
+    state = {
+        songs : this.props.songs,
+        playlist_id: this.props.playlist_id
+    }
 
     handlePlayClick = (event) =>{
         console.log(event)
@@ -92,21 +95,8 @@ class Songlist extends Component {
             });
     }
 
-    getPlaylist() {
-        console.log(this.props)
-        const {songs} = this.props
-        return songs
-    }
     render() {
-        return (
-            <>
-                {this.renderSongs(this.getPlaylist())}
-            </>
-        );
-    }
-
-    renderSongs(playlist){  
-        let songs = playlist.map(function(song, i){
+        let songs = this.state.songs.map(function(song, i){
             return (
                 <div key = {song.name + song.song_id} className="row song-row">
                     <div className="col song-col text-left">
@@ -139,6 +129,7 @@ class Songlist extends Component {
             </>
         )
     }
+
 }
  
 export default Songlist;

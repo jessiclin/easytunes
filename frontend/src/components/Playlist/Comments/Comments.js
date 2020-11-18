@@ -3,23 +3,15 @@ import { BsFillCaretUpFill, BsFillCaretDownFill} from 'react-icons/bs'
 import './Comments.css'
 
 class Comments extends Component {
-
+    state = {
+        comments : this.props.comments
+    }
     getComments = () => {
         const {comments} = this.props
         console.log(this.props)
         return comments
     }
     render() {
-        return (
-            <>
-                {this.renderComments(this.getComments())}
-            </>
-        );
-    }
-
-
-    renderComments(list){
-        console.log(list)
         function ReplyButton(elem){
             const [showReplyVisible, setVisibility] = React.useState(true);
             
@@ -70,7 +62,7 @@ class Comments extends Component {
 
  
 
-        let comments = list.map(function(elem, i){
+        let comments = this.state.comments.map(function(elem, i){
             
             return (
                     <div key = {elem.username + " " + i.toString()}  className="container result-container">
@@ -95,6 +87,7 @@ class Comments extends Component {
             </>
         );
     }
+
 }
  
 export default Comments;
