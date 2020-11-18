@@ -2,7 +2,7 @@ import {buildSchema} from 'graphql'
 
 const schema = buildSchema (`
 type SongRef {
-    _id: ID!
+    _id: String!
     name: String!
     artists: [String!]!
     uploaded: Boolean!
@@ -73,6 +73,13 @@ input UserInput {
     url: String!
 }
 
+input SongInput {
+    _id: String!
+    name: String!
+    artists: String!
+    uploaded: Boolean!
+}
+
 type RootQuery {
     searchUsers(username: String!): [User_Playlists!]!
     searchPlaylists(name: String!): [Playlist!]!
@@ -89,6 +96,7 @@ type RootMutation {
     createPlaylist(username: String!, user_id: ID!,  name: String!): Playlist
     deletePlaylist(id: ID!): Playlist
     deleteSong(id: ID!): SongRef
+    addSong(songInput: SongInput!, playlist_id: ID!): Playlist
 }
 
 schema {

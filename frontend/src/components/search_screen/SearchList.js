@@ -4,7 +4,6 @@ import SearchListCard from './SearchListCard.js'
 
 class SearchList extends Component {
     render() {
-
         const items = this.props.searchList;
         const tracks = items.songs
         const artists = items.artists
@@ -23,8 +22,8 @@ class SearchList extends Component {
                     </div>
                     {tracks && tracks.map(function(item) {
                         return (
-                            <SearchListCard key = {item.id} item={item} type="track"/>
-                        );})
+                            <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username}/>
+                        );}, this)
                     }
                     </>
                     : null
@@ -40,8 +39,8 @@ class SearchList extends Component {
                     </div>
                     {artists && artists.map(function(item) {
                     return (
-                        <SearchListCard key = {item.id} item={item} type="artist"/>
-                    );})
+                        <SearchListCard key = {item.id} item={item} type="artist" username = {this.props.username}/>
+                    );} ,this)
                      }
                 
                 </>
@@ -63,8 +62,8 @@ class SearchList extends Component {
                     </div>
                     {users && users.map(function(item) {
                     return (
-                        <SearchListCard key = {item.user._id} item={item} type="user"/>
-                    );})
+                        <SearchListCard key = {item.user._id} item={item} type="user" username = {this.props.username}/>
+                    );},this)
                     }
                 </>
                 :

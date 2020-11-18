@@ -9,3 +9,11 @@
 .search-results-container {
     margin-top: 60px
 }
+
+.add-song-box {
+    border: 1px solid;
+    position: absolute;
+    background: white;
+    z-index: 2;
+
+}

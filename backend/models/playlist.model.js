@@ -28,9 +28,9 @@ const PlaylistSchema = new Schema({
     ],
     songs: [
         {
-            song_id : {type: Schema.Types.ObjectId, required: true},
+            song_id : {type: String, required: true},
             name: {type: String, required: true},
-            artist: {type: String, required: true},
+            artists: [{type: String, required: true}],
             uploaded: {type: Boolean, required: true}
         }
     ]
