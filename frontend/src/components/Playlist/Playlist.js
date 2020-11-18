@@ -163,8 +163,9 @@ class Playlist extends Component {
             );
         }
 
+
         changeView = (event) => {
-            let invisible = new Array();
+            let invisible = [];
             const visible = event.target.className
             if (visible === "songs-btn"){
                 this.setState({

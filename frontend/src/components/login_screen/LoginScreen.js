@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-// npm install react-router-dom to use Router 
-import {Link} from 'react-router-dom';
 
 // Import css 
 import 'bootstrap/dist/css/bootstrap.css'

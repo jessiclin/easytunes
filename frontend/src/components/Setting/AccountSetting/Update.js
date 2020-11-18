@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 class Update extends Component {
     state = { visible: false, origina: this.props.origina, text: this.props.text }
 

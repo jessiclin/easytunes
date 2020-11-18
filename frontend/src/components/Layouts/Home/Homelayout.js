@@ -2,7 +2,7 @@ import React from "react";
 import "./Homelayout.css";
 import { Button } from "../../Button/Button";
 import { Link } from "react-router-dom";
-import Navbar from "../../Navbar/Navbar";
+
 
 function Homelayout({
   lightBg,

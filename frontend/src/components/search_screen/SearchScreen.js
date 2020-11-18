@@ -23,7 +23,7 @@ class SearchScreen extends Component {
                 'content-type': 'application/json'
             }})
             .then(res => {
-                if (res.status != 200 && res.status != 201)
+                if (res.status !== 200 && res.status !== 201)
                     throw new Error ('Failed')
                 return res.json()
             })
@@ -172,10 +172,10 @@ class SearchScreen extends Component {
         );
     }
 }
-const mapStateToProps = (state, ownProps) => {
-    const searchList = ownProps.searchList;
-    return {
+// const mapStateToProps = (state, ownProps) => {
+//     const searchList = ownProps.searchList;
+//     return {
 
-    };
-}
+//     };
+//}
 export default SearchScreen;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
-import {MdAccountCircle} from 'react-icons/md'
-import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
+import {AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
+
 import {RiPlayListLine} from 'react-icons/ri'
 import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 // FaRegPauseCircle
@@ -9,13 +8,15 @@ import {FaRegPlayCircle} from 'react-icons/fa'
 class PlaylistButton extends Component {
     constructor(props){
         super(props);
-        this.setPlaylists = this.props.setPlaylists
+        this.setPlaylists = this.props.setPlaylists;
+
     }
     
     state = { 
         playlist: this.props.playlist,
         username: this.props.username,
         deleteConfirmVisible: false,
+        history: this.props.history
     }
 
 
@@ -28,11 +29,9 @@ class PlaylistButton extends Component {
     }
 
     toPlaylist = () => {
-        
+        this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/playlist='+ this.state.playlist._id)
     }
-
     deletePlaylist = () => {
-        console.log(this)
         this.setInvisible()
         // Delete the playlist 
         let requestBody = {
@@ -114,7 +113,7 @@ class PlaylistButton extends Component {
                 </div>
 
                 <div className="col text-left">
-                    {playlist.songs.length} {playlist.songs.length == 1 ? "song" : "songs"} 
+                    {playlist.songs.length} {playlist.songs.length === 1 ? "song" : "songs"} 
                 </div>
 
                 <div className="col text-left">

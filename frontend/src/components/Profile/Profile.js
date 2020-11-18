@@ -1,10 +1,6 @@
 import React, { Component} from 'react'
 
 import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
-import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
-// FaRegPauseCircle
-
-import {IoMdAddCircleOutline}from 'react-icons/io'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import Playlists from './Playlists/Playlists'
@@ -75,7 +71,7 @@ class Profile extends Component {
                 'content-type': 'application/json'
             }})
             .then(res => {
-                if (res.status != 200 && res.status != 201)
+                if (res.status !== 200 && res.status !== 201)
                     throw new Error ('Failed')
                 return res.json()
             })
@@ -140,8 +136,8 @@ class Profile extends Component {
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
-                    {this.state.showSavedPlaylists ? <Playlists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
-                    {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} /> : null}
+                    {this.state.showSavedPlaylists ? <Playlists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history} /> : null}
+                    {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history}/> : null}
                     {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
                 </div>
                 <PlaylistNavbar/>
@@ -152,7 +148,6 @@ class Profile extends Component {
          );
     }
 
- 
     isFollowing = () =>{
         let followers = this.state.profileFollowers
         let following = false 
@@ -166,7 +161,7 @@ class Profile extends Component {
 
     
     changeView = (event) => {
-        let invisible = new Array();
+        let invisible = []
         const visible = event.target.className
         if (visible === "my-playlists-btn"){
             this.setState({

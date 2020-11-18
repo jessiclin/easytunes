@@ -4,7 +4,6 @@ import {AiOutlineDelete} from 'react-icons/ai'
 import {FaRegPlayCircle} from 'react-icons/fa'
 import './Songlist.css'
 
-import mockData from '../../../mock_data.json'
 class Songlist extends Component {
 
 

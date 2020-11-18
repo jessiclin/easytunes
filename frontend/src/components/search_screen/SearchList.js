@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import SearchListCard from './SearchListCard.js'
 
-class SearchList extends React.Component {
 
-
+class SearchList extends Component {
     render() {
 
         const items = this.props.searchList;
@@ -75,10 +74,10 @@ class SearchList extends React.Component {
         );
     }
 }
-const mapStateToProps = (state, ownProps) => {
-    const searchList = ownProps.searchList;
-    return {
+// const mapStateToProps = (state, ownProps) => {
+//     const searchList = ownProps.searchList;
+//     return {
 
-    };
-}
+//     };
+// }
 export default SearchList;

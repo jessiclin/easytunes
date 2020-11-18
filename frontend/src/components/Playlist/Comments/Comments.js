@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { BsFillCaretUpFill, BsFillCaretDownFill, BsLayoutThreeColumns} from 'react-icons/bs'
+import { BsFillCaretUpFill, BsFillCaretDownFill} from 'react-icons/bs'
 import './Comments.css'
 
-import mockData from '../../../mock_data.json'
 class Comments extends Component {
 
     getComments = () => {

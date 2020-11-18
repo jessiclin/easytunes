@@ -19,7 +19,7 @@ class FollowingPage extends Component {
     users = mockData.users 
 
     changeView = (event) => {
-        let invisible = new Array();
+        let invisible = [];
         const visible = event.target.className
         if (visible === "followers-btn"){
             this.setState({

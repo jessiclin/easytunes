@@ -12,9 +12,9 @@ import HomeScreen from "./components/home_screen/HomeScreen"
 import SearchScreen from "./components/search_screen/SearchScreen.js"
 import FollowingPage from './components/Following/FollowingPage'
 import Setting from './components/Setting/Setting'
-import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
-import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
-import Navbar from './components/Navbar/Navbar'
+// import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
+// import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
+// import Navbar from './components/Navbar/Navbar'
 
 
 class App extends Component {

@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import './Search.css'
 
-class SearchListCard extends React.Component {
-    constructor(props){
-        super(props)
-    }
-    
-    handleAddToPlaylist = (e) => {
+class SearchListCard extends Component {
 
+    handleAddToPlaylist = (e) => {
+        console.log(e)
     }
     handleFavorite = (e) => {
 
@@ -16,7 +13,7 @@ class SearchListCard extends React.Component {
     millisToMinutesAndSeconds(millis) {
         const minutes = Math.floor(millis / 60000);
         const seconds = ((millis % 60000) / 1000).toFixed(0);
-        return (seconds == 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds)
+        return (seconds === 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds)
     }
 
     render() {
@@ -45,8 +42,8 @@ class SearchListCard extends React.Component {
                     </div>
 
                     <div className='card-content col s3'>
-                        <a className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></a>
-                        <a className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></a>
+                        <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
+                        <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button>
                     </div>
                 </div>
             </div>
@@ -73,8 +70,8 @@ class SearchListCard extends React.Component {
                     </div>
 
                     <div className='card-content col s3'>
-                        <a className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></a>
-                        <a className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></a>
+                        <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
+                        <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button>
                     </div>
                 </div>
             </div>
@@ -104,8 +101,8 @@ class SearchListCard extends React.Component {
                         <span className='card-title'>{songLength}</span>
                     </div>
                     <div className='card-content col s3'>
-                        <a className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></a>
-                        <a className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></a>
+                        <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
+                        <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button>
                     </div>
                 </div>
             </div>

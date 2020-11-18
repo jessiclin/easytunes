@@ -1,12 +1,7 @@
-import React, { useState, Component } from 'react'
-import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle, FaAlignCenter} from 'react-icons/fa'
+import React, {Component } from 'react'
+import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
 
-// import { Button } from '../Button/Button';
-// import { NavLink, Link } from 'react-router-dom';
 import '../Navbar/Navbar.css';
-// import Dropdown from '../Dropdown';
-// import { BsMusicNoteList } from "react-icons/bs";
-// import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import "./HomeScreen.css"
 // import Logo from "./am4a.png"
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
@@ -50,7 +45,7 @@ class HomeScreen extends Component {
                         </div>
 
                     <div className="image-container">
-                        <img src = "https://www.afghansmart.com/assets/fronend/images/default_album_art.png" size = {100}/>
+                        <img src = "https://www.afghansmart.com/assets/fronend/images/default_album_art.png"  alt="" size = {100}/>
                     </div>
                     
                     <div className="container-fluid text-center song-info-row">

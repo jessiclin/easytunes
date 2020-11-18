@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 class UpdatePassword extends Component {
     state = { visible: false }
 

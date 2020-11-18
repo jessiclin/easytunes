@@ -7,10 +7,13 @@ class PlaylistSetting extends Component {
         playlist : this.props.playlist,
         save : true,
         edit: false,
-        public: true
+        public:this.props.playlist.public
     }
 
-
+    handleEditClick = () => {
+        this.setState({edit: !this.state.edit})
+        console.log(this.state.edit)
+    }
     render(){
         return (
             <>

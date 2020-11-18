@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 
-import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
-import Switch from 'react-input-switch';
+
 import AccountSetting from './AccountSetting/AccountSetting'
 import AdvancedSetting from './AdvancedSetting/AdvancedSetting'
 import PrivacySetting from './PrivacySetting/PrivacySetting'
@@ -55,7 +54,7 @@ class Setting extends Component {
         );
     }
     changeView = (event) => {
-        let invisible = new Array();
+        let invisible = [];
         const visible = event.target.id
         console.log(event)
         if (visible === "settings-account-btn"){
