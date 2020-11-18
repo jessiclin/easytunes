@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {RiUserFollowLine, RiUserAddLine, RiUserUnfollowLine} from 'react-icons/ri'
+import {RiUserAddLine} from 'react-icons/ri'
 
 class Requests extends Component {
     state = { 

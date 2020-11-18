@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './PlaylistNavbar.css'
-import {RiPlayListLine} from 'react-icons/ri'
-import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle, FaAlignCenter} from 'react-icons/fa'
+import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
 import AudioPlayer, { RHAP_UI }  from "react-h5-audio-player";
 import './AudioPlayer.css'
 //import 'react-h5-audio-player/lib/styles.css';

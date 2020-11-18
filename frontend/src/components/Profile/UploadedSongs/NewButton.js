@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
 import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 // FaRegPauseCircle
 
 import {IoMdAddCircleOutline}from 'react-icons/io'
 class NewButton extends Component {
-    constructor(props) {
-        super(props)
-    }
+
     state = { 
         popupVisible: false,
         // playlistName: null,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {Component } from "react";
 import { Button } from "../Button/Button";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
@@ -7,7 +7,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 
 
-class Navbar extends React.Component {
+class Navbar extends Component {
   constructor(props){
     super(props)
     this.notAtHome = this.props.notAtHome

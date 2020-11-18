@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 
-import { NavLink, Link } from 'react-router-dom';
 import {BsFillCaretDownFill} from 'react-icons/bs'
 import {MdAccountCircle} from 'react-icons/md'
-import {AiFillHome, AiOutlineConsoleSql} from 'react-icons/ai'
+import {AiFillHome} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
 import './HeaderNavbar.css'
 import mockData from '../../mock_data.json'

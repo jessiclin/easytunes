@@ -58,7 +58,7 @@ class SignUp extends Component {
                 `
               };
     
-            const results = await  fetch('http://localhost:5000/graphql', {
+            await  fetch('http://localhost:5000/graphql', {
                                         method: 'POST',
                                         body: JSON.stringify(requestBody),
                                         headers: {

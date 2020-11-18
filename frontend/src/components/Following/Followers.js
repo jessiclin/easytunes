@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {RiUserFollowLine, RiUserAddLine, RiUserUnfollowLine} from 'react-icons/ri'
+import {RiUserUnfollowLine} from 'react-icons/ri'
 class Followers extends Component {
     state = { 
         followers: this.props.followers,

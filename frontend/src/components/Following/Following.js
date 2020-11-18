@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {RiUserFollowLine, RiUserAddLine, RiUserUnfollowLine} from 'react-icons/ri'
+import {RiUserUnfollowLine} from 'react-icons/ri'
 class Following extends Component {
     state = { 
         following: this.props.following,
