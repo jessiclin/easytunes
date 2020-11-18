@@ -99,7 +99,6 @@ class Playlists extends Component {
     }
     
     render() { 
-        console.log(this.props)
         if (this.state.loading)
             return (<> </>);
 
@@ -180,7 +179,7 @@ class Playlists extends Component {
                     `
                 }
         
-                // Create the playlist 
+                // Delete the playlist 
                 fetch('http://localhost:5000/graphql', {
                     method: 'POST',
                     body: JSON.stringify(requestBody),
@@ -194,7 +193,6 @@ class Playlists extends Component {
                         return res.json()
                     })
                     .then(result => {
-
                          // Update the playlists on the UI 
                         requestBody = {
                             query: `
@@ -225,8 +223,7 @@ class Playlists extends Component {
                             return res.json()
                         })
                         .then(result => {
-                            console.log(result.data.getPlaylists)
-                            setPlaylists(result.data.getPlaylists)
+                            setPlaylists(result.data.getUserPlaylists)
                             //error here
                         })
                         .catch(err => {
@@ -284,7 +281,7 @@ class Playlists extends Component {
         playlists = playlists.map(function(playlist) {
             
             return (
-                <PlaylistButton playlist = {playlist} history = {this.props} key = {playlist._id} username = {this.state.profileUsername}/>
+                <PlaylistButton playlist = {playlist} history = {this.props} key = {playlist._id} username = {this.state.profileUsername} setPlaylists = {this.setPlaylists}/>
             )
         }, this)
 
@@ -329,7 +326,6 @@ class Playlists extends Component {
                         return res.json()
                     })
                     .then(result => {
-                        console.log(result, username)
                          // Update the playlists on the UI 
                         requestBody = {
                             query: `
@@ -355,13 +351,11 @@ class Playlists extends Component {
                             'content-type': 'application/json'
                             }})
                         .then(res => {
-                            console.log("HERE")
                             if (res.status !== 200 && res.status !== 201) 
                                 throw new Error('Failed');
                             return res.json()
                         })
                         .then(result => {
-                            console.log(result.data.getUserPlaylists)
                             setPlaylists(result.data.getUserPlaylists)
                         })
                         .catch(err => {
