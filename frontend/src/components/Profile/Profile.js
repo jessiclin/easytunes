@@ -8,6 +8,7 @@ import {IoMdAddCircleOutline}from 'react-icons/io'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import Playlists from './Playlists/Playlists'
+import UploadedSongs from './UploadedSongs/UploadedSongs'
 import './Profile.css'
 
 
@@ -139,9 +140,9 @@ class Profile extends Component {
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
-                    {this.state.showSavedPlaylists ? <Playlists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} username = {this.props.username}/> : null}
-                    {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} username = {this.props.username} /> : null}
-                    {this.state.showUploadedSongs ? this.renderUploads() : null}
+                    {this.state.showSavedPlaylists ? <Playlists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
+                    {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} /> : null}
+                    {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
                 </div>
                 <PlaylistNavbar/>
             </div>
@@ -151,47 +152,7 @@ class Profile extends Component {
          );
     }
 
-    renderUploads = () => {
-        function NewButton({text}){
-            const [visible, setVisibility] = React.useState(false)
-
-            function toggleVisibilityTrue() {
-                setVisibility(visible => true)
-            }
-
-            function toggleVisibilityFalse() {
-                setVisibility(visible => false)
-            }
-
-            return (
-                <>
-                    <button className = "add-btn" onClick = {toggleVisibilityTrue}> <IoMdAddCircleOutline size = {24}/> </button>
-                    {visible ? 
-                    <div className="new-playlist-box">
-                       {text}
-                        <input type="text" required/>
-                        Name 
-                        <input type="text" required/>
-                        <button className = "confirm-new-upload-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
-                        <button className = "cancel-new-upload-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
-                    </div>
-                    : null}
-                </>
-            )
-        }
-        return (
-            <>
-            {this.props.username === this.state.profileUsername ?
-                <div className="add-new">
-                    <NewButton text = {"Upload Your Audio File"}/>
-                </div> : null 
-            }
-
-            </>
-        )
-    }
-
-    
+ 
     isFollowing = () =>{
         let followers = this.state.profileFollowers
         let following = false 

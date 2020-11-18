@@ -4,9 +4,12 @@ import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import Switch from 'react-input-switch';
-
+import AccountSetting from './AccountSetting/AccountSetting'
+import AdvancedSetting from './AdvancedSetting/AdvancedSetting'
+import PrivacySetting from './PrivacySetting/PrivacySetting'
 import './Setting.css'
 import mockData from '../../mock_data.json'
+
 
 class Setting extends Component {
  
@@ -15,41 +18,8 @@ class Setting extends Component {
     state = { 
         showAccount: true,
         showPrivacy: false,
-        showAdvanced: false
-    }
-
-    handleAccountClick = () =>{
-        this.setState({
-            showAccount: true,
-            showPrivacy: false,
-            showAdvanced: false
-        })
-        document.getElementById('settings-account-btn').style.background = "lightgray"
-        document.getElementById('settings-privacy-btn').style.background = "transparent"
-        document.getElementById('settings-advanced-btn').style.background = "transparent"
-
-    }
-
-    handlePrivacyClick = () =>{
-        this.setState({
-            showAccount: false,
-            showPrivacy: true,
-            showAdvanced: false
-        })
-        document.getElementById('settings-account-btn').style.background = "transparent"
-        document.getElementById('settings-privacy-btn').style.background = "lightgray"
-        document.getElementById('settings-advanced-btn').style.background = "transparent"
-    }
-
-    handleAdvancedClick = () =>{
-        this.setState({
-            showAccount: false,
-            showPrivacy: false,
-            showAdvanced: true
-        })
-        document.getElementById('settings-account-btn').style.background = "transparent"
-        document.getElementById('settings-privacy-btn').style.background = "transparent"
-        document.getElementById('settings-advanced-btn').style.background = "lightgray"
+        showAdvanced: false,
+        user: mockData.users[0]
     }
 
     render() { 
@@ -62,162 +32,65 @@ class Setting extends Component {
                     </div>
                     <ul className="settings-options">
                         <li>
-                            <button id = "settings-account-btn" style = {{background: "lightgray"}} onClick={this.handleAccountClick}>Account</button>          
+                            <button id = "settings-account-btn" style = {{background: "lightgray"}} onClick={this.changeView}>Account</button>          
                         </li>
                         <li>
-                            <button id = "settings-privacy-btn" onClick={this.handlePrivacyClick}>Privacy</button>
+                            <button id = "settings-privacy-btn" onClick={this.changeView}>Privacy</button>
                             
                         </li>
                         <li>
-                            <button id = "settings-advanced-btn" onClick={this.handleAdvancedClick}>Advanced Settings</button>
+                            <button id = "settings-advanced-btn" onClick={this.changeView}>Advanced Settings</button>
                 
                         </li>
                     </ul>
                 </nav>
 
-                {this.state.showAccount ? this.renderAccount() : null}
-                {this.state.showPrivacy ? this.renderPrivacy() : null}
-                {this.state.showAdvanced ? this.renderAdvanced() : null}
+                {this.state.showAccount ? <AccountSetting user = {this.state.user}/>: null}
+                {this.state.showPrivacy ? <PrivacySetting/> : null}
+                {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
                 
-
                 
                 <PlaylistNavbar/>
             </div>
         );
     }
+    changeView = (event) => {
+        let invisible = new Array();
+        const visible = event.target.id
+        console.log(event)
+        if (visible === "settings-account-btn"){
+            this.setState({
+                showAccount: true,
+                showPrivacy: false,
+                showAdvanced: false
+            })
+            invisible.push("settings-privacy-btn")
+            invisible.push("settings-advanced-btn")
+        }
+        else if (visible === "settings-privacy-btn"){
+            this.setState({
+                showAccount: false,
+                showPrivacy: true,
+                showAdvanced: false
+            })
 
-    renderAccount(){
-
-        function Update({text, original}) {
-            const [visible, setVisibility] = React.useState(false)
-
-            function toggleVisibilityTrue(){
-                setVisibility(visible => true)
-            }
-
-            function toggleVisibilityFalse() {
-                setVisibility(visible => false)
-            }
-            return (
-                <>
-
-                    <button className = "user-settings-content-btn" onClick = {toggleVisibilityTrue}>{text}</button>   
-
-                    {
-                        visible ? 
-                            <div className="update-box">
-                                {text}
-                                <input type="text" placeholder = {original} required/>
-                                <button className = "confirm-change-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
-                                 <button className = "cancel-change-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
-                            </div>
-                        :
-                        
-                        null
-                    }    
-                </>
-            )
+            invisible.push("settings-account-btn")
+            invisible.push("settings-advanced-btn")
+        }
+        else {
+            this.setState({
+                showAccount: false,
+                showPrivacy: false,
+                showAdvanced: true
+            })
+            invisible.push("settings-privacy-btn")
+            invisible.push("settings-account-btn")
 
         }
-
-        function UpdatePassword (){
-            const [visible, setVisibility] = React.useState(false)
-
-            function toggleVisibilityTrue() {
-                setVisibility(visible => true)
-            }
-
-            function toggleVisibilityFalse() {
-                setVisibility(visible => false)
-            }
-
-            return (
-                <>
-                    <button className = "user-settings-content-btn" onClick = {toggleVisibilityTrue}> Update Password </button>
-                    {visible ? 
-                    <div className="update-pass-box">
-                        New Password
-                        <input type="password" required/>
-                        Confirm Password
-                        <input type="password" required/>
-                        <button className = "confirm-pass-btn" onClick={toggleVisibilityFalse}> <AiOutlineCheckCircle size = {24}/></button>
-                        <button className = "cancel-pass-btn"  onClick={toggleVisibilityFalse}> <AiOutlineCloseCircle size = {24}/></button>
-                    </div>
-                    : null}
-                </>
-            )
-        }
-        return (
-            <div className="user-settings-container">
-                <div className="settings-header">Account</div>
-                <div className="user-settings-content">
-                    <h5>Email</h5>
-                    <h6> This is the email associated with your account</h6>
-                    <div className="user-setting-info">
-                        {this.user.email}
-                    </div>
-                    
-                    <Update text = {"Update Email"} original = {this.user.email}/>
-                </div>
-
-                <div className="user-settings-content">
-                    <h5>Username</h5>
-                    <h6>This is how you will appear to everyone else</h6>
-                    <div className="user-setting-info">
-                        {this.user.username}
-                    </div>
-                    <Update text = {"Update Username"} original = {this.user.username}/>
-                    
-                    
-                </div>
-
-                <div className="user-settings-content"> 
-                    <h5>Change Password</h5>
- 
-                     <UpdatePassword/>
-                   
-                </div>
-            </div>
-        )
-    }
-
-    renderPrivacy(){
-        return (
-            <div className="user-settings-container">
-                <div className="settings-header">Privacy Settings</div>
-
-                <div className="user-settings-content">
-                    <h5>Default Playlist Settings</h5>
-                    <h6> <Switch/> Keep saved playlists private</h6>
-                    <h6> <Switch/> Keep my playlists private</h6>
-                </div>
-
-                <div className="user-settings-content">
-                    <h5>Verify Follow Requests</h5>
-                    <h6><Switch/> Automatically allow others to follow me</h6>
-                </div>
-            </div>
-        )
-    }
-
-    renderAdvanced(){
-        return (
-            <div className="user-settings-container">
-                <div className="settings-header">Advanced Settings</div>
-
-                <div className="user-settings-content">
-                    <h5>User ID</h5>
-                    <h6> This is the ID associated with your account</h6>
-                    <p> {this.user.user_id}</p>
-                </div>
-
-                <div className="user-settings-content">
-                    <h5>User URL</h5>
-                    <h6> This is the URL associated with your account </h6>
-                    <p> {this.user.url}</p>
-                </div>
-            </div>
-        )
+        document.getElementById(visible).style.background = "lightgray"
+        document.getElementById(invisible[0]).style.background = "transparent"
+        document.getElementById(invisible[1]).style.background = "transparent"
+     
     }
 }
  

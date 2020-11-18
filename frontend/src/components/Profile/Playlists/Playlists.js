@@ -9,7 +9,7 @@ class Playlists extends Component {
     }
     state = { 
         playlists: this.props.playlists,
-        username: this.props.username,
+        sessionUser: this.props.sessionUser,
         user: this.props.user
     }
     setPlaylists = (playlists) => {
@@ -19,18 +19,18 @@ class Playlists extends Component {
         let playlists = this.state.playlists.map(function(playlist) {
             
             return (
-                <PlaylistButton playlist = {playlist} key = {playlist._id} username = {this.state.username} setPlaylists = {this.setPlaylists}/>
+                <PlaylistButton playlist = {playlist} key = {playlist._id} username = {this.state.user.username} setPlaylists = {this.setPlaylists}/>
             )
         }, this)
 
         return (
             <>
             {playlists}
-            
+            { this.sessionUser === this.state.user.username ?
                 <div className="add-new">
-                    <NewButton text = {"Playlist Name"} username = {this.state.username} user_id = {this.state.user._id} setPlaylists = {this.setPlaylists}/>
-                </div>  
-                        
+                    <NewButton text = {"Playlist Name"} username = {this.state.user.username} user_id = {this.state.user._id} setPlaylists = {this.setPlaylists}/>
+                </div>  : null
+            }
             </>
         );
     }
