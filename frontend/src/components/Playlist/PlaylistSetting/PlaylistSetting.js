@@ -4,7 +4,7 @@ import './PlaylistSetting.css'
 // For Rendering the Settings section of a playlist
 class PlaylistSetting extends Component {
     state = { 
-        playlist_name : this.props.playlist_name,
+        playlist : this.props.playlist,
         save : true,
         edit: false,
         public: true
@@ -20,7 +20,7 @@ class PlaylistSetting extends Component {
                 </div>
                 <div className="settings-row">
                     Playlist Name 
-                    <input type="text" value={this.state.playlist_name} required/>
+                    <input type="text" value={this.state.playlist.name} required/>
                 </div>
 
                 <div className="settings-row">

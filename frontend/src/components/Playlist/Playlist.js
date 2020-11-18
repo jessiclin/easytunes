@@ -1,6 +1,5 @@
 import React, { Component} from 'react'
-import {AiFillHome, AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
-import {MdAccountCircle} from 'react-icons/md'
+import { AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
@@ -8,7 +7,6 @@ import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlist.css'
 
-import mockData from '../../mock_data.json'
 import { FaShare } from 'react-icons/fa'
 // A playlist page 
 class Playlist extends Component {
@@ -132,24 +130,24 @@ class Playlist extends Component {
                         {this.state.username === this.props.username ? 
                             <div className="navigation-row">
                                 <div className="col text-center playlist-col">
-                                    <button id = "songs-btn" className = "songs-btn" onClick = {this.setSongsVisible} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}} > Songs </button>
+                                    <button id = "songs-btn" className = "songs-btn" onClick = {this.changeView} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}} > Songs </button>
                                 </div>
 
                                 <div className="col text-center playlist-col">
-                                        <button id = "comments-btn" className = "comments-btn" onClick = {this.setCommentsVisible}> Comments </button> 
+                                        <button id = "comments-btn" className = "comments-btn" onClick = {this.changeView}> Comments </button> 
                                 </div>
 
                                 <div className="col text-center playlist-col">
-                                        <button id = "settings-btn" className = "settings-btn"onClick = {this.setSettingVisible}> Settings </button> 
+                                        <button id = "settings-btn" className = "settings-btn"onClick = {this.changeView}> Settings </button> 
                                 </div>
                             </div> : 
                             <div className="row navigation-row">
                                 <div className="col text-center playlist-col">
-                                    <button id = "songs-btn" className = "songs-btn" onClick = {this.setSongsVisible} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}}> Songs </button>
+                                    <button id = "songs-btn" className = "songs-btn" onClick = {this.changeView} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}}> Songs </button>
                                 </div>
         
                                 <div className="col text-center playlist-col">
-                                        <button id = "comments-btn" className = "comments-btn" onClick = {this.setCommentsVisible}> Comments </button> 
+                                        <button id = "comments-btn" className = "comments-btn" onClick = {this.changeView}> Comments </button> 
                                 </div>
                             </div>             
                         }
@@ -157,7 +155,7 @@ class Playlist extends Component {
                         {/* Render "Songs", "Comments", "Settings" */}
                         {this.state.songsVisible ? <Songlist songs = {this.state.songs} playlistId = {this.state.playlistId}/> : null}
                         {this.state.commentsVisible ? <Comments comments = {this.state.comments}  /> : null}
-                        {this.state.settingsVisible ? <PlaylistSetting playist = {this.state.playlistInfo} updatePlaylist = {this.updatePlaylist}/> : null}
+                        {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} updatePlaylist = {this.updatePlaylist}/> : null}
                     </div>
                     <PlaylistNavbar/>
                 </div>
@@ -165,66 +163,51 @@ class Playlist extends Component {
             );
         }
 
-    // Button click on "Songs"
-    setSongsVisible = () =>{
-        this.setState(
-            {   songsVisible : true,
-                commentsVisible : false,
-                settingsVisible : false}
-        )
-        document.getElementById('songs-btn').style.borderBottom = "3px solid #faed26"
-        document.getElementById('comments-btn').style.border = "none"
-       
-        document.getElementById('songs-btn').style.fontWeight = "bold"
-        document.getElementById('comments-btn').style.fontWeight = "normal"
-        try {
-            document.getElementById('settings-btn').style.border = "none"
-            document.getElementById('settings-btn').style.fontWeight = "normal"
-        }
-        catch (error){
-
-        }
-    }
-
-    // Button click on "Comments"
-    setCommentsVisible = () => {
-        this.setState(
-            {
-                songsVisible : false,
-                commentsVisible : true,
-                settingsVisible : false
+        changeView = (event) => {
+            let invisible = new Array();
+            const visible = event.target.className
+            if (visible === "songs-btn"){
+                this.setState({
+                    songsVisible: true,
+                    commentsVisible: false,
+                    settingsVisible: false
+                })
+                invisible.push("comments-btn")
+                invisible.push("settings-btn")
             }
-        )
-        document.getElementById('songs-btn').style.border = "none"
-        document.getElementById('comments-btn').style.borderBottom  = "3px solid #faed26"
-        
-        document.getElementById('songs-btn').style.fontWeight = "normal"
-        document.getElementById('comments-btn').style.fontWeight = "bold"
-        try {
-            document.getElementById('settings-btn').style.border = "none"
-            document.getElementById('settings-btn').style.fontWeight = "normal"
-        }
-        catch (error){
-
-        }
-    }
-
-    // Button click on Settings
-    setSettingVisible = () => {
-        this.setState(
-            {
-                songsVisible : false,
-                commentsVisible : false,
-                settingsVisible : true
+            else if (visible === "comments-btn"){
+                this.setState({
+                    songsVisible: false,
+                    commentsVisible: true,
+                    settingsVisible: false
+                })
+    
+                invisible.push("songs-btn")
+                invisible.push("settings-btn")
             }
-        )
-        document.getElementById('songs-btn').style.border = "none"
-        document.getElementById('comments-btn').style.border = "none"
-        document.getElementById('settings-btn').style.borderBottom = "3px solid #faed26"
-        document.getElementById('songs-btn').style.fontWeight = "normal"
-        document.getElementById('comments-btn').style.fontWeight = "normal"
-        document.getElementById('settings-btn').style.fontWeight = "bold"
-    }
+            else {
+                this.setState({
+                    songsVisible: false,
+                    commentsVisible: false,
+                    settingsVisible: true
+                })
+                invisible.push("songs-btn")
+                invisible.push("comments-btn")
+    
+            }
+      
+            document.getElementById(visible).style.borderBottom = "3px solid #faed26"
+            document.getElementById(visible).style.fontWeight = "bold"
+            try {
+                document.getElementById(invisible[0]).style.borderBottom = "none";
+                document.getElementById(invisible[0]).style.fontWeight = "normal"
+            }catch{}
+            try {
+                document.getElementById(invisible[1]).style.borderBottom = "none";
+                document.getElementById(invisible[1]).style.fontWeight = "normal"  
+            } catch {}
+            
+        }
 
 }
  

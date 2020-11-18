@@ -8,8 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import "./LoginScreen.css";
 import SignIn from './SignIn'
 import SignUp from './SignUp'
-import mockData from '../../mock_data.json'
-import HeaderNavbar from '../HeaderNavbar/HeaderNavbar';
+
 
 class Login extends Component {
     state = {

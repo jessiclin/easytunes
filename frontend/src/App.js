@@ -5,7 +5,7 @@ import './App.css';
 
 import LoginScreen from './components/login_screen/LoginScreen.js';
 import ResetPasswordScreen from './components/reset_password_screen/ResetPasswordScreen.js'
-import Playlists from './components/Playlists/Playlists'
+import Profile from './components/Profile/Profile'
 import Playlist from './components/Playlist/Playlist'
 import Home from "./components/HomePage/Home";
 import HomeScreen from "./components/home_screen/HomeScreen"
@@ -99,7 +99,7 @@ class App extends Component {
 
             <Route exact path='/:username'
               render = {(props) => (
-                <Playlists {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+                <Profile {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
               )}
             />
             

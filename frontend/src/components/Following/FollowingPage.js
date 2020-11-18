@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {RiUserFollowLine, RiUserAddLine, RiUserUnfollowLine} from 'react-icons/ri'
+
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import Followers from './Followers'
 import Following from './Following'
