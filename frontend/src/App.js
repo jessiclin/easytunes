@@ -10,7 +10,7 @@ import Playlist from './components/Playlist/Playlist'
 import Home from "./components/HomePage/Home";
 import HomeScreen from "./components/home_screen/HomeScreen"
 import SearchScreen from "./components/search_screen/SearchScreen.js"
-import Follows from './components/Following/Follows'
+import FollowingPage from './components/Following/FollowingPage'
 import Setting from './components/Setting/Setting'
 import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
@@ -81,7 +81,7 @@ class App extends Component {
 
             <Route exact path='/:username/followers' 
               render = {(props => (
-                <Follows {...props} username = {this.state.username} />
+                <FollowingPage {...props} username = {this.state.username} />
               ))}
             />
 
