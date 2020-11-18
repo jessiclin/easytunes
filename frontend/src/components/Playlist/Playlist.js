@@ -165,12 +165,6 @@ class Playlist extends Component {
             );
         }
 
-<<<<<<< HEAD
-    updatePlaylist = () => {
-
-    }
-=======
->>>>>>> 110c4a9a9f9310dd353341b97aeeaba2a0a7c0d6
     // Button click on "Songs"
     setSongsVisible = () =>{
         this.setState(
