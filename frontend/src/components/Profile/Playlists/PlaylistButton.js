@@ -1,0 +1,149 @@
+import React, { Component } from 'react'
+import {AiFillHome,AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
+import {MdAccountCircle} from 'react-icons/md'
+import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
+import {RiPlayListLine} from 'react-icons/ri'
+import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+// FaRegPauseCircle
+import {FaRegPlayCircle} from 'react-icons/fa'
+class PlaylistButton extends Component {
+    constructor(props){
+        super(props);
+        this.setPlaylists = this.props.setPlaylists
+    }
+    
+    state = { 
+        playlist: this.props.playlist,
+        username: this.props.username,
+        deleteConfirmVisible: false,
+    }
+
+
+    setVisible = () => {
+        this.setState({deleteConfirmVisible : true})
+    }
+
+    setInvisible = () => {
+        this.setState({deleteConfirmVisible: false})
+    }
+
+    toPlaylist = () => {
+        
+    }
+
+    deletePlaylist = () => {
+        console.log(this)
+        this.setInvisible()
+        // Delete the playlist 
+        let requestBody = {
+            query: `
+                mutation {
+                    deletePlaylist (id : "${this.state.playlist._id}") {
+                        _id 
+                    }
+                }
+            `
+        }
+
+        // Delete the playlist 
+        fetch('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) 
+                    throw new Error('Failed');
+                return res.json()
+            })
+            .then(result => {
+                 // Update the playlists on the UI 
+                requestBody = {
+                    query: `
+                        query {
+                            getUserPlaylists(username: "${this.state.username}"){
+                                _id
+                                name
+                                username
+                                likes 
+                                songs {
+                                    _id
+                                    name
+                                }
+                            }
+                        }
+                    `
+                }
+
+                fetch("http://localhost:5000/graphql", {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: {
+                    'content-type': 'application/json'
+                    }})
+                .then(res => {
+                    if (res.status !== 200 && res.status !== 201) 
+                        throw new Error('Failed');
+                    return res.json()
+                })
+                .then(result => {
+                    this.setPlaylists(result.data.getUserPlaylists)
+                    //error here
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+    render() { 
+        const playlist = this.state.playlist 
+        return (
+            <div className="playlist-row">
+                <div className="col">
+                    <RiPlayListLine size = {50}/>
+                </div>
+
+                <div className="col text-left">
+                    {playlist.name}
+                    {this.state.username === playlist.username ? <span>  {playlist.public ? <AiFillEye/> : < AiFillEyeInvisible/>} </span> : null}
+                </div>
+
+                <div className="col text-left">
+                    {playlist.songs.length} {playlist.songs.length == 1 ? "song" : "songs"} 
+                </div>
+
+                <div className="col text-left">
+                    {this.state.username === playlist.username ? <><AiFillHeart id={playlist._id} size = {24}/> {playlist.likes} </>:
+                    <>{playlist.username}</>}
+                </div>
+
+                <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.toPlaylist}/>
+                
+                <button className="play-btn">
+                    <FaRegPlayCircle size = {30}/>
+                </button>
+
+                
+                <button className="delete-btn" onClick = {this.setVisible}> 
+                    <AiOutlineDelete size = {24}/>
+                </button>
+                {this.state.deleteConfirmVisible ?
+                <div className="delete-playlist-box">
+                    <div>
+                        Delete the playlist?
+                    </div>
+                    <button className = "confirm-new-btn" onClick={this.deletePlaylist}> <AiOutlineCheckCircle size = {24}/></button>
+                    <button className = "cancel-new-btn"  onClick={this.setInvisible}> <AiOutlineCloseCircle size = {24}/></button>
+                </div>
+                : null }
+            </div>
+        );
+    }
+}
+ 
+export default PlaylistButton;
