@@ -84,6 +84,7 @@ class SignUp extends Component {
                                         this.state.username = result.data.createUser.username
     
                                         this.onUsernameChange(this.state.username)
+                                        localStorage.setItem("username", this.state.username);
                                         this.toHome()
                                     })
                                     .catch(err => {

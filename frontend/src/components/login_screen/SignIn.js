@@ -62,6 +62,7 @@ class SignIn extends Component {
                                     this.username = result.data.login.username
 
                                     this.onUsernameChange(this.username)
+                                    localStorage.setItem("username", this.state.username);
                                     this.toHome()
                                 })
                                 .catch(err => {
