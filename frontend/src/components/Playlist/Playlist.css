@@ -91,3 +91,15 @@
 .share:hover {
   cursor: pointer;
 }
+
+.share {
+  margin-right: 1%;
+}
+
+.fork:hover {
+  cursor: pointer;
+}
+
+.fork {
+  margin-left: 1%;
+}
