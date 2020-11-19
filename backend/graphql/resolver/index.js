@@ -291,8 +291,17 @@ const resolver = {
      
         try{
             let user = await User.findOne({username: username})
-            user.saved_playlists.push({playlist_id: playlist_id, name: name})
-            user.save()
+
+            let alreadyFavorited = false 
+            await user.saved_playlists.map(playlist => {
+                if (playlist.playlist_id.toString() === playlist_id)
+                    alreadyFavorited = true
+            })
+            if (!alreadyFavorited){
+                user.saved_playlists.push({playlist_id: playlist_id, name: name})
+                user.save()
+            }
+            
             return await Playlist.findOne({_id: playlist_id})
         }catch(error){}
     },
