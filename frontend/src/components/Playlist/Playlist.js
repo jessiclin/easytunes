@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
+import { BiGitRepoForked } from 'react-icons/bi'
 import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
@@ -83,6 +84,61 @@ class Playlist extends Component {
     componentDidMount = () => {
         this.getPlaylist()
     }
+    forkPlaylist = () => {
+        let requestBody = {
+            query: `
+                query {
+                    getUserByUsername (username : "${this.state.username}") {
+                        _id 
+                    }
+                }r
+            `
+        }
+        //find user id
+        fetch('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) 
+                    throw new Error('Failed');
+                return res.json()
+            })
+            .then(data => {
+                data = data.data.getUserByUsername
+                requestBody = {
+                    query: `
+                        mutation {
+                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistName}", user_id: "${data._id}") {
+                                _id 
+                            }
+                        }
+                    `
+                }
+                // Create the playlist 
+                fetch('http://localhost:5000/graphql', {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                    })
+                    .then(res => {
+                        if (res.status !== 200 && res.status !== 201) 
+                            throw new Error('Failed');
+                        return res.json()
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
     render() { 
 
@@ -118,8 +174,8 @@ class Playlist extends Component {
                                 <h5> Playlist By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
                             </div>
                             <div className="col text-center align-self-center playlist-col">
-                                <div onClick={() => {navigator.clipboard.writeText(window.location.href)}}>
-                                    <FaShare size={34} className="share"/>
+                                <div>
+                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork"/>
                                 </div>
                             </div>
                         </div>

@@ -121,6 +121,7 @@ type RootMutation {
     unFollow(username: String!, following_id: ID!): User
     addSavedPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist
     deleteFavorite (username: String!, playlist_id : ID!): User
+    forkPlaylist(username: String!, user_id: ID!, name: String!): Playlist
 }
 
 schema {
