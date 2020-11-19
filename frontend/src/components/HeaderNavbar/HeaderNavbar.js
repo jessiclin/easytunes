@@ -150,6 +150,7 @@ class HeaderNavbar extends Component {
 
         function LogOut({props}){
             function toggleLogOut (){
+                localStorage.removeItem("username")
                 props.history.push("/")
             }
             return (
