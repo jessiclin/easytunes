@@ -109,6 +109,7 @@ type RootMutation {
     addRequest(id: ID!, requested_username: String!): User
     addFollower(username: String!, request_id: ID!): User
     removeFollower(username: String!, follower_id: ID!): User
+    unFollow(username: String!, following_id: ID!): User
 }
 
 schema {
