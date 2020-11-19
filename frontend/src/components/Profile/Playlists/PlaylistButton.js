@@ -127,10 +127,14 @@ class PlaylistButton extends Component {
                     <FaRegPlayCircle size = {30}/>
                 </button>
 
-                
-                <button className="delete-btn" onClick = {this.setVisible}> 
+                {
+                    this.props.sessionUser === playlist.username ? 
+                    <button className="delete-btn" onClick = {this.setVisible}> 
                     <AiOutlineDelete size = {24}/>
-                </button>
+                </button> : null
+
+                }
+
                 {this.state.deleteConfirmVisible ?
                 <div className="delete-playlist-box">
                     <div>

@@ -137,10 +137,22 @@ const resolver = {
             throw err
         }
     },
-    deleteSong: async ({id}) => {
+    deleteSong: async ({playlist_id, song_id, index}) => {
         try {
-            const result = await Playlist.findByIdAndRemove(id)
-            return {...result._doc}
+            const result = await Playlist.findOne({_id: playlist_id})
+            console.log(song_id, index)
+            result.songs.map((song, i) => {
+  
+                if (song._id.toString() === song_id && i === index){
+                    console.log("HRE")
+                    result.songs.splice(i, 1)
+                    console.log(result.songs)
+                }
+            })
+            console.log(result)
+            result.save()
+            // const result = await Playlist.findByIdAndRemove(id)
+            // return {...result._doc}
         } catch(err) {
             throw err
         }
@@ -168,6 +180,12 @@ const resolver = {
         }catch(err){
             throw err
         }
+    },
+    updatePlaylist: async ({playlist_id, name, songs}) => {
+        try{
+            let result = await Playlist.findOne({_id: playlist_id})
+            console.log(songs)
+        }catch(error){}
     }
 }
 
