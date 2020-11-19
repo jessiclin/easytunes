@@ -9,7 +9,6 @@ class Requests extends Component {
      }
 
      getRequests = () => {
-        console.log(this.props.username)
         this.setState({loading: true})
         let requestBody = {
             query: `

@@ -8,7 +8,6 @@ class Followers extends Component {
         loading: true
      }
      getFollowers = () => {
-        console.log(this.props.username)
         this.setState({loading: true})
         let requestBody = {
             query: `
@@ -39,7 +38,7 @@ class Followers extends Component {
                 return res.json()
             })
             .then(data => {
-                console.log(data)
+
                 this.setState({
                     followers: data.data.getUserByUsername.user.followers,
                     loading: false

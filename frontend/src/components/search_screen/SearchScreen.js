@@ -5,9 +5,6 @@ import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 
 class SearchScreen extends Component {
 
-    handleSearchChange = (e) => {
-
-    }
     state = {
         searchQuery : this.props.match.params.query,
         searchResults : {},
@@ -29,6 +26,7 @@ class SearchScreen extends Component {
                 return res.json()
             })
             .then(data => {
+                console.log(data)
                 let searchRes = this.state.searchResults 
                 if (type === 'artists')
                     searchRes[type] = data.artists.items 
@@ -49,12 +47,14 @@ class SearchScreen extends Component {
     }
 
     fetchPlaylists = (last, query) => {
+        console.log("HEREs")
         const requestBody = {
             query: `
                 query {
                     searchPlaylists(name :"${query}"){
                         _id 
                         name 
+                        username
                         likes 
                         songs {
                             song_id 
