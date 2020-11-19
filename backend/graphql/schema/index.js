@@ -34,7 +34,7 @@ type Playlist {
 
 
 type UserRef {
-    _id: ID!
+    user_id: ID!
     username: String!
     following_since: String!
 }
@@ -106,6 +106,7 @@ type RootMutation {
     deleteSong(playlist_id: ID!, song_id: ID!, index: Int!): SongRef
     addSong(songInput: SongInput!, playlist_id: ID!): Playlist
     updatePlaylist(id: ID!, playlist: PlaylistInput!): Playlist
+    addRequest(id: ID!, requested_username: String!): User
 }
 
 schema {

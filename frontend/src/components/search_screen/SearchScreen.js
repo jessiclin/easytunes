@@ -57,7 +57,7 @@ class SearchScreen extends Component {
                         name 
                         likes 
                         songs {
-                            _id 
+                            song_id 
                             name
                         }
                     }
@@ -76,7 +76,11 @@ class SearchScreen extends Component {
                             _id
                             username
                             followers {
-                                _id
+                                user_id
+                                username
+                            }
+                            follow_requests {
+                                user_id 
                                 username
                             }
                         }
@@ -92,6 +96,7 @@ class SearchScreen extends Component {
     }
 
     fetchSpotify = (type, query, last) => {
+   
         let requestBody;
         if (type === 'artists')
             requestBody = { artist: query}
@@ -102,7 +107,9 @@ class SearchScreen extends Component {
     }
 
     componentDidUpdate = () => {
+        
         if (this.state.searchType !== this.props.match.params.type || this.state.searchQuery !== this.props.match.params.query){
+            console.log()
             console.log("Update")
             this.setState({
                 searchType : this.props.match.params.type,
@@ -119,7 +126,7 @@ class SearchScreen extends Component {
                     this.fetchUsers(true, query)
                 else if (type === 'playlists')
                     this.fetchPlaylists(true, query)
-                else {
+                else if (type === 'all' ){
                     this.fetchSpotify('artists',query, false) 
                     this.fetchSpotify('songs',query, false)
                     this.fetchUsers(false, query)
@@ -143,7 +150,7 @@ class SearchScreen extends Component {
                 this.fetchUsers(true, query)
             else if (type === 'playlists')
                 this.fetchPlaylists(true, query)
-            else {
+            else if (type === 'all' ){
                 this.fetchSpotify('artists', query, false) 
                 this.fetchSpotify('songs', query, false)
                 this.fetchUsers(false, query)

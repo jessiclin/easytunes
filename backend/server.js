@@ -72,6 +72,7 @@ app.use('/v1/search?', async (req, res, next) =>  {
     if (req.body.track){
 
         query = req.body.track 
+        
         await spotifyApi.searchTracks(query)
                     .then(function(data) {
                         res.status(200).send(data.body)
@@ -84,7 +85,21 @@ app.use('/v1/search?', async (req, res, next) =>  {
 
 })
 
-
+app.use('/v1/tracks/', async(req, res, next) => {
+    //await spotifyApi.getTracks([req.body.track])
+    await spotifyApi.getAudioFeaturesForTrack(req.body.track)
+    .then((data) =>{
+      //  console.log(data.body)
+        res.status(200).send(data.body)
+        next()
+    }
+        
+    )
+    .catch(err => {
+        console.log('Something went wrong!', err);
+        res.status(400)
+    })
+})
 
 // Query is fetch data. Mutation is changing data String! --> Cannot be null 
 app.use(isAuth);
