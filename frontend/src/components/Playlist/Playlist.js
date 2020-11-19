@@ -18,10 +18,12 @@ class Playlist extends Component {
         playlistInfo : null,
         playlistId : this.props.match.params.playlistid,
         username : this.props.match.params.username,
-        loading: true
+        loading: true,
+        editing: false,
     }
 
-    componentDidMount = () => {
+
+    getPlaylist = () => {
         this.setState({loading : true})
         let requestBody = {
             query : `
@@ -45,7 +47,7 @@ class Playlist extends Component {
                             }
                         }
                         songs {
-                            _id 
+                            song_id 
                             name 
                             artists
                         }
@@ -70,14 +72,20 @@ class Playlist extends Component {
                 console.log(data)
                 this.setState({
                     playlistInfo: data,
-                    loading: false
+                    loading: false,
+                    original: Object.assign({}, data) 
                 })
             })
             .catch(err => {
                 console.log(err);
             });
     }
+    componentDidMount = () => {
+        this.getPlaylist()
+    }
+
     render() { 
+
             if (this.state.loading)
                 return (<> </>);
             function User ({username, history}){
@@ -143,9 +151,9 @@ class Playlist extends Component {
                         }
 
                         {/* Render "Songs", "Comments", "Settings" */}
-                        {this.state.songsVisible ? <Songlist playlist_id = {this.state.playlistInfo._id} songs = {this.state.playlistInfo.songs}/> : null}
+                        {this.state.songsVisible ? <Songlist playlist_id = {this.state.playlistId} songs = {this.state.playlistInfo.songs} editing= {this.state.editing}/> : null}
                         {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments}  /> : null}
-                        {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} updatePlaylist = {this.updatePlaylist}/> : null}
+                        {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} editing= {this.state.editing} onChange = {this.onChange}/> : null}
                     </div>
                     <PlaylistNavbar/>
                 </div>
@@ -153,10 +161,70 @@ class Playlist extends Component {
             );
         }
 
-        changePlaylist = (playlist) => {
+        onChange = (type, obj) => {
+            if (type === "playlist") {
+                console.log(obj)
+                this.setState({playlist: obj})
+            }
+            else if (type == "revert")
+               this.getPlaylist()
+            else if (type == "save"){
+                console.log(this.state.playlistInfo.songs)
+                let songs = []
+                this.state.playlistInfo.songs.map(song => {
+                    songs.push(JSON.stringify({song_id: song.song_id,
+                    name: song.name,
+                    uploaded: song.uploaded,
+                    artists: song.artists}))
+                })
+                let requestBody = {
+                    query: `
+                    mutation UpdatePlaylist($public: Boolean, $name: String, $songs: [Strings]){ 
+                        updatePlaylist(id: "${this.state.playlistId}", playlist: {name: $name, public: $public, songs: $songs}){
+                            _id
+                        }
+
+                    }
+                    `,
+                    // variables: {name: this.state.playlistInfo.name}
+                    
+                    variables: {name: this.state.playlistInfo.name, public: this.state.playlistInfo.public, songs: songs}
+                }
+                console.log(requestBody)
+                fetch('http://localhost:5000/graphql', {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                    })
+                    .then(res => {
+                        if (res.status !== 200 && res.status !== 201) 
+                            throw new Error('Playlist not found');
+                        return res.json()
+                    })
+                    .then(data => {
+                
+                        console.log(data)
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+            else{
+                console.log(obj)
+                this.setState({editing: obj})
+            }
+
+        }
+        updatePlaylist = (playlist) => {
             this.setState({playlistInfo : playlist})
         }
 
+        changeEdit = () => {
+            this.setState({editing: !this.state.editing})
+        }
         changeView = (event) => {
             let invisible = [];
             const visible = event.target.className

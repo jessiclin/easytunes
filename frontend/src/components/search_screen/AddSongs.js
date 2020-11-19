@@ -57,8 +57,8 @@ class AddSong extends Component {
 
         let artists = ""
         console.log(typeof(artists))
-        this.state.song.artists.map(artist => {
-            artists = artists + "\n" + artist.name
+        artists += this.state.song.artists.map(artist => {
+            return "\n" + artist.name
         })
         console.log(JSON.stringify(artists))
         let requestBody = {
