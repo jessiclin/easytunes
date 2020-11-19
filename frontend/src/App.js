@@ -35,7 +35,6 @@ class App extends Component {
 
   onSearchResults = (results) => {
     this.setState({results: results})
-    console.log(results)
   }
 
   atHome = () => {
