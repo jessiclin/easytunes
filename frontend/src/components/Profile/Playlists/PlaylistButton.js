@@ -68,7 +68,7 @@ class PlaylistButton extends Component {
                                 username
                                 likes 
                                 songs {
-                                    _id
+                                    song_id
                                     name
                                 }
                             }
