@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 
 class AdvancedSetting extends Component {
     state = { user: this.props.user }
+
+
+
     render() { 
         return (  
             <div className="user-settings-container">
@@ -10,7 +13,7 @@ class AdvancedSetting extends Component {
             <div className="user-settings-content">
                 <h5>User ID</h5>
                 <h6> This is the ID associated with your account</h6>
-                <p> {this.state.user.user_id}</p>
+                <p> {this.state.user._id}</p>
             </div>
 
             <div className="user-settings-content">

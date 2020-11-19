@@ -141,7 +141,7 @@ class HeaderNavbar extends Component {
 
         function Settings({props}){
             function toggleSetting (){
-                props.history.push("/" + mockData.users[0].username+ "/settings")
+                props.history.push("/" + props.username+ "/settings")
             }
             return (
                 <button onClick = {toggleSetting}>Settings</button>
