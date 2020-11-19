@@ -171,7 +171,7 @@ class SearchScreen extends Component {
                 <div className="row">
                     <h2 className="col s1">Results</h2>
                 </div>
-                <SearchList searchList={this.state.searchResults} username={this.state.username}/>
+                <SearchList searchList={this.state.searchResults} username={this.state.username} history = {this.props.history}/>
             </div> 
             <PlaylistNavbar/>
             </>

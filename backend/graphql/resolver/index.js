@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import User from '../../models/user.model.js'
 import jwt from 'jsonwebtoken'
 import Playlist from '../../models/playlist.model.js';
+import request from 'request';
 const saltRounds = 10;
 const resolver = {
     // Gets Users 
@@ -202,6 +203,62 @@ const resolver = {
             result.follow_requests.push(request)
   
             result.save()
+            return result
+        }catch(error){}
+    },
+    addFollower: async ({username, request_id}) => {
+        try{
+            let result = await User.findOne({username: username})
+            let requestee = await User.findOne({_id: request_id})
+            
+            // Remove from follow_requests 
+            result.follow_requests.map((request,i) => {
+                if (request.user_id.toString() === request_id){
+                    result.follow_requests.splice(i, 1)
+                }
+                    
+            })
+            
+            const date = new Date()
+            // Add to followers
+            result.followers.push({
+                user_id: request_id,
+                username: requestee.username,
+                following_since: date
+            })
+
+            // Add to following 
+            requestee.following.push({
+                user_id: result._id,
+                username: username,
+                following_since: date 
+            })
+            result.save()
+            requestee.save()
+            return result
+        }catch(error){}
+    },
+    removeFollower: async({username, follower_id}) =>{
+        try{
+            let result = await User.findOne({username: username})
+            let follower = await User.findOne({_id: follower_id})
+            
+            // Remove from followers
+            result.followers.map((follower,i) => {
+                if (follower.user_id.toString() === follower_id){
+                    result.followers.splice(i, 1)
+                }
+                    
+            })
+            
+            // Remove from following
+            follower.following.map((follow, i) => {
+                if (follow.user_id.toString() === result._id.toString())
+                    follower.following.splice(i, 1)
+            })
+
+            result.save()
+            requestee.save()
             return result
         }catch(error){}
     }

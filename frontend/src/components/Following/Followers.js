@@ -1,35 +1,65 @@
 import React, { Component } from 'react'
-import {RiUserUnfollowLine} from 'react-icons/ri'
+
+import Follower from './Follower'
 class Followers extends Component {
     state = { 
-        followers: this.props.followers,
-        username: this.props.username
+        followers: null,
+        username: this.props.username,
+        loading: true
      }
+     getFollowers = () => {
+        console.log(this.props.username)
+        this.setState({loading: true})
+        let requestBody = {
+            query: `
+                query {
+                    getUserByUsername(username: "${this.state.username}"){
+                        user {
+                            _id
+                            followers {
+                                user_id
+                                username
+                            }
+                        }
+                    }
+                }
+            `
+        }
+
+        fetch("http://localhost:5000/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+                }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201)
+                    throw new Error ('Failed')
+                return res.json()
+            })
+            .then(data => {
+                console.log(data)
+                this.setState({
+                    followers: data.data.getUserByUsername.user.followers,
+                    loading: false
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    componentDidMount = () => {
+       this.getFollowers()
+    }
 
     render() { 
-
-        function User ({username}){
-
-            function toUser(){
-                // history.history.push('/' + username)
-            }
-            
-            return (
-                <button className = "user-btn" onClick = {toUser}>{username}</button>
-            )
-        }
+        if (this.state.loading)
+            return (<> </>)
         let followers = this.state.followers.map(function(follower) {
             return (
-                <div key = {follower.user_id} className="follower-row">
-                    <div className="col">
-                        {/* <button onClick = {toUser}>{follower.username}</button> */}
-                        <User username = {follower.username}/>
-                    </div>
-                    <div className="col">
-                        <button className="unfollow-btn"> Unfollow  <RiUserUnfollowLine/></button>
-                    </div>
-                    
-                </div>
+                <Follower key = {follower.user_id} follower= {follower} username = {this.state.username} history = {this.props.history} updateFollowers = {this.updateFollowers}/>
             )
         }, this)
 
@@ -38,6 +68,10 @@ class Followers extends Component {
             {followers}
             </>
         );
+    }
+
+    updateFollowers = (followers) => {
+        this.setState({followers : followers})
     }
 }
  

@@ -22,7 +22,7 @@ class SearchList extends Component {
                     </div>
                     {tracks && tracks.map(function(item) {
                         return (
-                            <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username}/>
+                            <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username} history = {this.props.history}/>
                         );}, this)
                     }
                     </>
@@ -39,7 +39,7 @@ class SearchList extends Component {
                     </div>
                     {artists && artists.map(function(item) {
                     return (
-                        <SearchListCard key = {item.id} item={item} type="artist" username = {this.props.username}/>
+                        <SearchListCard key = {item.id} item={item} type="artist" username = {this.props.username} history = {this.props.history}/>
                     );} ,this)
                      }
                 
@@ -62,7 +62,7 @@ class SearchList extends Component {
                     </div>
                     {users && users.map(function(item) {
                     return (
-                        <SearchListCard key = {item.user._id} item={item} type="user" username = {this.props.username}/>
+                        <SearchListCard key = {item.user._id} item={item} type="user" username = {this.props.username} history = {this.props.history}/>
                     );},this)
                     }
                 </>

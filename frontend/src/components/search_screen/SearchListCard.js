@@ -19,13 +19,13 @@ class SearchListCard extends Component {
     }
 
     render() {
-     // console.log(this.props)
+
         return (
             <>
             {this.state.type === "track" ? this.renderSong() : 
             this.state.type === "artist" ? this.renderArtist(): 
             this.state.type === "playlist" ? this.renderPlaylist():
-            <UserCard user = {this.state.item} sessionUser = {this.props.username}/>}
+            <UserCard user = {this.state.item} sessionUser = {this.props.username} history = {this.props.history}/>}
             </>
         )
     }
