@@ -107,6 +107,8 @@ type RootMutation {
     addSong(songInput: SongInput!, playlist_id: ID!): Playlist
     updatePlaylist(id: ID!, playlist: PlaylistInput!): Playlist
     addRequest(id: ID!, requested_username: String!): User
+    addFollower(username: String!, request_id: ID!): User
+    removeFollower(username: String!, follower_id: ID!): User
 }
 
 schema {

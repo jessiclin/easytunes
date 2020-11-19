@@ -123,7 +123,7 @@ class HeaderNavbar extends Component {
 
         function Followers({props}){
             function toggleFollower (){
-                props.history.push("/" + mockData.users[0].username+ "/followers")
+                props.history.push("/" +  props.username+ "/followers")
             }
             return (
                 <button onClick = {toggleFollower}>Followers</button>
@@ -132,7 +132,7 @@ class HeaderNavbar extends Component {
 
         function Following({props}){
             function toggleFollower (){
-                props.history.push("/" + mockData.users[0].username+ "/followers")
+                props.history.push("/" + props.username+ "/followers")
             }
             return (
                 <button onClick = {toggleFollower}>Following</button>

@@ -35,7 +35,7 @@ class Profile extends Component {
                             username
                             joined
                             followers {
-                                _id
+                                user_id
                                 username
                             }
                             saved_playlists {
@@ -123,7 +123,13 @@ class Profile extends Component {
                     {/* Navigation bar between "My Playlist" and "Saved Playlists" */}
                     <div className="navigation-row">
                         <div className="col">
-                           <button id = "my-playlists-btn" className = "my-playlists-btn" onClick = {this.changeView} style = {{borderBottom : "2px solid #faed26", fontWeight : "bold"}}>  My Playlists </button>
+                           <button id = "my-playlists-btn" className = "my-playlists-btn" onClick = {this.changeView} style = {{borderBottom : "2px solid #faed26", fontWeight : "bold"}}>  
+                                { 
+                                    this.state.profileUsername === this.props.username ? 
+                                        "My Playlists" :
+                                        "Playlists"
+                                }
+                            </button>
                         </div>
 
                         <div className="col">

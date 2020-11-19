@@ -145,6 +145,11 @@ class UserCard extends Component {
             })
 
     }
+
+    toUser = () => {
+        console.log(this.props)
+        this.props.history.push('/' +  this.state.user.user.username)
+    }
     render() { 
         if (this.state.loading)
             return (<> </>);
@@ -153,8 +158,8 @@ class UserCard extends Component {
         return(
             <div>
                 <div className='card z-depth-0 text'>
-                    <div className='card-content col s3'>
-                        <span className='card-title'>{this.state.user.user.username}</span>
+                    <div className='card-content col s3 user-button'>
+                        <button onClick = {this.toUser}><span className='card-title'>{this.state.user.user.username}</span> </button>
                     </div>
                     <div className='card-content col s3'>
                         <span className='card-title'>{this.state.user.user.followers.length}</span>

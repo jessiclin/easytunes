@@ -12,7 +12,49 @@ class FollowingPage extends Component {
     state = {  
         showFollowers: true,
         showFollowing: false,
-        showRequests: false
+        showRequests: false,
+        user: null,
+        loading: true
+    }
+
+    componentDidMount =() => {
+        this.setState({loading: true})
+        let requestBody = {
+            query: `
+                query {
+                    getUserByUsername(username: "${this.props.username}"){
+                        user {
+                            _id
+                            username
+                            joined
+                        }
+                    }
+                }
+            `
+        }
+
+        fetch("http://localhost:5000/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+                }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201)
+                    throw new Error ('Failed')
+                return res.json()
+            })
+            .then(data => {
+
+                this.setState({
+                    user : data.data.getUserByUsername.user,
+                    loading: false 
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     // Use the first user 
@@ -59,46 +101,20 @@ class FollowingPage extends Component {
         document.getElementById(invisible[1]).style.fontWeight = "normal"        
     }
 
-    // Get the username 
-    getUserName = () => {
-        const user = this.props.match.params.username;
-        return user
-    }
 
-    getUser = () => {
-        for (let i = 0; i < this.users.length; i++){
-            if (this.users[i].username === this.getUserName())
-                return this.users[i]
-        }
-    }
 
     getAccountCreationDate = () => {
-        const user = this.getUserName()
-        
-        for (let i = 0; i < this.users.length; i++){
-           
-            if (this.users[i].username === user)
-           
-                return this.users[i].joined.month + " " + this.users[i].joined.day + ", " + this.users[i].joined.year
-        }
-        
+        const user = this.state.user
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const date = new Date(parseInt(user.joined))
+        return  months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear()
+
     }
 
-    followers = () => {
-        const user = this.getUser()
-        return user.followers
-    }
-
-    following = () => {
-        const user = this.getUser()
-        return user.following
-    }
-
-    requests = () => {
-        const user = this.getUser() 
-        return user.follow_requests
-    }
+   
     render() { 
+        if (this.state.loading)
+            return (<> </>)
         
         return (  
             <>
@@ -110,7 +126,7 @@ class FollowingPage extends Component {
                         {/* Information Bar about the user */}
                         <div className="information-row">
                             <div className="col text-center">
-                                <h2>{this.getUserName()}                            
+                                <h2>{this.state.user.username}                            
                             
 
                                 </h2>
@@ -133,9 +149,9 @@ class FollowingPage extends Component {
                         </div>
 
                     
-                        {this.state.showFollowers ? <Followers followers = {this.followers()} username = {this.getUserName()}/>: null}
-                        {this.state.showFollowing ? <Following following = {this.following()} username = {this.getUserName()}/> : null}
-                        {this.state.showRequests ?  <Requests requests = {this.requests()} username = {this.getUserName()}/> : null}
+                        {this.state.showFollowers ? <Followers username = {this.state.user.username} history = {this.props.history}/>: null}
+                        {this.state.showFollowing ? <Following username = {this.state.user.username} history = {this.props.history}/> : null}
+                        {this.state.showRequests ?  <Requests username = {this.state.user.username} history = {this.props.history}/> : null}
                     </div>
                     
 
