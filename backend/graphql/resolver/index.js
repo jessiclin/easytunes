@@ -312,12 +312,13 @@ const resolver = {
 
         }
     },
-    forkPlaylist: async ({username, user_id, name}) => {
+    forkPlaylist: async ({username, user_id, name, songs}) => {
         const playlist = new Playlist({
             user_id: user_id,
             name: name, 
             username: username,
-            date_created: new Date()
+            date_created: new Date(),
+            songs: songs
         })
         try {
             const result = await playlist.save()

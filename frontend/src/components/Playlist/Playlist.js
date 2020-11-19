@@ -85,13 +85,16 @@ class Playlist extends Component {
         this.getPlaylist()
     }
     forkPlaylist = () => {
+        console.log(this.state.username)
         let requestBody = {
             query: `
                 query {
                     getUserByUsername (username : "${this.state.username}") {
-                        _id 
+                        user {
+                            _id
+                        }
                     }
-                }r
+                }
             `
         }
         //find user id
@@ -108,16 +111,30 @@ class Playlist extends Component {
                 return res.json()
             })
             .then(data => {
-                data = data.data.getUserByUsername
+                data = data.data.getUserByUsername.user._id
+                let songs = []
+                this.state.playlistInfo.songs.map(song => {
+                    songs.push(JSON.stringify({
+                        song_id: song.song_id,
+                        name: song.name,
+                        uploaded: song.uploaded,
+                        artists: song.artists
+                    }))
+                })
+                console.log(this.state.username)
+                console.log(this.state.playlistInfo.name)
+                console.log(data)
+                console.log(songs)
                 requestBody = {
                     query: `
-                        mutation {
-                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistName}", user_id: "${data._id}") {
+                        mutation forkPlaylist($username: String, $name: String, $user_id: String, $songs: [Strings] ){
+                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistInfo.name}", user_id: "${data}", songs: $songs) {
                                 _id 
                             }
                         }
                     `
                 }
+                console.log("requesting")
                 // Create the playlist 
                 fetch('http://localhost:5000/graphql', {
                     method: 'POST',
@@ -175,7 +192,7 @@ class Playlist extends Component {
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
-                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork"/>
+                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork" onClick={this.forkPlaylist}/>
                                 </div>
                             </div>
                         </div>
