@@ -186,6 +186,24 @@ const resolver = {
             let result = await Playlist.findOne({_id: playlist_id})
             console.log(songs)
         }catch(error){}
+    },
+    addRequest: async ({id, requested_username}) => {
+        try{
+            // Add request here 
+            let result = await User.findOne({_id: id})
+            // Get user id of the requestee 
+            let req = await User.findOne({username: requested_username})
+
+            const request = {
+                user_id: req._id,
+                username: requested_username,
+                request_date: new Date()
+            }
+            result.follow_requests.push(request)
+  
+            result.save()
+            return result
+        }catch(error){}
     }
 }
 

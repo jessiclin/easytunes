@@ -12,7 +12,28 @@ class PlaylistNavbar extends Component {
     }
 
     playlists = mockData.playlists
+    componentDidMount = () => {
+      let requestBody = { track: "3Qm86XLflmIXVm1wcwkgDK"}
 
+      fetch('http://localhost:5000/v1/tracks/', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+            'content-type': 'application/json'
+        }})
+        .then(res => {
+            if (res.status !== 200 && res.status !== 201)
+                throw new Error ('Failed')
+            return res.json()
+        })
+        .then(data => {
+         // console.log(data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+   //   this.fetchData(requestBody, type, 'http://localhost:5000/v1/search?', last)
+    }
     play = () => {
         if (this.state.play) {
           this.setState({ play: false });
@@ -25,11 +46,12 @@ class PlaylistNavbar extends Component {
       }
 
     render() { 
+      
         return ( 
             <>
                 <nav className="navbar fixed-bottom playlist-nav">
                     <div className="container playlist-nav-container">
-                        <AudioPlayer className="navbar-audio" src="https://www.freesound.org/data/previews/338/338825_1648170-lq.mp3" layout="horizontal-reverse" 
+                        <AudioPlayer className="navbar-audio" src="" layout="horizontal-reverse" 
                           customAdditionalControls={
                             [
                               

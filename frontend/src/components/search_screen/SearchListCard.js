@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Search.css'
 import AddSong from './AddSongs'
+import UserCard from './UserCard'
 class SearchListCard extends Component {
     state = {
         item : this.props.item,
@@ -18,44 +19,19 @@ class SearchListCard extends Component {
     }
 
     render() {
-
+     // console.log(this.props)
         return (
             <>
             {this.state.type === "track" ? this.renderSong() : 
             this.state.type === "artist" ? this.renderArtist(): 
             this.state.type === "playlist" ? this.renderPlaylist():
-            this.renderUser()}
+            <UserCard user = {this.state.item} sessionUser = {this.props.username}/>}
             </>
         )
     }
 
 
-    renderUser(){
-
-        return(
-            <div>
-                <div className='card z-depth-0 text'>
-                    <div className='card-content col s3'>
-                        <span className='card-title'>{this.state.item.user.username}</span>
-                    </div>
-                    <div className='card-content col s3'>
-                        <span className='card-title'>{this.state.item.user.followers.length}</span>
-                    </div>
-                    <div className='card-content col s3'>
-                        <span className='card-title'>{this.state.item.playlists.length}</span>
-                    </div>
-
-                    <div className='card-content col s3'>
-                        {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
-                        {/* <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button> */}
-                    </div>
-                </div>
-            </div>
-        );
-    }
     renderArtist(){
- 
-
         let genres = ""
      
             this.state.item.genres.forEach(genre => {

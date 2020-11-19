@@ -17,3 +17,12 @@
     z-index: 2;
 
 }
+
+.user-follow-info button {
+    background: transparent;
+    border: none
+}
+
+.user-follow-info button:focus {
+    outline: none
+}
