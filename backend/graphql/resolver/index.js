@@ -258,8 +258,9 @@ const resolver = {
                     follower.following.splice(i, 1)
             })
 
+
             result.save()
-            requestee.save()
+            follower.save()
             return result
         }catch(error){}
     },
