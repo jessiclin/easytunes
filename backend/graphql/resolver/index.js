@@ -311,6 +311,21 @@ const resolver = {
         catch{
 
         }
+    },
+    forkPlaylist: async ({username, user_id, name}) => {
+        const playlist = new Playlist({
+            user_id: user_id,
+            name: name, 
+            username: username,
+            date_created: new Date()
+        })
+        try {
+            const result = await playlist.save()
+            return { ...result._doc }
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
     }
 }
 
