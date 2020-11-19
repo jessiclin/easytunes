@@ -261,6 +261,29 @@ const resolver = {
             requestee.save()
             return result
         }catch(error){}
+    },
+    unFollow: async({username, following_id}) =>{
+        try{
+            let result = await User.findOne({username: username})
+            let following = await User.findOne({_id: following_id})
+            
+            // Remove from followers
+            following.followers.map((follower,i) => {
+                if (follower.user_id.toString() === result._id.toString())
+                    following.followers.splice(i, 1)
+            })
+            
+            // Remove from following
+            result.following.map((follow, i) => {
+                if (follow.user_id.toString() === following_id)
+                    result.following.splice(i, 1)
+            })
+
+            result.save()
+            following.save()
+
+            return result
+        }catch(error){}
     }
 }
 

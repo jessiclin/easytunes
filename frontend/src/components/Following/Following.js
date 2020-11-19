@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import {RiUserUnfollowLine} from 'react-icons/ri'
+import FollowingUser from './FollowingUser'
 class Following extends Component {
     state = { 
         following: null,
@@ -55,28 +56,10 @@ class Following extends Component {
     render() { 
         if (this.state.loading)
             return (<> </>)
-        function User ({username}){
 
-            function toUser(){
-                // history.history.push('/' + username)
-            }
-            
-            return (
-                <button className = "user-btn" onClick = {toUser}>{username}</button>
-            )
-        }
         let followings = this.state.following.map(function(following) {
             return (
-                <div key = {following.user_id} className="follower-row">
-                    <div className="col">
-                      {/* {following.username} */}
-                      <User username = {following.username} />
-                    </div>
-                    <div className="col">
-                        <button className="unfollow-btn"> Unfollow  <RiUserUnfollowLine/></button>
-                    </div>
-                    
-                </div>
+                <FollowingUser key = {following.user_id} following= {following} username = {this.state.username} history = {this.props.history} updateFollowing = {this.updateFollowing}/>
             )
         }, this)
 
@@ -85,6 +68,10 @@ class Following extends Component {
             {followings}
             </>
         );
+    }
+
+    updateFollowing = (following)=>{
+        this.setState({following: following})
     }
 }
  
