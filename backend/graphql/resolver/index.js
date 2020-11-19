@@ -44,10 +44,12 @@ const resolver = {
     getUserByUsername: async ({username}) => {
         try {
             const user = await User.findOne({ username: username})
+            // console.log(user)
             if (user === null)
                 throw new Error ("User not found")
             
             const playlists = await Playlist.find({user_id: user._id})
+
             return {user: { ...user._doc, password: null, _id: user.id}, playlists : playlists.map(playlist => {return {...playlist._doc}}) }
 
         } catch (err) {
@@ -112,7 +114,7 @@ const resolver = {
     getPlaylistByID: async ({id}) => {
         try{
             const playlist = await Playlist.findOne({_id : id})
-            console.log(playlist)
+            // console.log(playlist)
             return {...playlist._doc}
         }
         catch (err){
@@ -120,10 +122,11 @@ const resolver = {
         }
     },
     searchPlaylists: async ({name}) => {
+
         try {
             const playlists = await Playlist.find({ name: { "$regex": name, "$options": "i" }, public : true})
-        
-            return playlists.map(async user => {
+            // console.log(playlists)
+            return playlists.map(async playlist => {
                 return {...playlist._doc}
             })
         } catch (err) {
@@ -141,19 +144,17 @@ const resolver = {
     deleteSong: async ({playlist_id, song_id, index}) => {
         try {
             const result = await Playlist.findOne({_id: playlist_id})
-            console.log(song_id, index)
+            // console.log(song_id, index)
             result.songs.map((song, i) => {
   
                 if (song._id.toString() === song_id && i === index){
-                    console.log("HRE")
+                  
                     result.songs.splice(i, 1)
-                    console.log(result.songs)
+   
                 }
             })
-            console.log(result)
+
             result.save()
-            // const result = await Playlist.findByIdAndRemove(id)
-            // return {...result._doc}
         } catch(err) {
             throw err
         }
@@ -284,6 +285,32 @@ const resolver = {
 
             return result
         }catch(error){}
+    },
+    addSavedPlaylist: async ({username, playlist_id, name}) => {
+     
+        try{
+            let user = await User.findOne({username: username})
+            user.saved_playlists.push({playlist_id: playlist_id, name: name})
+            user.save()
+            return await Playlist.findOne({_id: playlist_id})
+        }catch(error){}
+    },
+    deleteFavorite: async ({username,playlist_id}) => {
+
+        try{
+            let user = await User.findOne({username : username})
+     
+            user.saved_playlists.map((playlist, i) => {
+           
+                if (playlist.playlist_id.toString() === playlist_id)
+                    user.saved_playlists.splice(i, 1)
+            })
+            user.save()
+            return user
+        }
+        catch{
+
+        }
     }
 }
 

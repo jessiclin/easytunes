@@ -5,6 +5,7 @@ import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import Playlists from './Playlists/Playlists'
 import UploadedSongs from './UploadedSongs/UploadedSongs'
+import SavedPlaylists from './Playlists/SavedPlaylists'
 import './Profile.css'
 
 
@@ -26,6 +27,7 @@ class Profile extends Component {
     componentDidMount = () => {
         this.setState({loading : true})
         const username = this.state.profileUsername
+        console.log(username)
         let requestBody = {
             query: `
                 query {
@@ -38,15 +40,10 @@ class Profile extends Component {
                                 user_id
                                 username
                             }
+
                             saved_playlists {
-                                _id 
-                                username 
-                                name 
-                                likes 
-                                songs {
-                                    song_id 
-                                    name
-                                }
+                                playlist_id 
+                                name
                             }
                         }
                         playlists {
@@ -71,6 +68,7 @@ class Profile extends Component {
                 'content-type': 'application/json'
             }})
             .then(res => {
+                console.log(res)
                 if (res.status !== 200 && res.status !== 201)
                     throw new Error ('Failed')
                 return res.json()
@@ -142,7 +140,7 @@ class Profile extends Component {
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
-                    {this.state.showSavedPlaylists ? <Playlists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history} /> : null}
+                    {this.state.showSavedPlaylists ? <SavedPlaylists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history} /> : null}
                     {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history}/> : null}
                     {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
                 </div>

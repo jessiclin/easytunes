@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Search.css'
 import AddSong from './AddSongs'
 import UserCard from './UserCard'
+import PlaylistCard from './PlaylistCard'
 class SearchListCard extends Component {
     state = {
         item : this.props.item,
@@ -24,7 +25,7 @@ class SearchListCard extends Component {
             <>
             {this.state.type === "track" ? this.renderSong() : 
             this.state.type === "artist" ? this.renderArtist(): 
-            this.state.type === "playlist" ? this.renderPlaylist():
+            this.state.type === "playlist" ? <PlaylistCard playlist = {this.state.item} sessionUser = {this.props.username} history = {this.props.history}/>:
             <UserCard user = {this.state.item} sessionUser = {this.props.username} history = {this.props.history}/>}
             </>
         )
@@ -58,6 +59,7 @@ class SearchListCard extends Component {
             </div>
         );
     }
+
     renderSong(){
         const artists = this.state.item.artists
 

@@ -9,7 +9,7 @@ class Following extends Component {
         loading: true
      }
      getFollowing = () => {
-        console.log(this.props.username)
+
         this.setState({loading: true})
         let requestBody = {
             query: `

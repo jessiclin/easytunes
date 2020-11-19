@@ -39,6 +39,15 @@ type UserRef {
     following_since: String!
 }
 
+type Saved {
+    playlist_id: ID!
+    username: String!
+    name: String!
+    img: String!
+    date_created: String!
+    likes: Int!
+    songs: [SongRef!]!
+}
 type User {
     _id: ID!
     email: String
@@ -49,7 +58,7 @@ type User {
     default_public: Boolean!
     current_song_id: String
     current_playlist_id: String 
-    saved_playlists: [Playlist!]! 
+    saved_playlists: [Saved!]! 
     following: [UserRef!]! 
     followers: [UserRef!]! 
     follow_requests: [UserRef!]! 
@@ -110,6 +119,8 @@ type RootMutation {
     addFollower(username: String!, request_id: ID!): User
     removeFollower(username: String!, follower_id: ID!): User
     unFollow(username: String!, following_id: ID!): User
+    addSavedPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist
+    deleteFavorite (username: String!, playlist_id : ID!): User
 }
 
 schema {
