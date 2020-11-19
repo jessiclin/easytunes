@@ -44,7 +44,7 @@ class Profile extends Component {
                                 name 
                                 likes 
                                 songs {
-                                    _id 
+                                    song_id 
                                     name
                                 }
                             }
@@ -55,7 +55,7 @@ class Profile extends Component {
                             username
                             likes 
                             songs {
-                                _id
+                                song_id
                                 name
                             }
                         }

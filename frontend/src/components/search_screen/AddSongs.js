@@ -19,7 +19,7 @@ class AddSong extends Component {
                             _id
                             name
                             songs {
-                                _id
+                                song_id
                                 name
                             }
                         }
