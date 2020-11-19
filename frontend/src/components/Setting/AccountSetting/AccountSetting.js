@@ -4,6 +4,7 @@ import UpdatePassword from './UpdatePassword'
 class AccountSetting extends Component {
     state = { user: this.props.user }
     render() { 
+        console.log(this.props.user)
         return (  
             <div className="user-settings-container">
             <div className="settings-header">Account</div>

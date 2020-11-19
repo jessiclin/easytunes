@@ -7,21 +7,60 @@ import AccountSetting from './AccountSetting/AccountSetting'
 import AdvancedSetting from './AdvancedSetting/AdvancedSetting'
 import PrivacySetting from './PrivacySetting/PrivacySetting'
 import './Setting.css'
-import mockData from '../../mock_data.json'
-
 
 class Setting extends Component {
- 
-    user = mockData.users[0]
-
     state = { 
         showAccount: true,
         showPrivacy: false,
         showAdvanced: false,
-        user: mockData.users[0]
+        user: null,
+        loading: true
     }
+    componentDidMount = () => {
+        this.setState({loading: true})
+        console.log(this.props)
+        let requestBody = {
+            query: `
+                query{
+                    getUserByUsername(username : "${this.props.username}") {
+                        user {
+                            _id
+                        username 
+                        default_public
+                        email
+                        url
+                        }
+                    }
+                }
+            `
+        }
 
+        fetch ('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }})
+            .then(res => {
+                // console.log(res)
+                if (res.status !== 200 && res.status !== 201)
+                    throw new Error ('Failed')
+                return res.json()
+            })
+            .then(data => {
+                console.log(data.data.getUserByUsername.user)
+               this.setState({
+                   user: data.data.getUserByUsername.user,
+                   loading:false
+               })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
     render() { 
+        if (this.state.loading)
+            return(<> </>)
         return (  
             <div className="container-fluid setting-container">
                 <HeaderNavbar  props = {this.props}/>
