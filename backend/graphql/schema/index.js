@@ -100,7 +100,7 @@ input PlaylistInput{
 type RootQuery {
     searchUsers(username: String!): [User_Playlists!]!
     searchPlaylists(name: String!): [Playlist!]!
-    getUserByUsername(username: String!) : User_Playlists!
+    getUserByUsername(username: String!): User_Playlists!
     getUserByEmail(email: String) : User_Playlists!
     login(email: String!, password: String!) : AuthData!
     getUserPlaylists(username: String!) : [Playlist!]!
@@ -121,6 +121,7 @@ type RootMutation {
     unFollow(username: String!, following_id: ID!): User
     addSavedPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist
     deleteFavorite (username: String!, playlist_id : ID!): User
+    forkPlaylist(username: String!, user_id: ID!, name: String!, playlist: PlaylistInput!): Playlist
 }
 
 schema {

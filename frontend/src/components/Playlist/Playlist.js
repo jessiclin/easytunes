@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
+import { BiGitRepoForked } from 'react-icons/bi'
 import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
@@ -83,6 +84,78 @@ class Playlist extends Component {
     componentDidMount = () => {
         this.getPlaylist()
     }
+    forkPlaylist = () => {
+        console.log(this.state.username)
+        let requestBody = {
+            query: `
+                query {
+                    getUserByUsername (username : "${this.state.username}") {
+                        user {
+                            _id
+                        }
+                    }
+                }
+            `
+        }
+        //find user id
+        fetch('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) 
+                    throw new Error('Failed');
+                return res.json()
+            })
+            .then(data => {
+                data = data.data.getUserByUsername.user._id
+                let songs = []
+                this.state.playlistInfo.songs.map(song => {
+                    songs.push(JSON.stringify({
+                        song_id: song.song_id,
+                        name: song.name,
+                        uploaded: song.uploaded,
+                        artists: song.artists
+                    }))
+                })
+                console.log(this.state.username)
+                console.log(this.state.playlistInfo.name)
+                console.log(data)
+                console.log(songs)
+                requestBody = {
+                    query: `
+                        mutation forkPlaylist($username: String, $name: String, $user_id: String, $songs: [Strings] ){
+                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistInfo.name}", user_id: "${data}", songs: $songs) {
+                                _id 
+                            }
+                        }
+                    `
+                }
+                console.log("requesting")
+                // Create the playlist 
+                fetch('http://localhost:5000/graphql', {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                    })
+                    .then(res => {
+                        if (res.status !== 200 && res.status !== 201) 
+                            throw new Error('Failed');
+                        return res.json()
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
     render() { 
 
@@ -118,8 +191,8 @@ class Playlist extends Component {
                                 <h5> Playlist By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
                             </div>
                             <div className="col text-center align-self-center playlist-col">
-                                <div onClick={() => {navigator.clipboard.writeText(window.location.href)}}>
-                                    <FaShare size={34} className="share"/>
+                                <div>
+                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork" onClick={this.forkPlaylist}/>
                                 </div>
                             </div>
                         </div>
