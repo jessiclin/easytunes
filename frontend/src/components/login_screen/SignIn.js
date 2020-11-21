@@ -1,3 +1,8 @@
+/** SIGN IN 
+ * Component withing Login Screen 
+ * Handles Signing in 
+ */
+
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom';
 
@@ -15,6 +20,7 @@ class SignIn extends Component {
     state = {
         errorMess : null
     }
+    
     setErrmess = (err) => {
         this.setState({errorMess : err})
 

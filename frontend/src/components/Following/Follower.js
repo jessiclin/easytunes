@@ -1,3 +1,7 @@
+/** FOLLOWER
+ * Handles displaing one follower
+ */
+
 import React, { Component } from 'react'
 import {RiUserUnfollowLine} from 'react-icons/ri'
 class Follower extends Component {

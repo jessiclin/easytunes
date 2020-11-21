@@ -1,3 +1,6 @@
+/** FOLLOWING USER
+ * Handles displaying one user that's being followed
+*/
 import React, { Component } from 'react'
 import {RiUserUnfollowLine} from 'react-icons/ri'
 class FollowingUser extends Component {

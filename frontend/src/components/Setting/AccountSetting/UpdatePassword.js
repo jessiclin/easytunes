@@ -1,5 +1,12 @@
+/** UPDATE PASSWORD
+ * Component within Account Setting 
+ * Used to handle changing password
+ **/
+
 import React, { Component } from 'react'
 import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+
+
 class UpdatePassword extends Component {
     state = { visible: false }
 

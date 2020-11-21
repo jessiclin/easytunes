@@ -1,3 +1,7 @@
+/** HEADER NAVBAR
+ * Contains home button, search bar, and settings icon 
+ */
+
 import React, { Component } from 'react'
 
 import {BsFillCaretDownFill} from 'react-icons/bs'
@@ -5,10 +9,6 @@ import {MdAccountCircle} from 'react-icons/md'
 import {AiFillHome} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
 import './HeaderNavbar.css'
-import mockData from '../../mock_data.json'
-
-
-
 
 class HeaderNavbar extends Component {
     constructor(props){
@@ -108,8 +108,6 @@ class HeaderNavbar extends Component {
                 </>
             )
         }
-        
-
         
         function Playlist({props}){
       

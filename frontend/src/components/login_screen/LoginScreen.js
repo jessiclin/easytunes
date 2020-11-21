@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
+/** LOGIN SCREEN
+ * Handles signing in and signing up 
+ */
 
+import React, { Component } from 'react';
 
 // Import css 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -14,6 +17,7 @@ class Login extends Component {
         signUpVisible: !this.props.login
    }
 
+   // Handle rendering sign in or sign up 
     changeView = (event) => {
         const visible = event.target.className
         
@@ -38,10 +42,12 @@ class Login extends Component {
         document.getElementsByClassName(visible)[0].style.borderBottom = "none"
         document.getElementsByClassName(invisible)[0].style.borderBottom = "1px solid lightgray";
     }
+
     element = (id) => {
         return document.getElementById(id)
     }
 
+    // Go to home page after logging in 
     toHome = () => {
         const url = '/home'
         const {history} = this.props;

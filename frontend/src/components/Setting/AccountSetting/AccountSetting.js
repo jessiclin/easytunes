@@ -1,6 +1,12 @@
+/** ACCOUNT SETTING 
+ * Component within Settings Page
+ */
+
+
 import React, { Component } from 'react'
 import Update from '../AccountSetting/Update'
 import UpdatePassword from './UpdatePassword'
+
 class AccountSetting extends Component {
     state = { user: this.props.user }
     render() { 
@@ -25,15 +31,11 @@ class AccountSetting extends Component {
                     {this.state.user.username}
                 </div>
                 <Update text = {"Update Username"} original = {this.state.user.username}/>
-                
-                
             </div>
 
             <div className="user-settings-content"> 
                 <h5>Change Password</h5>
-
                 <UpdatePassword/>
-            
             </div>
         </div>
         );

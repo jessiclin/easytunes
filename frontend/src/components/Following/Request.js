@@ -1,3 +1,6 @@
+/** REQUEST
+ * Handles one user request
+ */
 import React, { Component } from 'react'
 import {RiUserAddLine} from 'react-icons/ri'
 

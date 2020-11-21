@@ -1,3 +1,8 @@
+/** SONG LIST
+ * Component within Playlist
+ * Handles displaying the list of songs in a playlist 
+ */
+
 import React, { Component } from 'react'
 
 import './Songlist.css'
@@ -9,10 +14,12 @@ class Songlist extends Component {
         editing: this.props.editing,
     }
 
+    // Handles when the user clicks play 
     handlePlayClick = (event) =>{
         console.log(event)
     }
 
+    // Remove song from the playlist 
     removeSong = (song, index) => {
         if (this.state.songs[index]._id === song.song_id){
             let songs = this.state.songs
@@ -20,7 +27,7 @@ class Songlist extends Component {
             this.setState({songs : songs})
         }
     }
-
+    
     render() {
         console.log(this.props)
         let songs = this.state.songs.map(function(song, i){

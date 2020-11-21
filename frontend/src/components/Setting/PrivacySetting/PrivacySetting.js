@@ -1,5 +1,10 @@
+/** PRIVACY SETTING 
+ * Component within Settings Page
+ */
+
 import React, { Component } from 'react'
 import Switch from 'react-input-switch';
+
 class PrivacySetting extends Component {
     state = {  }
     render() { 

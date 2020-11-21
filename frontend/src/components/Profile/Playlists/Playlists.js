@@ -1,7 +1,13 @@
+/** PLAYLISTS
+ * Component within profile
+ * Handles displaying the user's playlists 
+ */
+
 import React, { Component } from 'react'
 
 import PlaylistButton from './PlaylistButton'
-import NewButton from './NewPlaylistButton'
+import NewPlaylistButton from './NewPlaylistButton'
+
 class Playlists extends Component {
  
     state = { 
@@ -10,6 +16,8 @@ class Playlists extends Component {
         user: this.props.user,
         history: this.props.history
     }
+
+    // Updates playlists 
     setPlaylists = (playlists) => {
         this.setState({playlists : playlists})
     }
@@ -28,7 +36,7 @@ class Playlists extends Component {
             {playlists}
             { this.state.sessionUser === this.state.user.username ?
                 <div className="add-new">
-                    <NewButton text = {"Playlist Name"} username = {this.state.user.username} user_id = {this.state.user._id} setPlaylists = {this.setPlaylists}/>
+                    <NewPlaylistButton text = {"Playlist Name"} username = {this.state.user.username} user_id = {this.state.user._id} setPlaylists = {this.setPlaylists}/>
                 </div>  : null
             }
             </>

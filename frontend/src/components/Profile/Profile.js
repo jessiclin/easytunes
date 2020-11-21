@@ -1,3 +1,7 @@
+/** PROFILE
+ * Handles the displaying the user's playlists, saved playlists, and uploaded songs 
+ */
+
 import React, { Component} from 'react'
 
 import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
@@ -152,6 +156,7 @@ class Profile extends Component {
          );
     }
 
+    // Check if the logged in user is following 
     isFollowing = () =>{
         let followers = this.state.profileFollowers
         let following = false 
@@ -163,7 +168,7 @@ class Profile extends Component {
         return following
     }
 
-    
+    // Handle displaying playlists, saved playlists, or uploaded songs 
     changeView = (event) => {
         let invisible = []
         const visible = event.target.className

@@ -1,3 +1,8 @@
+/** PLAYLIST SETTING
+ * Component within Playlist 
+ * Used to handle editing the playlist 
+ */
+
 import React, { Component } from 'react'
 import './PlaylistSetting.css'
 
@@ -14,6 +19,7 @@ class PlaylistSetting extends Component {
         public:this.props.playlist.public
     }
 
+    // Changes the edit status 
     handleEditClick = () => {
         this.setState({edit: !this.state.edit}, () =>{
             this.onChange("edit-status" , this.state.edit)
@@ -23,6 +29,7 @@ class PlaylistSetting extends Component {
         
     }
 
+    // Save Changes 
     handleSave = () => {
         this.setState({edit: !this.state.edit}, () =>{
             this.onChange("edit-status" , this.state.edit)
@@ -30,6 +37,7 @@ class PlaylistSetting extends Component {
         })
     }
 
+    // Cancel changes 
     handleCancel = () => {
         this.setState({edit: !this.state.edit}, () =>{
             this.onChange("edit-status" , this.state.edit)
@@ -38,11 +46,12 @@ class PlaylistSetting extends Component {
         
     }
 
+    // Change privacy setting of the playlist (Edit mode)
+    // NOTE: Does not update privacy setting in the database 
     changePrivacy = () => {
         let playlist = this.state.playlist
         playlist.public = !this.state.public 
         this.setState({public: !this.state.public})
-        // this.changePlaylist(playlist)        
     }
 
     render(){

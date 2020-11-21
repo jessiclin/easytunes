@@ -1,3 +1,7 @@
+/** FOLLOWERS 
+ * Handles displaying the list of followers 
+ */
+
 import React, { Component } from 'react'
 
 import Follower from './Follower'

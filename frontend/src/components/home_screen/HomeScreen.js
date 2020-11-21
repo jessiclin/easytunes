@@ -1,3 +1,7 @@
+/** HOME SCREEN
+ * Handles displaying the home screen after logging in 
+ */
+
 import React, {Component } from 'react'
 import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
 
@@ -20,13 +24,7 @@ class HomeScreen extends Component {
         console.log(history);
         history.replace('/home')
     }
-
-    goPlaylists = () => {
-        const {history } = this.props;
-        console.log(history);
-        history.push('/:userid')
-    }
-
+    
     render() { 
  
         return ( 

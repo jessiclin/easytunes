@@ -1,3 +1,8 @@
+/** PLAYLIST CARD  
+ * Component withing Search List Card 
+ * Used to display a playlist in the search results 
+*/
+
 import React, { Component } from 'react'
 
 class PlaylistCard extends Component {
@@ -37,11 +42,12 @@ class PlaylistCard extends Component {
         );
     }
 
+    // Go to the playlist 
     toPlaylist = () => {
-    
         this.props.history.push('/' +  this.state.playlist.username + "/playlist=" + this.state.playlist._id)
     }
 
+    // Add the playlist into the user's saved playlist 
     handleFavorite = () => {
         console.log(this.props.sessionUser)
         console.log(this.state.playlist._id)

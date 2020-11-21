@@ -1,3 +1,8 @@
+/** USER CARD
+ * Component within Search List Card
+ * Used to display a user in the search results 
+ */
+
 import React, { Component } from 'react'
 import { AiOutlineConsoleSql } from 'react-icons/ai'
 // Received for Pending request from user. Shared for pending request to user 
@@ -11,6 +16,7 @@ class UserCard extends Component {
         loading: true,
     }
 
+    // Get the user 
     componentDidMount = () => {
         this.setState({loading: true})
         let requestBody = {
@@ -99,6 +105,7 @@ class UserCard extends Component {
         return following 
     }
 
+    // Send a follow request 
     sendRequest = () => {
         console.log(this.state.user.user._id)
         let requestBody = {
@@ -146,6 +153,7 @@ class UserCard extends Component {
 
     }
 
+    // Go to the user's profile page 
     toUser = () => {
         console.log(this.props)
         this.props.history.push('/' +  this.state.user.user.username)
@@ -153,6 +161,7 @@ class UserCard extends Component {
     render() { 
         if (this.state.loading)
             return (<> </>);
+        // Do not show in the search results if it's the user that's logged in 
         if (this.props.sessionUser === this.state.user.user.username)
             return (<> </>);
         return(

@@ -1,3 +1,8 @@
+/** COMMENTS
+ * Component within Playlist
+ * Handles displaying comments 
+ */
+
 import React, { Component } from 'react'
 import { BsFillCaretUpFill, BsFillCaretDownFill} from 'react-icons/bs'
 import './Comments.css'
@@ -5,12 +10,8 @@ import './Comments.css'
 class Comments extends Component {
     state = {
         comments : this.props.comments
-    }
-    getComments = () => {
-        const {comments} = this.props
-        console.log(this.props)
-        return comments
-    }
+    }  
+
     render() {
         function ReplyButton(elem){
             const [showReplyVisible, setVisibility] = React.useState(true);

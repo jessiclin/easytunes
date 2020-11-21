@@ -1,3 +1,8 @@
+/** SONG
+ * Component within Song List 
+ * Handles displaying one song 
+ */
+
 import React, { Component } from 'react'
 import {AiOutlineDelete} from 'react-icons/ai'
 // FaRegPauseCircle
@@ -15,95 +20,22 @@ class Song extends Component {
         playlistId: this.props.playlist_id
     }
 
+    // Sets delete confirmation box to visible 
     setVisible = () => {
         this.setState({deleteConfirmVisible : true})
     }
 
+    // Sets delete confirmation box to invisible 
     setInvisible = () => {
         this.setState({deleteConfirmVisible: false})
     }
     
+    // Remove song from the playlist (Edit Mode)
+    // NOTE: Does not delete the song from the database 
     handleDelete = () => {
-
         this.removeSong(this.state.song, this.state.index)
-        // let requestBody = {
-        //     query: `
-        //         mutation {
-        //             deleteSong (playlist_id: "${this.state.playlistId}" song_id : "${this.state.song._id}", index : ${this.state.index}) {
-        //                 _id 
-        //             }
-        //         }
-        //     `
-        // }
-
-        // fetch('http://localhost:5000/graphql', {
-        //     method: 'POST',
-        //     body: JSON.stringify(requestBody),
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     }
-        //     })
-        //     .then(res => {
-        //         if (res.status !== 200 && res.status !== 201) 
-        //             throw new Error('Failed');
-        //         return res.json()
-        //     })
-        //     .then(result => {
-        //         console.log(result)
-        //          // Update the playlist on the UI 
-        //          let requestBody = {
-        //             query : `
-        //                 query {
-        //                     getPlaylistByID (id : "${this.state.playlistId}"){
-        //                         name 
-        //                         username 
-        //                         date_created 
-        //                         likes 
-        //                         public 
-        //                         comments {
-        //                             _id
-        //                             username
-        //                             date
-        //                             message
-        //                             replies {
-        //                                 _id
-        //                                 username
-        //                                 date
-        //                                 message
-        //                             }
-        //                         }
-        //                         songs {
-        //                             _id 
-        //                             name 
-        //                             artists
-        //                         }
-        //                     }
-        //                 }
-        //             `
-        //         }
-        //         fetch('http://localhost:5000/graphql', {
-        //             method: 'POST',
-        //             body: JSON.stringify(requestBody),
-        //             headers: {
-        //                 'content-type': 'application/json'
-        //             }
-        //             })
-        //             .then(res => {
-        //                 if (res.status !== 200 && res.status !== 201) 
-        //                     throw new Error('Playlist not found');
-        //                 return res.json()
-        //             })
-        //             .then(data => {
-        //                 console.log(data)
-        //             })
-        //             .catch(err => {
-        //                 console.log(err);
-        //             });
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
     }
+
     render() { 
         return (  
             <div className="row song-row">
