@@ -1,3 +1,8 @@
+/** SEARCH LIST CARD 
+ * Component withing Search List 
+ * Handles displaying one search result 
+**/
+
 import React, { Component } from 'react'
 import './Search.css'
 import AddSong from './AddSongs'
@@ -9,10 +14,7 @@ class SearchListCard extends Component {
         type : this.props.type,
     }
 
-    handleFavorite = (e) => {
-
-    }
-
+    // Converts length og song into minutes 
     millisToMinutesAndSeconds(millis) {
         const minutes = Math.floor(millis / 60000);
         const seconds = ((millis % 60000) / 1000).toFixed(0);

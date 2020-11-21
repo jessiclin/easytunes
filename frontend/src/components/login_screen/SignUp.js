@@ -1,3 +1,8 @@
+/** SIGN UP
+ * Component withing Login Screen 
+ * Handles Signing up
+ */
+
 import React, { Component } from 'react'
 
 class SignUp extends Component {

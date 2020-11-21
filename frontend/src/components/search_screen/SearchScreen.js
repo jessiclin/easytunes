@@ -1,3 +1,7 @@
+/** SEARCH SCREEN 
+ * Handles retrieving and getting search results   
+ **/
+
 import React, { Component } from 'react'
 import SearchList from './SearchList.js'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
@@ -13,6 +17,7 @@ class SearchScreen extends Component {
         loading : false,
     }
 
+    // Fetch Search Results from database 
     fetchData = (requestBody, type, url, last) => {
         fetch(url, {
             method: 'POST',
@@ -46,8 +51,8 @@ class SearchScreen extends Component {
             })
     }
 
+    // Handle getting search results for players 
     fetchPlaylists = (last, query) => {
-        console.log("HEREs")
         const requestBody = {
             query: `
                 query {
@@ -67,6 +72,7 @@ class SearchScreen extends Component {
         this.fetchData(requestBody, 'playlists', 'http://localhost:5000/graphql', last)
     }
 
+    // Handle getting search results for users 
     fetchUsers = (last, query) => {
         let requestBody = {
             query: `
@@ -95,6 +101,7 @@ class SearchScreen extends Component {
         this.fetchData(requestBody, 'users', 'http://localhost:5000/graphql', last)
     }
 
+    // Handle getting songs and artists search results 
     fetchSpotify = (type, query, last) => {
    
         let requestBody;
@@ -106,11 +113,10 @@ class SearchScreen extends Component {
         this.fetchData(requestBody, type, 'http://localhost:5000/v1/search?', last)
     }
 
-    componentDidUpdate = () => {
-        
+    // Updates the search page if the user searches for something else 
+    componentDidUpdate = () => {   
+        // Update if there is a change in search 
         if (this.state.searchType !== this.props.match.params.type || this.state.searchQuery !== this.props.match.params.query){
-            console.log()
-            console.log("Update")
             this.setState({
                 searchType : this.props.match.params.type,
                 searchQuery : this.props.match.params.query,
@@ -137,9 +143,9 @@ class SearchScreen extends Component {
             
         }
     }
-    componentDidMount = () => {
-        
 
+    // Handles the search page when the user first enters 
+    componentDidMount = () => {
         if (!this.state.loading){
             this.setState({loading: true})
             const type = this.state.searchType;
@@ -161,7 +167,7 @@ class SearchScreen extends Component {
     }
 
     render() {
-        if (this.loading)
+        if (this.state.loading)
             return (<> </>)
 
         return (

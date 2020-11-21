@@ -1,3 +1,5 @@
+/** SETTINGS PAGE  **/
+
 import React, { Component } from 'react'
 
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
@@ -16,9 +18,11 @@ class Setting extends Component {
         user: null,
         loading: true
     }
+
+    // Get the User 
     componentDidMount = () => {
         this.setState({loading: true})
-        console.log(this.props)
+
         let requestBody = {
             query: `
                 query{
@@ -48,7 +52,6 @@ class Setting extends Component {
                 return res.json()
             })
             .then(data => {
-                console.log(data.data.getUserByUsername.user)
                this.setState({
                    user: data.data.getUserByUsername.user,
                    loading:false
@@ -58,9 +61,13 @@ class Setting extends Component {
                 console.log(error)
             })
     }
+
+    // Render the Settings Page 
     render() { 
+        // If the data is still loading, do not attempt to render any information 
         if (this.state.loading)
             return(<> </>)
+
         return (  
             <div className="container-fluid setting-container">
                 <HeaderNavbar  props = {this.props}/>
@@ -87,15 +94,16 @@ class Setting extends Component {
                 {this.state.showPrivacy ? <PrivacySetting/> : null}
                 {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
                 
-                
                 <PlaylistNavbar/>
             </div>
         );
     }
+
+    // Handle button clicks to "Account Setting", "Privacy Setting", and "Advanced Setting"
     changeView = (event) => {
         let invisible = [];
         const visible = event.target.id
-        console.log(event)
+        
         if (visible === "settings-account-btn"){
             this.setState({
                 showAccount: true,

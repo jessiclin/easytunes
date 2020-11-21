@@ -1,3 +1,8 @@
+/** PLAYLIST NAVBAR
+ * Bar at the bottom of the screen 
+ * Allows users to control the songs in the playlist they're listening to  
+ */
+
 import React, { Component } from 'react'
 import './PlaylistNavbar.css'
 import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
@@ -34,16 +39,7 @@ class PlaylistNavbar extends Component {
         })
    //   this.fetchData(requestBody, type, 'http://localhost:5000/v1/search?', last)
     }
-    play = () => {
-        if (this.state.play) {
-          this.setState({ play: false });
-          //this.audio.pause();
-        } 
-        else {
-          this.setState({ play: true });
-          //this.audio.play();
-        }
-      }
+
 
     render() { 
       

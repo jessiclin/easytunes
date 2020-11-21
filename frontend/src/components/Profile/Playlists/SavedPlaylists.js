@@ -1,3 +1,8 @@
+/** SAVED PLAYLISTS 
+ * Component within profile
+ * Handles displaying the user's saved playlists 
+ */
+
 import React, { Component } from 'react'
 import SavedPlaylistButton from './SavedPlaylistButton'
 
@@ -11,7 +16,6 @@ class SavedPlaylists extends Component {
     setPlaylists = (playlists) => {
         this.setState({playlists : playlists})
     }
-
 
     render() { 
 
@@ -27,10 +31,6 @@ class SavedPlaylists extends Component {
 
             </>
         );
-    }
-
-    setPlaylists = (playlists) => {
-        this.setState({playlists: playlists})
     }
 }
  

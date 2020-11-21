@@ -1,3 +1,7 @@
+/** FOLLOWING
+ * Handles displaying the list of following 
+ */
+
 import React, { Component } from 'react'
 
 import {RiUserUnfollowLine} from 'react-icons/ri'

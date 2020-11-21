@@ -1,3 +1,7 @@
+/** HOME LAYOUT
+ * Handles displaying the home page prior to logging in 
+ */
+
 import React from "react";
 import "./Homelayout.css";
 import { Button } from "../../Button/Button";

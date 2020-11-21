@@ -1,3 +1,8 @@
+/** SAVED PLAYLISTS BUTTON
+ * Component within Saved Playlists 
+ * Handles one saved playlist in the playlists page 
+ */
+
 import React, { Component } from 'react'
 import {AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 

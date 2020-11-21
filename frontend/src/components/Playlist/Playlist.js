@@ -1,3 +1,7 @@
+/** PLAYLIST
+ * Handles the page for a playlist 
+ */
+
 import React, { Component} from 'react'
 import { AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import { BiGitRepoForked } from 'react-icons/bi'
@@ -9,7 +13,7 @@ import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import './Playlist.css'
 
 import { FaShare } from 'react-icons/fa'
-// A playlist page 
+
 class Playlist extends Component {
 
     state = {
@@ -23,7 +27,7 @@ class Playlist extends Component {
         editing: false,
     }
 
-
+    // Get the playlist 
     getPlaylist = () => {
         this.setState({loading : true})
         let requestBody = {
@@ -81,9 +85,11 @@ class Playlist extends Component {
                 console.log(err);
             });
     }
+
     componentDidMount = () => {
         this.getPlaylist()
     }
+
     forkPlaylist = () => {
         console.log(this.state.username)
         let requestBody = {
@@ -234,6 +240,7 @@ class Playlist extends Component {
             );
         }
 
+        // Update the playlist after edit 
         onChange = (type, obj) => {
             if (type === "playlist") {
                 console.log(obj)
@@ -291,58 +298,58 @@ class Playlist extends Component {
             }
 
         }
-        updatePlaylist = (playlist) => {
-            this.setState({playlistInfo : playlist})
-        }
+        // updatePlaylist = (playlist) => {
+        //     this.setState({playlistInfo : playlist})
+        // }
 
-        changeEdit = () => {
-            this.setState({editing: !this.state.editing})
-        }
-        changeView = (event) => {
-            let invisible = [];
-            const visible = event.target.className
-            if (visible === "songs-btn"){
-                this.setState({
-                    songsVisible: true,
-                    commentsVisible: false,
-                    settingsVisible: false
-                })
-                invisible.push("comments-btn")
-                invisible.push("settings-btn")
-            }
-            else if (visible === "comments-btn"){
-                this.setState({
-                    songsVisible: false,
-                    commentsVisible: true,
-                    settingsVisible: false
-                })
+        // changeEdit = () => {
+        //     this.setState({editing: !this.state.editing})
+        // }
+        // changeView = (event) => {
+        //     let invisible = [];
+        //     const visible = event.target.className
+        //     if (visible === "songs-btn"){
+        //         this.setState({
+        //             songsVisible: true,
+        //             commentsVisible: false,
+        //             settingsVisible: false
+        //         })
+        //         invisible.push("comments-btn")
+        //         invisible.push("settings-btn")
+        //     }
+        //     else if (visible === "comments-btn"){
+        //         this.setState({
+        //             songsVisible: false,
+        //             commentsVisible: true,
+        //             settingsVisible: false
+        //         })
     
-                invisible.push("songs-btn")
-                invisible.push("settings-btn")
-            }
-            else {
-                this.setState({
-                    songsVisible: false,
-                    commentsVisible: false,
-                    settingsVisible: true
-                })
-                invisible.push("songs-btn")
-                invisible.push("comments-btn")
+        //         invisible.push("songs-btn")
+        //         invisible.push("settings-btn")
+        //     }
+        //     else {
+        //         this.setState({
+        //             songsVisible: false,
+        //             commentsVisible: false,
+        //             settingsVisible: true
+        //         })
+        //         invisible.push("songs-btn")
+        //         invisible.push("comments-btn")
     
-            }
+        //     }
       
-            document.getElementById(visible).style.borderBottom = "3px solid #faed26"
-            document.getElementById(visible).style.fontWeight = "bold"
-            try {
-                document.getElementById(invisible[0]).style.borderBottom = "none";
-                document.getElementById(invisible[0]).style.fontWeight = "normal"
-            }catch{}
-            try {
-                document.getElementById(invisible[1]).style.borderBottom = "none";
-                document.getElementById(invisible[1]).style.fontWeight = "normal"  
-            } catch {}
+        //     document.getElementById(visible).style.borderBottom = "3px solid #faed26"
+        //     document.getElementById(visible).style.fontWeight = "bold"
+        //     try {
+        //         document.getElementById(invisible[0]).style.borderBottom = "none";
+        //         document.getElementById(invisible[0]).style.fontWeight = "normal"
+        //     }catch{}
+        //     try {
+        //         document.getElementById(invisible[1]).style.borderBottom = "none";
+        //         document.getElementById(invisible[1]).style.fontWeight = "normal"  
+        //     } catch {}
             
-        }
+        // }
 
 }
  

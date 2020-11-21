@@ -1,9 +1,12 @@
+/** ADVANCED SETTING 
+ * Component within Settings Page
+ */
+
+
 import React, { Component } from 'react'
 
 class AdvancedSetting extends Component {
     state = { user: this.props.user }
-
-
 
     render() { 
         return (  

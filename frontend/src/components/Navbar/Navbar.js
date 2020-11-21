@@ -1,3 +1,8 @@
+/** NAVBAR
+ * Component withing Home Page 
+ * Handles redirecting to Sign in and sign up  
+ */
+
 import React, {Component } from "react";
 import { Button } from "../Button/Button";
 import { Link } from "react-router-dom";

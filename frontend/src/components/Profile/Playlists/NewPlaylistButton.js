@@ -1,11 +1,18 @@
+/** NEW PLAYLIST BUTTON  
+ * Component within Playlists 
+ * Handles creating a new playlist 
+*/
+
 import React, { Component } from 'react'
 import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 import {IoMdAddCircleOutline}from 'react-icons/io'
+
 class NewPlaylistButton extends Component {
     constructor(props) {
         super(props)
         this.setPlaylists = this.props.setPlaylists
     }
+
     state = { 
         popupVisible: false,
         playlistName: null,
@@ -13,18 +20,22 @@ class NewPlaylistButton extends Component {
         user_id : this.props.user_id
      }
 
+    // Set new playlist box to visible 
     setVisible = () => {
         this.setState({popupVisible : true})
     }
 
+    // Set new playlist box to invisible 
     setInvisible = () => {
         this.setState({popupVisible : false})
     }
 
+    // Handles keeping the playlist name updated 
     inputOnChange = (event) =>{
         this.setState({playlistName: event.target.value})
     }
 
+    // Create a new playlist 
     createNewPlaylist = () =>{
         this.setInvisible()
         let requestBody = {

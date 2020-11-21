@@ -1,3 +1,7 @@
+/** REQUESTS
+ * Handles displaing list of requests
+ */
+
 import React, { Component } from 'react'
 import Request from './Request'
 

@@ -1,3 +1,8 @@
+/** ADD SONG
+ * Component within Search List 
+ * Used to add a song into a playlist 
+**/
+
 import React, { Component } from 'react'
 
 class AddSong extends Component {
@@ -9,6 +14,7 @@ class AddSong extends Component {
         visible: false
     }
 
+    // Fetch the user's playlist 
     componentDidMount = () => {
         this.setState({loading: true})
         let requestBody = {
@@ -47,14 +53,13 @@ class AddSong extends Component {
             })
     }
 
+    // Handle the visibility state of the user's playlists 
     changeVisible = () => {
         this.setState({visible : !this.state.visible})
     }
 
+    // Handle adding the song to a playlist 
     handleAdd = (event) => {
-        console.log(event.target.id)
-        console.log(this.state.song)
-
         let artists = ""
         console.log(typeof(artists))
         artists += this.state.song.artists.map(artist => {
@@ -90,6 +95,7 @@ class AddSong extends Component {
                 console.log(error)
             })
     }
+    
     render() { 
         // console.log(this.props)
         return ( 

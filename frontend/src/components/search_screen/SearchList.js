@@ -1,8 +1,15 @@
+/** SEARCH LIST 
+ * Component used within Search Screen 
+ * Used to handle display the list of search results 
+ */
+
 import React, { Component } from 'react'
 import SearchListCard from './SearchListCard.js'
 
 
 class SearchList extends Component {
+
+    
     render() {
         const items = this.props.searchList;
         const tracks = items.songs

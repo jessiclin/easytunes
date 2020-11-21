@@ -1,3 +1,8 @@
+/** PLAYLIST BUTTON
+ * Component used within playlist and saved playlists
+ * Handles one playlist in the playlists page 
+ */
+
 import React, { Component } from 'react'
 import {AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 
@@ -5,6 +10,7 @@ import {RiPlayListLine} from 'react-icons/ri'
 import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 // FaRegPauseCircle
 import {FaRegPlayCircle} from 'react-icons/fa'
+
 class PlaylistButton extends Component {
     constructor(props){
         super(props);
@@ -19,18 +25,22 @@ class PlaylistButton extends Component {
         history: this.props.history
     }
 
-
+    // Set delete confirmation box to visible
     setVisible = () => {
         this.setState({deleteConfirmVisible : true})
     }
 
+    // Set delete confirmation box to invisible 
     setInvisible = () => {
         this.setState({deleteConfirmVisible: false})
     }
 
+    // Go to the playlist page 
     toPlaylist = () => {
         this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/playlist='+ this.state.playlist._id)
     }
+
+    // Delete the playlist 
     deletePlaylist = () => {
         this.setInvisible()
         // Delete the playlist 
@@ -99,6 +109,7 @@ class PlaylistButton extends Component {
                 console.log(err);
             });
     }
+    
     render() { 
         const playlist = this.state.playlist 
         return (

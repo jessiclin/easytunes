@@ -1,3 +1,7 @@
+/** FOLLOWNG PAGE
+ * Handles displaying Followers, Following, and Requests 
+ */
+
 import React, { Component } from 'react'
 
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
@@ -17,6 +21,7 @@ class FollowingPage extends Component {
         loading: true
     }
 
+    // Gets the user 
     componentDidMount =() => {
         this.setState({loading: true})
         let requestBody = {
@@ -57,9 +62,7 @@ class FollowingPage extends Component {
             })
     }
 
-    // Use the first user 
-    users = mockData.users 
-
+    // Handle rendering followers, following, or requests 
     changeView = (event) => {
         let invisible = [];
         const visible = event.target.className
@@ -101,8 +104,7 @@ class FollowingPage extends Component {
         document.getElementById(invisible[1]).style.fontWeight = "normal"        
     }
 
-
-
+    // Get the user's account creation date 
     getAccountCreationDate = () => {
         const user = this.state.user
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -110,8 +112,7 @@ class FollowingPage extends Component {
         return  months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear()
 
     }
-
-   
+    
     render() { 
         if (this.state.loading)
             return (<> </>)
