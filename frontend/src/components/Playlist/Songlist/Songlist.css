@@ -28,3 +28,19 @@
 .song-col {
   display: inline-block;
 }
+
+.upbtn:hover {
+  cursor: pointer;
+}
+
+.upbtn {
+  margin-right: 1%;
+}
+
+.downbtn:hover {
+  cursor: pointer;
+}
+
+.downbtn {
+  margin-left: 1%;
+}

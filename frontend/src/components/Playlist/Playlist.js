@@ -127,10 +127,6 @@ class Playlist extends Component {
                         artists: song.artists
                     }))
                 })
-                console.log(this.state.username)
-                console.log(this.state.playlistInfo.name)
-                console.log(data)
-                console.log(songs)
                 requestBody = {
                     query: `
                         mutation forkPlaylist($username: String, $name: String, $user_id: String, $songs: [Strings] ){
@@ -198,7 +194,7 @@ class Playlist extends Component {
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
-                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork" onClick={this.forkPlaylist}/>
+                                    <FaShare size={34} class="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork" onClick={this.forkPlaylist}/>
                                 </div>
                             </div>
                         </div>
