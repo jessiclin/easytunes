@@ -4,18 +4,20 @@
  */
 
 import React, { Component } from 'react'
-import {AiOutlineDelete} from 'react-icons/ai'
+import {AiOutlineDelete, AiOutlineArrowUp, AiOutlineArrowDown} from 'react-icons/ai'
 // FaRegPauseCircle
 import {FaRegPlayCircle} from 'react-icons/fa'
 class Song extends Component {
     constructor(props){
         super(props)
         this.removeSong = this.props.removeSong
+        this.handleMoveUp = this.props.handleMoveUp
+        this.handleMoveDown = this.props.handleMoveDown
     }
     state = { 
         song: this.props.song , 
         index : this.props.index, 
-        editing: this.props.editing,
+        editing: true,
         deleteConfirmVisible : false,
         playlistId: this.props.playlist_id
     }
@@ -36,6 +38,16 @@ class Song extends Component {
         this.removeSong(this.state.song, this.state.index)
     }
 
+    moveUp = () => {
+        console.log("move up")
+        this.handleMoveUp(this.state.song, this.state.index)
+    }
+     
+    moveDown = () => {
+        console.log("move down")
+        this.handleMoveDown(this.state.song, this.state.index)
+    }
+
     render() { 
         return (  
             <div className="row song-row">
@@ -51,10 +63,20 @@ class Song extends Component {
                 {this.state.song.name}
             </div>
 
-            <div className="col song-col text-center">
-                {this.state.song.artist}
+            <div className="col song-col text-left">
+                {this.state.song.artists}
             </div>
-
+            <div className="col song-col text-center">
+                {1}
+            </div>
+            <div className="col song-col text-center">
+                {this.state.editing ? 
+                    <div>
+                        {(this.state.index > 0) ? <AiOutlineArrowUp size={34} class="upbtn" onClick={this.moveUp}/> : null}
+                        {(this.state.index < 100) ? <AiOutlineArrowDown size={34} class="downbtn" onClick={this.moveDown}/> : null}
+                    </div> 
+                :null}
+            </div>
             <div className="col song-col text-center">
                 {this.state.editing ? <button className = 'delete-btn' onClick={this.setVisible}> <AiOutlineDelete size = {24}/></button>: null}
             </div>
@@ -64,7 +86,7 @@ class Song extends Component {
                     <div>
                         Delete the Song? 
                     </div>
-                <button className = "confirm-new-btn" onClick={this.handleDelete}> Conf</button>
+                <button className = "confirm-new-btn" onClick={this.handleDelete}> Yes</button>
                 <button className = "cancel-new-btn"  onClick={this.setInvisible}> No</button>
         </div>
         : null }
