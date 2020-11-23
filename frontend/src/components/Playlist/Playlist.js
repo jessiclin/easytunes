@@ -193,6 +193,7 @@ class Playlist extends Component {
                                 <h2>{this.state.playlistInfo.name} {this.state.playlistInfo.public ? <AiFillEye size={24}/> : <AiFillEyeInvisible size={24}/>}</h2>
 
                                 <h5> Playlist By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
+                                <div>1 hr 33 min</div>
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
