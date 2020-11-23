@@ -55,6 +55,7 @@ class Playlist extends Component {
                             song_id 
                             name 
                             artists
+                            duration
                         }
                     }
                 }
@@ -124,7 +125,8 @@ class Playlist extends Component {
                         song_id: song.song_id,
                         name: song.name,
                         uploaded: song.uploaded,
-                        artists: song.artists
+                        artists: song.artists, 
+                        duration: song.duration
                     }))
                 })
                 requestBody = {
@@ -251,7 +253,8 @@ class Playlist extends Component {
                     songs.push(JSON.stringify({song_id: song.song_id,
                     name: song.name,
                     uploaded: song.uploaded,
-                    artists: song.artists}))
+                    artists: song.artists,
+                    duration: song.duration}))
                 })
                 let requestBody = {
                     query: `

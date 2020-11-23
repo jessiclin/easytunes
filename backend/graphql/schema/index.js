@@ -6,6 +6,7 @@ type SongRef {
     name: String!
     artists: [String!]!
     uploaded: Boolean!
+    duration: String!
 }
 type ReplyRef {
     _id: ID!
@@ -87,6 +88,7 @@ input SongInput {
     name: String!
     artists: String!
     uploaded: Boolean!
+    duration: String!
 }
 
 input PlaylistInput{

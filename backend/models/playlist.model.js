@@ -31,7 +31,8 @@ const PlaylistSchema = new Schema({
             song_id : {type: String, required: true},
             name: {type: String, required: true},
             artists: [{type: String, required: true}],
-            uploaded: {type: Boolean, required: true}
+            uploaded: {type: Boolean, required: true},
+            duration: {type: String, required: true}
         }
     ]
 })
