@@ -57,6 +57,11 @@ class AddSong extends Component {
     changeVisible = () => {
         this.setState({visible : !this.state.visible})
     }
+    millisToMinutesAndSeconds(millis) {
+        const minutes = Math.floor(millis / 60000);
+        const seconds = ((millis % 60000) / 1000).toFixed(0);
+        return (seconds === 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds)
+    }
 
     // Handle adding the song to a playlist 
     handleAdd = (event) => {
@@ -65,11 +70,12 @@ class AddSong extends Component {
         artists += this.state.song.artists.map(artist => {
             return "\n" + artist.name
         })
+        let songlength = this.millisToMinutesAndSeconds(this.state.song.duration_ms)
         console.log(JSON.stringify(artists))
         let requestBody = {
             query: `
                 mutation {
-                    addSong(songInput: {_id: "${this.state.song.id}", name: "${this.state.song.name}", artists: """${artists}""", uploaded: false, duration: "${this.state.song.duration}"}, playlist_id: "${event.target.id}"){
+                    addSong(songInput: {_id: "${this.state.song.id}", name: "${this.state.song.name}", artists: """${artists}""", uploaded: false, duration: "${songlength}"}, playlist_id: "${event.target.id}"){
                         _id
                     }
                 }
