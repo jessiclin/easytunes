@@ -124,7 +124,7 @@ class PlaylistButton extends Component {
                 </div>
 
                 <div className="col text-left">
-                    {playlist.songs.length} {playlist.songs.length === 1 ? "song" : "songs"} 
+                    {playlist.songs.length} {playlist.songs.length === 1 ? "Song" : "Songs"} - {"1 hr 33 min"}
                 </div>
 
                 <div className="col text-left">

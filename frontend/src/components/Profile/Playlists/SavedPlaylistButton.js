@@ -154,6 +154,9 @@ class SavedPlaylistButton extends Component {
             return(<> </>)
         const playlist = this.state.playlist 
         // console.log(playlist)
+        if (playlist == null) {
+            return(<> </>)
+        }
         return (
             <div className="playlist-row">
                 <div className="col">
