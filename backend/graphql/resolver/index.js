@@ -167,7 +167,8 @@ const resolver = {
                 song_id : songInput._id,
                 name: songInput.name,
                 uploaded: songInput.uploaded,
-                artists: []
+                artists: [],
+                duration: songInput.duration
             }
             let artists = songInput.artists.split("\n")
 

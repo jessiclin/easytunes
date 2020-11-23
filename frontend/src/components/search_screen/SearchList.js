@@ -25,7 +25,7 @@ class SearchList extends Component {
                     <div className='row'>
                         <div className='col s3'>Song</div>
                         <div className='col s3'>Artist</div>
-                        <div className='col s3'>Length</div>
+                        <div className='col s3'>Duration</div>
                         <div className='col s3'></div>
                     </div>
                     {tracks && tracks.map(function(item) {
