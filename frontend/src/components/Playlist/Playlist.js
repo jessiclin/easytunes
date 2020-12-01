@@ -36,7 +36,8 @@ class Playlist extends Component {
                     getPlaylistByID (id : "${this.state.playlistId}"){
                         name 
                         username 
-                        date_created 
+                        date_created
+                        total_duration 
                         likes 
                         public 
                         comments {
@@ -193,7 +194,8 @@ class Playlist extends Component {
                                 <h2>{this.state.playlistInfo.name} {this.state.playlistInfo.public ? <AiFillEye size={24}/> : <AiFillEyeInvisible size={24}/>}</h2>
 
                                 <h5> Playlist By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
-                                <div>1 hr 33 min</div>
+                                <div>{this.state.playlistInfo.total_duration < 3600 ? "0 hr " + (this.state.playlistInfo.total_duration < 600 ? "0" + Math.floor(this.state.playlistInfo.total_duration/60) + " min": Math.floor(this.state.playlistInfo.total_duration/60) + " min") :
+                (Math.floor(this.state.playlistInfo.total_duration/3600) + " hr " + (this.state.playlistInfo.total_duration%3600 < 600 ? "0" + Math.floor(this.state.playlistInfo.total_duration/60) + " min": Math.floor(this.state.playlistInfo.total_duration/60) + " min"))}</div>
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div>

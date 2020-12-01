@@ -35,7 +35,8 @@ class SavedPlaylistButton extends Component {
                         _id
                             name
                             username
-                            likes 
+                            likes
+                            total_duration 
                             songs {
                                 song_id
                                 name
@@ -169,7 +170,10 @@ class SavedPlaylistButton extends Component {
                 </div>
 
                 <div className="col text-left">
-                    {playlist.songs.length} {playlist.songs.length === 1 ? "song" : "songs"} 
+                <div className="col text-left">
+                    {playlist.songs.length} {playlist.songs.length === 1 ? "Song" : "Songs"} - {playlist.total_duration < 3600 ? "0 hr " + (playlist.total_duration < 600 ? "0" + Math.floor(playlist.total_duration/60) + " min": Math.floor(playlist.total_duration/60) + " min") :
+                (Math.floor(playlist.total_duration/3600) + " hr " + (playlist.total_duration%3600 < 600 ? "0" + Math.floor(playlist.total_duration/60) + " min": Math.floor(playlist.total_duration/60) + " min"))}
+                </div>
                 </div>
 
                 <div className="col text-left">
