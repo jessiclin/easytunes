@@ -337,6 +337,34 @@ const resolver = {
             console.log(error)
             throw error
         }
+    },
+    moveSongUp: async({playlist_id, song_id, index}) => {
+        try {
+            let result = await Playlist.findOne({_id: playlist_id})
+
+            let temp = result.songs[index]
+            result.songs[index] = result.songs[index-1]
+            result.songs[index-1] = temp
+
+            result.save()
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    },
+    moveSongDown: async({playlist_id, song_id, index}) => {
+        try {
+            let result = await Playlist.findOne({_id: playlist_id})
+
+            let temp = result.songs[index]
+            result.songs[index] = result.songs[index+1]
+            result.songs[index+1] = temp
+
+            result.save()
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
     }
 }
 
