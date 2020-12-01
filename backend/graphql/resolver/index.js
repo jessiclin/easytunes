@@ -153,14 +153,13 @@ const resolver = {
    
                 }
             })
-
+            result.total_duration -= song.duration
             result.save()
         } catch(err) {
             throw err
         }
     },
     addSong: async ({songInput, playlist_id}) => {
-   
         try{
             let result = await Playlist.findOne({_id: playlist_id})
             let song = {
@@ -177,7 +176,7 @@ const resolver = {
             })
 
             result.songs.push(song)
-
+            result.total_duration += songInput.duration
    
             result.save()
         }catch(err){
