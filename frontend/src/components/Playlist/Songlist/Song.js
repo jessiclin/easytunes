@@ -17,7 +17,7 @@ class Song extends Component {
     state = { 
         song: this.props.song , 
         index : this.props.index,
-        editing: true,
+        editing: this.props.editing,
         deleteConfirmVisible : false,
         playlistId: this.props.playlist_id
     }
