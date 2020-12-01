@@ -67,7 +67,8 @@ class Song extends Component {
                 {this.state.song.artists}
             </div>
             <div className="col song-col text-center">
-                {this.state.song.duration}
+                {this.state.song.duration < 60 ? "0:" + (this.state.song.duration < 10 ? "0" + this.state.song.duration: this.state.song.duration) :
+                (Math.floor(this.state.song.duration/60) + ":" + (this.state.song.duration%60 < 10 ? "0" + this.state.song.duration%60 : this.state.song.duration%60))}
             </div>
             <div className="col song-col text-center">
                 {this.state.editing ? 

@@ -77,6 +77,7 @@ class PlaylistButton extends Component {
                                 name
                                 username
                                 likes 
+                                total_duration
                                 songs {
                                     song_id
                                     name
@@ -124,7 +125,8 @@ class PlaylistButton extends Component {
                 </div>
 
                 <div className="col text-left">
-                    {playlist.songs.length} {playlist.songs.length === 1 ? "Song" : "Songs"} - {"1 hr 33 min"}
+                    {playlist.songs.length} {playlist.songs.length === 1 ? "Song" : "Songs"} - {playlist.total_duration < 3600 ? "0 hr " + (playlist.total_duration < 600 ? "0" + Math.floor(playlist.total_duration/60) + " min": Math.floor(playlist.total_duration/60) + " min") :
+                (Math.floor(playlist.total_duration/3600) + " hr " + (playlist.total_duration%3600 < 600 ? "0" + Math.floor(playlist.total_duration/60) + " min": Math.floor(playlist.total_duration/60) + " min"))}
                 </div>
 
                 <div className="col text-left">

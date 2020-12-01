@@ -6,7 +6,7 @@ type SongRef {
     name: String!
     artists: [String!]!
     uploaded: Boolean!
-    duration: String!
+    duration: Int!
 }
 type ReplyRef {
     _id: ID!
@@ -27,7 +27,8 @@ type Playlist {
     name: String!
     img: String!
     date_created: String!
-    public: Boolean! 
+    public: Boolean!
+    total_duration: Int!
     likes: Int!
     comments: [CommentRef!]!
     songs: [SongRef!]!
@@ -46,6 +47,7 @@ type Saved {
     name: String!
     img: String!
     date_created: String!
+    total_duration: Int!
     likes: Int!
     songs: [SongRef!]!
 }
@@ -88,15 +90,16 @@ input SongInput {
     name: String!
     artists: String!
     uploaded: Boolean!
-    duration: String!
+    duration: Int!
 }
 
 input PlaylistInput{
-    name: String
-    img: String
-    public: Boolean
-    likes: Int
-    songs: [String]
+    name: String!
+    img: String!
+    public: Boolean!
+    total_duration: Int!
+    likes: Int!
+    songs: [String]!
 }
 
 type RootQuery {
