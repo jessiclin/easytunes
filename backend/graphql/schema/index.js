@@ -127,6 +127,8 @@ type RootMutation {
     addSavedPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist
     deleteFavorite (username: String!, playlist_id : ID!): User
     forkPlaylist(username: String!, user_id: ID!, name: String!, playlist: PlaylistInput!): Playlist
+    moveSongUp(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
+    moveSongDown(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
 }
 
 schema {

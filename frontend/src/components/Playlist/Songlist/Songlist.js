@@ -40,7 +40,7 @@ class Songlist extends Component {
         let songs = this.state.songs.map(function(song, i){
             return (
                 <Song  key = {song.name + song.song_id} song={song} index={i} editing={this.state.editing} 
-                    playlist_id = {this.state.playlist_id} removeSong={this.removeSong} handleMoveUp={this.handleMoveUp} handleMoveDown={this.handleMoveDown}/>
+                    playlist_id = {this.state.playlist_id} removeSong={this.removeSong} handleMoveUp={this.handleMoveUp} handleMoveDown={this.handleMoveDown} playlist_length={this.props.songs.length}/>
             );
         }, this)
 
