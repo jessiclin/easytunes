@@ -176,7 +176,7 @@ class Playlist extends Component {
                 )
             }
             return ( 
-                <div className="container-fluid playlist-container">
+                <div className="container-fluid playlist-container playlist">
                     {/* Home and Profile Icons */}
                     <HeaderNavbar  props = {this.props}/>
 
@@ -199,7 +199,7 @@ class Playlist extends Component {
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
-                                    <FaShare size={34} class="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork" onClick={this.forkPlaylist}/>
+                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} className="fork" onClick={this.forkPlaylist}/>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +232,7 @@ class Playlist extends Component {
 
                         {/* Render "Songs", "Comments", "Settings" */}
                         {this.state.songsVisible ? <Songlist playlist_id = {this.state.playlistId} songs = {this.state.playlistInfo.songs} editing= {this.state.editing}/> : null}
-                        {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments}  /> : null}
+                        {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments} username = {this.props.username} playlist_id = {this.state.playlistId}  /> : null}
                         {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} editing= {this.state.editing} onChange = {this.onChange}/> : null}
                     </div>
                     <PlaylistNavbar/>
