@@ -54,8 +54,9 @@ class Profile extends Component {
                             _id
                             name
                             username
-                            likes 
                             public
+                            likes
+                            total_duration 
                             songs {
                                 song_id
                                 name

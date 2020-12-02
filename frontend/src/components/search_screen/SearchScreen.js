@@ -60,7 +60,8 @@ class SearchScreen extends Component {
                         _id 
                         name 
                         username
-                        likes 
+                        likes
+                        total_duration 
                         songs {
                             song_id 
                             name

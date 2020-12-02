@@ -25,7 +25,9 @@ class PlaylistCard extends Component {
                         <span className='card-title'>{this.state.playlist.likes}</span>
                     </div>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{this.state.playlist.songs.length}</span>
+                        <span className='card-title'>{this.state.playlist.songs.length} {this.state.playlist.songs.length === 1 ? "Song" : "Songs"} - {this.state.playlist.total_duration < 3600 ? "0 hr " + (this.state.playlist.total_duration < 600 ? "0" + Math.floor(this.state.playlist.total_duration/60) + " min": Math.floor(this.state.playlist.total_duration/60) + " min") :
+                (Math.floor(this.state.playlist.total_duration/3600) + " hr " + (this.state.playlist.total_duration%3600 < 600 ? "0" + Math.floor(this.state.playlist.total_duration/60) + " min": Math.floor(this.state.playlist.total_duration/60) + " min"))}
+                        </span>
                     </div>
                     
                 {
