@@ -39,7 +39,17 @@ class SavedPlaylistButton extends Component {
                         songs {
                             song_id
                             name
+<<<<<<< HEAD
                         }
+=======
+                            username
+                            likes
+                            total_duration 
+                            songs {
+                                song_id
+                                name
+                            }
+>>>>>>> 79ec1430964a415394c9664fcd9ab0b82939775a
                     }
                 }
             `
@@ -154,6 +164,9 @@ class SavedPlaylistButton extends Component {
             return(<> </>)
         const playlist = this.state.playlist 
         // console.log(playlist)
+        if (playlist == null) {
+            return(<> </>)
+        }
         return (
             <div className="playlist-row">
                 <div className="col">
@@ -166,7 +179,10 @@ class SavedPlaylistButton extends Component {
                 </div>
 
                 <div className="col text-left">
-                    {playlist.songs.length} {playlist.songs.length === 1 ? "song" : "songs"} 
+                <div className="col text-left">
+                    {playlist.songs.length} {playlist.songs.length === 1 ? "Song" : "Songs"} - {playlist.total_duration < 3600 ? "0 hr " + (playlist.total_duration < 600 ? "0" + Math.floor(playlist.total_duration/60) + " min": Math.floor(playlist.total_duration/60) + " min") :
+                (Math.floor(playlist.total_duration/3600) + " hr " + (playlist.total_duration%3600 < 600 ? "0" + Math.floor(playlist.total_duration/60) + " min": Math.floor(playlist.total_duration/60) + " min"))}
+                </div>
                 </div>
 
                 <div className="col text-left">

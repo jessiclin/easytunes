@@ -153,21 +153,21 @@ const resolver = {
    
                 }
             })
-
+            result.total_duration -= song.duration
             result.save()
         } catch(err) {
             throw err
         }
     },
     addSong: async ({songInput, playlist_id}) => {
-   
         try{
             let result = await Playlist.findOne({_id: playlist_id})
             let song = {
                 song_id : songInput._id,
                 name: songInput.name,
                 uploaded: songInput.uploaded,
-                artists: []
+                artists: [],
+                duration: songInput.duration
             }
             let artists = songInput.artists.split("\n")
 
@@ -176,7 +176,7 @@ const resolver = {
             })
 
             result.songs.push(song)
-
+            result.total_duration += songInput.duration
    
             result.save()
         }catch(err){
@@ -365,7 +365,34 @@ const resolver = {
             playlist.save() 
             return {...result._doc}
         } catch(error){
-            
+        }
+    },
+    moveSongUp: async({playlist_id, song_id, index}) => {
+        try {
+            let result = await Playlist.findOne({_id: playlist_id})
+
+            let temp = result.songs[index]
+            result.songs[index] = result.songs[index-1]
+            result.songs[index-1] = temp
+
+            result.save()
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    },
+    moveSongDown: async({playlist_id, song_id, index}) => {
+        try {
+            let result = await Playlist.findOne({_id: playlist_id})
+
+            let temp = result.songs[index]
+            result.songs[index] = result.songs[index+1]
+            result.songs[index+1] = temp
+
+            result.save()
+        } catch (error) {
+            console.log(error)
+            throw error
         }
     }
 }

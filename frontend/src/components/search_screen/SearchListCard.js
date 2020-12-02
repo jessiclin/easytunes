@@ -15,10 +15,9 @@ class SearchListCard extends Component {
     }
 
     // Converts length og song into minutes 
-    millisToMinutesAndSeconds(millis) {
-        const minutes = Math.floor(millis / 60000);
-        const seconds = ((millis % 60000) / 1000).toFixed(0);
-        return (seconds === 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds)
+    millisToSeconds(millis) {
+        const seconds = Math.floor(millis/1000);
+        return seconds
     }
 
     render() {
@@ -71,7 +70,7 @@ class SearchListCard extends Component {
 
         })
 
-        const songLength = this.millisToMinutesAndSeconds(this.state.item.duration_ms)
+        const songLength = this.millisToSeconds(this.state.item.duration_ms)
 
         return (
             <div>
@@ -83,7 +82,8 @@ class SearchListCard extends Component {
                         <span className='card-title'>{artistNames}</span>
                     </div>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{songLength}</span>
+                        <span className='card-title'>{songLength < 60 ? "0:" + (songLength < 10 ? "0" + songLength: songLength) :
+                (Math.floor(songLength/60) + ":" + (songLength%60 < 10 ? "0" + songLength%60 : songLength%60))}</span>
                     </div>
                     <div className='card-content col s3 '>
                         {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
