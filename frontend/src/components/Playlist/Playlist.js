@@ -74,7 +74,7 @@ class Playlist extends Component {
             })
             .then(data => {
                 data = data.data.getPlaylistByID
-                console.log(data)
+
                 this.setState({
                     playlistInfo: data,
                     loading: false,
@@ -119,7 +119,7 @@ class Playlist extends Component {
             .then(data => {
                 data = data.data.getUserByUsername.user._id
                 let songs = []
-                this.state.playlistInfo.songs.map(song => {
+                this.state.playlistInfo.songs.forEach(song => {
                     songs.push(JSON.stringify({
                         song_id: song.song_id,
                         name: song.name,
@@ -198,7 +198,7 @@ class Playlist extends Component {
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
-                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} class="fork" onClick={this.forkPlaylist}/>
+                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} className="fork" onClick={this.forkPlaylist}/>
                                 </div>
                             </div>
                         </div>
@@ -243,113 +243,148 @@ class Playlist extends Component {
         // Update the playlist after edit 
         onChange = (type, obj) => {
             if (type === "playlist") {
-                console.log(obj)
                 this.setState({playlist: obj})
             }
-            else if (type == "revert")
+            else if (type === "revert")
                this.getPlaylist()
-            else if (type == "save"){
-                console.log(this.state.playlistInfo.songs)
-                let songs = []
-                this.state.playlistInfo.songs.map(song => {
-                    songs.push(JSON.stringify({song_id: song.song_id,
-                    name: song.name,
-                    uploaded: song.uploaded,
-                    artists: song.artists}))
-                })
-                let requestBody = {
-                    query: `
-                    mutation UpdatePlaylist($public: Boolean, $name: String, $songs: [Strings]){ 
-                        updatePlaylist(id: "${this.state.playlistId}", playlist: {name: $name, public: $public, songs: $songs}){
-                            _id
-                        }
-
-                    }
-                    `,
-                    // variables: {name: this.state.playlistInfo.name}
-                    
-                    variables: {name: this.state.playlistInfo.name, public: this.state.playlistInfo.public, songs: songs}
-                }
-                console.log(requestBody)
-                fetch('http://localhost:5000/graphql', {
-                    method: 'POST',
-                    body: JSON.stringify(requestBody),
-                    headers: {
-                        'content-type': 'application/json'
-                    }
-                    })
-                    .then(res => {
-                        if (res.status !== 200 && res.status !== 201) 
-                            throw new Error('Playlist not found');
-                        return res.json()
-                    })
-                    .then(data => {
-                
-                        console.log(data)
-
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+            else if (type === "save"){
+                this.updatePrivacy()
+                this.updateName()
+                this.removeSongs()
+                this.state.playlistInfo.songs.forEach(song => {
+                    this.addSong(song)
+                }, this)
             }
             else{
-                console.log(obj)
                 this.setState({editing: obj})
             }
 
         }
-        // updatePlaylist = (playlist) => {
-        //     this.setState({playlistInfo : playlist})
-        // }
 
-        // changeEdit = () => {
-        //     this.setState({editing: !this.state.editing})
-        // }
-        // changeView = (event) => {
-        //     let invisible = [];
-        //     const visible = event.target.className
-        //     if (visible === "songs-btn"){
-        //         this.setState({
-        //             songsVisible: true,
-        //             commentsVisible: false,
-        //             settingsVisible: false
-        //         })
-        //         invisible.push("comments-btn")
-        //         invisible.push("settings-btn")
-        //     }
-        //     else if (visible === "comments-btn"){
-        //         this.setState({
-        //             songsVisible: false,
-        //             commentsVisible: true,
-        //             settingsVisible: false
-        //         })
+        updatePrivacy = () => {
+            // Set Public/Private status 
+            let playlist = this.state.playlistInfo
+            let requestBody = {
+                query: `
+                    mutation {
+                        changePlaylistPrivacy(id: "${this.state.playlistId}", privacy: ${playlist.public}){
+                            _id 
+                        }
+                    }
+                `
+            }
+            this.fetch(requestBody)
+        }
+
+        updateName = () => {
+            let playlist = this.state.playlistInfo
+            let requestBody = {
+                query: `
+                    mutation {
+                        changePlaylistName(id: "${this.state.playlistId}", name: "${playlist.name}"){
+                            _id 
+                        }
+                    }
+                `
+            }
+
+            this.fetch(requestBody)
+        }
+
+        removeSongs = () => {
+            let requestBody = {
+                query: `
+                    mutation {
+                        removeAllSongs(id: "${this.state.playlistId}"){
+                            _id 
+                        }
+                    }
+                `
+            }
+            this.fetch(requestBody)
+        }
+
+        addSong = (song) => {
+            let artists = ""
+            artists += song.artists.map(artist => {
+                return "\n" + artist
+            })
+
+            let requestBody = {
+                query: `
+                    mutation {
+                        addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false}, playlist_id: "${this.state.playlistId}"){
+                            _id
+                        }
+                    }
+                `
+            }
+           this.fetch(requestBody)
+        }
+        fetch = (requestBody) => {
+            fetch('http://localhost:5000/graphql', {
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: {
+                    'content-type': 'application/json'
+                }
+                })
+                .then(res => {
+                    if (res.status !== 200 && res.status !== 201) 
+                        throw new Error('Playlist not found');
+                    return res.json()
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        }
+
+        changeView = (event) => {
+            let invisible = [];
+            const visible = event.target.className
+            if (visible === "songs-btn"){
+                this.setState({
+                    songsVisible: true,
+                    commentsVisible: false,
+                    settingsVisible: false
+                })
+                invisible.push("comments-btn")
+                invisible.push("settings-btn")
+            }
+            else if (visible === "comments-btn"){
+                this.setState({
+                    songsVisible: false,
+                    commentsVisible: true,
+                    settingsVisible: false
+                })
     
-        //         invisible.push("songs-btn")
-        //         invisible.push("settings-btn")
-        //     }
-        //     else {
-        //         this.setState({
-        //             songsVisible: false,
-        //             commentsVisible: false,
-        //             settingsVisible: true
-        //         })
-        //         invisible.push("songs-btn")
-        //         invisible.push("comments-btn")
+                invisible.push("songs-btn")
+                invisible.push("settings-btn")
+            }
+            else {
+                this.setState({
+                    songsVisible: false,
+                    commentsVisible: false,
+                    settingsVisible: true
+                })
+                invisible.push("songs-btn")
+                invisible.push("comments-btn")
     
-        //     }
+            }
       
-        //     document.getElementById(visible).style.borderBottom = "3px solid #faed26"
-        //     document.getElementById(visible).style.fontWeight = "bold"
-        //     try {
-        //         document.getElementById(invisible[0]).style.borderBottom = "none";
-        //         document.getElementById(invisible[0]).style.fontWeight = "normal"
-        //     }catch{}
-        //     try {
-        //         document.getElementById(invisible[1]).style.borderBottom = "none";
-        //         document.getElementById(invisible[1]).style.fontWeight = "normal"  
-        //     } catch {}
+            document.getElementById(visible).style.borderBottom = "3px solid #faed26"
+            document.getElementById(visible).style.fontWeight = "bold"
+            try {
+                document.getElementById(invisible[0]).style.borderBottom = "none";
+                document.getElementById(invisible[0]).style.fontWeight = "normal"
+            }catch{}
+            try {
+                document.getElementById(invisible[1]).style.borderBottom = "none";
+                document.getElementById(invisible[1]).style.fontWeight = "normal"  
+            } catch {}
             
-        // }
+        }
 
 }
  

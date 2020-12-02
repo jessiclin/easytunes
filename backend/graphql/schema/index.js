@@ -101,7 +101,7 @@ type RootQuery {
     searchUsers(username: String!): [User_Playlists!]!
     searchPlaylists(name: String!): [Playlist!]!
     getUserByUsername(username: String!): User_Playlists!
-    getUserByEmail(email: String) : User_Playlists!
+    getUserByEmail(email: String!) : User_Playlists!
     login(email: String!, password: String!) : AuthData!
     getUserPlaylists(username: String!) : [Playlist!]!
     getPlaylistByID(id : ID!) : Playlist
@@ -122,6 +122,9 @@ type RootMutation {
     addSavedPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist
     deleteFavorite (username: String!, playlist_id : ID!): User
     forkPlaylist(username: String!, user_id: ID!, name: String!, playlist: PlaylistInput!): Playlist
+    changePlaylistPrivacy(id: ID!, privacy: Boolean!): Playlist 
+    changePlaylistName(id: ID!, name: String!): Playlist 
+    removeAllSongs(id: ID!): Playlist
 }
 
 schema {

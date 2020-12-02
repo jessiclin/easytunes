@@ -46,7 +46,7 @@ const resolver = {
             const user = await User.findOne({ username: username})
             // console.log(user)
             if (user === null)
-                throw new Error ("User not found")
+                throw new Error (`${username} not found`)
             
             const playlists = await Playlist.find({user_id: user._id})
 
@@ -336,6 +336,36 @@ const resolver = {
         } catch (error) {
             console.log(error)
             throw error
+        }
+    },
+    changePlaylistPrivacy: async ({id , privacy}) => {
+        try {
+            const playlist = await Playlist.findOne({_id: id})
+            playlist.public = privacy
+            playlist.save()
+            return {...result._doc}
+        } catch(error){
+
+        }
+    },
+    changePlaylistName: async ({id , name}) => {
+        try {
+            const playlist = await Playlist.findOne({_id: id})
+            playlist.name = name
+            playlist.save()
+            return {...result._doc}
+        } catch(error){
+
+        }
+    },
+    removeAllSongs: async ({id}) => {
+        try {
+            const playlist = await Playlist.findOne({_id : id})
+            playlist.songs = []
+            playlist.save() 
+            return {...result._doc}
+        } catch(error){
+            
         }
     }
 }

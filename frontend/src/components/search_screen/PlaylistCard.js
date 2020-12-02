@@ -11,7 +11,7 @@ class PlaylistCard extends Component {
         loading: true,
      }
     render() { 
-        const playlist = this.state.item
+        
         return (
             <div>
                 <div className='card z-depth-0 text'>

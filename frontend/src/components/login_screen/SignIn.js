@@ -1,5 +1,5 @@
 /** SIGN IN 
- * Component withing Login Screen 
+ * Component within Login Screen 
  * Handles Signing in 
  */
 
@@ -62,7 +62,6 @@ class SignIn extends Component {
                                     return res.json()
                                 })
                                 .then(result => {
-                               
                                     console.log(result.data.login.username)
                                     // Load the data in 
                                     this.username = result.data.login.username
@@ -74,8 +73,6 @@ class SignIn extends Component {
                                 })
                                 .catch(err => {
                                     console.log(err);
-                                    this.setErrmess(err.message)
-                                    console.log(this.state.errorMess === null)
                                 });
     }
 
