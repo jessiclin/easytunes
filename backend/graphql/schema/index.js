@@ -132,6 +132,7 @@ type RootMutation {
     removeAllSongs(id: ID!): Playlist
     moveSongUp(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
     moveSongDown(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
+    addComment(playlist_id: ID!, username: String!, comment: String!): Playlist
 }
 
 schema {
