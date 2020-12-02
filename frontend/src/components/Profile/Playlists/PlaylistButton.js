@@ -77,6 +77,7 @@ class PlaylistButton extends Component {
                                 name
                                 username
                                 likes 
+                                public
                                 songs {
                                     song_id
                                     name
@@ -112,6 +113,7 @@ class PlaylistButton extends Component {
     
     render() { 
         const playlist = this.state.playlist 
+        console.log(playlist)
         return (
             <div className="playlist-row">
                 <div className="col">

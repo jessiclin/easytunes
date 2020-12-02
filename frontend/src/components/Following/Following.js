@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react'
 
-import {RiUserUnfollowLine} from 'react-icons/ri'
+// import {RiUserUnfollowLine} from 'react-icons/ri'
 import FollowingUser from './FollowingUser'
 class Following extends Component {
     state = { 

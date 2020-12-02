@@ -23,43 +23,47 @@ class Setting extends Component {
     componentDidMount = () => {
         this.setState({loading: true})
 
-        let requestBody = {
-            query: `
-                query{
-                    getUserByUsername(username : "${this.props.username}") {
-                        user {
-                            _id
-                        username 
-                        default_public
-                        email
-                        url
+        if (this.props.username === this.props.match.params.username){
+            let requestBody = {
+                query: `
+                    query{
+                        getUserByUsername(username : "${this.props.username}") {
+                            user {
+                                _id
+                            username 
+                            default_public
+                            email
+                            url
+                            }
                         }
                     }
-                }
-            `
+                `
+            }
+    
+            fetch ('http://localhost:5000/graphql', {
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: {
+                    'content-type': 'application/json'
+                }})
+                .then(res => {
+                    // console.log(res)
+                    if (res.status !== 200 && res.status !== 201)
+                        throw new Error ('Failed')
+                    return res.json()
+                })
+                .then(data => {
+                   this.setState({
+                       user: data.data.getUserByUsername.user,
+                       loading:false
+                   })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
-
-        fetch ('http://localhost:5000/graphql', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-                'content-type': 'application/json'
-            }})
-            .then(res => {
-                // console.log(res)
-                if (res.status !== 200 && res.status !== 201)
-                    throw new Error ('Failed')
-                return res.json()
-            })
-            .then(data => {
-               this.setState({
-                   user: data.data.getUserByUsername.user,
-                   loading:false
-               })
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        
+        
     }
 
     // Render the Settings Page 

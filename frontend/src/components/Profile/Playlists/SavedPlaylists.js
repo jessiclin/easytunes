@@ -18,7 +18,7 @@ class SavedPlaylists extends Component {
     }
 
     render() { 
-
+      
         let playlists = this.state.playlists.map(function(playlist) {
             
             return (

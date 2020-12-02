@@ -4,9 +4,8 @@
  */
 
 import React, { Component } from 'react'
-import { AiOutlineConsoleSql } from 'react-icons/ai'
-// Received for Pending request from user. Shared for pending request to user 
-import {RiUserFollowLine, RiUserAddLine,RiUserUnfollowLine,RiUserReceivedLine,RiUserSharedLine} from 'react-icons/ri'
+// Received for Pending request from user. Shared for pending request to user ## RiUserUnfollowLine
+import {RiUserFollowLine, RiUserAddLine,RiUserReceivedLine,RiUserSharedLine} from 'react-icons/ri'
 
 class UserCard extends Component {
     state = { 
@@ -68,9 +67,10 @@ class UserCard extends Component {
         const requests = this.state.user.user.follow_requests
 
         let requested = false
-        requests.map(request => {
+        requests.forEach(request => {
             if (request.username === this.props.sessionUser)
-                requested =  true 
+                requested = true 
+          
         })
         return requested
     }
@@ -78,7 +78,7 @@ class UserCard extends Component {
     // If the searched user has made a follow request 
     searchedRequestedFollow = () => {
         let requested = false 
-        this.state.sessionUserRequests.map(request => {
+        this.state.sessionUserRequests.forEach(request => {
             if (request.username === this.state.user.user.username)
                 requested = true
         })
@@ -88,7 +88,7 @@ class UserCard extends Component {
     // If the searched user is following 
     searchedFollowing = () => {
         let following = false 
-        this.state.sessionUserFollowers.map(follower => {
+        this.state.sessionUserFollowers.forEach(follower => {
             if (follower.username === this.state.user.user.username)
                 following = true
         })

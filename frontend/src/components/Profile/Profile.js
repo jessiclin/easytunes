@@ -55,6 +55,7 @@ class Profile extends Component {
                             name
                             username
                             likes 
+                            public
                             songs {
                                 song_id
                                 name
@@ -89,6 +90,7 @@ class Profile extends Component {
                     profileAccountCreationDate: months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
                     loading: false
                 })        
+            
             })
             .catch(error => {
                 console.log(error)

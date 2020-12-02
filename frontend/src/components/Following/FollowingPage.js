@@ -10,7 +10,6 @@ import Following from './Following'
 import Requests from './Requests'
 import './Follows.css'
 
-import mockData from '../../mock_data.json'
 class FollowingPage extends Component {
 
     state = {  

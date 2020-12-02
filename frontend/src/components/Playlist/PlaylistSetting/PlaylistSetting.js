@@ -54,6 +54,12 @@ class PlaylistSetting extends Component {
         this.setState({public: !this.state.public})
     }
 
+    changeName = (event) => {
+        let playlist = this.state.playlist
+        playlist.name = event.target.value 
+        this.setState({playlist: playlist})
+    }
+
     render(){
         return (
             <>
@@ -68,7 +74,7 @@ class PlaylistSetting extends Component {
                 </div>
                 <div className="settings-row">
                     Playlist Name 
-                    <input type="text" value={this.state.playlist.name} required/>
+                    <input type="text" disabled = {!this.state.edit} defaultValue={this.state.playlist.name} required onChange={this.changeName}/>
                 </div>
 
                 <div className="settings-row">

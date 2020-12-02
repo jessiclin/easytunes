@@ -33,13 +33,13 @@ class SavedPlaylistButton extends Component {
                 query{
                     getPlaylistByID(id : "${this.props.playlist.playlist_id}") {
                         _id
+                        name
+                        username
+                        likes 
+                        songs {
+                            song_id
                             name
-                            username
-                            likes 
-                            songs {
-                                song_id
-                                name
-                            }
+                        }
                     }
                 }
             `
@@ -58,7 +58,7 @@ class SavedPlaylistButton extends Component {
                 return res.json()
             })
             .then(data => {
-            //    console.log(data)
+
                this.setState({
                    playlist: data.data.getPlaylistByID,
                    loading:false
