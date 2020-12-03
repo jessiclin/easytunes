@@ -364,6 +364,7 @@ const resolver = {
         try {
             const playlist = await Playlist.findOne({_id : id})
             playlist.songs = []
+            playlist.total_duration = 0
             playlist.save() 
             return {...result._doc}
         } catch(error){

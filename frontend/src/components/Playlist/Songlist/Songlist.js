@@ -29,60 +29,27 @@ class Songlist extends Component {
             this.setState({songs : songs})
         }
     }
-    handleMoveUp = (id, index) => {
-        console.log("handle move up")
-        let requestBody = {
-            query: `
-                mutation {
-                    moveSongUp (id : "${id}", index : ${index}) {
-                        _id
-                    }
-                }
-            `
-        }
-        fetch('http://localhost:5000/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                    'content-type': 'application/json'
-                }
-                })
-                .then(res => {
-                    if (res.status !== 200 && res.status !== 201) 
-                        throw new Error('Playlist not moved');
-                    return res.json()
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+    handleMoveUp = (song, index) => {
+        console.log(song, index)
+        let songs = this.state.songs
+
+        let temp = songs[index]
+        songs[index] = songs[index-1]
+        songs[index-1] = temp
+
+        this.setState({songs : songs})
     }
     
-    handleMoveDown = (id, index) => {
-        console.log("handle move down")
-        let requestBody = {
-            query: `
-                mutation {
-                    moveSongDown (id : "${id}", index : ${index}) {
-                        _id
-                    }
-                }
-            `
-        }
-        fetch('http://localhost:5000/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                    'content-type': 'application/json'
-                }
-                })
-                .then(res => {
-                    if (res.status !== 200 && res.status !== 201) 
-                        throw new Error('Playlist not found');
-                    return res.json()
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+    handleMoveDown = (song, index) => {
+        console.log(song, index)
+        let songs = this.state.songs
+
+        let temp = songs[index]
+        songs[index] = songs[index+1]
+        songs[index+1] = temp
+
+
+        this.setState({songs : songs})
     }
 
     render() {
