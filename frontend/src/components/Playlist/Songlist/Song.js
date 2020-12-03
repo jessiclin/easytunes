@@ -17,7 +17,7 @@ class Song extends Component {
     state = { 
         song: this.props.song , 
         index : this.props.index,
-        editing: this.props.editing,
+        editing: true,
         deleteConfirmVisible : false,
         playlistId: this.props.playlist_id
     }
@@ -40,12 +40,12 @@ class Song extends Component {
 
     moveUp = () => {
         console.log("move up")
-        this.handleMoveUp(this.state.song, this.state.index)
+        this.handleMoveUp(this.state.playlistId, this.state.index)
     }
      
     moveDown = () => {
         console.log("move down")
-        this.handleMoveDown(this.state.song, this.state.index)
+        this.handleMoveDown(this.state.playlistId, this.state.index)
     }
 
     render() { 

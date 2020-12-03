@@ -186,7 +186,7 @@ const resolver = {
     updatePlaylist: async ({playlist_id, name, songs}) => {
         try{
             let result = await Playlist.findOne({_id: playlist_id})
-            console.log(songs)
+            //console.log(songs)
         }catch(error){}
     },
     addRequest: async ({id, requested_username}) => {
@@ -322,12 +322,13 @@ const resolver = {
 
         }
     },
-    forkPlaylist: async ({username, user_id, name, songs}) => {
+    forkPlaylist: async ({username, user_id, name, total_duration, songs}) => {
         const playlist = new Playlist({
             user_id: user_id,
             name: name, 
             username: username,
             date_created: new Date(),
+            total_duration: total_duration, 
             songs: songs
         })
         try {
@@ -351,6 +352,7 @@ const resolver = {
     changePlaylistName: async ({id , name}) => {
         try {
             const playlist = await Playlist.findOne({_id: id})
+            
             playlist.name = name
             playlist.save()
             return {...result._doc}
@@ -367,29 +369,31 @@ const resolver = {
         } catch(error){
         }
     },
-    moveSongUp: async({playlist_id, song_id, index}) => {
+    moveSongUp: async({id, index}) => {
         try {
-            let result = await Playlist.findOne({_id: playlist_id})
+            const result = await Playlist.findOne({_id: id})
 
-            let temp = result.songs[index]
+            const temp = result.songs[index]
             result.songs[index] = result.songs[index-1]
             result.songs[index-1] = temp
 
             result.save()
+            return {...result._doc}
         } catch (error) {
             console.log(error)
             throw error
         }
     },
-    moveSongDown: async({playlist_id, song_id, index}) => {
+    moveSongDown: async({id, index}) => {
         try {
-            let result = await Playlist.findOne({_id: playlist_id})
+            const result = await Playlist.findOne({_id: id})
 
-            let temp = result.songs[index]
+            const temp = result.songs[index]
             result.songs[index] = result.songs[index+1]
             result.songs[index+1] = temp
 
             result.save()
+            return {...result._doc}
         } catch (error) {
             console.log(error)
             throw error

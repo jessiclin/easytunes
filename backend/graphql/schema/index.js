@@ -130,8 +130,8 @@ type RootMutation {
     changePlaylistPrivacy(id: ID!, privacy: Boolean!): Playlist 
     changePlaylistName(id: ID!, name: String!): Playlist 
     removeAllSongs(id: ID!): Playlist
-    moveSongUp(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
-    moveSongDown(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
+    moveSongUp(id: ID!, index: Int!): Playlist
+    moveSongDown(id: ID!, index: Int!): Playlist
 }
 
 schema {
