@@ -398,6 +398,26 @@ const resolver = {
             console.log(error)
             throw error
         }
+    },
+    addComment: async({playlist_id, username, comment}) => {
+        console.log("HERE")
+        try {
+            let user = await User.findOne({username: username})
+            let playlist = await Playlist.findOne({_id : playlist_id})
+
+            playlist.comments.push({
+                user_id: user._id,
+                username: username,
+                date: new Date(),
+                message: comment,
+                replies: []
+            })
+            playlist.save() 
+            return {...playlist._doc}
+        }
+        catch(error){
+
+        }
     }
 }
 
