@@ -92,12 +92,14 @@ class HomeScreen extends Component {
                         />
                         
 
-                    <PlaylistNavbar/>
+                    <PlaylistNavbar onChange = {this.onChange}/>
                     
                 </div>
           
          );
     }
+
+
 
 }
 

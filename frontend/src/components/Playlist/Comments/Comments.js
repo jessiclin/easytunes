@@ -13,6 +13,8 @@ class Comments extends Component {
     }  
 
     render() {
+
+        // Handles replying to a Comment ** Not implemented 
         function ReplyButton(elem){
             const [showReplyVisible, setVisibility] = React.useState(true);
             
@@ -111,6 +113,7 @@ class Comments extends Component {
                     console.log(err);
                 });
             }
+
             return (
                 <>
                 <textarea id = "comment-input" className="comment-text" type="text" placeholder="Add a Comment" onChange = {onChange} onFocus = {setVisible} onBlur = {handleBlur}/>
@@ -128,18 +131,22 @@ class Comments extends Component {
  
 
         let comments = this.state.comments.map(function(elem, i){
-            
+            // One comment 
             return (
                     <div key = {elem.username + " " + i.toString()}  className="container result-container">
+                        {/* Username */}
                         <div className="row username-row">
                             {elem.username}
                         </div>
 
+                        {/* Comment */}
                         <div className="row comment-row">
                             {elem.message}
                         </div>
                         
+                        {/* Reply Button */}
                         <div className="row replies-row">
+                            <button onClick = {this.handleReply}> REPLY </button>  
                             {elem.replies.length > 0 ? 
                             <ReplyButton replies = {elem.replies}/> : null
                             }
@@ -148,6 +155,7 @@ class Comments extends Component {
                     </div>
             )
         }, this)
+        console.log(this.props.comments)
         return (
             <>
                 <div className="container comments-container">
@@ -162,6 +170,9 @@ class Comments extends Component {
         );
     }
 
+    handleReply = () => [
+        
+    ]
 }
  
 export default Comments;

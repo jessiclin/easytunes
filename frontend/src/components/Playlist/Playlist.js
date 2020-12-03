@@ -80,7 +80,6 @@ class Playlist extends Component {
                 this.setState({
                     playlistInfo: data,
                     loading: false,
-                    original: Object.assign({}, data) 
                 })
             })
             .catch(err => {
@@ -246,20 +245,28 @@ class Playlist extends Component {
             if (type === "playlist") {
                 this.setState({playlist: obj})
             }
-            else if (type === "revert")
+            else if (type === "revert"){
+                this.setState({
+                    songsVisible : true,
+                    commentsVisible : false,
+                    settingsVisible : false,
+                })
                this.getPlaylist()
+            }
             else if (type === "save"){
                 this.updatePrivacy()
                 this.updateName()
-                this.removeSongs()
-                this.state.playlistInfo.songs.forEach(song => {
-                    this.addSong(song)
-                }, this)
+                // this.removeSongs()
+                // this.state.playlistInfo.songs.forEach(song => {
+                //     this.addSong(song)
+                // }, this)
             }
             else{
                 this.setState({editing: obj})
             }
 
+
+       
         }
 
         updatePrivacy = () => {
