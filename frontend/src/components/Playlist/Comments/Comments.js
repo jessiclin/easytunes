@@ -64,17 +64,25 @@ class Comments extends Component {
  
 
         let comments = this.state.comments.map(function(elem, i){
+            //One comment, i is the index
             
             return (
                     <div key = {elem.username + " " + i.toString()}  className="container result-container">
+                        {/* Username */}
                         <div className="row username-row">
                             {elem.username}
                         </div>
+
+
+
+                        {/* Comment */}
 
                         <div className="row comment-row">
                             {elem.message}
                         </div>
                         
+
+                        {/* Reply Button */}
                         <div className="row replies-row">
                             <ReplyButton replies = {elem.replies}/>
         
