@@ -132,8 +132,8 @@ class Playlist extends Component {
                 })
                 requestBody = {
                     query: `
-                        mutation forkPlaylist($username: String, $name: String, $user_id: String, $songs: [Strings] ){
-                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistInfo.name}", user_id: "${data}", songs: $songs) {
+                        mutation {
+                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistInfo.name}", user_id: "${data}", total_duration: ${this.state.playlistInfo.total_duration}, songs: ${songs}) {
                                 _id 
                             }
                         }
