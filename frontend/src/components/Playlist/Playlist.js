@@ -256,10 +256,10 @@ class Playlist extends Component {
             else if (type === "save"){
                 this.updatePrivacy()
                 this.updateName()
-                // this.removeSongs()
-                // this.state.playlistInfo.songs.forEach(song => {
-                //     this.addSong(song)
-                // }, this)
+                this.removeSongs()
+                this.state.playlistInfo.songs.forEach(song => {
+                    this.addSong(song)
+                }, this)
             }
             else{
                 this.setState({editing: obj})
