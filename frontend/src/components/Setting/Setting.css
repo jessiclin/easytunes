@@ -22,7 +22,7 @@
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 999;
+
     background: #f0f0f0;
     color: #fff;
     transition: all 0.3s;
@@ -117,7 +117,8 @@
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 20px
+    padding-bottom: 20px;
+    z-index: 2;
 }
 .confirm-change-btn{
     background: white;
@@ -155,4 +156,10 @@
     background: white;
     border: none;
     margin-left: 150px;
+  }
+
+  .error-box {
+    height: 10px;
+ 
+    color: red
   }

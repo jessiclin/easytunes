@@ -83,14 +83,16 @@ const resolver = {
         return {_id: user._id, username: user.username, token: token, token_expiration: 1}
     },
     createPlaylist: async ({username, user_id, name}) => {
-        const playlist = new Playlist({
-            user_id: user_id,
-            name: name, 
-            username: username,
-            date_created: new Date()
-        })
 
         try {
+            const user = await User.findOne({_id: user_id})
+            const playlist = new Playlist({
+                user_id: user_id,
+                name: name, 
+                username: username,
+                date_created: new Date(),
+                public: user.default_public_playlist
+            })
             const result = await playlist.save()
             return { ...result._doc }
         } catch (error) {
@@ -163,7 +165,6 @@ const resolver = {
         try{
             console.log("Add song ")
             let result = await Playlist.findOne({_id: playlist_id})
-            console.log("BEFORE", result.songs)
             let song = {
                 song_id : songInput._id,
                 name: songInput.name,
@@ -171,26 +172,30 @@ const resolver = {
                 artists: [],
                 duration: songInput.duration
             }
-            
 
             let artists = songInput.artists.split("\n")
             artists.map(artist => {
                 song.artists.push(artist)
             })
 
-            result.songs.push(song)
-            result.total_duration += songInput.duration
+            let inPlaylist = false 
+            result.songs.forEach(song => {
+                if (song.song_id === songInput._id)
+                    inPlaylist = true
+            })
+            console.log(inPlaylist)
+            if (!inPlaylist){
+                result.songs.push(song)
+                result.total_duration += songInput.duration
 
-            await Playlist.findOneAndUpdate({_id: playlist_id}, 
+                result = await Playlist.findOneAndUpdate({_id: playlist_id}, 
                 {
                     songs: result.songs,
                     total_duration: result.total_duration
-                },{useFindAndModify: false})
+                },{useFindAndModify: false, new: true})
+            }
             
-            result = await Playlist.findOne({_id: playlist_id})
-    
-            console.log("AFTER", result.songs)
-
+            return {...result._doc}
         }catch(err){
             throw err
         }
@@ -207,15 +212,32 @@ const resolver = {
             let result = await User.findOne({_id: id})
             // Get user id of the requestee 
             let req = await User.findOne({username: requested_username})
-
-            const request = {
-                user_id: req._id,
-                username: requested_username,
-                request_date: new Date()
+            
+            if (result.verify_requests){
+                const request = {
+                    user_id: req._id,
+                    username: requested_username,
+                    request_date: new Date()
+                }
+                result.follow_requests.push(request)
             }
-            result.follow_requests.push(request)
-  
+            else {
+                const request = {
+                    user_id: req._id,
+                    username: requested_username,
+                    following_since: new Date()
+                }
+                result.followers.push(request)
+                req.following.push({
+                    user_id: result._id,
+                    username: result.username,
+                    following_since: new Date()
+                })
+                req.save() 
+            }
+
             result.save()
+            
             return result
         }catch(error){}
     },
@@ -376,14 +398,11 @@ const resolver = {
         try {
             console.log("REMOVE ALL SONGS")
 
-            await Playlist.findOneAndUpdate({_id: id}, 
+            let playlist = await Playlist.findOneAndUpdate({_id: id}, 
                 {
                     songs: [],
                     total_duration: 0
-                },{useFindAndModify: false})
-
-            const playlist = await Playlist.findOne({_id : id})
-            console.log("REMOVED SONGS", playlist.songs)
+                },{useFindAndModify: false, new: true})
             return {...playlist._doc}
         } catch(error){
             console.log(error)
@@ -439,7 +458,6 @@ const resolver = {
 
         }
     },
-
     updateEmail: async({email, new_email}) => {
         try {
             let user = await User.findOne({email: new_email})
@@ -491,7 +509,6 @@ const resolver = {
             throw error
         }
     },
-
     deleteComment: async({playlist_id, username, index}) => {
         try {
             let playlist = await Playlist.findOne({_id : playlist_id})
