@@ -27,6 +27,7 @@
   margin-top: 5px;
   margin-bottom: 0px;
   padding-bottom: 1px;
+  position: relative;
   border-bottom: 1px solid lightgray;
 }
 
@@ -102,4 +103,32 @@
 
 .fork {
   margin-left: 1%;
+}
+
+.fork-playlist-box {
+  border: 1px solid lightgray;
+  height: 250px;
+  width: 400px;
+  position: absolute;
+  background: white;
+  z-index: 999;  
+  top: 0px;
+  right: 3%; 
+  border-radius: 15px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px
+}
+
+.confirm-new-btn {
+  background: white;
+  border: none;
+  margin-right: 150px;
+  margin-top: 100px
+}
+
+.confirm-new-btn:focus { 
+  outline: none
+
 }
