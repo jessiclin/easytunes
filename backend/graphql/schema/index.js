@@ -51,6 +51,12 @@ type Saved {
     likes: Int!
     songs: [SongRef!]!
 }
+
+type LikedPlaylists {
+    playlist_id: ID!
+    name: String!
+}
+
 type User {
     _id: ID!
     email: String
