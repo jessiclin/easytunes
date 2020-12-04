@@ -98,7 +98,7 @@ class UserCard extends Component {
     // If the session user is following searched user 
     userFollowing = () => {
         let following = false 
-        this.state.user.user.followers.map(follower => {
+        this.state.user.user.followers.forEach(follower => {
             if (follower.username === this.props.sessionUser)
                 following = true
         })

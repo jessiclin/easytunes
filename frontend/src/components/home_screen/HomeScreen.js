@@ -9,7 +9,7 @@ import '../Navbar/Navbar.css';
 import "./HomeScreen.css"
 // import Logo from "./am4a.png"
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
-import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
+// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import AudioPlayer, { RHAP_UI }  from "react-h5-audio-player";
 
 import mockData from '../../mock_data.json'
@@ -97,11 +97,9 @@ class HomeScreen extends Component {
                   })
                   .then(data => {
                       data = data.data.getPlaylistByID
-                      console.log(data)
                       let index = -1
-                      console.log(current_song)
                       data.songs.forEach((song,i) => {
-                        if (song.song_id == current_song)
+                        if (song.song_id === current_song)
                           index = i
                       })
                       
@@ -110,8 +108,6 @@ class HomeScreen extends Component {
                         current_song: current_song,
                         index: index,
                         loading: false
-                      }, function () {
-                        console.log(this.state)
                       })
                   })
                   .catch(err => {
@@ -127,17 +123,16 @@ class HomeScreen extends Component {
     // Redirect to Home when home button is pressed 
     handleHome = () => {
         const {history } = this.props;
-        console.log(history);
         history.replace('/home')
     }
     
     render() { 
-      const size = {
-        width: '100%',
-        height: 300,
-      };
-      const view = 'coverart'; // or 'coverart'
-      const theme = 'black'; // or 'white'
+      // const size = {
+      //   width: '100%',
+      //   height: 300,
+      // };
+      // const view = 'coverart'; // or 'coverart'
+      // const theme = 'black'; // or 'white'
       if (this.state.loading)
         return (<></>)
         return ( 
@@ -173,7 +168,7 @@ class HomeScreen extends Component {
                         view={view}
                         theme={theme}
                       /> */}
-                    <AudioPlayer src="https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK" layout="stacked-reverse" className="home-audio-bar"
+                    <AudioPlayer src="" layout="stacked-reverse" className="home-audio-bar"
 
                           customControlsSection={
                             [
@@ -210,7 +205,7 @@ class HomeScreen extends Component {
                         />
                         
 
-                    <PlaylistNavbar onChange = {this.onChange}/>
+                    {/* <PlaylistNavbar onChange = {this.onChange}/> */}
                     
                 </div>
           

@@ -33,7 +33,7 @@ class UpdatePassword extends Component {
 
     handleUpdate = () => {
       console.log(this.props.username)
-        if (this.state.password != this.state.confirm ){
+        if (this.state.password !== this.state.confirm ){
             this.setState({error: "Passwords do not match"})
         }
         else if (this.state.password === "")

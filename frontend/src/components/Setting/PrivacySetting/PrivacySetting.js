@@ -36,7 +36,7 @@ class PrivacySetting extends Component {
 
             function updateSaved() {
                 let requestBody = ""
-                if (saved_privacy == 0){
+                if (saved_privacy === 0){
                     setSavedValue(1)
                     requestBody = {
                         query: `
@@ -67,7 +67,7 @@ class PrivacySetting extends Component {
 
             function updatePlaylist() {
                 let requestBody = ""
-                if (playlist_privacy == 0){
+                if (playlist_privacy === 0){
                     setPlaylistValue(1)
                     requestBody = {
                         query: `
@@ -97,7 +97,7 @@ class PrivacySetting extends Component {
             }
             function updateVerify() {
                 let requestBody = ""
-                if (verify_request == 1){
+                if (verify_request === 1){
                     setVerifyValue(0)
                     requestBody = {
                         query: `

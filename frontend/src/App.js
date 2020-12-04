@@ -108,7 +108,7 @@ class App extends Component {
             
             {/* <Route path='/:any' component={HomeScreen} /> */}
           </Switch>
-          {/* {this.state.username ?  <PlaylistNavbar/> :  null} */}
+          {this.state.username ?  <PlaylistNavbar username= {this.state.username}/> :  null}
         
         </div>
       </BrowserRouter>
