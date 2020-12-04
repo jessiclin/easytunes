@@ -76,7 +76,7 @@ class Playlist extends Component {
                 return res.json()
             })
             .then(data => {
-                const playlists = data.data.getPlaylistByID
+                const playlist = data.data.getPlaylistByID
                 
                 let requestBody = {
                     query: `
@@ -112,9 +112,11 @@ class Playlist extends Component {
                                 data.liked_playlists.forEach(playlist => {
                                     if (playlist.playlist_id === this.state.playlistId)
                                         liked = true 
+                                    
                                 })
+
                                 this.setState({
-                                    playlistInfo: playlists,
+                                    playlistInfo: playlist,
                                     loading: false,
                                     liked: liked
                                 })
@@ -228,7 +230,13 @@ class Playlist extends Component {
                                 return res.json()
                             })
                             .then(data => {
-                                this.setState({liked: !this.state.liked})
+                                let playlist = this.state.playlistInfo
+                                if (this.state.liked)
+                                    playlist.likes -= 1
+                                else 
+                                    playlist.likes += 1
+                                
+                                this.setState({liked: !this.state.liked, playlist: playlist})
         
                             })
                             .catch(err => {

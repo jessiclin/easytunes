@@ -564,7 +564,7 @@ const resolver = {
         try{
             let user = await User.findOne({username : username})
             let unlike = false 
-            console.log(playlist_id)
+    
             user.liked_playlists.forEach((playlist,i) => {
                 if (playlist.playlist_id.toString() === playlist_id){
                     user.liked_playlists.splice(i, 1)
@@ -581,6 +581,12 @@ const resolver = {
                 
                 liked_playlists : user.liked_playlists
             }, {useFindAndModify: false, new:true})
+            
+            let playlist = await Playlist.findOne({_id: playlist_id})
+            if (unlike)
+                await Playlist.findByIdAndUpdate({_id: playlist_id}, {likes: playlist.likes - 1})
+            else 
+                await Playlist.findByIdAndUpdate({_id: playlist_id}, {likes: playlist.likes + 1})
             return {...user._doc}
         }catch(error){
             console.log(error)
