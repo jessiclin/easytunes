@@ -111,7 +111,6 @@ class UserCard extends Component {
         let requestBody = {
             query: `
                 mutation {
-                 
                     addRequest(id: "${this.state.user.user._id}", requested_username: "${this.props.sessionUser}"){
                             _id
                             username
