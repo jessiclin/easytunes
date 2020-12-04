@@ -93,8 +93,20 @@ const resolver = {
                 date_created: new Date(),
                 public: user.default_public_playlist
             })
-            const result = await playlist.save()
-            return { ...result._doc }
+
+            const playlists = await Playlist.find({username : username})
+            let usedName = false 
+            playlists.forEach(playlist => {
+                if (playlist.name === name)
+                    usedName = true 
+            })
+
+            if (usedName)
+                throw new Error("You have another playlist of the same name")
+            else {
+                const result = await playlist.save()
+                return { ...result._doc }
+            }
         } catch (error) {
             console.log(error)
             throw error
@@ -356,18 +368,28 @@ const resolver = {
 
         }
     },
-    forkPlaylist: async ({username, user_id, name, total_duration, songs}) => {
-        const playlist = new Playlist({
-            user_id: user_id,
-            name: name, 
-            username: username,
-            date_created: new Date(),
-            total_duration: total_duration, 
-            songs: songs
-        })
+    forkPlaylist: async ({username, playlist_id, name}) => {
         try {
-            const result = await playlist.save()
-            return { ...result._doc }
+            let playlist = await Playlist.findOne({_id: playlist_id})
+            let user_playlist = await Playlist.findOne({username: username, name:name})
+
+            if (user_playlist)
+                throw new Error("You already have a playlist of that name")
+            else {
+                let user = await User.findOne({username: username})
+
+                const new_playlist = new Playlist({
+                    user_id: user._id,
+                    name: name, 
+                    username: username,
+                    date_created: new Date(),
+                    total_duration: playlist.total_duration, 
+                    songs: playlist.songs
+                })
+
+                const result = await new_playlist.save()
+                return { ...result._doc }
+            }
         } catch (error) {
             console.log(error)
             throw error

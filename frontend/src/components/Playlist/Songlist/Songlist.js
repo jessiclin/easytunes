@@ -51,7 +51,6 @@ class Songlist extends Component {
     }
 
     render() {
-        console.log(this.props)
         let songs = this.state.songs.map(function(song, i){
             return (
                 <Song  key = {song.name + song.song_id} song={song} index={i} editing={this.state.editing} 

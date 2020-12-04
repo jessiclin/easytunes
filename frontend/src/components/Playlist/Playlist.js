@@ -10,6 +10,8 @@ import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
+import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+import Fork from './Fork.js'
 import './Playlist.css'
 
 import { FaShare } from 'react-icons/fa'
@@ -25,6 +27,9 @@ class Playlist extends Component {
         username : this.props.match.params.username,
         loading: true,
         editing: false,
+        forkPopupVisible: false,
+        fork_playlist_name: "",
+        error : ""
     }
 
     // Get the playlist 
@@ -129,10 +134,11 @@ class Playlist extends Component {
                         duration: song.duration
                     }))
                 })
+                console.log(this.state.fork_playlist_name)
                 requestBody = {
                     query: `
                         mutation {
-                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistInfo.name}", user_id: "${data}", total_duration: ${this.state.playlistInfo.total_duration}, songs: ${songs}) {
+                            forkPlaylist (username : "${this.props.username}", playlist_id : "${this.state.playlistId}", name: "${this.state.fork_playlist_name}") {
                                 _id 
                             }
                         }
@@ -152,6 +158,14 @@ class Playlist extends Component {
                             throw new Error('Failed');
                         return res.json()
                     })
+                    .then (data => {
+                        console.log(data)
+                        if (data.errors)
+                            this.setState({error: data.errors[0].message})
+                        else {
+                            this.setForkInvisible()
+                    }
+                    })
                     .catch(err => {
                         console.log(err);
                     });
@@ -160,7 +174,17 @@ class Playlist extends Component {
                 console.log(err);
             });
     }
+    setForkVisible = () => {
+        this.setState({forkPopupVisible : true})
+    }
 
+    setForkInvisible = () => {
+        this.setState({forkPopupVisible : false})
+    }
+
+    forkInputOnChange = (event) => {
+        this.setState({fork_playlist_name : event.target.value})
+    }
     render() { 
 
             if (this.state.loading)
@@ -198,9 +222,25 @@ class Playlist extends Component {
                             </div>
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
-                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> <BiGitRepoForked size={34} className="fork" onClick={this.forkPlaylist}/>
+                                    <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> 
+
+                                    
+                                    <BiGitRepoForked size={34} className="fork" onClick={this.setForkVisible}/>
                                 </div>
                             </div>
+                            {this.state.forkPopupVisible ? 
+ 
+                                <div className="fork-playlist-box">
+                                    Playlist Name
+                                    <div className = "error-box"> {this.state.error} </div>
+                                    <input type="text" required onChange={this.forkInputOnChange}/>
+                                    <button className = "confirm-new-btn" onClick={this.forkPlaylist}> <AiOutlineCheckCircle size = {24}/></button>
+                                    <button className = "cancel-new-btn"  onClick={this.setForkInvisible}> <AiOutlineCloseCircle size = {24}/></button>
+                                </div>
+                                :
+                                null
+                                }
+   
                         </div>
 
                         {/* Songs, Likes and Comments, Settings Navbar */}
