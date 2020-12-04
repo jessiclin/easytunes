@@ -51,6 +51,11 @@ type Saved {
     likes: Int!
     songs: [SongRef!]!
 }
+
+type LikedPlaylists {
+    playlist_id: ID!
+    name: String!
+}
 type User {
     _id: ID!
     email: String
@@ -64,6 +69,7 @@ type User {
     current_song_id: String
     current_playlist_id: String 
     saved_playlists: [Saved!]! 
+    liked_playlists: [LikedPlaylists]!
     following: [UserRef!]! 
     followers: [UserRef!]! 
     follow_requests: [UserRef!]! 
@@ -142,6 +148,7 @@ type RootMutation {
     changeSavedPlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
     changePlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
     changeVerifyFollowDef(_id: ID!, def: Boolean!): User 
+    like_unlikePlaylist(username: String!, playlist_id: ID!, playlist_name: String!): User
 }
 
 schema {

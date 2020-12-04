@@ -4,7 +4,7 @@
 
 import React, {Component } from 'react'
 import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
-import SpotifyPlayer from 'react-spotify-player';
+//import SpotifyPlayer from 'react-spotify-player';
 import '../Navbar/Navbar.css';
 import "./HomeScreen.css"
 // import Logo from "./am4a.png"
@@ -31,10 +31,10 @@ class HomeScreen extends Component {
             query : `
                 query {
                   getUserByUsername(username: "${this.props.username}"){
-                    user{
-                    current_song_id
-                    current_playlist_id
-                    }
+                      user{
+                      current_song_id
+                      current_playlist_id
+                      }
                     }
                 }
             `
@@ -54,60 +54,70 @@ class HomeScreen extends Component {
             .then(data => {
                 data = data.data.getUserByUsername.user
 
-                requestBody = {
-                  query : `
-                      query {
-                        getPlaylistByID(id : "${data.current_playlist_id}"){
-                          _id
-                          name
-                          img
-                          total_duration
-                          songs {
-                            song_id
-                            name
-                            artists
-                            uploaded
-                            duration
-                          }
-                          }
-                      }
-                  `
-              }
-
-              current_song = data.current_song_id
-
-              fetch('http://localhost:5000/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                    'content-type': 'application/json'
+                if (data.current_playlist_id == null){
+                  this.setState({
+                    loading: false
+                  })
                 }
-                })
-                .then(res => {
-                    if (res.status !== 200 && res.status !== 201) 
-                        throw new Error('Playlist not found');
-                    return res.json()
-                })
-                .then(data => {
-                    console.log(data)
-                    data = data.data.getPlaylistByID
-                    let index = -1
-                    console.log(current_song)
-                    data.songs.forEach((song,i) => {
-                      if (song.song_id == current_song)
-                        index = i
-                    })
-                    
-                    this.setState({
-                      current_playlist: data,
-                      current_song: current_song,
-                      index: index,
-                      loading: false
-                    })
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+
+                else{
+                  requestBody = {
+                    query : `
+                        query {
+                          getPlaylistByID(id : "${data.current_playlist_id}"){
+                            _id
+                            name
+                            img
+                            total_duration
+                            songs {
+                              song_id
+                              name
+                              artists
+                              uploaded
+                              duration
+                            }
+                            }
+                        }
+                    `
+                }
+
+                current_song = data.current_song_id
+
+                fetch('http://localhost:5000/graphql', {
+                  method: 'POST',
+                  body: JSON.stringify(requestBody),
+                  headers: {
+                      'content-type': 'application/json'
+                  }
+                  })
+                  .then(res => {
+                      if (res.status !== 200 && res.status !== 201) 
+                          throw new Error('Playlist not found');
+                      return res.json()
+                  })
+                  .then(data => {
+                      data = data.data.getPlaylistByID
+                      console.log(data)
+                      let index = -1
+                      console.log(current_song)
+                      data.songs.forEach((song,i) => {
+                        if (song.song_id == current_song)
+                          index = i
+                      })
+                      
+                      this.setState({
+                        current_playlist: data,
+                        current_song: current_song,
+                        index: index,
+                        loading: false
+                      }, function () {
+                        console.log(this.state)
+                      })
+                  })
+                  .catch(err => {
+                      console.log(err);
+                  });
+                }
         
             })
             .catch(err => {
@@ -141,7 +151,7 @@ class HomeScreen extends Component {
                                 CURRENT PLAYLIST
                               </div>
                               <div className="current-playlist-name">
-                                {this.state.current_playlist.name}
+                                {this.state.current_playlist ? this.state.current_playlist.name : ""}
                               </div>
                         </div>
 
@@ -151,10 +161,10 @@ class HomeScreen extends Component {
                     
                     <div className="container-fluid text-center song-info-row">
                         <div className="song-name">
-                            {this.state.current_playlist.songs[this.state.index].name}
+                            {this.state.current_playlist ? this.state.current_playlist.songs[this.state.index].name : ""}
                         </div>
                         <div className="song-artist">
-                            {this.state.current_playlist.songs[this.state.index].artist}
+                            {this.state.current_playlist ? this.state.current_playlist.songs[this.state.index].artist : ""}
                         </div>
                     </div>
                     {/* <SpotifyPlayer
