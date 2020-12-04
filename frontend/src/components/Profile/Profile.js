@@ -5,7 +5,7 @@
 import React, { Component} from 'react'
 
 import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
-import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
+// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import Playlists from './Playlists/Playlists'
 import UploadedSongs from './UploadedSongs/UploadedSongs'
@@ -151,7 +151,7 @@ class Profile extends Component {
                     {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history}/> : null}
                     {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
                 </div>
-                <PlaylistNavbar/>
+                {/* <PlaylistNavbar/> */}
             </div>
                     
                 

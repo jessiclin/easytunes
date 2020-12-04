@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
-import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
+// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 
 import AccountSetting from './AccountSetting/AccountSetting'
 import AdvancedSetting from './AdvancedSetting/AdvancedSetting'
@@ -101,7 +101,7 @@ class Setting extends Component {
                 {this.state.showPrivacy ? <PrivacySetting user ={this.state.user} /> : null}
                 {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
                 
-                <PlaylistNavbar/>
+                {/* <PlaylistNavbar/> */}
             </div>
         );
     }
