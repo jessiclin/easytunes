@@ -130,7 +130,7 @@ class PrivacySetting extends Component {
                     <div className="user-settings-content">
                         <h5>Default Playlist Settings</h5>
 
-                        <h6> <Switch value={saved_privacy} onChange={updateSaved}/> Keep saved playlists private</h6>
+                        {/* <h6> <Switch value={saved_privacy} onChange={updateSaved}/> Keep saved playlists private</h6> */}
                         <h6> <Switch value={playlist_privacy} onChange={updatePlaylist}/> Keep my playlists private</h6>
                     </div>
 

@@ -496,6 +496,19 @@ const resolver = {
             throw error
         }
     },
+    changePassword: async({username, new_password}) => {
+        console.log("HERE")
+        try {
+            const hashed = await bcrypt.hash(new_password, saltRounds)
+            let user = await User.findOneAndUpdate({username: username}, {
+                password: hashed
+            },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        } catch(error){
+            console.log(error)
+            throw error
+        }
+    },
     deleteComment: async({playlist_id, username, index}) => {
         try {
             let playlist = await Playlist.findOne({_id : playlist_id})
