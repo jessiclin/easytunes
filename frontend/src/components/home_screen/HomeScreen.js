@@ -4,7 +4,7 @@
 
 import React, {Component } from 'react'
 import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
-import SpotifyPlayer from 'react-spotify-player';
+//import SpotifyPlayer from 'react-spotify-player';
 import '../Navbar/Navbar.css';
 import "./HomeScreen.css"
 // import Logo from "./am4a.png"
