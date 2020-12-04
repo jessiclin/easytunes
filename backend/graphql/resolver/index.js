@@ -466,6 +466,19 @@ const resolver = {
         } catch(error){
             console.log(error)
             throw error
+
+    deleteComment: async({playlist_id, username, index}) => {
+        try {
+            let playlist = await Playlist.findOne({_id : playlist_id})
+            if (playlist.comments[index].username == username)
+                playlist.comments.splice(index,1)
+            playlist.save()
+            console.log("hi")
+            console.log(...playlist._doc)
+            return {...playlist._doc}
+        }
+        catch(error) {
+
         }
     }
 }

@@ -114,6 +114,8 @@ class Comments extends Component {
                 });
             }
 
+             
+
             return (
                 <>
                 <textarea id = "comment-input" className="comment-text" type="text" placeholder="Add a Comment" onChange = {onChange} onFocus = {setVisible} onBlur = {handleBlur}/>
@@ -131,7 +133,7 @@ class Comments extends Component {
  
 
         let comments = this.state.comments.map(function(elem, i){
-            // One comment 
+            // One comment, i is index 
             return (
                     <div key = {elem.username + " " + i.toString()}  className="container result-container">
                         {/* Username */}
@@ -152,6 +154,12 @@ class Comments extends Component {
                             }
                             
                         </div>
+
+                        <div className="row delete-row">
+                            <button onClick={this.handleDelete.bind(this, i)} className="btn red right ">Delete </button>  
+                            
+                        </div>
+
                     </div>
             )
         }, this)
@@ -170,7 +178,57 @@ class Comments extends Component {
         );
     }
 
+    handleDelete = (index, e) => {
+        const comments = Object.assign([], this.state.comments);
+        //console.log("hi")
+        //console.log(comments)
+        comments.splice(index, 1);
+        let requestBody = {
+            query : `
+                mutation {
+                    deleteComment(playlist_id: "${this.props.playlist_id}", username: "${this.props.username}", index: ${index}) {
+                        comments {
+                            username
+                            message
+                            replies {
+                                username
+                                message
+                            }
+                        }
 
+                    }
+                }
+                `
+        }
+
+        fetch("http://localhost:5000/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+            'content-type': 'application/json'
+            }})
+        .then(res => {
+            if (res.status !== 200 && res.status !== 201) 
+                throw new Error('Playlist not found');
+            return res.json()
+        })
+        .then(data => {
+            this.setState({comments:comments})
+
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+    }
+
+
+    handleReply = () => [
+        
+    ]
+
+
+    
 }
  
 export default Comments;
