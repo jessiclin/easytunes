@@ -25,6 +25,7 @@ class Playlist extends Component {
         username : this.props.match.params.username,
         loading: true,
         editing: false,
+        liked: false 
     }
 
     // Get the playlist 
@@ -75,12 +76,55 @@ class Playlist extends Component {
                 return res.json()
             })
             .then(data => {
-                data = data.data.getPlaylistByID
+                const playlists = data.data.getPlaylistByID
+                
+                let requestBody = {
+                    query: `
+                        query {
+                            getUserByUsername (username : "${this.props.username}") {
+                                user {
+                                    liked_playlists{ 
+                                        playlist_id
+                                        name
+                                    }
+                                }
+                            }
+                        }
+                    `
+                }
+                
+                fetch('http://localhost:5000/graphql', {
+                            method: 'POST',
+                            body: JSON.stringify(requestBody),
+                            headers: {
+                                'content-type': 'application/json'
+                            }
+                            })
+                            .then(res => {
+                                if (res.status !== 200 && res.status !== 201) 
+                                    throw new Error('Failed');
+                                return res.json()
+                            })
+                            .then(data => {
+                                data = data.data.getUserByUsername.user
+                                console.log(data.liked_playlists)
+                                let liked = false 
+                                data.liked_playlists.forEach(playlist => {
+                                    if (playlist.playlist_id === this.state.playlistId)
+                                        liked = true 
+                                })
+                                this.setState({
+                                    playlistInfo: playlists,
+                                    loading: false,
+                                    liked: liked
+                                })
+        
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
 
-                this.setState({
-                    playlistInfo: data,
-                    loading: false,
-                })
+                
             })
             .catch(err => {
                 console.log(err);
@@ -161,6 +205,37 @@ class Playlist extends Component {
             });
     }
 
+    handleLike = () => {
+        let requestBody = {
+            query: `
+                mutation {
+                    like_unlikePlaylist(username: "${this.props.username}", playlist_id: "${this.state.playlistId}", playlist_name: "${this.state.playlistInfo.name}"){
+                        _id
+                    }
+                }
+            `
+        }
+        fetch('http://localhost:5000/graphql', {
+                            method: 'POST',
+                            body: JSON.stringify(requestBody),
+                            headers: {
+                                'content-type': 'application/json'
+                            }
+                            })
+                            .then(res => {
+                                if (res.status !== 200 && res.status !== 201) 
+                                    throw new Error('Failed');
+                                return res.json()
+                            })
+                            .then(data => {
+                                this.setState({liked: !this.state.liked})
+        
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+    }
+
     render() { 
 
             if (this.state.loading)
@@ -184,7 +259,8 @@ class Playlist extends Component {
                         <div className="information-row">
                             <div className="col text-center align-self-center playlist-col">
                                 <div className="likes">
-                                    <AiFillHeart size={34} />
+                                    {this.state.liked ? <AiFillHeart onClick = {this.handleLike} size={34}  style={{color: "red"}}/> : <AiFillHeart onClick = {this.handleLike}size={34} />} 
+                                    
                                     {this.state.playlistInfo.likes} 
                                 </div>
                             </div>
