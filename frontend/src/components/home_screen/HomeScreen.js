@@ -4,7 +4,7 @@
 
 import React, {Component } from 'react'
 import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
-
+import SpotifyPlayer from 'react-spotify-player';
 import '../Navbar/Navbar.css';
 import "./HomeScreen.css"
 // import Logo from "./am4a.png"
@@ -17,7 +17,103 @@ import mockData from '../../mock_data.json'
 class HomeScreen extends Component {
 
     playlists = mockData.playlists
-    
+    state = {
+      loading: true,
+      current_playlist: null,
+      current_song: null,
+      index: -1
+    }
+
+    componentDidMount = () => {
+      this.setState({loading : true})
+      let current_song = null
+        let requestBody = {
+            query : `
+                query {
+                  getUserByUsername(username: "${this.props.username}"){
+                    user{
+                    current_song_id
+                    current_playlist_id
+                    }
+                    }
+                }
+            `
+        }
+        fetch('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) 
+                    throw new Error('Playlist not found');
+                return res.json()
+            })
+            .then(data => {
+                data = data.data.getUserByUsername.user
+
+                requestBody = {
+                  query : `
+                      query {
+                        getPlaylistByID(id : "${data.current_playlist_id}"){
+                          _id
+                          name
+                          img
+                          total_duration
+                          songs {
+                            song_id
+                            name
+                            artists
+                            uploaded
+                            duration
+                          }
+                          }
+                      }
+                  `
+              }
+
+              current_song = data.current_song_id
+
+              fetch('http://localhost:5000/graphql', {
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: {
+                    'content-type': 'application/json'
+                }
+                })
+                .then(res => {
+                    if (res.status !== 200 && res.status !== 201) 
+                        throw new Error('Playlist not found');
+                    return res.json()
+                })
+                .then(data => {
+                    console.log(data)
+                    data = data.data.getPlaylistByID
+                    let index = -1
+                    console.log(current_song)
+                    data.songs.forEach((song,i) => {
+                      if (song.song_id == current_song)
+                        index = i
+                    })
+                    
+                    this.setState({
+                      current_playlist: data,
+                      current_song: current_song,
+                      index: index,
+                      loading: false
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
     // Redirect to Home when home button is pressed 
     handleHome = () => {
         const {history } = this.props;
@@ -26,7 +122,14 @@ class HomeScreen extends Component {
     }
     
     render() { 
- 
+      const size = {
+        width: '100%',
+        height: 300,
+      };
+      const view = 'coverart'; // or 'coverart'
+      const theme = 'black'; // or 'white'
+      if (this.state.loading)
+        return (<></>)
         return ( 
             
                 <div className="container-fluid  user-home-container" ref={this.container}>
@@ -38,7 +141,7 @@ class HomeScreen extends Component {
                                 CURRENT PLAYLIST
                               </div>
                               <div className="current-playlist-name">
-                                {this.playlists[0].name}
+                                {this.state.current_playlist.name}
                               </div>
                         </div>
 
@@ -48,14 +151,19 @@ class HomeScreen extends Component {
                     
                     <div className="container-fluid text-center song-info-row">
                         <div className="song-name">
-                            {this.playlists[0].songs[0].name}
+                            {this.state.current_playlist.songs[this.state.index].name}
                         </div>
                         <div className="song-artist">
-                            {this.playlists[0].songs[0].artist}
+                            {this.state.current_playlist.songs[this.state.index].artist}
                         </div>
                     </div>
-                    
-                    <AudioPlayer src="https://www.freesound.org/data/previews/338/338825_1648170-lq.mp3" layout="stacked-reverse" className="home-audio-bar"
+                    {/* <SpotifyPlayer
+                        uri={`spotify:track:${this.state.current_playlist.songs[this.state.index].song_id}`}
+                        size={size}
+                        view={view}
+                        theme={theme}
+                      /> */}
+                    <AudioPlayer src="https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK" layout="stacked-reverse" className="home-audio-bar"
 
                           customControlsSection={
                             [

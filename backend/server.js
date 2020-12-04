@@ -89,7 +89,7 @@ app.use('/v1/search?', async (req, res, next) =>  {
 app.use('/v1/tracks/', async(req, res, next) => {
     await spotifyApi.getTracks([req.body.track])
     .then((data) =>{
-        //console.log(data.body)
+        console.log(data.body)
         res.status(200).send(data.body)
         next()
     }

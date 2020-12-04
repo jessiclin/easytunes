@@ -163,7 +163,6 @@ const resolver = {
         try{
             console.log("Add song ")
             let result = await Playlist.findOne({_id: playlist_id})
-            console.log("BEFORE", result.songs)
             let song = {
                 song_id : songInput._id,
                 name: songInput.name,
@@ -171,7 +170,6 @@ const resolver = {
                 artists: [],
                 duration: songInput.duration
             }
-            
 
             let artists = songInput.artists.split("\n")
             artists.map(artist => {
@@ -181,16 +179,12 @@ const resolver = {
             result.songs.push(song)
             result.total_duration += songInput.duration
 
-            await Playlist.findOneAndUpdate({_id: playlist_id}, 
+            result = await Playlist.findOneAndUpdate({_id: playlist_id}, 
                 {
                     songs: result.songs,
                     total_duration: result.total_duration
-                },{useFindAndModify: false})
-            
-            result = await Playlist.findOne({_id: playlist_id})
-    
-            console.log("AFTER", result.songs)
-
+                },{useFindAndModify: false, new: true})
+            return {...result._doc}
         }catch(err){
             throw err
         }
@@ -376,14 +370,11 @@ const resolver = {
         try {
             console.log("REMOVE ALL SONGS")
 
-            await Playlist.findOneAndUpdate({_id: id}, 
+            let playlist = await Playlist.findOneAndUpdate({_id: id}, 
                 {
                     songs: [],
                     total_duration: 0
-                },{useFindAndModify: false})
-
-            const playlist = await Playlist.findOne({_id : id})
-            console.log("REMOVED SONGS", playlist.songs)
+                },{useFindAndModify: false, new: true})
             return {...playlist._doc}
         } catch(error){
             console.log(error)
@@ -437,6 +428,44 @@ const resolver = {
         }
         catch(error){
 
+        }
+    },
+    updateEmail: async({email, new_email}) => {
+        try {
+            let user = await User.findOne({email: new_email})
+            if (user)
+                throw new Error("Email in use")
+            else {
+                user = await User.findOneAndUpdate({email: email}, 
+                    {
+                        email: new_email
+                    },{useFindAndModify: false, new: true})
+          
+                return {...user._doc}
+            }
+
+        } catch(error){
+            console.log(error)
+            throw error
+        }
+    },
+    changeUsername: async({username, new_username}) => {
+        try {
+            let user = await User.findOne({username: new_username})
+            if (user)
+                throw new Error("Username in use")
+            else {
+                user = await User.findOneAndUpdate({username: username}, 
+                    {
+                        username: new_username
+                    },{useFindAndModify: false, new: true})
+          
+                return {...user._doc}
+            }
+
+        } catch(error){
+            console.log(error)
+            throw error
         }
     }
 }

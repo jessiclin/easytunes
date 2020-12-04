@@ -9,6 +9,20 @@ import UpdatePassword from './UpdatePassword'
 
 class AccountSetting extends Component {
     state = { user: this.props.user }
+    
+    onChange = (type, value) => {
+        let user = this.state.user 
+        if (type === "Update Email")
+            user.email = value 
+        else {
+            user.username = value 
+            localStorage.setItem("username", value);
+            
+            this.props.onUsernameChange(value)
+           this.props.history.push("/" + value + "/settings")
+        }
+        this.setState({user : user})
+    }
     render() { 
         console.log(this.props.user)
         return (  
@@ -21,7 +35,7 @@ class AccountSetting extends Component {
                     {this.state.user.email}
                 </div>
                 
-                <Update text = {"Update Email"} original = {this.state.user.email}/>
+                <Update text = {"Update Email"} original = {this.state.user.email} onChange = {this.onChange} />
             </div>
 
             <div className="user-settings-content">
@@ -30,7 +44,7 @@ class AccountSetting extends Component {
                 <div className="user-setting-info">
                     {this.state.user.username}
                 </div>
-                <Update text = {"Update Username"} original = {this.state.user.username}/>
+                <Update text = {"Update Username"} original = {this.state.user.username} onChange = {this.onChange}/>
             </div>
 
             <div className="user-settings-content"> 
