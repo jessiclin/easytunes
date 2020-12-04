@@ -559,6 +559,32 @@ const resolver = {
         catch(error) {
 
         }
+    },
+    like_unlikePlaylist: async ({username, playlist_id, playlist_name}) => {
+        try{
+            let user = await User.findOne({username : username})
+            let unlike = false 
+            console.log(playlist_id)
+            user.liked_playlists.forEach((playlist,i) => {
+                if (playlist.playlist_id.toString() === playlist_id){
+                    user.liked_playlists.splice(i, 1)
+                    unlike = true 
+                }
+            })
+            if (!unlike)
+                user.liked_playlists.push({
+                    playlist_id: playlist_id,
+                    name: playlist_name
+                })
+            user = await User.findOneAndUpdate({username: username}, 
+            {
+                
+                liked_playlists : user.liked_playlists
+            }, {useFindAndModify: false, new:true})
+            return {...user._doc}
+        }catch(error){
+            console.log(error)
+        }
     }
 }
 
