@@ -50,6 +50,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
+        <script src="https://sdk.scdn.co/spotify-player.js"></script>
           <Switch>
             <Route exact path='/' component = {Home}/>
 
@@ -92,13 +93,13 @@ class App extends Component {
 
             <Route exact path='/:username/settings'
               render = {(props) => (
-                <Setting {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+                <Setting {...props} username = {this.state.username} onUsernameChange = {this.onUsernameChange}/>
               )}
             />
 
             <Route exact path='/:username'
               render = {(props) => (
-                <Profile {...props} username = {this.state.username} onSearchResults = {this.onSearchResults}/>
+                <Profile {...props} username = {this.state.username}/>
               )}
             />
             

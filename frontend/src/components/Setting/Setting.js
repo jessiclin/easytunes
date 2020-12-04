@@ -94,8 +94,8 @@ class Setting extends Component {
                     </ul>
                 </nav>
 
-                {this.state.showAccount ? <AccountSetting user = {this.state.user}/>: null}
-                {this.state.showPrivacy ? <PrivacySetting/> : null}
+                {this.state.showAccount ? <AccountSetting user = {this.state.user} onUsernameChange ={this.props.onUsernameChange} history = {this.props.history}/>: null}
+                {this.state.showPrivacy ? <PrivacySetting user ={this.state.user}/> : null}
                 {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
                 
                 <PlaylistNavbar/>

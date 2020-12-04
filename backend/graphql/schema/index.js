@@ -133,6 +133,8 @@ type RootMutation {
     moveSongUp(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
     moveSongDown(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
     addComment(playlist_id: ID!, username: String!, comment: String!): Playlist
+    updateEmail(email:String!, new_email:String!): User
+    changeUsername(username: String!, new_username:String!): User
 }
 
 schema {
