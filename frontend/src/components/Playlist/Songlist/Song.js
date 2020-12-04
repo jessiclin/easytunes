@@ -15,8 +15,7 @@ class Song extends Component {
         this.handleMoveDown = this.props.handleMoveDown
     }
     state = { 
-        song: this.props.song , 
-        index : this.props.index,
+        song: this.props.song, 
         editing: this.props.editing,
         deleteConfirmVisible : false,
         playlistId: this.props.playlist_id
@@ -35,24 +34,24 @@ class Song extends Component {
     // Remove song from the playlist (Edit Mode)
     // NOTE: Does not delete the song from the database 
     handleDelete = () => {
-        this.removeSong(this.state.song, this.state.index)
+        this.removeSong(this.state.song, this.props.index)
     }
 
     moveUp = () => {
         console.log("move up")
-        this.handleMoveUp(this.state.song, this.state.index)
+        this.handleMoveUp(this.state.song, this.props.index)
     }
      
     moveDown = () => {
         console.log("move down")
-        this.handleMoveDown(this.state.song, this.state.index)
+        this.handleMoveDown(this.state.song, this.props.index)
     }
 
     render() { 
         return (  
             <div className="row song-row">
             <div className="col song-col text-left">
-                {this.state.index+1}
+                {this.props.index+1}
             </div>
             <div className="col song-col text-left">
             <button className="play-btn" onClick = {this.handlePlayClick}>
@@ -73,7 +72,7 @@ class Song extends Component {
             <div className="col song-col text-center">
                 {this.state.editing ? 
                     <div>
-                        {(this.props.index > 0) ? <AiOutlineArrowUp size={34} class="upbtn" onClick={this.moveUp}/> : <AiOutlineArrowUp size={34} disabled color="#cccccc"/>}
+                        {(this.props.index > 0) ? <AiOutlineArrowUp size={34} className="upbtn" onClick={this.moveUp}/> : <AiOutlineArrowUp size={34} disabled color="#cccccc"/>}
                         {(this.props.index === this.props.playlist_length - 1) ? <AiOutlineArrowDown size={34} disabled color="#cccccc"/> : <AiOutlineArrowDown size={34} class="downbtn" onClick={this.moveDown}/>}
                     </div> 
                 :null}
