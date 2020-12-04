@@ -440,6 +440,58 @@ const resolver = {
         }
     },
 
+    updateEmail: async({email, new_email}) => {
+        try {
+            let user = await User.findOne({email: new_email})
+            if (user)
+                throw new Error("Email in use")
+            else {
+                user = await User.findOneAndUpdate({email: email}, 
+                    {
+                        email: new_email
+                    },{useFindAndModify: false, new: true})
+          
+                return {...user._doc}
+            }
+
+        } catch(error){
+            console.log(error)
+            throw error
+        }
+    },
+    changeUsername: async({username, new_username}) => {
+        try {
+            let user = await User.findOne({username: new_username})
+            if (user)
+                throw new Error("Username in use")
+            else {
+                user = await User.findOneAndUpdate({username: username}, 
+                    {
+                        username: new_username
+                    },{useFindAndModify: false, new: true})
+          
+                return {...user._doc}
+            }
+
+        } catch(error){
+            console.log(error)
+            throw error
+        }
+    },
+    changePassword: async({username, new_password}) => {
+        console.log("HERE")
+        try {
+            const hashed = await bcrypt.hash(new_password, saltRounds)
+            let user = await User.findOneAndUpdate({username: username}, {
+                password: hashed
+            },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        } catch(error){
+            console.log(error)
+            throw error
+        }
+    },
+
     deleteComment: async({playlist_id, username, index}) => {
         try {
             let playlist = await Playlist.findOne({_id : playlist_id})
@@ -452,6 +504,69 @@ const resolver = {
         }
         catch(error) {
 
+        }
+    },
+    changeSavedPlaylistPrivacyDef: async ({_id, def}) => {
+        try {
+            console.log(def)
+            let user = await User.findOneAndUpdate({_id: _id}, 
+                {
+                    default_public_saved_playlist: def
+                },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        }
+        catch(error) {
+
+        }
+    },
+    changePlaylistPrivacyDef: async ({_id, def}) => {
+        try {
+            let user = await User.findOneAndUpdate({_id: _id}, 
+                {
+                    default_public_playlist: def
+                },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        }
+        catch(error) {
+
+        }
+    },
+    changeVerifyFollowDef: async ({_id, def}) => {
+        try {
+            let user = await User.findOneAndUpdate({_id: _id}, 
+                {
+                    verify_requests: def
+                },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        }
+        catch(error) {
+
+        }
+    },
+    like_unlikePlaylist: async ({username, playlist_id, playlist_name}) => {
+        try{
+            let user = await User.findOne({username : username})
+            let unlike = false 
+            console.log(playlist_id)
+            user.liked_playlists.forEach((playlist,i) => {
+                if (playlist.playlist_id.toString() === playlist_id){
+                    user.liked_playlists.splice(i, 1)
+                    unlike = true 
+                }
+            })
+            if (!unlike)
+                user.liked_playlists.push({
+                    playlist_id: playlist_id,
+                    name: playlist_name
+                })
+            user = await User.findOneAndUpdate({username: username}, 
+            {
+                
+                liked_playlists : user.liked_playlists
+            }, {useFindAndModify: false, new:true})
+            return {...user._doc}
+        }catch(error){
+            console.log(error)
         }
     }
 }

@@ -17,6 +17,12 @@ const UserSchema = new Schema({
             name: {type: String, required: true},
         }
     ],
+    liked_playlists: [
+        {
+            playlist_id: {type: Schema.Types.ObjectId, ref: 'Playlist', required: true},
+            name: {type: String, required: true},
+        }
+    ],
     following : [
         {
             user_id: {type:Schema.Types.ObjectId, ref: 'User',  required: true},
