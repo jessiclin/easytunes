@@ -131,8 +131,8 @@ class Playlist extends Component {
                 })
                 requestBody = {
                     query: `
-                        mutation forkPlaylist($username: String, $name: String, $user_id: String, $songs: [Strings] ){
-                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistInfo.name}", user_id: "${data}", songs: $songs) {
+                        mutation {
+                            forkPlaylist (username : "${this.state.username}", name : "${this.state.playlistInfo.name}", user_id: "${data}", total_duration: ${this.state.playlistInfo.total_duration}, songs: ${songs}) {
                                 _id 
                             }
                         }
@@ -241,7 +241,7 @@ class Playlist extends Component {
         }
 
         // Update the playlist after edit 
-        onChange = (type, obj) => {
+        onChange = async (type, obj) => {
             if (type === "playlist") {
                 this.setState({playlist: obj})
             }
@@ -256,10 +256,11 @@ class Playlist extends Component {
             else if (type === "save"){
                 this.updatePrivacy()
                 this.updateName()
-                // this.removeSongs()
-                // this.state.playlistInfo.songs.forEach(song => {
-                //     this.addSong(song)
-                // }, this)
+                console.log(this.state.playlistId)
+                await this.removeSongs()
+                console.log(this.state.playlistInfo.songs)
+                for(let i = 0; i < this.state.playlistInfo.songs.length; i++)
+                    await this.addSong(this.state.playlistInfo.songs[i])
             }
             else{
                 this.setState({editing: obj})
@@ -300,34 +301,72 @@ class Playlist extends Component {
         }
 
         removeSongs = () => {
-            let requestBody = {
-                query: `
-                    mutation {
-                        removeAllSongs(id: "${this.state.playlistId}"){
-                            _id 
+            return new Promise((resolve, reject) => {
+                let requestBody = {
+                    query: `
+                        mutation {
+                            removeAllSongs(id: "${this.state.playlistId}"){
+                                _id 
+                            }
                         }
-                    }
-                `
-            }
-            this.fetch(requestBody)
+                    `
+                }
+                fetch('http://localhost:5000/graphql', {
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: {
+                    'content-type': 'application/json'
+                }
+                })
+                .then(res => {
+                    if (res.status !== 200 && res.status !== 201) 
+                        throw new Error('Playlist not found');
+                    return res.json()
+                })
+                .then(data => {
+                    resolve(data)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+             });
         }
 
         addSong = (song) => {
-            let artists = ""
-            artists += song.artists.map(artist => {
-                return "\n" + artist
-            })
-
-            let requestBody = {
-                query: `
-                    mutation {
-                        addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false}, playlist_id: "${this.state.playlistId}"){
-                            _id
+            return new Promise((resolve, reject) => {
+                let artists = ""
+                artists += song.artists.map(artist => {
+                    return "\n" + artist
+                })
+    
+                let requestBody = {
+                    query: `
+                        mutation {
+                            addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false, duration: ${song.duration}}, playlist_id: "${this.state.playlistId}"){
+                                _id
+                            }
                         }
-                    }
-                `
-            }
-           this.fetch(requestBody)
+                    `
+                }
+                fetch('http://localhost:5000/graphql', {
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: {
+                    'content-type': 'application/json'
+                }
+                })
+                .then(res => {
+                    if (res.status !== 200 && res.status !== 201) 
+                        throw new Error('Playlist not found');
+                    return res.json()
+                })
+                .then(data => {
+                    resolve(data)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+             });
         }
         fetch = (requestBody) => {
             fetch('http://localhost:5000/graphql', {

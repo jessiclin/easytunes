@@ -22,19 +22,32 @@ class Songlist extends Component {
     // Remove song from the playlist 
     removeSong = (song, index) => {
         console.log(song, index)
-        if (this.state.songs[index].song_id === song.song_id){
-            console.log("HERE")
-            let songs = this.state.songs
-            songs.splice(index, 1)
-            this.setState({songs : songs})
-        }
+        let songs = this.state.songs
+        songs.splice(index, 1)
+        this.setState({songs : songs})
     }
+    
     handleMoveUp = (song, index) => {
+        console.log(song, index)
+        let songs = this.state.songs
 
+        let temp = songs[index]
+        songs[index] = songs[index-1]
+        songs[index-1] = temp
+
+        this.setState({songs : songs})
     }
     
     handleMoveDown = (song, index) => {
-        
+        console.log(song, index)
+        let songs = this.state.songs
+
+        let temp = songs[index]
+        songs[index] = songs[index+1]
+        songs[index+1] = temp
+
+
+        this.setState({songs : songs})
     }
 
     render() {
