@@ -49,7 +49,7 @@ class AccountSetting extends Component {
 
             <div className="user-settings-content"> 
                 <h5>Change Password</h5>
-                <UpdatePassword/>
+                <UpdatePassword username = {this.state.user.username}/>
             </div>
         </div>
         );

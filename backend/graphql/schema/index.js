@@ -137,6 +137,7 @@ type RootMutation {
     addComment(playlist_id: ID!, username: String!, comment: String!): Playlist
     updateEmail(email:String!, new_email:String!): User
     changeUsername(username: String!, new_username:String!): User
+    changePassword(username: String!, new_password:String!): User
     deleteComment(playlist_id: ID!, username: String!, index: Int!): Playlist
     changeSavedPlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
     changePlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
