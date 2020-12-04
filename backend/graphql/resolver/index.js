@@ -161,7 +161,9 @@ const resolver = {
     },
     addSong: async ({songInput, playlist_id}) => {
         try{
+            console.log("Add song ")
             let result = await Playlist.findOne({_id: playlist_id})
+            console.log("BEFORE", result.songs)
             let song = {
                 song_id : songInput._id,
                 name: songInput.name,
@@ -169,16 +171,26 @@ const resolver = {
                 artists: [],
                 duration: songInput.duration
             }
-            let artists = songInput.artists.split("\n")
+            
 
+            let artists = songInput.artists.split("\n")
             artists.map(artist => {
                 song.artists.push(artist)
             })
 
             result.songs.push(song)
             result.total_duration += songInput.duration
-   
-            result.save()
+
+            await Playlist.findOneAndUpdate({_id: playlist_id}, 
+                {
+                    songs: result.songs,
+                    total_duration: result.total_duration
+                },{useFindAndModify: false})
+            
+            result = await Playlist.findOne({_id: playlist_id})
+    
+            console.log("AFTER", result.songs)
+
         }catch(err){
             throw err
         }
@@ -362,12 +374,19 @@ const resolver = {
     },
     removeAllSongs: async ({id}) => {
         try {
+            console.log("REMOVE ALL SONGS")
+
+            await Playlist.findOneAndUpdate({_id: id}, 
+                {
+                    songs: [],
+                    total_duration: 0
+                },{useFindAndModify: false})
+
             const playlist = await Playlist.findOne({_id : id})
-            playlist.songs = []
-            playlist.total_duration = 0
-            playlist.save() 
-            return {...result._doc}
+            console.log("REMOVED SONGS", playlist.songs)
+            return {...playlist._doc}
         } catch(error){
+            console.log(error)
         }
     },
     moveSongUp: async({id, index}) => {
