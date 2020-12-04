@@ -77,11 +77,8 @@ class PlaylistButton extends Component {
                                 name
                                 username
                                 likes 
-<<<<<<< HEAD
                                 public
-=======
                                 total_duration
->>>>>>> 79ec1430964a415394c9664fcd9ab0b82939775a
                                 songs {
                                     song_id
                                     name

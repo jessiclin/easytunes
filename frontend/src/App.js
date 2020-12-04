@@ -13,7 +13,7 @@ import SearchScreen from "./components/search_screen/SearchScreen.js"
 import FollowingPage from './components/Following/FollowingPage'
 import Setting from './components/Setting/Setting'
 // import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
-// import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
+import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
 // import Navbar from './components/Navbar/Navbar'
 
 
@@ -107,7 +107,8 @@ class App extends Component {
             
             {/* <Route path='/:any' component={HomeScreen} /> */}
           </Switch>
-          {/* {this.state.logged_in ?  <PlaylistNavbar/> :  null} */}
+          {/* {this.state.username ?  <PlaylistNavbar/> :  null} */}
+        
         </div>
       </BrowserRouter>
     );

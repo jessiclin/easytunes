@@ -394,6 +394,41 @@ const resolver = {
             console.log(error)
             throw error
         }
+    },
+    addComment: async({playlist_id, username, comment}) => {
+        console.log("HERE")
+        try {
+            let user = await User.findOne({username: username})
+            let playlist = await Playlist.findOne({_id : playlist_id})
+
+            playlist.comments.push({
+                user_id: user._id,
+                username: username,
+                date: new Date(),
+                message: comment,
+                replies: []
+            })
+            playlist.save() 
+            return {...playlist._doc}
+        }
+        catch(error){
+
+        }
+    },
+
+    deleteComment: async({playlist_id, username, index}) => {
+        try {
+            let playlist = await Playlist.findOne({_id : playlist_id})
+            if (playlist.comments[index].username == username)
+                playlist.comments.splice(index,1)
+            playlist.save()
+            console.log("hi")
+            console.log(...playlist._doc)
+            return {...playlist._doc}
+        }
+        catch(error) {
+
+        }
     }
 }
 

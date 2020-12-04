@@ -39,9 +39,7 @@ class SavedPlaylistButton extends Component {
                         songs {
                             song_id
                             name
-<<<<<<< HEAD
                         }
-=======
                             username
                             likes
                             total_duration 
@@ -49,7 +47,6 @@ class SavedPlaylistButton extends Component {
                                 song_id
                                 name
                             }
->>>>>>> 79ec1430964a415394c9664fcd9ab0b82939775a
                     }
                 }
             `

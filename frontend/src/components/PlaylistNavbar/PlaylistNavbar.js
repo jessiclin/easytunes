@@ -33,6 +33,7 @@ class PlaylistNavbar extends Component {
         })
         .then(data => {
          console.log(data)
+         console.log(data.tracks[0].external_urls.spotify)
         })
         .catch(error => {
             console.log(error)
@@ -47,7 +48,7 @@ class PlaylistNavbar extends Component {
             <>
                 <nav className="navbar fixed-bottom playlist-nav">
                     <div className="container playlist-nav-container">
-                        <AudioPlayer className="navbar-audio" src="" layout="horizontal-reverse" 
+                        <AudioPlayer className="navbar-audio" src="https://open.spotify.com/track/3Qm86XLflmIXVm1wcwkgDK" layout="horizontal-reverse" 
                           customAdditionalControls={
                             [
                               
