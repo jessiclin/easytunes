@@ -64,7 +64,9 @@ type User {
     username: String!
     joined: String!
     url: String!
-    default_public: Boolean!
+    default_public_saved_playlist: Boolean!
+    default_public_playlist: Boolean!
+    verify_requests: Boolean!
     current_song_id: String
     current_playlist_id: String 
     saved_playlists: [Saved!]! 
@@ -139,7 +141,13 @@ type RootMutation {
     moveSongUp(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
     moveSongDown(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
     addComment(playlist_id: ID!, username: String!, comment: String!): Playlist
+    updateEmail(email:String!, new_email:String!): User
+    changeUsername(username: String!, new_username:String!): User
+    changePassword(username: String!, new_password:String!): User
     deleteComment(playlist_id: ID!, username: String!, index: Int!): Playlist
+    changeSavedPlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
+    changePlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
+    changeVerifyFollowDef(_id: ID!, def: Boolean!): User 
 }
 
 schema {

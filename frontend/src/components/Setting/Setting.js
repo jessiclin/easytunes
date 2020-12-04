@@ -31,7 +31,9 @@ class Setting extends Component {
                             user {
                                 _id
                             username 
-                            default_public
+                            default_public_saved_playlist
+                            default_public_playlist
+                            verify_requests
                             email
                             url
                             }
@@ -66,6 +68,7 @@ class Setting extends Component {
         
     }
 
+
     // Render the Settings Page 
     render() { 
         // If the data is still loading, do not attempt to render any information 
@@ -94,8 +97,8 @@ class Setting extends Component {
                     </ul>
                 </nav>
 
-                {this.state.showAccount ? <AccountSetting user = {this.state.user}/>: null}
-                {this.state.showPrivacy ? <PrivacySetting/> : null}
+                {this.state.showAccount ? <AccountSetting user = {this.state.user} onUsernameChange ={this.props.onUsernameChange} history = {this.props.history}/>: null}
+                {this.state.showPrivacy ? <PrivacySetting user ={this.state.user} /> : null}
                 {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
                 
                 <PlaylistNavbar/>
