@@ -466,7 +466,8 @@ const resolver = {
         } catch(error){
             console.log(error)
             throw error
-
+        }
+    },
     deleteComment: async({playlist_id, username, index}) => {
         try {
             let playlist = await Playlist.findOne({_id : playlist_id})
