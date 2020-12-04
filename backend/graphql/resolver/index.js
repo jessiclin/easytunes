@@ -83,14 +83,16 @@ const resolver = {
         return {_id: user._id, username: user.username, token: token, token_expiration: 1}
     },
     createPlaylist: async ({username, user_id, name}) => {
-        const playlist = new Playlist({
-            user_id: user_id,
-            name: name, 
-            username: username,
-            date_created: new Date()
-        })
 
         try {
+            const user = await User.findOne({_id: user_id})
+            const playlist = new Playlist({
+                user_id: user_id,
+                name: name, 
+                username: username,
+                date_created: new Date(),
+                public: user.default_public_playlist
+            })
             const result = await playlist.save()
             return { ...result._doc }
         } catch (error) {
@@ -176,14 +178,23 @@ const resolver = {
                 song.artists.push(artist)
             })
 
-            result.songs.push(song)
-            result.total_duration += songInput.duration
+            let inPlaylist = false 
+            result.songs.forEach(song => {
+                if (song.song_id === songInput._id)
+                    inPlaylist = true
+            })
+            console.log(inPlaylist)
+            if (!inPlaylist){
+                result.songs.push(song)
+                result.total_duration += songInput.duration
 
-            result = await Playlist.findOneAndUpdate({_id: playlist_id}, 
+                result = await Playlist.findOneAndUpdate({_id: playlist_id}, 
                 {
                     songs: result.songs,
                     total_duration: result.total_duration
                 },{useFindAndModify: false, new: true})
+            }
+            
             return {...result._doc}
         }catch(err){
             throw err
@@ -201,15 +212,32 @@ const resolver = {
             let result = await User.findOne({_id: id})
             // Get user id of the requestee 
             let req = await User.findOne({username: requested_username})
-
-            const request = {
-                user_id: req._id,
-                username: requested_username,
-                request_date: new Date()
+            
+            if (result.verify_requests){
+                const request = {
+                    user_id: req._id,
+                    username: requested_username,
+                    request_date: new Date()
+                }
+                result.follow_requests.push(request)
             }
-            result.follow_requests.push(request)
-  
+            else {
+                const request = {
+                    user_id: req._id,
+                    username: requested_username,
+                    following_since: new Date()
+                }
+                result.followers.push(request)
+                req.following.push({
+                    user_id: result._id,
+                    username: result.username,
+                    following_since: new Date()
+                })
+                req.save() 
+            }
+
             result.save()
+            
             return result
         }catch(error){}
     },
@@ -477,6 +505,43 @@ const resolver = {
             console.log("hi")
             console.log(...playlist._doc)
             return {...playlist._doc}
+        }
+        catch(error) {
+
+        }
+    },
+    changeSavedPlaylistPrivacyDef: async ({_id, def}) => {
+        try {
+            console.log(def)
+            let user = await User.findOneAndUpdate({_id: _id}, 
+                {
+                    default_public_saved_playlist: def
+                },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        }
+        catch(error) {
+
+        }
+    },
+    changePlaylistPrivacyDef: async ({_id, def}) => {
+        try {
+            let user = await User.findOneAndUpdate({_id: _id}, 
+                {
+                    default_public_playlist: def
+                },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        }
+        catch(error) {
+
+        }
+    },
+    changeVerifyFollowDef: async ({_id, def}) => {
+        try {
+            let user = await User.findOneAndUpdate({_id: _id}, 
+                {
+                    verify_requests: def
+                },{useFindAndModify: false, new: true})
+            return {...user._doc}
         }
         catch(error) {
 
