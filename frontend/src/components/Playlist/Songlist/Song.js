@@ -72,7 +72,7 @@ class Song extends Component {
             <div className="col song-col text-center">
                 {this.state.editing ? 
                     <div>
-                        {(this.props.index > 0) ? <AiOutlineArrowUp size={34} class="upbtn" onClick={this.moveUp}/> : <AiOutlineArrowUp size={34} disabled color="#cccccc"/>}
+                        {(this.props.index > 0) ? <AiOutlineArrowUp size={34} className="upbtn" onClick={this.moveUp}/> : <AiOutlineArrowUp size={34} disabled color="#cccccc"/>}
                         {(this.props.index === this.props.playlist_length - 1) ? <AiOutlineArrowDown size={34} disabled color="#cccccc"/> : <AiOutlineArrowDown size={34} class="downbtn" onClick={this.moveDown}/>}
                     </div> 
                 :null}

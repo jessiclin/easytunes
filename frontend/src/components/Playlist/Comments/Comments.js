@@ -170,9 +170,7 @@ class Comments extends Component {
         );
     }
 
-    handleReply = () => [
-        
-    ]
+
 }
  
 export default Comments;
