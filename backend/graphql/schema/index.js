@@ -135,6 +135,7 @@ type RootMutation {
     addComment(playlist_id: ID!, username: String!, comment: String!): Playlist
     updateEmail(email:String!, new_email:String!): User
     changeUsername(username: String!, new_username:String!): User
+    deleteComment(playlist_id: ID!, username: String!, index: Int!): Playlist
 }
 
 schema {
