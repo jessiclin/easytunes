@@ -179,6 +179,7 @@ const resolver = {
             let result = await Playlist.findOne({_id: playlist_id})
             let song = {
                 song_id : songInput._id,
+                song_uri : songInput.uri,
                 name: songInput.name,
                 uploaded: songInput.uploaded,
                 artists: [],

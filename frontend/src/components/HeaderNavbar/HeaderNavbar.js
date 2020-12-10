@@ -3,18 +3,18 @@
  */
 
 import React, { Component } from 'react'
-
 import {BsFillCaretDownFill} from 'react-icons/bs'
 import {MdAccountCircle} from 'react-icons/md'
 import {AiFillHome} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
+import SpotifyPlayer from 'react-spotify-web-playback';
 import './HeaderNavbar.css'
 
 class HeaderNavbar extends Component {
     constructor(props){
         super(props)
-        this.onSearchResults = this.props.onSearchResults
     }
+
     container = React.createRef();
     state = {
         open: false,
@@ -44,10 +44,11 @@ class HeaderNavbar extends Component {
     };
 
     handleHome = () => {
-        const {history} = this.props.props
+        const {history} = this.props
         history.push('/home')
     }
     render() { 
+
         function Search({props}) {
  
             const [visible, setVisibility] = React.useState(false);
@@ -89,6 +90,7 @@ class HeaderNavbar extends Component {
             }
 
             async function toggleSearch(){
+                toggleVisibility()
                 const url = '/searchq=' +  encodeURIComponent(keyword)+ "/type=" + text.toLowerCase()
                 const {history} = props;
                 
@@ -110,7 +112,7 @@ class HeaderNavbar extends Component {
         }
         
         function Playlist({props}){
-      
+    
             function togglePlaylist (){
                 props.history.push("/" + props.username)
             }
@@ -149,6 +151,9 @@ class HeaderNavbar extends Component {
         function LogOut({props}){
             function toggleLogOut (){
                 localStorage.removeItem("username")
+
+                console.log(localStorage.getItem("username"))
+                props.onUsernameChange("")
                 props.history.push("/")
             }
             return (
@@ -168,7 +173,7 @@ class HeaderNavbar extends Component {
                 {/* Search bar */}
                 <div className="col search-bar">
                     
-                    <Search props ={this.props.props}/>
+                    <Search props ={this.props}/>
                     
                 </div>
                 
@@ -182,19 +187,19 @@ class HeaderNavbar extends Component {
                         <div className="container home-container">
                             <ul className = "account-options">
                                 <li>
-                                        <Playlist props = {this.props.props}/>
+                                        <Playlist props = {this.props}/>
                                 </li>
                                 <li>
-                                        <Followers props = {this.props.props}/>
+                                        <Followers props = {this.props}/>
                                 </li>
                                 <li>
-                                        <Following props = {this.props.props}/>
+                                        <Following props = {this.props}/>
                                 </li>
                                 <li>
-                                    <Settings props = {this.props.props}/>
+                                        <Settings props = {this.props}/>
                                 </li>
                                 <li>
-                                    <LogOut props = {this.props.props}/>
+                                        <LogOut props = {this.props}/>
                                 </li>
                             </ul>
                         </div>

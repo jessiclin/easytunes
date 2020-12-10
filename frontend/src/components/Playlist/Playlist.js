@@ -60,6 +60,7 @@ class Playlist extends Component {
                         }
                         songs {
                             song_id 
+                            song_uri
                             name 
                             artists
                             duration
@@ -139,6 +140,8 @@ class Playlist extends Component {
     }
 
     componentDidMount = () => {
+        if (!this.props.username)
+            this.props.history.push('/login')
         this.getPlaylist()
     }
 
@@ -283,8 +286,7 @@ class Playlist extends Component {
             }
             return ( 
                 <div className="container-fluid playlist-container playlist">
-                    {/* Home and Profile Icons */}
-                    <HeaderNavbar  props = {this.props}/>
+
 
                     <div className="container-fluid playlist-data-container">
                         {/* Information about the Playlist */}
@@ -358,7 +360,7 @@ class Playlist extends Component {
                         {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments} username = {this.props.username} playlist_id = {this.state.playlistId}  /> : null}
                         {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} editing= {this.state.editing} onChange = {this.onChange}/> : null}
                     </div>
-                    <PlaylistNavbar/>
+  
                 </div>
                 
             );
@@ -466,7 +468,7 @@ class Playlist extends Component {
                 let requestBody = {
                     query: `
                         mutation {
-                            addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false, duration: ${song.duration}}, playlist_id: "${this.state.playlistId}"){
+                            addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false, duration: ${song.duration}, uri: "${song.song_uri}"}, playlist_id: "${this.state.playlistId}"){
                                 _id
                             }
                         }

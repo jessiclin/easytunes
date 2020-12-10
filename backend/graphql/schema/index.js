@@ -3,6 +3,7 @@ import {buildSchema} from 'graphql'
 const schema = buildSchema (`
 type SongRef {
     song_id: String!
+    song_uri: String!
     name: String!
     artists: [String!]!
     uploaded: Boolean!
@@ -95,6 +96,7 @@ input UserInput {
 
 input SongInput {
     _id: String!
+    uri: String!
     name: String!
     artists: String!
     uploaded: Boolean!

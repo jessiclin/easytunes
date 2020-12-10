@@ -9,13 +9,12 @@ import {AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import {RiPlayListLine} from 'react-icons/ri'
 import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 // FaRegPauseCircle
-import {FaRegPlayCircle} from 'react-icons/fa'
+import {FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
 
 class PlaylistButton extends Component {
     constructor(props){
         super(props);
         this.setPlaylists = this.props.setPlaylists;
-
     }
     
     state = { 
@@ -114,7 +113,7 @@ class PlaylistButton extends Component {
     
     render() { 
         const playlist = this.state.playlist 
-        console.log(playlist)
+
         return (
             <div className="playlist-row">
                 <div className="col">
@@ -139,7 +138,17 @@ class PlaylistButton extends Component {
                 <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.toPlaylist}/>
                 
                 <button className="play-btn">
-                    <FaRegPlayCircle size = {30}/>
+                    { this.props.playlist.songs.length > 0 ?
+                    <>
+                        { this.props.play && this.props.current_playlist.name === this.state.playlist.name? 
+                            <FaRegPauseCircle onClick = {this.handlePlay} size = {30}/>
+                            : <FaRegPlayCircle onClick = {this.handlePlay} size = {30}/>
+                        }
+                    </>
+                        : null
+                    }
+                    
+                    
                 </button>
 
                 {
@@ -161,6 +170,15 @@ class PlaylistButton extends Component {
                 : null }
             </div>
         );
+    }
+
+    handlePlay = async () => {
+        // If pausing current playlist 
+        if (this.props.current_playlist !== null && this.props.current_playlist.name === this.state.playlist.name)
+            this.props.onPlayChange(!this.props.play) 
+        // If changing playlist 
+        else 
+            this.props.onPlaylistChange(this.state.playlist)
     }
 }
  

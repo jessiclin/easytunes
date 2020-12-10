@@ -115,7 +115,7 @@ class PrivacySetting extends Component {
                     requestBody = {
                         query: `
                             mutation {
-                                changePlaylistPrivacyDef(_id: "${props._id}", def:${false}){
+                                changeVerifyFollowDef(_id: "${props._id}", def:${false}){
                                     _id
                                 }
                             }

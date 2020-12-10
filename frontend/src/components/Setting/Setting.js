@@ -21,6 +21,8 @@ class Setting extends Component {
 
     // Get the User 
     componentDidMount = () => {
+        if (!this.props.username)
+            this.props.history.push('/login')
         this.setState({loading: true})
 
         if (this.props.username === this.props.match.params.username){
@@ -71,13 +73,15 @@ class Setting extends Component {
 
     // Render the Settings Page 
     render() { 
+        
+            
         // If the data is still loading, do not attempt to render any information 
         if (this.state.loading)
             return(<> </>)
 
         return (  
             <div className="container-fluid setting-container">
-                <HeaderNavbar  props = {this.props}/>
+ 
                 <nav className="sidebar">
                     <div className="sidebar-header text-left">
                         <h3 style={{color : "black"}}>Settings</h3>

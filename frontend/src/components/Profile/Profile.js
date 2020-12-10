@@ -29,9 +29,13 @@ class Profile extends Component {
 
     // Get the user information and their playlists 
     componentDidMount = () => {
+
+        if (!this.props.username)
+            this.props.history.push('/login')
+
         this.setState({loading : true})
         const username = this.state.profileUsername
-        console.log(username)
+
         let requestBody = {
             query: `
                 query {
@@ -59,6 +63,7 @@ class Profile extends Component {
                             total_duration 
                             songs {
                                 song_id
+                                song_uri
                                 name
                             }
                         }
@@ -74,7 +79,6 @@ class Profile extends Component {
                 'content-type': 'application/json'
             }})
             .then(res => {
-                console.log(res)
                 if (res.status !== 200 && res.status !== 201)
                     throw new Error ('Failed')
                 return res.json()
@@ -100,14 +104,15 @@ class Profile extends Component {
     }
     
     render() { 
+
+
         if (this.state.loading)
             return (<> </>);
-
+            
         return ( 
-        
+            
             <div className="container-fluid playlist-container">
-                {/* Home Button, Username, Account Icon */}
-                <HeaderNavbar  props = {this.props}/>
+
                 <div className="container-fluid playlist-data-container">
                     {/* Information Bar about the user */}
                     <div className="information-row">
@@ -148,7 +153,16 @@ class Profile extends Component {
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
                     {this.state.showSavedPlaylists ? <SavedPlaylists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history} /> : null}
-                    {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history}/> : null}
+                    {this.state.showMyPlaylists ?  
+                        <Playlists playlists = {this.state.profilePlaylists} 
+                                user = {this.state.profileUserInfo} 
+                                sessionUser = {this.props.username} 
+                                history = {this.props.history} 
+                                play = {this.props.play} 
+                                onPlayChange = {this.props.onPlayChange}
+                                onPlaylistChange = {this.props.onPlaylistChange}
+                                current_playlist = {this.props.current_playlist}
+                        /> : null}
                     {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
                 </div>
                 {/* <PlaylistNavbar/> */}
