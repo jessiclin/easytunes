@@ -149,6 +149,7 @@ type RootMutation {
     changeVerifyFollowDef(_id: ID!, def: Boolean!): User 
     like_unlikePlaylist(username: String!, playlist_id: ID!, playlist_name: String!): User
     resetPassword(email: String!, new_password: String!): User
+    addReply(username: String!, message: String!, playlist_id: ID!, comment_index: Int!): Playlist
 }
 
 schema {
