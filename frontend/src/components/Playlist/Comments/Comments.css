@@ -1,0 +1,57 @@
+.result-container {
+  margin-top: 10px;
+  /* margin-left: 30px */
+}
+
+.username-row {
+  margin: 0px 0px 0px -10px;
+  font-weight: bold;
+}
+
+.comment-row,
+.reply {
+  margin: 0px 0px 0px 10px;
+}
+
+.replies {
+  margin: 0px 0px 0px 10px;
+}
+
+.view-replies-btn {
+  border: none;
+  background: transparent;
+}
+
+.view-replies-btn:focus{
+  outline:none
+}
+
+.reply-btn {
+  margin-left: 10px;
+  background: none;
+  outline: none;
+  border: 1px solid;
+}
+
+.comments-container .row .comment-text {
+  padding: 10px;
+ 
+  resize: none;
+  overflow: hidden;
+  margin: 10px;
+  border: 1px solid lightgray ;
+}
+.comments-container .row .comment-text:focus {
+  border: 1px solid lightgray ; 
+}
+.comments-container .row .comment-button {
+  margin-right: 20px;
+  margin-left: 10px;
+  min-width: 100px; 
+  height: 40px;
+  border-radius: 5px;
+  font-size: medium;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+  color: white;
+}

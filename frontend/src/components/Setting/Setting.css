@@ -1,0 +1,165 @@
+.setting-container {
+    height: 100%;
+    padding-left: 0px;
+    margin-top: 50px;
+    margin-bottom: 150px
+}
+
+.sidebar-header {
+    padding-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+.sidebar {
+    /* position: fixed; */
+    /* min-width: 250px;
+    max-width: 250px;
+    min-height: 250px;
+    height:  100vh */
+    padding-top: 50px;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+
+    background: #f0f0f0;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+
+.settings-options button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    padding-left: 20px;
+    background: transparent;
+}
+
+.settings-options button:hover{
+    background: lightgray;
+    outline:none
+}
+.settings-options li {
+    width: 100%;
+
+}
+
+.user-settings-container {
+    height: 100%;
+    margin-left: 250px;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-left: 30px
+}
+
+.settings-header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid lightgray;
+    font-size: 20px;
+}
+
+.user-settings-content h5 {
+    padding-bottom: 10px
+}
+
+.user-settings-content h6 {
+    padding-bottom: 10px;
+    color: #545252
+}
+
+.user-settings-content p {
+    background-color: #e8e8e8;
+    max-width: 50%
+}
+.user-settings-content-btn {
+    border: 1px solid gray;
+    border-radius: 15px;
+    outline: none;
+    width: 150px;
+    height:25px;
+    background: white;
+}
+
+.user-settings-content-btn:focus{
+    outline: none
+}
+.user-settings-content-btn:hover{
+    background: #faed26;
+    border: #faed26;
+    outline: none
+}
+
+.user-settings-content {
+    padding-top: 30px;
+    padding-bottom:50px;
+    border-bottom: 1px solid lightgray
+
+}
+
+.user-setting-info {
+    color: #757575;
+    padding-bottom: 20px
+}
+
+.update-box, .update-pass-box{
+    border: 1px solid lightgray;
+    height: 250px;
+    width: 400px;
+    position: absolute;
+    background: white;
+    top: 200px;
+    right: 35%;
+    border-radius: 15px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    z-index: 2;
+}
+.confirm-change-btn{
+    background: white;
+    border: none;
+    margin-right: 150px;
+    margin-top: 100px
+  }
+.confirm-change-btn:focus { 
+    outline: none
+  
+  }
+  .cancel-change-btn{
+    background: white;
+    border: none;
+    margin-left: 150px;
+  }
+  
+  .cancel-change-btn:focus { 
+    outline: none
+  
+  }
+
+
+  .confirm-pass-btn {
+    background: white;
+    border: none;
+    margin-right: 150px;
+    margin-top: 40px
+  }
+
+  .confirm-pass-btn:focus, .cancel-pass-btn:focus {
+      outline: none
+  }
+  .cancel-pass-btn {
+    background: white;
+    border: none;
+    margin-left: 150px;
+  }
+
+  .error-box {
+    height: 10px;
+ 
+    color: red
+  }

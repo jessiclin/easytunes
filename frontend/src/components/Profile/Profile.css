@@ -1,0 +1,198 @@
+.playlist-container {
+  margin: 0px;
+  margin-bottom: 150px;
+}
+
+.playlist-row {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100px;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-items: center;  
+}
+
+.playlist-row:after {
+  content: "";
+  width: 85%;
+  height: 1px;
+  background: lightgray;
+  position: absolute;
+  bottom: -4px;
+  right: -10px;
+  margin-left: 15%;
+}
+
+.playlist-row button {
+  background: transparent;
+}
+
+.playlist-btn:focus {
+  outline: none;
+}
+
+.information-row button {
+  background: white;
+  border: none
+}
+
+.information-row button:focus{
+  outline:none
+}
+.playlist-row .playlist-btn {
+  width: 80%;
+  height: 60px;
+  outline: none;
+  border: none;
+  text-align: left;
+  position: absolute;
+  display: inline-block;
+}
+
+.delete-btn {
+  display: inline-block;
+  border: none;
+  justify-content: center;
+  margin-right: 4%;
+  background: transparent;
+}
+
+.play-btn {
+  display: inline-block;
+  border: none;
+  justify-content: center;
+  margin-right: 4%;
+}
+
+.following button {
+  background: transparent;
+  border: 1px solid;
+  align-items: center;
+  text-align: center;
+}
+
+.saved-playlists-btn,
+.uploaded-songs-btn,
+.my-playlists-btn {
+  border: none;
+  position: relative;
+  /* border-bottom: 2px solid #faed26; */
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  padding: 0px;
+  outline: none;
+  stroke-linecap: round;
+}
+
+.my-playlists-btn:focus,
+.saved-playlists-btn:focus,
+.uploaded-songs-btn:focus {
+  outline: none;
+  background: transparent;
+}
+
+.playlist-container {
+  height:100%
+}
+
+.playlist-data-container{
+  height: 100%;
+  width: 100%;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 0px;
+}
+
+/* .add-new {
+  display: "flex"
+} */
+
+.add-btn {
+  background: white;
+  border: none;
+  margin-left: 90%;
+  margin-right: 50px;
+  margin-top: 20px
+}
+
+.add-btn:focus { 
+  outline: none
+
+}
+
+.new-playlist-box {
+  border: 1px solid lightgray;
+  height: 250px;
+  width: 400px;
+  position: absolute;
+  background: white;
+  top: 200px;
+  right: 3%;
+  border-radius: 15px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px
+}
+.delete-playlist-box {
+  border: 1px solid lightgray;
+  height: 250px;
+  width: 400px;
+  position: absolute;
+  background: white;
+  z-index: 2;
+  top: 65px;
+  right: 3%;
+  border-radius: 15px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px
+}
+
+.confirm-new-btn {
+  background: white;
+  border: none;
+  margin-right: 150px;
+  margin-top: 100px
+}
+
+.confirm-new-btn:focus { 
+  outline: none
+
+}
+
+.confirm-new-upload-btn {
+  background: white;
+  border: none;
+  margin-right: 150px;
+  margin-top: 30px
+}
+
+.confirm-new-upload-btn:focus { 
+  outline: none
+
+}
+.cancel-new-btn{
+  background: white;
+  border: none;
+  margin-left: 150px;
+}
+
+.cancel-new-btn:focus { 
+  outline: none
+
+}
+
+.cancel-new-upload-btn{
+  background: white;
+  border: none;
+  margin-left: 150px;
+}
+
+.cancel-new-upload-btn:focus { 
+  outline: none
+
+}

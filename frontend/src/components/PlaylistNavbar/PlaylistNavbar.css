@@ -1,0 +1,43 @@
+.playlist-nav {
+  /* height: 50px; */
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.playlist-nav-container {
+  background: transparent;
+  justify-content: left;
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+}
+
+.playlist-nav-img,
+.playlist-nav-back,
+.playlist-nav-play,
+.playlist-nav-forward {
+  background: transparent;
+  justify-self: start;
+}
+
+.progress {
+  width: 100%;
+  height: 3px;
+  background: black;
+  transition: width 0.1s linear;
+}
+
+.audio-container {
+  width: 50%;
+}
+
+.audio-bar-song-info {
+  margin-right: 10px;
+  margin-left: 5px
+}
+.audio-bar-song-artist{
+  font-size: 10px;
+}
+.audio-bar-song-name{
+  font-size: 15px;
+}

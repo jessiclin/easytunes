@@ -1,0 +1,46 @@
+.song-row {
+  height: 100px;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.song-row:after {
+  content: "";
+  width: 85%;
+  height: 1px;
+  background: lightgray;
+  position: absolute;
+  bottom: -4px;
+  right: -10px;
+  margin-left: 15%;
+}
+
+.play-btn {
+  background: transparent;
+  border: none;
+}
+.play-btn:focus {
+  outline: none;
+}
+
+.song-col {
+  display: inline-block;
+}
+
+.upbtn:hover {
+  cursor: pointer;
+}
+
+.upbtn {
+  margin-right: 1%;
+}
+
+.downbtn:hover {
+  cursor: pointer;
+}
+
+.downbtn {
+  margin-left: 1%;
+}
