@@ -12,10 +12,103 @@ class Comments extends Component {
         comments : this.props.comments
     }  
 
-    render() {
+    stateChange = (comment) => {
 
-        // Handles replying to a Comment ** Not implemented 
-        function ReplyButton(elem){
+        this.setState({comments : comment}, function () {
+            console.log(this.state.comments)
+        })
+    }
+
+    render() {
+        function ReplyButton(props){
+
+            const [buttonVisibility, setVisibility] = React.useState(false)
+            const [text, updateText] = React.useState("");
+
+            function onChange(event){
+                updateText(text => event.target.value)
+            }
+
+            function setVisible(){
+                setVisibility(buttonVisibility => true)
+            }
+
+            function setInvisible(){
+                setVisibility(buttonVisibility => false)
+            }
+
+            function handleCancel(){
+                updateText(text => "")
+                document.getElementById("comment-input").value = ""
+                setInvisible()
+            }
+
+            function handleSubmit(){
+                let requestBody = {
+                    query: `
+                    mutation {
+                        addReply(username:"${props.username}", message: "${text}", playlist_id: "${props.playlist_id}", comment_index: ${props.commentIndex}){
+
+                            comments {
+                                _id
+                                username 
+                                message 
+                                date 
+                                replies {
+                                    _id
+                                    username 
+                                    message
+                                }
+                            }
+                        }
+
+                    }
+                `
+                }
+
+                fetch("http://localhost:5000/graphql", {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: {
+                    'content-type': 'application/json'
+                    }})
+                .then(res => {
+                    if (res.status !== 200 && res.status !== 201) 
+                        throw new Error('Failed');
+                    return res.json()
+                })
+                .then(data => {
+                    setInvisible()
+                    props.stateChange(data.data.addReply.comments)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            }
+
+             
+
+            return (
+                <>
+                
+                {
+                    buttonVisibility ? 
+                    <>
+                        <textarea id = "comment-input" className="comment-text" type="text" placeholder="Add a Comment" onChange = {onChange}/>
+                         <button className = "comment-button" onClick ={handleSubmit}> REPLY </button>
+                         <button className = "comment-button" onClick = {handleCancel} style = {{color: "black", backgroundColor: "white", border:"none"}}> CANCEL </button>
+                         </>
+                    : 
+                    <button className = "reply-button" onClick = {setVisible}> REPLY </button>  
+                }
+                
+                </>
+            )
+        }
+
+
+        // Handles showing replies 
+        function ShowRepliesButton(elem){
             const [showReplyVisible, setVisibility] = React.useState(true);
             
             function toggleVisibility(){
@@ -87,12 +180,21 @@ class Comments extends Component {
             }
 
             function handleSubmit(){
-                console.log(props)
                 let requestBody = {
                     query: `
                     mutation {
                         addComment(playlist_id: "${props.playlist_id}", username : "${props.username}", comment: "${text}"){
-                            _id
+                        
+                            comments {
+                                _id
+                                username 
+                                message 
+                                date
+                                replies {
+                                    username 
+                                    message
+                                }
+                            }
                         }
                     }
                 `
@@ -109,14 +211,19 @@ class Comments extends Component {
                         throw new Error('Failed');
                     return res.json()
                 })
+                .then (data => {
+                    props.props.setState({comments : data.data.addComment.comments})
+                  //  props.stateChange({comments : data.data.addComment.comments})
+                    
+                })
                 .catch(err => {
                     console.log(err);
                 });
             }
 
-             
-
+        
             return (
+                
                 <>
                 <textarea id = "comment-input" className="comment-text" type="text" placeholder="Add a Comment" onChange = {onChange} onFocus = {setVisible} onBlur = {handleBlur}/>
                 {
@@ -139,6 +246,11 @@ class Comments extends Component {
                         {/* Username */}
                         <div className="row username-row">
                             {elem.username}
+                            { elem.username === this.props.username ?
+                                <button onClick={this.handleDelete.bind(this, i)} className="delete-button">Delete </button> 
+                                : null
+                            }
+                            
                         </div>
 
                         {/* Comment */}
@@ -148,27 +260,24 @@ class Comments extends Component {
                         
                         {/* Reply Button */}
                         <div className="row replies-row">
-                            <button onClick = {this.handleReply}> REPLY </button>  
-                            {elem.replies.length > 0 ? 
-                            <ReplyButton replies = {elem.replies}/> : null
-                            }
-                            
-                        </div>
+                            <ReplyButton commentIndex = {i} username = {this.props.username}  playlist_id = {this.props.playlist_id} stateChange = {this.stateChange}/>
 
-                        <div className="row delete-row">
-                            <button onClick={this.handleDelete.bind(this, i)} className="btn red right ">Delete </button>  
-                            
+                        </div>
+                        <div className="row replies-row">
+
+                            {elem.replies.length > 0 ? 
+                            <ShowRepliesButton replies = {elem.replies}/> : null
+                            }
                         </div>
 
                     </div>
             )
         }, this)
-        console.log(this.props.comments)
         return (
             <>
                 <div className="container comments-container">
                     <div className="row">
-                    <Comment playlist_id = {this.props.playlist_id} username = {this.props.username} />
+                    <Comment playlist_id = {this.props.playlist_id} username = {this.props.username} props = {this}/>
                     </div>
                     
                     {comments}
@@ -180,14 +289,14 @@ class Comments extends Component {
 
     handleDelete = (index, e) => {
         const comments = Object.assign([], this.state.comments);
-        //console.log("hi")
-        //console.log(comments)
+
         comments.splice(index, 1);
         let requestBody = {
             query : `
                 mutation {
                     deleteComment(playlist_id: "${this.props.playlist_id}", username: "${this.props.username}", index: ${index}) {
                         comments {
+                            _id
                             username
                             message
                             replies {
@@ -213,7 +322,7 @@ class Comments extends Component {
             return res.json()
         })
         .then(data => {
-            this.setState({comments:comments})
+            this.setState({comments:data.data.deleteComment.comments})
 
         })
         .catch(err => {
