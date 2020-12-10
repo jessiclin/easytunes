@@ -461,7 +461,6 @@ const resolver = {
         }
     },
     addComment: async({playlist_id, username, comment}) => {
-        console.log("HERE")
         try {
             let user = await User.findOne({username: username})
             let playlist = await Playlist.findOne({_id : playlist_id})
@@ -509,7 +508,7 @@ const resolver = {
                     {
                         username: new_username
                     },{useFindAndModify: false, new: true})
-          
+                await Playlist.updateMany({username : username} , { "$set":{username: new_username}})
                 return {...user._doc}
             }
 
@@ -536,13 +535,11 @@ const resolver = {
             let playlist = await Playlist.findOne({_id : playlist_id})
             if (playlist.comments[index].username == username)
                 playlist.comments.splice(index,1)
-            playlist.save()
-            console.log("hi")
-            console.log(...playlist._doc)
+    
             return {...playlist._doc}
         }
         catch(error) {
-
+            console.log(error)
         }
     },
     changeSavedPlaylistPrivacyDef: async ({_id, def}) => {
@@ -613,7 +610,35 @@ const resolver = {
         }catch(error){
             console.log(error)
         }
-    }
+    },
+    addReply: async ({username, message, playlist_id, comment_index}) => {
+            try{
+                console.log(
+                    "HERE"
+                )
+                let playlist = await Playlist.findOne({_id : playlist_id})
+                let user = await User.findOne({username: username})
+    
+                console.log(playlist.comments[comment_index]._id)
+                playlist = await Playlist.findOneAndUpdate({_id : playlist_id}, 
+                    { $push: {"comments.$[index].replies" : {
+                        user_id: user._id,
+                        username: username,
+                        message: message,
+                        date: new Date() }}},
+                    {arrayFilters: [{"index._id" : playlist.comments[comment_index]._id}], useFindAndModify: false, new:true}
+                )
+    
+    
+                console.log(playlist.comments[comment_index].replies)
+                return {...playlist._doc}
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        }
+
+
 }
 
 export default resolver
