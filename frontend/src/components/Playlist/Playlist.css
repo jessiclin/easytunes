@@ -132,3 +132,28 @@
   outline: none
 
 }
+
+.reply-button{
+  background: transparent;
+  border:none;
+  border-bottom: 1px solid
+}
+
+.reply-button:focus {
+  outline:none;
+  border:none;
+  border-bottom: 1px solid
+}
+
+.delete-button {
+  background: transparent;
+  border:none;
+  border-bottom: 1px solid;
+  margin-left: 20px;
+}
+
+.delete-button:focus {
+  outline:none;
+  border:none;
+  border-bottom: 1px solid
+}
