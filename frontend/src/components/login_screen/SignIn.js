@@ -26,6 +26,11 @@ class SignIn extends Component {
 
     }
 
+    componentDidMount = () => {
+        if (this.props.username)
+            this.props.history.push('/home')
+    }
+
     handleSignIn = async (event) => {
         event.preventDefault();
         const email = this.emailEl.current.value.toLowerCase();
@@ -68,8 +73,27 @@ class SignIn extends Component {
 
                                     this.onUsernameChange(this.username)
                                     localStorage.setItem("username", this.username);
-                                    console.log(localStorage.getItem("username"))
-                                    this.toHome()
+                                   // console.log(localStorage.getItem("username"))
+                                    fetch('http://localhost:5000/authorization', {
+                                        method: 'POST',
+                        
+                                        headers: {
+                                            'content-type': 'application/json'
+                                        }
+                                        })
+                                        .then(res => {
+                                            if (res.status !== 200 && res.status !== 201) 
+                                                throw new Error('Playlist not found');
+                                            return res.json()
+                                        })
+                                        .then(data => {
+                                            console.log(data)
+                                            window.location.replace(data)
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                        });
+                                  //  this.toHome()
                                 })
                                 .catch(err => {
                                     console.log(err);

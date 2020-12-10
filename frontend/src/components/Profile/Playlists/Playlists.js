@@ -28,7 +28,19 @@ class Playlists extends Component {
         let playlists = this.state.playlists.map(function(playlist) {
             
             return (
-                <PlaylistButton playlist = {playlist} key = {playlist._id} username = {this.state.user.username} setPlaylists = {this.setPlaylists}sessionUser = {this.state.sessionUser}  editing={this.props.editing} history = {this.props.history}/>
+                <PlaylistButton 
+                    playlist = {playlist} 
+                    key = {playlist._id} 
+                    username = {this.state.user.username} 
+                    setPlaylists = {this.setPlaylists} 
+                    sessionUser = {this.state.sessionUser}  
+                    editing={this.props.editing} 
+                    history = {this.props.history} 
+                    play = {this.props.play} 
+                    onPlayChange = {this.props.onPlayChange}
+                    onPlaylistChange = {this.props.onPlaylistChange}
+                    current_playlist = {this.props.current_playlist}
+                />
             )
         }, this)
         return (

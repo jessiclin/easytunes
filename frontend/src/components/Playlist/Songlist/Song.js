@@ -47,6 +47,20 @@ class Song extends Component {
         this.handleMoveDown(this.state.song, this.props.index)
     }
 
+    handlePlay = async () => {
+        let accessToken = await fetch('http://localhost:5000/access-token')
+                                .then(res => {
+                                    if (res.status !== 200 && res.status !== 201)
+                                        throw new Error("Access token not found")
+                                    return res.json()
+                                })
+                                .then(data => {
+                                    console.log(data)
+                                })
+                                .catch(error => {
+                                    console.log(error)
+                                })
+    }
     render() { 
         return (  
             <div className="row song-row">
@@ -55,7 +69,7 @@ class Song extends Component {
             </div>
             <div className="col song-col text-left">
             <button className="play-btn" onClick = {this.handlePlayClick}>
-                <FaRegPlayCircle size= {24}/>
+                <FaRegPlayCircle onClick = {this.handlePlay} size= {24}/>
             </button>
             </div>
             <div className="col song-col text-left">

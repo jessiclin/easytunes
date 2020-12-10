@@ -22,6 +22,9 @@ class FollowingPage extends Component {
 
     // Gets the user 
     componentDidMount =() => {
+        if (!this.props.username)
+            this.props.history.push('/login')
+            
         this.setState({loading: true})
         let requestBody = {
             query: `
@@ -120,8 +123,7 @@ class FollowingPage extends Component {
             <>
                 <div className="container-fluid followers-container">
                     {/* Home Button, Username, Account Icon */}
-                    
-                    <HeaderNavbar  props = {this.props}/>
+
                     <div className="container-fluid follow-data-container">
                         {/* Information Bar about the user */}
                         <div className="information-row">

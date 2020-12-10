@@ -147,6 +147,8 @@ class SearchScreen extends Component {
 
     // Handles the search page when the user first enters 
     componentDidMount = () => {
+        if (!this.props.username)
+            this.props.history.push('/login')
         if (!this.state.loading){
             this.setState({loading: true})
             const type = this.state.searchType;
@@ -168,12 +170,14 @@ class SearchScreen extends Component {
     }
 
     render() {
+        
+            
         if (this.state.loading)
             return (<> </>)
 
         return (
             <>
-            <HeaderNavbar props = {this.props}/>
+
             <div className="container navy search-results-container" style={{paddingBotton: "50px"}}>
                 <div className="row">
                     <h2 className="col s1">Results</h2>

@@ -20,6 +20,11 @@ class SignUp extends Component {
     state = {
         errorMess : null
     }
+
+    componentDidMount = () => {
+        if (this.props.username)
+            this.props.history.push('/home')
+    }
     setErrmess = (err) => {
         this.setState({errorMess : err})
     }
@@ -99,6 +104,7 @@ class SignUp extends Component {
             
         }
     render() { 
+        
         return (
             <div>
                 {/* Sign Up components */}
