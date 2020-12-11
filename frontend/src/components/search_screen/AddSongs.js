@@ -94,6 +94,7 @@ class AddSong extends Component {
             })
             .then(data => {
                 console.log(data)
+                this.changeVisible()
                 // this.setState({playlists : data.data.getUserByUsername.playlists, loading: false})
             })
             .catch(error => {
