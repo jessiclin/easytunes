@@ -21,7 +21,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.4",
     "react-spotify-player": "^1.0.4",
-    "react-spotify-web-playback": "^0.8.0",
+    "react-spotify-web-playback": "^0.8.1",
+    "spotify-url-info": "^2.2.0",
     "spotify-web-api-js": "^1.5.1",
     "spotify-web-api-node": "^5.0.0"
   },

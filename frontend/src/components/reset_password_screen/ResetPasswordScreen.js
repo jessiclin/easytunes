@@ -9,14 +9,58 @@ import "./ResetPasswordScreen.css";
 
 
 class Reset extends Component {
-    state = {  }
+    constructor() {
+        super()
+        this.emailR = React.createRef();
+    } 
+    state = { 
+        sent : false,
+        errorMess : null
+    }
     
     element = (id) => {
         return document.getElementById(id)
     }
 
-    handleReset = () =>{
-        console.log(this.element('email'))
+    handleReset = () => {
+        const email = this.emailR.current.value.toLowerCase();
+        const password = Math.floor(Math.random() * (99999999 - 10000000) + 10000000)
+        console.log(password)
+
+        if (email.trim().length === 0)
+            return;
+
+        let requestBody = {
+            query: `
+              mutation {
+                resetPassword(email: "${email}", new_password: "${password}") {
+                  _id
+                }
+              }
+            `
+          };
+
+        fetch('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+            'content-type': 'application/json'
+            }})
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) {
+                    throw new Error('post error')
+                }
+                if (res.err) {
+                    
+                }
+                this.setState({errorMess : null})
+                this.setState({sent : true})
+                return res.json()
+            })
+            .catch(err => {
+                this.setState({errorMess : err.message})
+                console.log(err);
+            });
     }
 
     render() { 
@@ -34,15 +78,14 @@ class Reset extends Component {
 
                     <div className="row justify-content-center">
                         <div className="col-sm-12 cred">        
-                            Plase the email to your email to your account
-                            <div className="input-group">
-                                <input className = "input" id = "email" type="text" required/>
-                                <label className = "label">Email</label>
+                            Please enter your email address.
+                            <div class="error-message-reset">
+                                {this.state.errorMess}
                             </div>
-                            <Link to="/" className="login">
-                                Sign In
-                            </Link>
-                            
+                            <div className="input-group">
+                                <input className="input" id="email" type="text" ref={this.emailR} required/>
+                                <label className="label">Email</label>
+                            </div>    
                         </div>
                     </div>
 
@@ -50,6 +93,9 @@ class Reset extends Component {
                         <div className="col-sm-12 text-center align-self-center login-col">
                             <button onClick = {this.handleReset}> Reset Password</button>
                         </div>
+                        <Link to="/login" className="login">
+                                Cancel
+                        </Link>
                     </div>
                 </div>
             </div>

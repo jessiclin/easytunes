@@ -34,23 +34,16 @@ class SearchListCard extends Component {
 
 
     renderArtist(){
-        let genres = ""
-     
-            this.state.item.genres.forEach(genre => {
-                genres = genres + genre + ", "
-            })
-
-        genres = genres.substring(0, genres.length - 2)
         return(
             <div>
                 <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{this.state.item.name}</span>
+                        {this.state.item.images[0] ? <img src={this.state.item.images[0].url} class="artist_picture"></img> : <img src='https://cdn3.iconfinder.com/data/icons/social-media-circle-flat-1/1024/itunes-01-01-512.png' class="artist_picture"></img>}
                     </div>
                     <div className='card-content col s3'>
-                        <span className='card-title'>{genres}</span>
+                        <span className='card-title'>{this.state.item.name}</span>
                     </div>
-
+                    
                     <div className='card-content col s3'>
                         {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
                         

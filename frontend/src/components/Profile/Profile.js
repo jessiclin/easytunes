@@ -29,9 +29,13 @@ class Profile extends Component {
 
     // Get the user information and their playlists 
     componentDidMount = () => {
+
+        if (!this.props.username)
+            this.props.history.push('/login')
+
         this.setState({loading : true})
         const username = this.state.profileUsername
-        console.log(username)
+
         let requestBody = {
             query: `
                 query {
@@ -59,7 +63,9 @@ class Profile extends Component {
                             total_duration 
                             songs {
                                 song_id
+                                song_uri
                                 name
+                                artists
                             }
                         }
 
@@ -74,7 +80,6 @@ class Profile extends Component {
                 'content-type': 'application/json'
             }})
             .then(res => {
-                console.log(res)
                 if (res.status !== 200 && res.status !== 201)
                     throw new Error ('Failed')
                 return res.json()
@@ -100,14 +105,15 @@ class Profile extends Component {
     }
     
     render() { 
+
+
         if (this.state.loading)
             return (<> </>);
-
+            
         return ( 
-        
+            
             <div className="container-fluid playlist-container">
-                {/* Home Button, Username, Account Icon */}
-                <HeaderNavbar  props = {this.props}/>
+
                 <div className="container-fluid playlist-data-container">
                     {/* Information Bar about the user */}
                     <div className="information-row">
@@ -141,16 +147,27 @@ class Profile extends Component {
                             <button id = "saved-playlists-btn" className = "saved-playlists-btn" onClick = {this.changeView}> Saved Playlists </button>
                         </div>
                         
-                        <div className="col">
+                        {/* <div className="col">
                         <button id = "uploaded-songs-btn" className = "uploaded-songs-btn" onClick = {this.changeView}> Uploaded Songs </button>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
                     {this.state.showSavedPlaylists ? <SavedPlaylists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history} /> : null}
-                    {this.state.showMyPlaylists ?  <Playlists playlists = {this.state.profilePlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history}/> : null}
-                    {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
+                    {this.state.showMyPlaylists ?  
+                        <Playlists playlists = {this.state.profilePlaylists} 
+                                user = {this.state.profileUserInfo} 
+                                sessionUser = {this.props.username} 
+                                history = {this.props.history} 
+                                play = {this.props.play} 
+                                onPlayChange = {this.props.onPlayChange}
+                                onPlaylistChange = {this.props.onPlaylistChange}
+                                current_playlist = {this.props.current_playlist}
+                        /> : null}
+                    {/* {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null} */}
+                    <div className = "row blank-space"> </div>
                 </div>
+                
                 {/* <PlaylistNavbar/> */}
             </div>
                     
@@ -181,7 +198,7 @@ class Profile extends Component {
                 showMyPlaylists: true,
                 showUploadedSongs: false,
             })
-            invisible.push("uploaded-songs-btn")
+          //  invisible.push("uploaded-songs-btn")
             invisible.push("saved-playlists-btn")
         }
         else if (visible === "saved-playlists-btn"){
@@ -191,7 +208,7 @@ class Profile extends Component {
                 showUploadedSongs: false,
             })
 
-            invisible.push("uploaded-songs-btn")
+         //   invisible.push("uploaded-songs-btn")
             invisible.push("my-playlists-btn")
         }
         else {
@@ -205,10 +222,10 @@ class Profile extends Component {
 
         }
         document.getElementById(invisible[0]).style.borderBottom = "none";
-        document.getElementById(invisible[1]).style.borderBottom= "none"
+     //   document.getElementById(invisible[1]).style.borderBottom= "none"
         document.getElementById(visible).style.borderBottom = "2px solid #faed26";
         document.getElementById(invisible[0]).style.fontWeight = "normal"
-        document.getElementById(invisible[1]).style.fontWeight = "normal"
+       // document.getElementById(invisible[1]).style.fontWeight = "normal"
         document.getElementById(visible).style.fontWeight = "bold"
     }
     
