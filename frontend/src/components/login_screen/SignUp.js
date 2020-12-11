@@ -95,7 +95,26 @@ class SignUp extends Component {
     
                                         this.onUsernameChange(this.state.username)
                                         localStorage.setItem("username", this.state.username);
-                                        this.toHome()
+                                        fetch('http://localhost:5000/authorization', {
+                                            method: 'POST',
+                            
+                                            headers: {
+                                                'content-type': 'application/json'
+                                            }
+                                            })
+                                            .then(res => {
+                                                if (res.status !== 200 && res.status !== 201) 
+                                                    throw new Error('Playlist not found');
+                                                return res.json()
+                                            })
+                                            .then(data => {
+                                                console.log(data)
+                                                window.location.replace(data)
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
+                                   
                                     })
                                     .catch(err => {
                                         console.log(err);
