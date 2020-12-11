@@ -179,7 +179,7 @@ class PlaylistButton extends Component {
         // If changing playlist 
         else {
             console.log("Change playlist")
-            this.props.onPlaylistChange(this.state.playlist, this.state.playlist.songs[0])
+            this.props.onPlaylistChange(this.state.playlist)
         }
             
     }

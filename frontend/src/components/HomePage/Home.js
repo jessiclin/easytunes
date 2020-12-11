@@ -6,10 +6,14 @@ import React, { Component } from 'react'
 
 class Home extends Component {
   state = {  }
+
+  componentDidMount = () => {
+if (this.props.username){
+      this.props.history.push('/home')
+    }
+  }
   render() { 
-    // if (this.props.username){
-    //   this.props.history.push('/home')
-    // }
+    
     
     return (  
           <>

@@ -146,9 +146,9 @@ class Profile extends Component {
                             <button id = "saved-playlists-btn" className = "saved-playlists-btn" onClick = {this.changeView}> Saved Playlists </button>
                         </div>
                         
-                        <div className="col">
+                        {/* <div className="col">
                         <button id = "uploaded-songs-btn" className = "uploaded-songs-btn" onClick = {this.changeView}> Uploaded Songs </button>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
@@ -163,8 +163,10 @@ class Profile extends Component {
                                 onPlaylistChange = {this.props.onPlaylistChange}
                                 current_playlist = {this.props.current_playlist}
                         /> : null}
-                    {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null}
+                    {/* {this.state.showUploadedSongs ? <UploadedSongs user = {this.state.profileUserInfo} sessionUser = {this.props.username}/> : null} */}
+                    <div className = "row blank-space"> </div>
                 </div>
+                
                 {/* <PlaylistNavbar/> */}
             </div>
                     
@@ -195,7 +197,7 @@ class Profile extends Component {
                 showMyPlaylists: true,
                 showUploadedSongs: false,
             })
-            invisible.push("uploaded-songs-btn")
+          //  invisible.push("uploaded-songs-btn")
             invisible.push("saved-playlists-btn")
         }
         else if (visible === "saved-playlists-btn"){
@@ -205,7 +207,7 @@ class Profile extends Component {
                 showUploadedSongs: false,
             })
 
-            invisible.push("uploaded-songs-btn")
+         //   invisible.push("uploaded-songs-btn")
             invisible.push("my-playlists-btn")
         }
         else {
@@ -219,10 +221,10 @@ class Profile extends Component {
 
         }
         document.getElementById(invisible[0]).style.borderBottom = "none";
-        document.getElementById(invisible[1]).style.borderBottom= "none"
+     //   document.getElementById(invisible[1]).style.borderBottom= "none"
         document.getElementById(visible).style.borderBottom = "2px solid #faed26";
         document.getElementById(invisible[0]).style.fontWeight = "normal"
-        document.getElementById(invisible[1]).style.fontWeight = "normal"
+       // document.getElementById(invisible[1]).style.fontWeight = "normal"
         document.getElementById(visible).style.fontWeight = "bold"
     }
     

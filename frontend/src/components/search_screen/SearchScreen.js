@@ -183,6 +183,7 @@ class SearchScreen extends Component {
                     <h2 className="col s1">Results</h2>
                 </div>
                 <SearchList searchList={this.state.searchResults} username={this.state.username} history = {this.props.history}/>
+                <div className = "row blank-space"> </div>
             </div> 
             {/* <PlaylistNavbar/> */}
             </>

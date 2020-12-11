@@ -27,7 +27,8 @@ class App extends Component {
       current_song: null,
       access_token: null,
       uris: [],
-      offset: 0
+      offset: 0,
+      shuffle: false 
     }
 
   }
@@ -58,25 +59,69 @@ class App extends Component {
     this.setState({play: play}, function() {console.log(this.state)})
   }
 
-  onSongChange = (song_id, offset) => {
+  onSongChange = (song_id) => {
     let s = null
-
-    this.state.current_playlist.songs.forEach(song => {
-      if (song.song_id === song_id)
-        s = song 
+    let offset = 0
+    this.state.current_playlist.songs.forEach((song,i) => {
+      if (song.song_id === song_id){
+        s = song
+        offset = i
+      }
+         
     })
-    console.log(s)
+    
     this.setState({current_song: s, play: true, offset:offset}, function() {console.log(this.state)})
   }
 
-  onPlaylistChange = (playlist, song, offset) => {
+  shufflePlaylist = (uris, playlist) => {
+    var currentIndex = uris.length, temporaryValue, randomIndex;
+    let song = null
+
+      while (currentIndex > 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = uris[currentIndex];
+        uris[currentIndex] = uris[randomIndex];
+        uris[randomIndex] = temporaryValue;
+      }
+      console.log(uris[0])
+      playlist.songs.forEach(s => {
+        console.log(s.song_uri)
+        if (s.song_uri === uris[0])
+          song = s
+      })
+    console.log([uris, song])
+    return [uris, song]
+  }
+
+  onPlaylistChange = (playlist) => {
     let uris = []
-    if (playlist)
-      uris = playlist.songs.map(song => {
+    let offset = 0
+    let result = [uris, playlist.songs[0]]
+    if (playlist){
+      uris = playlist.songs.map((song,i) => {
         return song.song_uri
       })
-    this.setState({current_playlist : playlist, play : true, uris: uris, current_song: song, offset: offset}, function() {console.log(this.state)})
+      result[0] = uris
+
+    if (this.state.shuffle){
+      result = this.shufflePlaylist(uris, playlist)
+    }
   }
+
+    console.log(uris)
+    this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0}, function() {console.log(this.state)})
+  }
+
+  onShuffleChange = () => {
+    let uris = this.state.uris 
+    if (this.state.shuffle){
+      uris = this.state.current_playlist.songs.map (song => {return song.song_uri})
+    }
+    this.setState({shuffle: !this.state.shuffle, uris: uris})
+  }
+
   onUsernameChange = (username) => {
     this.setState({username: username})
   }
@@ -156,6 +201,7 @@ class App extends Component {
                   onSongChange = {this.onSongChange}
                   current_playlist = {this.state.current_playlist}
                   current_song = {this.state.current_song}
+                  shuffle= {this.shuffle}
                 />
               )}
             /> 
@@ -174,6 +220,7 @@ class App extends Component {
                   onPlayChange = {this.onPlayChange} 
                   onPlaylistChange = {this.onPlaylistChange}
                   current_playlist = {this.state.current_playlist}
+                  shuffle= {this.shuffle}
                 />
               )}
             />
@@ -184,6 +231,8 @@ class App extends Component {
             {/* <Route path='/:any' component={HomeScreen} /> */}
           </Switch>
           {this.state.username ? 
+          <>
+          
             <Route render = {(props) => 
               <PlaylistNavbar {...props} 
                           username= {this.state.username} 
@@ -191,12 +240,18 @@ class App extends Component {
                             onPlayChange = {this.onPlayChange} 
                             onPlaylistChange = {this.onPlaylistChange}
                             onSongChange = {this.onSongChange}
+                            onShuffleChange = {this.onShuffleChange}
                             playlist = {this.state.uris}
                             current_song = {this.state.current_song}
                             access_token = {this.state.access_token}
                             offset = {this.state.offset}
+                            shuffle= {this.state.shuffle}
+                            shufflePlaylist = {this.shufflePlaylist}
+
               />   
+            
             }/>
+            </>
         :  null}
 
 

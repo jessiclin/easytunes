@@ -370,6 +370,7 @@ class Playlist extends Component {
                         : null}
                         {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments} username = {this.props.username} playlist_id = {this.state.playlistId}  /> : null}
                         {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} editing= {this.state.editing} onChange = {this.onChange}/> : null}
+                        <div className = "row blank-space"> </div>
                     </div>
   
                 </div>
