@@ -18,6 +18,26 @@ class PlaylistNavbar extends Component {
       // this.props.onPlayChange()
       console.log(type)
       console.log(state)
+      if (type === "track_update")
+        this.props.onSongChange(state.track.id)
+
+      let uris = []
+      state.previousTracks.forEach(track => {
+        uris.push(track.uri)
+      })
+      uris.push(state.track.uri)
+      state.nextTracks.forEach(track => {
+        uris.push(track.uri)
+      })
+      
+      let equal = true 
+      for (let i = 0; i < uris.length; i++)
+        if (uris[i] !== this.props.playlist[i])
+          equal = false 
+
+      if (type === "player_update" && !equal)
+        console.log("Change Playlist")
+
       this.props.onPlayChange(state.isPlaying)
     }
     render() {     
