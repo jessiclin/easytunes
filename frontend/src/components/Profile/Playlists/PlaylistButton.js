@@ -80,7 +80,9 @@ class PlaylistButton extends Component {
                                 total_duration
                                 songs {
                                     song_id
+                                    song_uri
                                     name
+                                    artists
                                 }
                             }
                         }
