@@ -57,13 +57,22 @@ class App extends Component {
     this.setState({play: play})
   }
 
-  onPlaylistChange = (playlist) => {
+  onSongChange = (song_id) => {
+    let s = null
+    this.state.current_playlist.songs.forEach(song => {
+      if (song.song_id === song_id)
+        s = song 
+    })
+    this.setState({current_song: s}, function() {console.log(this.state)})
+  }
+
+  onPlaylistChange = (playlist, song) => {
     let uris = []
     if (playlist)
       uris = playlist.songs.map(song => {
         return song.song_uri
       })
-    this.setState({current_playlist : playlist, play : true, uris: uris})
+    this.setState({current_playlist : playlist, play : true, uris: uris, current_song: song}, function() {console.log(this.state)})
   }
   onUsernameChange = (username) => {
     this.setState({username: username})
@@ -136,7 +145,15 @@ class App extends Component {
 
             <Route exact path='/:username/playlist=:playlistid'
               render = {(props) => (
-                <Playlist {...props} username = {this.state.username}/>
+                <Playlist {...props} 
+                  username = {this.state.username}
+                  play = {this.state.play}
+                  onPlayChange = {this.onPlayChange}
+                  onPlaylistChange = {this.onPlaylistChange}
+                  onSongChange = {this.onSongChange}
+                  current_playlist = {this.state.current_playlist}
+                  current_song = {this.state.current_song}
+                />
               )}
             /> 
 
@@ -170,7 +187,9 @@ class App extends Component {
                             play = {this.state.play} 
                             onPlayChange = {this.onPlayChange} 
                             onPlaylistChange = {this.onPlaylistChange}
+                            onSongChange = {this.onSongChange}
                             playlist = {this.state.uris}
+                            current_song = {this.state.current_song}
                             access_token = {this.state.access_token}
               />   
             }/>

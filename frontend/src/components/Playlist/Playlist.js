@@ -356,7 +356,18 @@ class Playlist extends Component {
                         }
 
                         {/* Render "Songs", "Comments", "Settings" */}
-                        {this.state.songsVisible ? <Songlist playlist_id = {this.state.playlistId} songs = {this.state.playlistInfo.songs} editing= {this.state.editing}/> : null}
+                        {this.state.songsVisible ? <Songlist 
+                                                        playlist_id = {this.state.playlistId} 
+                                                        songs = {this.state.playlistInfo.songs} 
+                                                        editing= {this.state.editing}
+                                                        play = {this.props.play}
+                                                        onPlayChange = {this.props.onPlayChange}
+                                                        onPlaylistChange = {this.props.onPlaylistChange}
+                                                        onSongChange = {this.props.onSongChange}
+                                                        current_playlist = {this.props.current_playlist}
+                                                        current_song = {this.props.current_song}
+                                                    /> 
+                        : null}
                         {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments} username = {this.props.username} playlist_id = {this.state.playlistId}  /> : null}
                         {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} editing= {this.state.editing} onChange = {this.onChange}/> : null}
                     </div>

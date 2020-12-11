@@ -53,8 +53,22 @@ class Songlist extends Component {
     render() {
         let songs = this.state.songs.map(function(song, i){
             return (
-                <Song  key = {song.name + song.song_id} song={song} index={i} editing={this.state.editing} 
-                    playlist_id = {this.state.playlist_id} removeSong={this.removeSong} handleMoveUp={this.handleMoveUp} handleMoveDown={this.handleMoveDown} playlist_length={this.props.songs.length}/>
+                <Song  key = {song.name + song.song_id} 
+                    song={song} 
+                    index={i}
+                    editing={this.state.editing} 
+                    playlist_id = {this.state.playlist_id} 
+                    removeSong={this.removeSong} 
+                    handleMoveUp={this.handleMoveUp} 
+                    handleMoveDown={this.handleMoveDown} 
+                    playlist_length={this.props.songs.length}
+                    play = {this.props.play}
+                    onPlayChange = {this.props.onPlayChange}
+                    onPlaylistChange = {this.props.onPlaylistChange}
+                    onSongChange = {this.props.onSongChange}
+                    current_playlist = {this.props.current_playlist}
+                    current_song = {this.props.current_song}
+                />
             );
         }, this)
 

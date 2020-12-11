@@ -177,8 +177,11 @@ class PlaylistButton extends Component {
         if (this.props.current_playlist !== null && this.props.current_playlist.name === this.state.playlist.name)
             this.props.onPlayChange(!this.props.play) 
         // If changing playlist 
-        else 
-            this.props.onPlaylistChange(this.state.playlist)
+        else {
+            console.log("Change playlist")
+            this.props.onPlaylistChange(this.state.playlist, this.state.playlist.songs[0])
+        }
+            
     }
 }
  
