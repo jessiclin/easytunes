@@ -3,6 +3,7 @@ import {buildSchema} from 'graphql'
 const schema = buildSchema (`
 type SongRef {
     song_id: String!
+    song_uri: String!
     name: String!
     artists: [String!]!
     uploaded: Boolean!
@@ -95,6 +96,7 @@ input UserInput {
 
 input SongInput {
     _id: String!
+    uri: String!
     name: String!
     artists: String!
     uploaded: Boolean!
@@ -118,7 +120,6 @@ type RootQuery {
     login(email: String!, password: String!) : AuthData!
     getUserPlaylists(username: String!) : [Playlist!]!
     getPlaylistByID(id : ID!) : Playlist
-    
 }
 
 type RootMutation {
@@ -149,7 +150,9 @@ type RootMutation {
     changePlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
     changeVerifyFollowDef(_id: ID!, def: Boolean!): User 
     like_unlikePlaylist(username: String!, playlist_id: ID!, playlist_name: String!): User
+    resetPassword(email: String!, new_password: String!): User
     addReply(username: String!, message: String!, playlist_id: ID!, comment_index: Int!): Playlist
+    editComment(username: String!, message: String!, playlist_id: ID!, comment_index: Int!): Playlist
 }
 
 schema {
