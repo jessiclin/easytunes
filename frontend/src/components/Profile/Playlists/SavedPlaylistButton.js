@@ -9,7 +9,7 @@ import {AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import {RiPlayListLine} from 'react-icons/ri'
 import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 // FaRegPauseCircle
-import {FaRegPlayCircle} from 'react-icons/fa'
+import {FaRegPlayCircle,FaRegPauseCircle} from 'react-icons/fa'
 class SavedPlaylistButton extends Component {
     constructor(props){
         super(props);
@@ -39,6 +39,7 @@ class SavedPlaylistButton extends Component {
                         songs {
                             song_id
                             name
+                            song_uri
                         }
                             username
                             likes
@@ -46,6 +47,7 @@ class SavedPlaylistButton extends Component {
                             songs {
                                 song_id
                                 name
+                                song_uri
                             }
                     }
                 }
@@ -164,6 +166,8 @@ class SavedPlaylistButton extends Component {
         if (playlist == null) {
             return(<> </>)
         }
+        console.log(playlist)
+        console.log(this.props)
         return (
             <div className="playlist-row">
                 <div className="col">
@@ -190,7 +194,17 @@ class SavedPlaylistButton extends Component {
                 <button className="playlist-btn" id={playlist.playlist_id} onClick = {this.toPlaylist}/>
                 
                 <button className="play-btn">
-                    <FaRegPlayCircle size = {30}/>
+                { playlist.songs.length > 0 ?
+                        <>
+                        { this.props.play && this.props.current_playlist.name === playlist.name? 
+                            <FaRegPauseCircle onClick = {this.handlePlay} size = {30}/>
+                            : <FaRegPlayCircle onClick = {this.handlePlay} size = {30}/>
+                        }
+                    </>
+                        : null
+                    }
+
+                   
                 </button>
 
                 {
@@ -212,6 +226,18 @@ class SavedPlaylistButton extends Component {
                 : null }
             </div>
         );
+    }
+
+    handlePlay = async () => {
+        // If pausing current playlist 
+        if (this.props.current_playlist !== null && this.props.current_playlist.name === this.state.playlist.name)
+            this.props.onPlayChange(!this.props.play) 
+        // If changing playlist 
+        else {
+            console.log("Change playlist")
+            this.props.onPlaylistChange(this.state.playlist)
+        }
+            
     }
 }
  
