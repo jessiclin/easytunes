@@ -153,7 +153,15 @@ class Profile extends Component {
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
-                    {this.state.showSavedPlaylists ? <SavedPlaylists playlists = {this.state.profileSavedPlaylists} user = {this.state.profileUserInfo} sessionUser = {this.props.username} history = {this.props.history} /> : null}
+                    {this.state.showSavedPlaylists ? <SavedPlaylists 
+                        playlists = {this.state.profileSavedPlaylists} 
+                        user = {this.state.profileUserInfo} 
+                        sessionUser = {this.props.username} 
+                        history = {this.props.history}
+                        play = {this.props.play} 
+                        onPlayChange = {this.props.onPlayChange}
+                        onPlaylistChange = {this.props.onPlaylistChange}
+                        current_playlist = {this.props.current_playlist} /> : null}
                     {this.state.showMyPlaylists ?  
                         <Playlists playlists = {this.state.profilePlaylists} 
                                 user = {this.state.profileUserInfo} 

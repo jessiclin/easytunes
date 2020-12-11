@@ -40,6 +40,7 @@ class SavedPlaylistButton extends Component {
                             song_id
                             name
                             song_uri
+                            artists
                         }
                             username
                             likes
@@ -48,6 +49,7 @@ class SavedPlaylistButton extends Component {
                                 song_id
                                 name
                                 song_uri
+                                artists
                             }
                     }
                 }
