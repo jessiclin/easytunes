@@ -69,8 +69,8 @@ class Login extends Component {
                             <button className="to-signup-btn" onClick = {this.changeView} style={{borderLeft:"1px solid lightgray", borderBottom:"1px solid lightgray"} }> Sign Up</button>
                     </div>
 
-                    {this.state.loginVisible ? <SignIn onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome}/> : null}
-                    {this.state.signUpVisible ? <SignUp onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome}/> : null}
+                    {this.state.loginVisible ? <SignIn onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome} username = {this.props.username}/> : null}
+                    {this.state.signUpVisible ? <SignUp onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome} username = {this.props.username}/> : null}
                 </div>
             </div>
         );
