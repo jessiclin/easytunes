@@ -21,7 +21,6 @@ class PlaylistNavbar extends Component {
       if (type === "track_update"){          
         this.props.onSongChange(state.track.id)
       }
-       
      this.props.onPlayChange(state.isPlaying)
     }
 
@@ -30,7 +29,7 @@ class PlaylistNavbar extends Component {
     }
 
     render() {     
-
+      console.log(this.props.playlist)
         return ( 
             <>
                 <nav className="navbar fixed-bottom playlist-nav">
@@ -44,9 +43,9 @@ class PlaylistNavbar extends Component {
                           
                               play = {this.props.play}
                               offset = {this.props.offset}
-                              style = {{
+                              styles={{
                                 activeColor: '#fff',
-                                bgColor: 'black',
+                                bgColor: '#333',
                                 color: '#fff',
                                 loaderColor: '#fff',
                                 sliderColor: '#1cb954',
