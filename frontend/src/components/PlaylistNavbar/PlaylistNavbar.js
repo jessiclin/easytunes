@@ -40,6 +40,9 @@ class PlaylistNavbar extends Component {
                               token= {this.props.access_token}
                               callback = {this.handleCallback}
                               uris={this.props.playlist}
+
+                              magnifySliderOnHover = {true}
+                              showSaveIcon = {false}
                           
                               play = {this.props.play}
                               offset = {this.props.offset}
@@ -49,7 +52,7 @@ class PlaylistNavbar extends Component {
                                 color: '#fff',
                                 loaderColor: '#fff',
                                 sliderColor: '#1cb954',
-                                trackArtistColor: '#ccc',
+                                trackArtistColor: '#d9d9d9',
                                 trackNameColor: '#fff',
                               }}
                             />
