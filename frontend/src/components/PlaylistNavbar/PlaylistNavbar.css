@@ -1,7 +1,8 @@
 .playlist-nav {
   /* height: 50px; */
   height: 50px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: transparent;
+ 
 }
 
 .playlist-nav-container {
@@ -9,9 +10,11 @@
   justify-content: left;
   display: flex;
   padding: 0px;
+  padding-left: 50px;
+  padding-bottom: 20px;
   margin: 0px;
 }
-
+/* 
 .playlist-nav-img,
 .playlist-nav-back,
 .playlist-nav-play,
@@ -41,3 +44,9 @@
 .audio-bar-song-name{
   font-size: 15px;
 }
+
+.shuffle {
+  position: absolute;
+  right:100px;
+  z-index: 2;
+} */

@@ -18,31 +18,17 @@ class PlaylistNavbar extends Component {
 
       console.log(type)
       console.log(state)
-      if (type === "track_update")
+      if (type === "track_update"){          
         this.props.onSongChange(state.track.id)
-
-      let uris = []
-      state.previousTracks.forEach(track => {
-        uris.push(track.uri)
-      })
-      uris.push(state.track.uri)
-      state.nextTracks.forEach(track => {
-        uris.push(track.uri)
-      })
-      
-      let equal = true 
-      if (uris.length !== this.props.playlist.length)
-        equal = false 
-      else 
-        for (let i = 0; i < uris.length; i++)
-          if (uris[i] !== this.props.playlist[i])
-            equal = false 
-
-      if (type === "player_update" && !equal)
-        console.log("Change Playlist")
-
-      this.props.onPlayChange(state.isPlaying)
+      }
+       
+     this.props.onPlayChange(state.isPlaying)
     }
+
+    shuffle = () => {
+      this.props.onShuffleChange()
+    }
+
     render() {     
 
         return ( 
@@ -50,17 +36,28 @@ class PlaylistNavbar extends Component {
                 <nav className="navbar fixed-bottom playlist-nav">
                     <div className="container playlist-nav-container">
                       {this.props.access_token &&
-                      
+                              
                             <SpotifyPlayer
                               token= {this.props.access_token}
                               callback = {this.handleCallback}
                               uris={this.props.playlist}
-                              style = {{width: "100%"}}
+                          
                               play = {this.props.play}
                               offset = {this.props.offset}
-                        />
+                              style = {{
+                                activeColor: '#fff',
+                                bgColor: 'black',
+                                color: '#fff',
+                                loaderColor: '#fff',
+                                sliderColor: '#1cb954',
+                                trackArtistColor: '#ccc',
+                                trackNameColor: '#fff',
+                              }}
+                            />
+                            
+                          
                       }
-                    
+                    {/* <button className="shuffle" onClick = {this.shuffle}> Shuffle </button>  */}
                     </div>
                 </nav>
             </>
