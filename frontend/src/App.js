@@ -35,6 +35,27 @@ class App extends Component {
 
   componentDidMount = async () => {
     this.getAccesstoken()
+    // if (!this.state.access_token)
+    //   fetch('http://localhost:5000/authorization', {
+    //     method: 'POST',
+
+    //     headers: {
+    //         'content-type': 'application/json'
+    //     }
+    //     })
+    //     .then(res => {
+    //         if (res.status !== 200 && res.status !== 201) 
+    //             throw new Error('Playlist not found');
+    //         return res.json()
+    //     })
+    //     .then(data => {
+    //         console.log(data)
+    //         window.location.replace(data)
+    //         this.getAccesstoken()
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
   }
   getAccesstoken = async () => {
     return await fetch('http://localhost:5000/access-token', {
