@@ -26,3 +26,9 @@
 .user-follow-info button:focus, .user-button button:focus, .playlist-button button:focus {
     outline: none
 }
+
+.artist_picture {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+}
