@@ -50,7 +50,7 @@ class Song extends Component {
     handlePlay = async () => {
         // No songs playing 
         if (!this.props.current_playlist || !this.props.current_song){
-            console.log("Change Playlist")
+            console.log("Play Playlist")
             let requestBody = {
                 query : `
                     query {
@@ -84,17 +84,22 @@ class Song extends Component {
                 })
                 .then(data => {
                     console.log(data.data.getPlaylistByID)
-                    this.props.onPlaylistChange(data.data.getPlaylistByID, this.state.song)
+                    this.props.onPlaylistChange(data.data.getPlaylistByID, this.state.song, this.props.index)
                 })
                 .catch(error => {
                     console.log(error)
                 })
         }
-
-        else if (this.props.current_song.song_id === this.state.song.song_id)
+        // Same playlist and pause the song 
+        else if (this.props.current_playlist._id === this.props.playlist_id && this.props.current_song.song_id === this.state.song.song_id)
             this.props.onPlayChange(!this.props.play)
-        else 
-            console.log("Change songs")
+        // Same playlist and pause the song 
+        else {
+            this.props.onPlayChange(true)
+            this.props.onSongChange(this.state.song.song_id, this.props.index)
+        }
+            
+           // console.log("Change songs")
     }
 
     render() { 

@@ -27,6 +27,7 @@ class App extends Component {
       current_song: null,
       access_token: null,
       uris: [],
+      offset: 0
     }
 
   }
@@ -54,25 +55,27 @@ class App extends Component {
   }
 
   onPlayChange = (play) => {
-    this.setState({play: play})
+    this.setState({play: play}, function() {console.log(this.state)})
   }
 
-  onSongChange = (song_id) => {
+  onSongChange = (song_id, offset) => {
     let s = null
+
     this.state.current_playlist.songs.forEach(song => {
       if (song.song_id === song_id)
         s = song 
     })
-    this.setState({current_song: s}, function() {console.log(this.state)})
+    console.log(s)
+    this.setState({current_song: s, play: true, offset:offset}, function() {console.log(this.state)})
   }
 
-  onPlaylistChange = (playlist, song) => {
+  onPlaylistChange = (playlist, song, offset) => {
     let uris = []
     if (playlist)
       uris = playlist.songs.map(song => {
         return song.song_uri
       })
-    this.setState({current_playlist : playlist, play : true, uris: uris, current_song: song}, function() {console.log(this.state)})
+    this.setState({current_playlist : playlist, play : true, uris: uris, current_song: song, offset: offset}, function() {console.log(this.state)})
   }
   onUsernameChange = (username) => {
     this.setState({username: username})
@@ -191,6 +194,7 @@ class App extends Component {
                             playlist = {this.state.uris}
                             current_song = {this.state.current_song}
                             access_token = {this.state.access_token}
+                            offset = {this.state.offset}
               />   
             }/>
         :  null}
