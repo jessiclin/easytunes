@@ -131,6 +131,18 @@ class HomeScreen extends Component {
         history.replace('/home')
     }
     
+    getArtists = () => {
+      let artists = ""
+
+      this.props.current_song.artists.forEach((artist,i) => {
+          if (i == 0)
+            artists = artist 
+          else 
+            artists = artists + ", " + artist
+      })
+      console.log(artists)
+      return artists
+    }
     render() { 
 
       if (this.state.loading)
@@ -147,7 +159,7 @@ class HomeScreen extends Component {
                                 CURRENT PLAYLIST
                               </div>
                               <div className="current-playlist-name">
-                                {this.state.current_playlist ? this.state.current_playlist.name : ""}
+                                {this.props.current_playlist ? this.props.current_playlist.name : ""}
                               </div>
                         </div>
 
@@ -157,10 +169,10 @@ class HomeScreen extends Component {
                     
                     <div className="container-fluid text-center song-info-row">
                         <div className="song-name">
-                            {this.state.current_playlist ? this.state.current_playlist.songs[this.state.index].name : ""}
+                            {this.props.current_playlist ? this.props.current_song.name : ""}
                         </div>
                         <div className="song-artist">
-                            {this.state.current_playlist ? this.state.current_playlist.songs[this.state.index].artist : ""}
+                            {this.props.current_playlist ? this.getArtists() : ""}
                         </div>
                     </div>
                     {/* <SpotifyPlayer

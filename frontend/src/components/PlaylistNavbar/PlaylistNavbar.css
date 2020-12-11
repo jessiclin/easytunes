@@ -1,8 +1,7 @@
 .playlist-nav {
   /* height: 50px; */
-  height: 50px;
-  background-color: transparent;
- 
+  height: 60px;
+  background-color:transparent;
 }
 
 .playlist-nav-container {
@@ -14,7 +13,7 @@
   padding-bottom: 20px;
   margin: 0px;
 }
-/* 
+
 .playlist-nav-img,
 .playlist-nav-back,
 .playlist-nav-play,
@@ -49,4 +48,4 @@
   position: absolute;
   right:100px;
   z-index: 2;
-} */
+}

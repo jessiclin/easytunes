@@ -97,7 +97,6 @@ class App extends Component {
 
   onPlaylistChange = (playlist) => {
     let uris = []
-    let offset = 0
     let result = [uris, playlist.songs[0]]
     if (playlist){
       uris = playlist.songs.map((song,i) => {
@@ -110,7 +109,7 @@ class App extends Component {
     }
   }
 
-    console.log(uris)
+
     this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0}, function() {console.log(this.state)})
   }
 
@@ -176,7 +175,11 @@ class App extends Component {
 
             <Route exact path='/home' 
               render = {(props) => (
-                <HomeScreen {...props} username = {this.state.username} access_token = {this.state.access_token}/>
+                <HomeScreen {...props} 
+                  username = {this.state.username} 
+                  access_token = {this.state.access_token}
+                  current_playlist = {this.state.current_playlist}
+                  current_song = {this.state.current_song}/>
               )}
             />
 
