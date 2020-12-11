@@ -43,6 +43,11 @@ class HeaderNavbar extends Component {
         });
     };
 
+    close = () => {
+        this.setState({
+            open: false,
+        });
+    }
     handleHome = () => {
         const {history} = this.props
         history.push('/home')
@@ -53,13 +58,14 @@ class HeaderNavbar extends Component {
  
             const [visible, setVisibility] = React.useState(false);
             const [text, setText] = React.useState("All");
-            const [keyword, searchText] = React.useState("Search")
+            const [keyword, searchText] = React.useState("")
 
             function toggleVisibility () {
                 setVisibility(visible => !visible)
             }
             
             function toggleText(selected) {
+                toggleVisibility()
                 setText(selected)
             }
 
@@ -90,11 +96,16 @@ class HeaderNavbar extends Component {
             }
 
             async function toggleSearch(){
-                toggleVisibility()
-                const url = '/searchq=' +  encodeURIComponent(keyword)+ "/type=" + text.toLowerCase()
+                
+                console.log(keyword)
+                if (keyword !== ""){
+                    toggleVisibility()
+                    const url = '/searchq=' +  encodeURIComponent(keyword)+ "/type=" + text.toLowerCase()
                 const {history} = props;
                 
                 history.push(url)
+                }
+                
             }
 
             return (
@@ -111,9 +122,10 @@ class HeaderNavbar extends Component {
             )
         }
         
-        function Playlist({props}){
+        function Playlist({props, close}){
     
             function togglePlaylist (){
+                close()
                 props.history.push("/" + props.username)
             }
             return (
@@ -121,8 +133,9 @@ class HeaderNavbar extends Component {
             )
         }
 
-        function Followers({props}){
+        function Followers({props, close}){
             function toggleFollower (){
+                close()
                 props.history.push("/" +  props.username+ "/followers")
             }
             return (
@@ -130,8 +143,9 @@ class HeaderNavbar extends Component {
             )
         }
 
-        function Following({props}){
+        function Following({props, close}){
             function toggleFollower (){
+                close()
                 props.history.push("/" + props.username+ "/followers")
             }
             return (
@@ -139,8 +153,9 @@ class HeaderNavbar extends Component {
             )
         }
 
-        function Settings({props}){
+        function Settings({props, close}){
             function toggleSetting (){
+                close()
                 props.history.push("/" + props.username+ "/settings")
             }
             return (
@@ -148,8 +163,9 @@ class HeaderNavbar extends Component {
             )
         }
 
-        function LogOut({props}){
+        function LogOut({props, close }){
             function toggleLogOut (){
+                close()
                 localStorage.removeItem("username")
 
                 console.log(localStorage.getItem("username"))
@@ -187,19 +203,19 @@ class HeaderNavbar extends Component {
                         <div className="container home-container">
                             <ul className = "account-options">
                                 <li>
-                                        <Playlist props = {this.props}/>
+                                        <Playlist props = {this.props} close = {this.close}/>
                                 </li>
                                 <li>
-                                        <Followers props = {this.props}/>
+                                        <Followers props = {this.props} close = {this.close}/>
                                 </li>
                                 <li>
-                                        <Following props = {this.props}/>
+                                        <Following props = {this.props} close = {this.close}/>
                                 </li>
                                 <li>
-                                        <Settings props = {this.props}/>
+                                        <Settings props = {this.props} close = {this.close}/>
                                 </li>
                                 <li>
-                                        <LogOut props = {this.props}/>
+                                        <LogOut props = {this.props} close = {this.close}/>
                                 </li>
                             </ul>
                         </div>
