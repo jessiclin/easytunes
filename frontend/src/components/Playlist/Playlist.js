@@ -36,6 +36,7 @@ class Playlist extends Component {
     // Get the playlist 
     getPlaylist = () => {
         this.setState({loading : true})
+        console.log(this.state.playlistId)
         let requestBody = {
             query : `
                 query {
@@ -83,7 +84,7 @@ class Playlist extends Component {
             })
             .then(data => {
                 const playlist = data.data.getPlaylistByID
-                
+                console.log(data)
                 let requestBody = {
                     query: `
                         query {

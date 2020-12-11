@@ -41,9 +41,7 @@ class SearchList extends Component {
                 {artists ? 
                 <>
                 <div className='row'>
-                        <div className='col s3'>Artist</div>
-                        <div className='col s3'>Genres</div>
-                        <div className='col s3'></div>
+                        <div className='col s3'>Artists</div>
                     </div>
                     {artists && artists.map(function(item) {
                     return (
