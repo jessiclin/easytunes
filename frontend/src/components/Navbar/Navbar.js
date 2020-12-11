@@ -1,193 +1,62 @@
-/** NAVBAR
- * Component withing Home Page 
- * Handles redirecting to Sign in and sign up  
- */
-
-import React, {Component } from "react";
-import { Button } from "../Button/Button";
+import React from "react";
+import {makeStyles } from '@material-ui/styles';
+import { AppBar, Icon, Toolbar } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import IconButton from '@material-ui/core/IconButton';
 import { Link } from "react-router-dom";
-import "./Navbar.css";
-import { BsMusicNoteList } from "react-icons/bs";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { IconContext } from "react-icons/lib";
 
 
-class Navbar extends Component {
-  constructor(props){
-    super(props)
-    this.notAtHome = this.props.notAtHome
 
-  }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  appbar: {
+    background: "black",
+  },
+  icon: {
+    fontSize: "large", 
+  },
+  appbarWrapper: {
+    width: '80%',
+    margin: '0 auto'
+  },
+  title: {
+    flexGrow: 1,
+  },
 
-  state = {click : false}
+}));
 
-  handleClick = () => {
-    this.state.setState({click : !this.state.click})
+function Navbar() {
+  const classes = useStyles();
 
-  }
 
-  closeMobileMenu = () => {
-    this.state.setState({click : false})
-  }
-  render() { 
-    console.log(this.props)
+    
+  return (
 
-    return (
-      <>
-        <IconContext.Provider value={{ color: "#fff" }}>
-  
-          <nav className="navbar top-nav">
-  
-            <div className="navbar-container container">
-              <Link to="/" className="navbar-logo" onClick={this.closeMobileMenu}>
-                <BsMusicNoteList className="navbar-icon" />
-                Easy Tunes
-              </Link>
-  
-              <div className="menu-icon" onClick={this.handleClick}>
-                {this.state.click ? <FaTimes /> : <FaBars />}
-              </div>
-  
-              <ul className={this.state.click ? "nav-menu active" : "nav-menu"}>
-                <li className="nav-btn">
-                    <Link to="/register" className="btn-link">
-                    <Button onClick = {this.notAtHome}>
-                      SIGN UP 
-                    </Button>
-                   </Link>
-         
-                  {/* {button ? (
-                    <Link to="/register" className="btn-link">
-                      <Button buttonStyle="btn--outline">SIGN UP</Button>
-                    </Link>
-                  ) : (
-                    <Link to="/register" className="btn-link">
-                      <Button
-                        buttonStyle="btn--outline"
-                        buttonSize="btn--mobile"
-                        onClick={closeMobileMenu}
-                      >
-                        SIGN UP
-                      </Button>
-                    </Link>
-                  )} */}
-                </li>
-                
-                <li className="nav-btn">
-                <Link to="/login" className="btn-link">
-                <Button onClick = {this.notAtHome}>
-                      SIGN IN
-                    </Button>
-                    </Link>
-                  {/* {button ? (
-                    <Link to="/login" className="btn-link">
-                      <Button buttonStyle="btn--outline">LOG IN</Button>
-                    </Link>
-                  ) : (
-                    <Link to="/login" className="btn-link">
-                      <Button
-                        buttonStyle="btn--outline"
-                        buttonSize="btn--mobile"
-                        onClick={closeMobileMenu}
-                      >
-                        LOG IN
-                      </Button>
-                    </Link>
-                  )} */}
-                </li>
-                
-              </ul>
-            </div>
-          </nav>
-        </IconContext.Provider>
-      </>
-    );
-  }
+  <div className={classes.root}>
+    <AppBar className={classes.appbar} elevation={0}>
+      <Toolbar className={classes.appbarWrapper}>
+      <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            < MusicNoteIcon/>
+          </IconButton>
+      <Typography variant="h6" className={classes.title}>
+            EasyTunes
+      </Typography>
+      <Link to="/register">
+      <Button color="inherit" onClick={() => { console.log('onClick'); }}>
+      Sign Up
+      </Button>
+      </Link>
+      <Link to="/login">
+      <Button color="inherit">Login</Button>
+      </Link>
+      </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
- 
+
 export default Navbar;
-// function Navbar() {
-//   const [click, setClick] = useState(false);
-//   const [button, setButton] = useState(true);
-
-//   const handleClick = () => setClick(!click);
-//   const closeMobileMenu = () => setClick(false);
-
-//   const showButton = () => {
-//     if (window.innerWidth <= 960) {
-//       setButton(false);
-//     } else {
-//       setButton(true);
-//     }
-//   };
-
-//   useEffect(() => {
-//     showButton();
-//   }, []);
-
-//   console.log(this)
-//   return (
-//     <>
-//       <IconContext.Provider value={{ color: "#fff" }}>
-
-//         <nav className="navbar top-nav">
-
-//           <div className="navbar-container container">
-//             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-//               <BsMusicNoteList className="navbar-icon" />
-//               Easy Tunes
-//             </Link>
-
-//             <div className="menu-icon" onClick={handleClick}>
-//               {click ? <FaTimes /> : <FaBars />}
-//             </div>
-
-//             <ul className={click ? "nav-menu active" : "nav-menu"}>
-//               <li className="nav-btn">
-//                   <Button buttonStyle="btn--outline" onClick = {this.props.toLoginPage}>
-//                     SIGN UP
-//                   </Button>
-//                 {/* {button ? (
-//                   <Link to="/register" className="btn-link">
-//                     <Button buttonStyle="btn--outline">SIGN UP</Button>
-//                   </Link>
-//                 ) : (
-//                   <Link to="/register" className="btn-link">
-//                     <Button
-//                       buttonStyle="btn--outline"
-//                       buttonSize="btn--mobile"
-//                       onClick={closeMobileMenu}
-//                     >
-//                       SIGN UP
-//                     </Button>
-//                   </Link>
-//                 )} */}
-//               </li>
-              
-//               <li className="nav-btn">
-//                 {button ? (
-//                   <Link to="/login" className="btn-link">
-//                     <Button buttonStyle="btn--outline">LOG IN</Button>
-//                   </Link>
-//                 ) : (
-//                   <Link to="/login" className="btn-link">
-//                     <Button
-//                       buttonStyle="btn--outline"
-//                       buttonSize="btn--mobile"
-//                       onClick={closeMobileMenu}
-//                     >
-//                       LOG IN
-//                     </Button>
-//                   </Link>
-//                 )}
-//               </li>
-              
-//             </ul>
-//           </div>
-//         </nav>
-//       </IconContext.Provider>
-//     </>
-//   );
-// }
-
-// export default Navbar;
