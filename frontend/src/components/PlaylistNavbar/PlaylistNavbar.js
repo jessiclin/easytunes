@@ -15,7 +15,7 @@ class PlaylistNavbar extends Component {
     }
     
     handleCallback = ({type, ...state}) => {
-      // this.props.onPlayChange()
+
       console.log(type)
       console.log(state)
       if (type === "track_update")
@@ -31,9 +31,12 @@ class PlaylistNavbar extends Component {
       })
       
       let equal = true 
-      for (let i = 0; i < uris.length; i++)
-        if (uris[i] !== this.props.playlist[i])
-          equal = false 
+      if (uris.length !== this.props.playlist.length)
+        equal = false 
+      else 
+        for (let i = 0; i < uris.length; i++)
+          if (uris[i] !== this.props.playlist[i])
+            equal = false 
 
       if (type === "player_update" && !equal)
         console.log("Change Playlist")
@@ -49,13 +52,12 @@ class PlaylistNavbar extends Component {
                       {this.props.access_token &&
                       
                             <SpotifyPlayer
-                          token= {this.props.access_token}
-                          // callback={handleCallback}
-                          callback = {this.handleCallback}
-                          uris={this.props.playlist}
-                          style = {{width: "100%"}}
-                          play = {this.props.play}
-                          
+                              token= {this.props.access_token}
+                              callback = {this.handleCallback}
+                              uris={this.props.playlist}
+                              style = {{width: "100%"}}
+                              play = {this.props.play}
+                              offset = {this.props.offset}
                         />
                       }
                     
