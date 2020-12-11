@@ -512,6 +512,13 @@ const resolver = {
                         username: new_username
                     },{useFindAndModify: false, new: true})
                 await Playlist.updateMany({username : username} , { "$set":{username: new_username}})
+                await Playlist.updateMany({}, 
+                    {"$set": {"comments.$[username].username" : 
+                        new_username 
+                    }},
+                    {arrayFilters: [{"username.username" : username}], useFindAndModify: false, new:true}
+                    )
+                // NEED TO UPDATE REPLY USERNAMES TOO 
                 return {...user._doc}
             }
 
@@ -538,7 +545,7 @@ const resolver = {
             let playlist = await Playlist.findOne({_id : playlist_id})
             if (playlist.comments[index].username == username)
                 playlist.comments.splice(index,1)
-    
+            playlist.save()
             return {...playlist._doc}
         }
         catch(error) {
@@ -677,8 +684,26 @@ const resolver = {
                 console.log(error)
                 throw error
             }
-        }
+        },
+        editComment: async ({username, message, playlist_id, comment_index}) => {
+            try{
+                console.log("HERE")
+                let playlist = await Playlist.findOne({_id : playlist_id})
+                let user = await User.findOne({username: username})
+    
+                console.log(playlist.comments[comment_index]._id)
+                playlist = await Playlist.findOneAndUpdate({_id : playlist_id}, 
+                    { $set: {"comments.$[index].message" : message}},
+                    {arrayFilters: [{"index._id" : playlist.comments[comment_index]._id}], useFindAndModify: false, new:true}
+                )
 
+                console.log(playlist.comments[comment_index])
+                return {...playlist._doc}
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        }
 
 }
 
