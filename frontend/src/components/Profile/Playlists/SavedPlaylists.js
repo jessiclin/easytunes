@@ -22,7 +22,18 @@ class SavedPlaylists extends Component {
         let playlists = this.state.playlists.map(function(playlist) {
             
             return (
-                <SavedPlaylistButton key = {playlist.playlist_id} playlist = {playlist} username = {this.state.user.username} setPlaylists = {this.setPlaylists}sessionUser = {this.state.sessionUser}  editing={this.props.editing} history = {this.props.history}/>
+                <SavedPlaylistButton key = {playlist.playlist_id} 
+                    playlist = {playlist} 
+                    username = {this.state.user.username} 
+                    setPlaylists = {this.setPlaylists}
+                    sessionUser = {this.state.sessionUser}  
+                    editing={this.props.editing} 
+                    history = {this.props.history}
+                    play = {this.props.play} 
+                    onPlayChange = {this.props.onPlayChange}
+                    onPlaylistChange = {this.props.onPlaylistChange}
+                    current_playlist = {this.props.current_playlist}
+                />
             )
         }, this)
         return (
