@@ -65,17 +65,16 @@ class AddSong extends Component {
     // Handle adding the song to a playlist 
     handleAdd = (event) => {
         let artists = ""
-        console.log(typeof(artists))
+
         artists += this.state.song.artists.map(artist => {
             return "\n" + artist.name
         })
         let songlength = this.millisToSeconds(this.state.song.duration_ms)
-        console.log(songlength)
-        console.log(JSON.stringify(artists))
+
         let requestBody = {
             query: `
                 mutation {
-                    addSong(songInput: {_id: "${this.state.song.id}", name: "${this.state.song.name}", artists: """${artists}""", uploaded: false, duration: ${songlength}}, playlist_id: "${event.target.id}"){
+                    addSong(songInput: {_id: "${this.state.song.id}", name: "${this.state.song.name}", artists: """${artists}""", uploaded: false, duration: ${songlength}, uri: "${this.state.song.uri}"}, playlist_id: "${event.target.id}"){
                         _id
                     }
                 }
@@ -95,6 +94,7 @@ class AddSong extends Component {
             })
             .then(data => {
                 console.log(data)
+                this.changeVisible()
                 // this.setState({playlists : data.data.getUserByUsername.playlists, loading: false})
             })
             .catch(error => {

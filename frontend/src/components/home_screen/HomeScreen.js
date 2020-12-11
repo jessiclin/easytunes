@@ -3,20 +3,22 @@
  */
 
 import React, {Component } from 'react'
-import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
+//import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
 //import SpotifyPlayer from 'react-spotify-player';
 import '../Navbar/Navbar.css';
 import "./HomeScreen.css"
 // import Logo from "./am4a.png"
-import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
-// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
-import AudioPlayer, { RHAP_UI }  from "react-h5-audio-player";
 
-import mockData from '../../mock_data.json'
+// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
+//import AudioPlayer, { RHAP_UI }  from "react-h5-audio-player";
+import SpotifyPlayer from 'react-spotify-web-playback';
+
+
+// import mockData from '../../mock_data.json'
 
 class HomeScreen extends Component {
 
-    playlists = mockData.playlists
+    // playlists = mockData.playlists
     state = {
       loading: true,
       current_playlist: null,
@@ -25,6 +27,9 @@ class HomeScreen extends Component {
     }
 
     componentDidMount = () => {
+      if (!this.props.username)
+        this.props.history.push('/login')
+
       this.setState({loading : true})
       let current_song = null
         let requestBody = {
@@ -126,27 +131,35 @@ class HomeScreen extends Component {
         history.replace('/home')
     }
     
+    getArtists = () => {
+      let artists = ""
+
+      this.props.current_song.artists.forEach((artist,i) => {
+          if (i == 0)
+            artists = artist 
+          else 
+            artists = artists + ", " + artist
+      })
+      console.log(artists)
+      return artists
+    }
     render() { 
-      // const size = {
-      //   width: '100%',
-      //   height: 300,
-      // };
-      // const view = 'coverart'; // or 'coverart'
-      // const theme = 'black'; // or 'white'
+
       if (this.state.loading)
         return (<></>)
+        console.log(this.props.access_token)
+    
         return ( 
             
                 <div className="container-fluid  user-home-container" ref={this.container}>
                     {/* Home Button and Account Icon */}
-                    <HeaderNavbar props = {this.props}/>
 
                     <div className="container-fluid text-center playlist-info-row">
                               <div className="current-playlist">
                                 CURRENT PLAYLIST
                               </div>
                               <div className="current-playlist-name">
-                                {this.state.current_playlist ? this.state.current_playlist.name : ""}
+                                {this.props.current_playlist ? this.props.current_playlist.name : ""}
                               </div>
                         </div>
 
@@ -156,56 +169,18 @@ class HomeScreen extends Component {
                     
                     <div className="container-fluid text-center song-info-row">
                         <div className="song-name">
-                            {this.state.current_playlist ? this.state.current_playlist.songs[this.state.index].name : ""}
+                            {this.props.current_playlist ? this.props.current_song.name : ""}
                         </div>
                         <div className="song-artist">
-                            {this.state.current_playlist ? this.state.current_playlist.songs[this.state.index].artist : ""}
+                            {this.props.current_playlist ? this.getArtists() : ""}
                         </div>
                     </div>
                     {/* <SpotifyPlayer
-                        uri={`spotify:track:${this.state.current_playlist.songs[this.state.index].song_id}`}
-                        size={size}
-                        view={view}
-                        theme={theme}
-                      /> */}
-                    <AudioPlayer src="" layout="stacked-reverse" className="home-audio-bar"
-
-                          customControlsSection={
-                            [
-                               
-                               RHAP_UI.ADDITIONAL_CONTROLS,
-                            //    <div><iPlayListLine size={24}/> </div>, 
-                               RHAP_UI.MAIN_CONTROLS,
-                               RHAP_UI.VOLUME_CONTROLS,
-                            ]
-                            
-                          }
-                          customProgressBarSection={
-                            [RHAP_UI.PROGRESS_BAR,
-                            RHAP_UI.CURRENT_TIME,
-                            <div>/</div>,
-                            RHAP_UI.DURATION]
-                          }
-                            customIcons={{
-                                play: <FaRegPlayCircle size={32} color="black"/>,
-                                pause: < FaRegPauseCircle size={32} color="black"/>,
-                                // rewind: <FaStepBackward size={20} />,
-                                // forward: <FaStepForward size={20} />,
-                                previous: <FaStepBackward size={20} />,
-                                next: <FaStepForward size={20} />
-                                // previous?: ReactNode
-                                // next?: ReactNode
-                                // loop?: ReactNode
-                                // loopOff?: ReactNode
-                                // volume?: ReactNode
-                                // volumeMute?: ReactNode
-                              }}
-                              showSkipControls = {true}
-                              showJumpControls = {false} 
-                        />
-                        
-
-                    {/* <PlaylistNavbar onChange = {this.onChange}/> */}
+                      token= {this.props.access_token}
+                      uris={["spotify:track:2r6OAV3WsYtXuXjvJ1lIDi", "spotify:track:7qwt4xUIqQWCu1DJf96g2k"]}
+                      style = {{width: "100%"}}
+                    /> */}
+                  
                     
                 </div>
           

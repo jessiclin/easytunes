@@ -6,7 +6,7 @@
 import React, { Component } from 'react'
 import {AiOutlineDelete, AiOutlineArrowUp, AiOutlineArrowDown} from 'react-icons/ai'
 // FaRegPauseCircle
-import {FaRegPlayCircle} from 'react-icons/fa'
+import {FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
 class Song extends Component {
     constructor(props){
         super(props)
@@ -47,7 +47,62 @@ class Song extends Component {
         this.handleMoveDown(this.state.song, this.props.index)
     }
 
+    handlePlay = async () => {
+        // No songs playing 
+        if (!this.props.current_playlist || !this.props.current_song || this.props.current_playlist._id !== this.props.playlist_id){
+            console.log("Play Playlist")
+            let requestBody = {
+                query : `
+                    query {
+                        getPlaylistByID(id : "${this.state.playlistId}") {
+                            likes 
+                            name 
+                            public 
+                            songs {
+                                name 
+                                song_id 
+                                song_uri
+                            }
+                            total_duration 
+                            username 
+                            _id 
+                        }
+                    }
+                `
+            }
+
+            fetch('http://localhost:5000/graphql',{
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: {
+                    'content-type': 'application/json'
+                }})
+                .then (res => {
+                    if (res.status !== 200 && res.status !== 201)
+                        throw new Error("Playlist not found")
+                    return res.json()
+                })
+                .then(data => {
+                    console.log(data.data.getPlaylistByID)
+                    this.props.onPlaylistChange(data.data.getPlaylistByID, this.state.song)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+        // Same playlist and pause the song 
+        else if (this.props.current_playlist._id === this.props.playlist_id && this.props.current_song.song_id === this.state.song.song_id)
+            this.props.onPlayChange(!this.props.play)
+        // Different Song 
+        else {
+            this.props.onSongChange(this.state.song.song_id)
+        }
+            
+           // console.log("Change songs")
+    }
+
     render() { 
+
         return (  
             <div className="row song-row">
             <div className="col song-col text-left">
@@ -55,7 +110,12 @@ class Song extends Component {
             </div>
             <div className="col song-col text-left">
             <button className="play-btn" onClick = {this.handlePlayClick}>
-                <FaRegPlayCircle size= {24}/>
+                {this.props.play && this.props.current_playlist._id === this.state.playlistId && this.props.current_song.song_id === this.state.song.song_id ?
+                    <FaRegPauseCircle onClick = {this.handlePlay} size= {24}/>
+                 : 
+                    <FaRegPlayCircle onClick = {this.handlePlay} size= {24}/>
+                }
+                
             </button>
             </div>
             <div className="col song-col text-left">
