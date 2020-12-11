@@ -27,8 +27,9 @@ class SignIn extends Component {
     }
 
     componentDidMount = () => {
+        console.log(this.props)
         if (this.props.username)
-            this.props.history.push('/home')
+            this.props.toHome()
     }
 
     handleSignIn = async (event) => {

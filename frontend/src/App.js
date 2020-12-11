@@ -35,7 +35,7 @@ class App extends Component {
 
   componentDidMount = async () => {
     this.getAccesstoken()
-    // if (!this.state.access_token)
+    // if (!this.getAccesstoken())
     //   fetch('http://localhost:5000/authorization', {
     //     method: 'POST',
 
@@ -51,12 +51,13 @@ class App extends Component {
     //     .then(data => {
     //         console.log(data)
     //         window.location.replace(data)
-    //         this.getAccesstoken()
     //     })
     //     .catch(err => {
     //         console.log(err);
     //     });
+    
   }
+
   getAccesstoken = async () => {
     return await fetch('http://localhost:5000/access-token', {
                     method: 'POST',
@@ -69,7 +70,8 @@ class App extends Component {
                     return res.json()
                 })
                 .then(result => {
-                    this.setState({access_token : result})
+                  this.setState({access_token : result})
+
                 })
                 .catch(err => {
                     console.log(err);

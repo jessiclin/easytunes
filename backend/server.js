@@ -101,7 +101,10 @@ app.get('/callback', function(req, res) {
   });
 
 app.use('/access-token', function(req, res) {
-    res.status(200).send(JSON.stringify(spotifyApi.getAccessToken()))
+    if (spotifyApi.getAccessToken())
+        res.status(200).send(JSON.stringify(spotifyApi.getAccessToken()))
+    else 
+        res.status(200).send(JSON.stringify(null))
 })
 async function newToken() {
     await spotifyApi.refreshAccessToken().then(

@@ -23,7 +23,7 @@ class SignUp extends Component {
 
     componentDidMount = () => {
         if (this.props.username)
-            this.props.history.push('/home')
+            this.props.toHome()
     }
     setErrmess = (err) => {
         this.setState({errorMess : err})
