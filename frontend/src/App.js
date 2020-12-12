@@ -28,34 +28,14 @@ class App extends Component {
       access_token: null,
       uris: [],
       offset: 0,
-      shuffle: false 
+      shuffle: false,
+      needsUpdate: true
     }
 
   }
 
   componentDidMount = async () => {
-    this.getAccesstoken()
-    // if (!this.getAccesstoken())
-    //   fetch('http://localhost:5000/authorization', {
-    //     method: 'POST',
-
-    //     headers: {
-    //         'content-type': 'application/json'
-    //     }
-    //     })
-    //     .then(res => {
-    //         if (res.status !== 200 && res.status !== 201) 
-    //             throw new Error('Playlist not found');
-    //         return res.json()
-    //     })
-    //     .then(data => {
-    //         console.log(data)
-    //         window.location.replace(data)
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
-    
+    this.getAccesstoken()    
   }
 
   getAccesstoken = async () => {
@@ -82,6 +62,9 @@ class App extends Component {
     this.setState({play: play}, function() {console.log(this.state)})
   }
 
+  updated = () => {
+    this.setState({needsUpdate: false})
+  }
   onSongChange = (song_id) => {
     let s = null
     let offset = 0
@@ -92,8 +75,11 @@ class App extends Component {
       }
          
     })
-    
-    this.setState({current_song: s, play: true, offset:offset}, function() {console.log(this.state)})
+    console.log("SONG CHANGE APP.JS")
+    // if (!this.state.play || !this.state.playlist)
+    //   this.setState({current_song: s, play: true, offset:offset, needsUpdate: true}, function() {console.log(this.state)})
+    // else 
+      this.setState({current_song: s, play: true, offset:offset, needsUpdate: false}, function() {console.log(this.state)})
   }
 
   shufflePlaylist = (uris, playlist) => {
@@ -130,10 +116,13 @@ class App extends Component {
     if (this.state.shuffle){
       result = this.shufflePlaylist(uris, playlist)
     }
+
   }
-
-
-    this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0}, function() {console.log(this.state)})
+  console.log("PLAYLIST CHANGE APP.JS")
+    if (!this.state.play || !this.state.playlist)
+      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0, needsUpdate:true}, function() {console.log(this.state)})
+    else 
+      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0, needsUpdate:false}, function() {console.log(this.state)})
   }
 
   onShuffleChange = () => {
@@ -273,6 +262,8 @@ class App extends Component {
                             offset = {this.state.offset}
                             shuffle= {this.state.shuffle}
                             shufflePlaylist = {this.shufflePlaylist}
+                            needsUpdate = {this.state.needsUpdate}
+                            updated = {this.updated}
 
               />   
             
