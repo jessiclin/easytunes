@@ -628,15 +628,15 @@ const resolver = {
                 throw new Error('Email not found')
 
             let transport = nodemailer.createTransport({
-                host: 'smtp.mailtrap.io',
-                port: 2525,
+                service: 'gmail',
+                host: 'smtp.gmail.com',
                 auth: {
-                    user: 'dbfdd5243ed8bf',
-                    pass: '83db572868cc4d'
+                    user: 'easytunes416@gmail.com',
+                    pass: 'CSE416#b'
                 }
             });
             const message = {
-                from: 'support@easytunes.com',
+                from: 'easytunes416@gmail.com',
                 to: email,
                 subject: 'EasyTunes Password Reset Request',
                 html: '<h1><strong>EasyTunes</strong></h1><h2>Your new password is ' + new_password + '</h2><p>Login using the link below and choose your own password in the settings page.</p><p>Thanks for using EasyTunes!</p><p><a href="http://127.0.0.1:3000/login">www.easytunes.com/login</a></p>'
