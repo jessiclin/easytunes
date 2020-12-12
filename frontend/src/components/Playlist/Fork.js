@@ -42,7 +42,8 @@ class Fork extends Component {
                         name: song.name,
                         uploaded: song.uploaded,
                         artists: song.artists, 
-                        duration: song.duration
+                        duration: song.duration,
+                        song_img: song.song_img
                     }))
                 })
                 requestBody = {

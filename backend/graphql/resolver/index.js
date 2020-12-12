@@ -185,7 +185,8 @@ const resolver = {
                 name: songInput.name,
                 uploaded: songInput.uploaded,
                 artists: [],
-                duration: songInput.duration
+                duration: songInput.duration,
+                song_img: songInput.img
             }
 
             let artists = songInput.artists.split("\n")

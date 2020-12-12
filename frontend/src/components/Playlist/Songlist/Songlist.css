@@ -44,3 +44,8 @@
 .downbtn {
   margin-left: 1%;
 }
+
+.song_picture {
+  height: 64px;
+  width: 64px;
+}

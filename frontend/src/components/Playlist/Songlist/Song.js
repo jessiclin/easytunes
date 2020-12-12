@@ -118,6 +118,9 @@ class Song extends Component {
                 
             </button>
             </div>
+            <div className="col song-col">
+                <img alt = "" src={this.state.song.song_img} class="song_picture"></img>
+            </div>
             <div className="col song-col text-left">
                 {this.state.song.name}
             </div>
