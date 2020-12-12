@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container';
 //import {Link} from 'react-router-dom';
 
 
-const useStyles= theme => ({
+const useStyles = theme => ({
     paper: {
       marginTop: theme.spacing(8),
       display: 'flex',
@@ -30,6 +30,11 @@ const useStyles= theme => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    input: {
+      paddingLeft: "10px",
+      paddingRight: "10px"
+    }
+
   });
   
 
@@ -61,12 +66,11 @@ class SignIn extends Component {
 
     handleSignIn = async (event) => {
         event.preventDefault();
-        const email = this.emailEl.current.value.toLowerCase();
-        const password = this.passwordEl.current.value;
+        const email = this.emailEl.current.children[1].children[0].value.toLowerCase();
+        const password = this.passwordEl.current.children[1].children[0].value;
 
         if (email.trim().length === 0 || password.trim().length === 0)
             return;
-
 
         // Request backened 
         let requestBody = {
@@ -130,7 +134,7 @@ class SignIn extends Component {
 
     render() { 
         const {classes}  = this.props; 
-        console.log(classes)
+
         return (
             <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -143,6 +147,9 @@ class SignIn extends Component {
               </Typography>
               <form className={classes.form} noValidate>
                 <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}
                   variant="outlined"
                   margin="normal"
                   required
@@ -152,8 +159,12 @@ class SignIn extends Component {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  ref = {this.emailEl}
                 />
                 <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}  
                   variant="outlined"
                   margin="normal"
                   required
@@ -163,6 +174,7 @@ class SignIn extends Component {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  ref = {this.passwordEl}
                 />
                 <Button
                   type="submit"
@@ -170,12 +182,14 @@ class SignIn extends Component {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  onClick = {this.handleSignIn}
                 >
                   Sign In
                 </Button>
+                
                 <Grid container>
                   <Grid item xs>
-                    <Link to="/forgotpassword" variant="body2">
+                    <Link href="/forgotpassword" variant="body2">
                       Forgot password?
                     </Link>
                   </Grid>
@@ -188,4 +202,3 @@ class SignIn extends Component {
 }
  
 export default withStyles(useStyles)(SignIn);
-
