@@ -481,7 +481,7 @@ class Playlist extends Component {
                 let requestBody = {
                     query: `
                         mutation {
-                            addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false, duration: ${song.duration}, img: "${song.album.images[0].url}",uri: "${song.song_uri}"}, playlist_id: "${this.state.playlistId}"){
+                            addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false, duration: ${song.duration}, img: "${song.song_img}",uri: "${song.song_uri}"}, playlist_id: "${this.state.playlistId}"){
                                 _id
                             }
                         }
