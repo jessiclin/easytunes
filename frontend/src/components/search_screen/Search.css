@@ -32,3 +32,15 @@
     width: 100px;
     border-radius: 100%;
 }
+
+.song_picture {
+    height: 64px;
+    width: 64px;
+}
+
+.search_card:hover {
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    cursor: pointer;
+}

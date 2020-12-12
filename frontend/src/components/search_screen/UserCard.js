@@ -165,7 +165,7 @@ class UserCard extends Component {
             return (<> </>);
         return(
             <div>
-                <div className='card z-depth-0 text'>
+                <div className='card z-depth-0 text search_card'>
                     <div className='card-content col s3 user-button'>
                         <button onClick = {this.toUser}><span className='card-title'>{this.state.user.user.username}</span> </button>
                     </div>
