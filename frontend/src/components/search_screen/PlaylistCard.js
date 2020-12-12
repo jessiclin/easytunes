@@ -14,7 +14,7 @@ class PlaylistCard extends Component {
         
         return (
             <div>
-                <div className='card z-depth-0 text'>
+                <div className='card z-depth-0 text search_card'>
                     <div className='card-content col s3 playlist-button'>
                         <button  onClick={this.toPlaylist}><span className='card-title'>{this.state.playlist.name}</span></button>
                         </div>
@@ -35,7 +35,9 @@ class PlaylistCard extends Component {
                         <div className='card-content col s3 '>
                             <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
                         </div>
-                    : null
+                    : <div className='card-content col s3 '>
+                        
+                        </div>
                 }
                     
                   
