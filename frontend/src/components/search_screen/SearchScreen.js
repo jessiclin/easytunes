@@ -4,9 +4,6 @@
 
 import React, { Component } from 'react'
 import SearchList from './SearchList.js'
-// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
-import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
-
 class SearchScreen extends Component {
 
     state = {

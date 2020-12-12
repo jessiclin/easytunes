@@ -5,10 +5,8 @@
 import React, { Component} from 'react'
 
 import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
-// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
-import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import Playlists from './Playlists/Playlists'
-import UploadedSongs from './UploadedSongs/UploadedSongs'
+// import UploadedSongs from './UploadedSongs/UploadedSongs'
 import SavedPlaylists from './Playlists/SavedPlaylists'
 import './Profile.css'
 

@@ -1,10 +1,6 @@
 /** SETTINGS PAGE  **/
 
 import React, { Component } from 'react'
-
-import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
-// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
-
 import AccountSetting from './AccountSetting/AccountSetting'
 import AdvancedSetting from './AdvancedSetting/AdvancedSetting'
 import PrivacySetting from './PrivacySetting/PrivacySetting'
@@ -102,7 +98,7 @@ class Setting extends Component {
                 </nav>
 
                 {this.state.showAccount ? <AccountSetting user = {this.state.user} onUsernameChange ={this.props.onUsernameChange} history = {this.props.history}/>: null}
-                {this.state.showPrivacy ? <PrivacySetting user ={this.state.user} /> : null}
+                {this.state.showPrivacy ? <PrivacySetting user ={this.state.user} onPrivacyChange = {this.onPrivacyChange}/> : null}
                 {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
                 
                 {/* <PlaylistNavbar/> */}
@@ -110,6 +106,14 @@ class Setting extends Component {
         );
     }
 
+    onPrivacyChange = (type, value) => {
+        let user = this.state.user 
+        if (type === "playlist")
+            user.default_public_playlist = value 
+        else 
+            user.verify_requests = value 
+        this.setState({user:user})
+    }
     // Handle button clicks to "Account Setting", "Privacy Setting", and "Advanced Setting"
     changeView = (event) => {
         let invisible = [];

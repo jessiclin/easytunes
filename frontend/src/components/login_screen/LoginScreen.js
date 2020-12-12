@@ -11,6 +11,7 @@ import SignIn from './SignIn'
 import SignUp from './SignUp'
 
 
+
 class Login extends Component {
     state = {
         loginVisible: this.props.login,
@@ -71,6 +72,7 @@ class Login extends Component {
 
                     {this.state.loginVisible ? <SignIn onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome} username = {this.props.username}/> : null}
                     {this.state.signUpVisible ? <SignUp onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome} username = {this.props.username}/> : null}
+
                 </div>
             </div>
         );

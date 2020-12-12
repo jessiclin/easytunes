@@ -38,7 +38,7 @@ class SearchListCard extends Component {
             <div>
                 <div className='card z-depth-0 text'>
                     <div className='card-content col s3'>
-                        {this.state.item.images[0] ? <img src={this.state.item.images[0].url} class="artist_picture"></img> : <img src='https://cdn3.iconfinder.com/data/icons/social-media-circle-flat-1/1024/itunes-01-01-512.png' class="artist_picture"></img>}
+                        {this.state.item.images[0] ? <img alt = "" src={this.state.item.images[0].url} class="artist_picture"></img> : <img alt = "" src='https://cdn3.iconfinder.com/data/icons/social-media-circle-flat-1/1024/itunes-01-01-512.png' class="artist_picture"></img>}
                     </div>
                     <div className='card-content col s3'>
                         <span className='card-title'>{this.state.item.name}</span>

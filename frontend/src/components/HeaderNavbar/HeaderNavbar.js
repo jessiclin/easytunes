@@ -7,13 +7,9 @@ import {BsFillCaretDownFill} from 'react-icons/bs'
 import {MdAccountCircle} from 'react-icons/md'
 import {AiFillHome} from 'react-icons/ai'
 import {RiSearch2Line} from 'react-icons/ri'
-import SpotifyPlayer from 'react-spotify-web-playback';
 import './HeaderNavbar.css'
 
 class HeaderNavbar extends Component {
-    constructor(props){
-        super(props)
-    }
 
     container = React.createRef();
     state = {
@@ -143,15 +139,15 @@ class HeaderNavbar extends Component {
             )
         }
 
-        function Following({props, close}){
-            function toggleFollower (){
-                close()
-                props.history.push("/" + props.username+ "/followers")
-            }
-            return (
-                <button onClick = {toggleFollower}>Following</button>
-            )
-        }
+        // function Following({props, close}){
+        //     function toggleFollower (){
+        //         close()
+        //         props.history.push("/" + props.username+ "/followers")
+        //     }
+        //     return (
+        //         <button onClick = {toggleFollower}>Following</button>
+        //     )
+        // }
 
         function Settings({props, close}){
             function toggleSetting (){
@@ -208,9 +204,7 @@ class HeaderNavbar extends Component {
                                 <li>
                                         <Followers props = {this.props} close = {this.close}/>
                                 </li>
-                                <li>
-                                        <Following props = {this.props} close = {this.close}/>
-                                </li>
+
                                 <li>
                                         <Settings props = {this.props} close = {this.close}/>
                                 </li>
