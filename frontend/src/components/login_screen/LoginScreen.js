@@ -9,7 +9,45 @@ import 'bootstrap/dist/css/bootstrap.css'
 import "./LoginScreen.css";
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Navbar from '../Navbar/Navbar';
+import { Link } from "react-router-dom";
 
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      minHeight: '100vh',
+      backgroundImage: `url(${process.env.PUBLIC_URL + '../../assets/home.jpg' })`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: 'cover',
+      flexGrow: 1,
+      justifyContent: 'center'
+    },
+    
+    hero: {
+      height: "100vh",
+      background: "none",
+      position: "relative",
+      display: 'flex',
+      justifyContent: "center",
+      alignItems: "center",
+      color: "black",
+      fontSize: "3rem",
+      
+    },
+  
+    title: {
+      fontSize: "3rem",
+      color: "black",
+      display: 'flex',
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    
+  }));
 
 class Login extends Component {
     state = {
@@ -78,3 +116,6 @@ class Login extends Component {
 }
  
 export default Login;
+
+
+
