@@ -69,6 +69,7 @@ class HomeScreen extends Component {
                               artists
                               uploaded
                               duration
+                              song_img
                             }
                             }
                         }

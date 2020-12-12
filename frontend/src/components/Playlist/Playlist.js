@@ -63,6 +63,7 @@ class Playlist extends Component {
                             name 
                             artists
                             duration
+                            song_img
                         }
                     }
                 }
@@ -179,7 +180,8 @@ class Playlist extends Component {
                         name: song.name,
                         uploaded: song.uploaded,
                         artists: song.artists, 
-                        duration: song.duration
+                        duration: song.duration,
+                        song_img: song.song_img
                     }))
                 })
                 console.log(this.state.fork_playlist_name)
@@ -479,7 +481,7 @@ class Playlist extends Component {
                 let requestBody = {
                     query: `
                         mutation {
-                            addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false, duration: ${song.duration}, uri: "${song.song_uri}"}, playlist_id: "${this.state.playlistId}"){
+                            addSong(songInput: {_id: "${song.song_id}", name: "${song.name}", artists: """${artists}""", uploaded: false, duration: ${song.duration}, img: "${song.album.images[0].url}",uri: "${song.song_uri}"}, playlist_id: "${this.state.playlistId}"){
                                 _id
                             }
                         }

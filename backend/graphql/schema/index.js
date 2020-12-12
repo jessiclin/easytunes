@@ -4,6 +4,7 @@ const schema = buildSchema (`
 type SongRef {
     song_id: String!
     song_uri: String!
+    song_img: String!
     name: String!
     artists: [String!]!
     uploaded: Boolean!
@@ -97,6 +98,7 @@ input UserInput {
 input SongInput {
     _id: String!
     uri: String!
+    img: String!
     name: String!
     artists: String!
     uploaded: Boolean!
