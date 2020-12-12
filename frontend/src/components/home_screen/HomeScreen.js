@@ -3,22 +3,11 @@
  */
 
 import React, {Component } from 'react'
-//import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
-//import SpotifyPlayer from 'react-spotify-player';
 import '../Navbar/Navbar.css';
 import "./HomeScreen.css"
-// import Logo from "./am4a.png"
-
-// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
-//import AudioPlayer, { RHAP_UI }  from "react-h5-audio-player";
-import SpotifyPlayer from 'react-spotify-web-playback';
-
-
-// import mockData from '../../mock_data.json'
 
 class HomeScreen extends Component {
 
-    // playlists = mockData.playlists
     state = {
       loading: true,
       current_playlist: null,
@@ -135,7 +124,7 @@ class HomeScreen extends Component {
       let artists = ""
 
       this.props.current_song.artists.forEach((artist,i) => {
-          if (i == 0)
+          if (i === 0)
             artists = artist 
           else 
             artists = artists + ", " + artist

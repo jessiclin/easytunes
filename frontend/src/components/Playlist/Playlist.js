@@ -8,8 +8,6 @@ import { BiGitRepoForked } from 'react-icons/bi'
 import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
-import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
-import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 
 import './Playlist.css'

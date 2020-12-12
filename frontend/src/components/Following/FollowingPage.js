@@ -3,8 +3,6 @@
  */
 
 import React, { Component } from 'react'
-
-import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import Followers from './Followers'
 import Following from './Following'
 import Requests from './Requests'

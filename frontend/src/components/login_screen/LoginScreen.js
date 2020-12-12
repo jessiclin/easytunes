@@ -17,37 +17,6 @@ import Navbar from '../Navbar/Navbar';
 import { Link } from "react-router-dom";
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      minHeight: '100vh',
-      backgroundImage: `url(${process.env.PUBLIC_URL + '../../assets/home.jpg' })`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: 'cover',
-      flexGrow: 1,
-      justifyContent: 'center'
-    },
-    
-    hero: {
-      height: "100vh",
-      background: "none",
-      position: "relative",
-      display: 'flex',
-      justifyContent: "center",
-      alignItems: "center",
-      color: "black",
-      fontSize: "3rem",
-      
-    },
-  
-    title: {
-      fontSize: "3rem",
-      color: "black",
-      display: 'flex',
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    
-  }));
 
 class Login extends Component {
     state = {
@@ -109,6 +78,7 @@ class Login extends Component {
 
                     {this.state.loginVisible ? <SignIn onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome} username = {this.props.username}/> : null}
                     {this.state.signUpVisible ? <SignUp onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome} username = {this.props.username}/> : null}
+
                 </div>
             </div>
         );
