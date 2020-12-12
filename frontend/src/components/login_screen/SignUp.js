@@ -1,9 +1,41 @@
-/** SIGN UP
- * Component withing Login Screen 
- * Handles Signing up
- */
+import React, { Component } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { withStyles } from '@material-ui/core/styles';
+import {MuiThemeProvider} from "@material-ui/core/styles";
+//import theme from '../../Theme.js';
 
-import React, { Component } from 'react'
+
+const useStyles= theme => ({
+  
+  paper: {
+    marginTop: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+});
+
 
 class SignUp extends Component {
     constructor(props){
@@ -30,10 +62,10 @@ class SignUp extends Component {
     }
         handleSignUp = async (event) =>{
             event.preventDefault();
-            const email = this.emailEl.current.value.toLowerCase();
-            const password = this.passwordEl.current.value;
-            const username = this.usernameEl.current.value;
-            const confirm = this.confirmEl.current.value;
+            const email = this.emailEl.current.children[1].children[0].value.toLowerCase();
+            const password = this.passwordEl.current.children[1].children[0].value;
+            const username = this.usernameEl.current.children[1].children[0].value;
+            const confirm = this.confirmEl.current.children[1].children[0].value;
             const userUrl = "easytunes.com/" + username;
             if (email.trim().length === 0 || password.trim().length === 0 || username.trim().length === 0 || confirm.trim().length === 0){
                 this.setErrmess("Fill out all inputs")
@@ -122,49 +154,87 @@ class SignUp extends Component {
                                     });
             
         }
+
     render() { 
-        
+      
+        const {classes}  = this.props; 
+        console.log(classes)
         return (
-            <div>
-                {/* Sign Up components */}
-                <div className="row justify-content-sm-center login-row ">
-                    <div className="col-sm-12 cred">
-                        <div className="error-message justify-content-center"> 
-                                {!this.state.errorMess ? null : this.state.errorMess}
-                            </div>
-                        <div className="input-group-signup input-group">
-                            <input className="input" id = "email"  ref = {this.emailEl} type="text" required/>
-                            <label className="label">Email</label>
-                        </div>
-    
-                        <div className="input-group-signup input-group">
-                            <input className="input" id = "username"  ref = {this.usernameEl} type="text" required/>
-                            <label className="label">Username</label>
-                        </div>
-    
-                        <div className="input-group-signup input-group">
-                            <input className="input" id = "password"  ref = {this.passwordEl} type="password" required/>
-                            <label className="label">Password</label>
-                        </div>
-    
-                         <div className="input-group-signup input-group">
-                            <input className="input" id = "confirm-password"  ref = {this.confirmEl} type="password" required/>
-                            <label className="label">Confirm Password</label>
-                        </div>
-                    </div>
-                </div>
-                
-                {/* Sign Up Button */}
-                <div className="row justify-content-center login-row ">
-                    <div className="col-sm-12 login-col">
-                        <button onClick = {this.handleSignUp}> Sign Up </button>
-                    </div>
-                </div>
-    
-                {this.state.loginError ? <div>{this.state.errorMess} </div> : null}
-            </div>
-            );    
+            <Container component="main" maxWidth="xs">
+
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon/>
+        </Avatar>
+        <Typography component="h1" variant="h5" >
+          Sign up
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                ref = {this.emailEl}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="userName"
+                label="Username"
+                name="userName"
+                ref = {this.usernameEl}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                ref = {this.passwordEl}
+              />
+            </Grid>
+            <Grid item xs={12}>
+            <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Confirm Password"
+                type="password"
+                id="confirm-password"
+                ref = {this.confirmEl}
+              />
+              
+            </Grid>
+          </Grid>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick = {this.handleSignUp}
+          >
+            Sign Up
+          </Button>
+        </form>
+      </div>
+    </Container>
+  );
     }
 }
  
-export default SignUp;
+export default withStyles(useStyles)(SignUp);
