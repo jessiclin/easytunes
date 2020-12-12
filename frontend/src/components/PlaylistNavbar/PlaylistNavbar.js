@@ -3,23 +3,23 @@
  * Allows users to control the songs in the playlist they're listening to  
  */
 
-import React, { Component, useCallback } from 'react'
+import React, { Component } from 'react'
 import './PlaylistNavbar.css'
-import {FaStepBackward, FaStepForward, FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
-import AudioPlayer, { RHAP_UI }  from "react-h5-audio-player";
-import SpotifyPlayer,  { STATUS, CallbackState } from 'react-spotify-web-playback';
+
+import SpotifyPlayer from 'react-spotify-web-playback';
 import './AudioPlayer.css'
 
-class PlaylistNavbar extends Component {
-    state = { 
-    }
-    
+class PlaylistNavbar extends Component {    
     handleCallback = ({type, ...state}) => {
 
       console.log(type)
       console.log(state)
+ 
       if (type === "track_update"){          
         this.props.onSongChange(state.track.id)
+      }
+      if (type === "player_update"){
+        console.log("Player Update")
       }
      this.props.onPlayChange(state.isPlaying)
     }
@@ -29,7 +29,7 @@ class PlaylistNavbar extends Component {
     }
 
     render() {     
-      console.log(this.props.playlist)
+      console.log(this.props)
         return ( 
             <>
                 <nav className="navbar fixed-bottom playlist-nav">
@@ -40,10 +40,8 @@ class PlaylistNavbar extends Component {
                               token= {this.props.access_token}
                               callback = {this.handleCallback}
                               uris={this.props.playlist}
-
                               magnifySliderOnHover = {true}
                               showSaveIcon = {false}
-                          
                               play = {this.props.play}
                               offset = {this.props.offset}
                               styles={{
