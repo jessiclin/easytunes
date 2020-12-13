@@ -139,7 +139,7 @@ class FollowingPage extends Component {
                                     <h5> User Since: {this.getAccountCreationDate()}</h5>
                             </div>
                         </div>
-
+                     
                         <div className="navigation-row">
                             <div className="col">
                             <button id = "followers-btn" className = "followers-btn" onClick = {this.changeView} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}}>  Followers </button>
@@ -154,7 +154,6 @@ class FollowingPage extends Component {
                             </div>
                         </div>
 
-                    
                         {this.state.showFollowers ? <Followers username = {this.state.user.username} history = {this.props.history}/>: null}
                         {this.state.showFollowing ? <Following username = {this.state.user.username} history = {this.props.history}/> : null}
                         {this.state.showRequests ?  <Requests username = {this.state.user.username} history = {this.props.history}/> : null}

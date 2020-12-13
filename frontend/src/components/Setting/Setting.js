@@ -4,8 +4,56 @@ import React, { Component } from 'react'
 import AccountSetting from './AccountSetting/AccountSetting'
 import AdvancedSetting from './AdvancedSetting/AdvancedSetting'
 import PrivacySetting from './PrivacySetting/PrivacySetting'
+import { withStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
+import PlayCircleFilledRoundedIcon from '@material-ui/icons/PlayCircleFilledRounded'
+import IconButton from '@material-ui/core/IconButton'
 import './Setting.css'
 
+const useStyles= theme => ({
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 1),
+        marginLeft: "0px",
+        marginTop: "10px",
+        // necessary for content to be below app bar
+        ...theme.mixins.toolbar,
+      },
+      col : {
+          border: "1px solid",
+          background: "#f0f0f0",
+          color: "#fff",
+          paddingTop: "50px"
+      },
+     sidebarHeader : {
+        paddingTop: "10px",
+        marginBottom : "20px"
+     },
+      content: {
+        flexGrow: 1,
+        padding: theme.spacing(0),
+      },
+    wrapper: {
+        // padding: theme.spacing(2),
+        marginTop: theme.spacing(1),
+        borderBottom: "2px solid lightgray"
+    },
+    settingsOptionsButton: {    
+        width: "100%",
+        minHeight: "50px",
+        border: "none",
+        outline: "none",
+        textAlign: "left",
+        paddingLeft: "20px",
+        background: "transparent"
+    },
+    settingsConent: {
+        padding : 0
+    }
+})
 class Setting extends Component {
     state = { 
         showAccount: true,
@@ -74,35 +122,40 @@ class Setting extends Component {
         // If the data is still loading, do not attempt to render any information 
         if (this.state.loading)
             return(<> </>)
-
+        const {classes} = this.props
         return (  
-            <div className="container-fluid setting-container">
- 
-                <nav className="sidebar">
-                    <div className="sidebar-header text-left">
-                        <h3 style={{color : "black"}}>Settings</h3>
-                    </div>
-                    <ul className="settings-options">
-                        <li>
-                            <button id = "settings-account-btn" style = {{background: "lightgray"}} onClick={this.changeView}>Account</button>          
-                        </li>
-                        <li>
-                            <button id = "settings-privacy-btn" onClick={this.changeView}>Privacy</button>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <Container classname = {classes.wrapper}>
+                    <Grid container>
+                        <Grid item xs={2} className = {classes.col}>
                             
-                        </li>
-                        <li>
-                            <button id = "settings-advanced-btn" onClick={this.changeView}>Advanced Settings</button>
+                        <div className="sidebar-header text-left">
+                            <h3 style={{color : "black"}}>Settings</h3>
+                        </div>
+                     <ul >
+                         <li>
+                            <button className = {classes.settingsOptionsButton} id = "settings-account-btn" style = {{background: "lightgray"}} onClick={this.changeView}>Account</button>          
+                     </li>
+                         <li>
+                             <button className = {classes.settingsOptionsButton} id = "settings-privacy-btn" onClick={this.changeView}>Privacy</button>
+                            
+                         </li>
+                         <li>
+                             <button className = {classes.settingsOptionsButton} id = "settings-advanced-btn" onClick={this.changeView}>Advanced Settings</button>
                 
-                        </li>
-                    </ul>
-                </nav>
-
-                {this.state.showAccount ? <AccountSetting user = {this.state.user} onUsernameChange ={this.props.onUsernameChange} history = {this.props.history}/>: null}
-                {this.state.showPrivacy ? <PrivacySetting user ={this.state.user} onPrivacyChange = {this.onPrivacyChange}/> : null}
-                {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
-                
-                {/* <PlaylistNavbar/> */}
-            </div>
+                         </li>
+                     </ul>
+                     
+                        </Grid>
+                        <Grid item xs className ={classes.settingsContent}>
+                            {this.state.showAccount ? <AccountSetting user = {this.state.user} onUsernameChange ={this.props.onUsernameChange} history = {this.props.history}/>: null}
+                            {this.state.showPrivacy ? <PrivacySetting user ={this.state.user} onPrivacyChange = {this.onPrivacyChange}/> : null}
+                            {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
+                        </Grid>
+                    </Grid>
+                </Container> 
+            </main>
         );
     }
 
@@ -155,4 +208,4 @@ class Setting extends Component {
     }
 }
  
-export default Setting;
+export default withStyles(useStyles)(Setting);

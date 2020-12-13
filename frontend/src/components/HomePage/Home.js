@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   root: {
     minHeight: '100vh',
     backgroundImage: `url(${process.env.PUBLIC_URL + '../../assets/home.jpg' })`,
@@ -39,13 +39,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   
-}));
+});
 
-function Home() {
-
-  const classes = useStyles();
-  return (
-    <div className={classes.root}>
+class Home extends Component {
+  state = {  }
+  componentDidMount = () => {
+    if (this.props.username)
+      this.props.history.push('/home')
+  }
+  render() { 
+    const {classes} = this.props
+    return (  
+      <div className={classes.root}>
       <Navbar />
       <Box className={classes.hero}>
         <Box textAlign='center'>
@@ -65,10 +70,9 @@ function Home() {
       
 
     </div>
-    
-  );
+    );
+  }
 }
 
-export default Home;
 
-
+export default withStyles(useStyles)(Home);
