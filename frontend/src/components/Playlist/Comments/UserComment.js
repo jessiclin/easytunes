@@ -5,14 +5,47 @@ import ShowReplies from './ShowReplies'
 class UserComment extends Component {
     state = {  
         editVisible: false,
-        text : this.props.message
+        text : this.props.message,
+        username : null,
+        loading: true
     }
 
+    componentDidMount = () => {
+        let requestBody = {
+            query: `
+                query {
+                    getUserById (user_id : "${this.props.user_id}"){
+                        username
+                    }
+                }
+            `
+        }
+        fetch("http://localhost:5000/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+            'content-type': 'application/json'
+            }})
+        .then(res => {
+            if (res.status !== 200 && res.status !== 201) 
+                throw new Error('Playlist not found');
+            return res.json()
+        })
+        .then(data => {
+            console.log(data.data.getUserById)
+            this.setState({username : data.data.getUserById.username, loading: false})
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+    }
     handleUpdate = (event) => {
-        this.setState({text : event.target.value})
+        this.setState({text : event.target.value, loading:false})
     }
 
     handleEditVisibility = () => {
+        console.log("HERE")
         this.setState({editVisible : !this.state.editVisible})
     }
 
@@ -21,13 +54,12 @@ class UserComment extends Component {
         let requestBody = {
             query : `
                 mutation {
-                    deleteComment(playlist_id: "${this.props.playlist_id}", username: "${this.props.sessionUser}", index: ${this.props.index}) {
+                    deleteComment(playlist_id: "${this.props.playlist_id}", user_id: "${this.props.user_id}", index: ${this.props.index}) {
                         comments {
                             _id
-                            username
+                            user_id
                             message
                             replies {
-                                username
                                 message
                             }
                         }
@@ -59,17 +91,18 @@ class UserComment extends Component {
     }
 
     handleEditSubmit = () => {
+        console.log(this.state.text)
         let requestBody = {
             query: `
             mutation {
-                editComment(username : "${this.props.sessionUser}", message: "${this.state.text}", playlist_id: "${this.props.playlist_id}", comment_index : ${this.props.index}){
+                editComment(user_id: "${this.props.user_id}", message: "${this.state.text}", playlist_id: "${this.props.playlist_id}", comment_index : ${this.props.index}){
                     comments {
                         _id
-                        username 
+                        user_id
                         message 
                         date
                         replies {
-                            username 
+                            user_id
                             message
                         }
                     }
@@ -100,6 +133,8 @@ class UserComment extends Component {
 
     }
     render() { 
+        if (this.state.loading)
+            return (<> </>)
         return (  
             <>
             {/* Username */}
@@ -107,8 +142,8 @@ class UserComment extends Component {
                 {/* <div className="">
                     <img alt = "playlist_img" src={this.props.profile_img} class="user_picture"></img>
                 </div> */}
-                {this.props.username}
-                {this.props.username === this.props.sessionUser ?
+                {this.state.username}
+                {this.state.username === this.props.sessionUser ?
                     <button onClick ={this.handleEditVisibility} className = "delete-button"> Edit </button>
                     : null
                 }
@@ -116,7 +151,7 @@ class UserComment extends Component {
 
             {/* Comment */}
             <div className="row comment-row">
-                {!this.state.editVisibile ? <>{this.props.message} </>
+                {!this.state.editVisible ? <>{this.props.message} </>
                     : 
                     <>
                         <textarea id = "comment-input" className="comment-text" type="text" placeholder = {this.props.message} onChange = {this.handleUpdate}/>
@@ -130,7 +165,7 @@ class UserComment extends Component {
         
             {/* Reply Button */}
             <div className="row replies-row">
-                <Reply commentIndex = {this.props.index} username = {this.props.sessionUser}  playlist_id = {this.props.playlist_id} stateChange = {this.props.stateChange}/>
+                <Reply commentIndex = {this.props.index} user_id = {this.props.user_id}  playlist_id = {this.props.playlist_id} stateChange = {this.props.stateChange}/>
 
             </div>
             <div className="row replies-row">

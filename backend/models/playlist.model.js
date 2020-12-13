@@ -14,14 +14,13 @@ const PlaylistSchema = new Schema({
     comments: [
         {
             user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
-            username: {type: String, required: true},
             //profile_img: {type: String, required: true},
             date: {type: Date, required: true},
             message: {type: String, required: true},
             replies: [
                 {
                     user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
-                    username: {type: String, required: true},
+    
                     //profile_img: {type: String, required: true},
                     date: {type: Date, required: true},
                     message: {type: String, required: true},
