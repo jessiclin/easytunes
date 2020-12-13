@@ -223,7 +223,7 @@ const resolver = {
             //console.log(songs)
         }catch(error){}
     },
-    addRequest: async ({id, requested_username}) => {
+    addRequest: async ({id, requested_username, profile_img}) => {
         try{
             // Add request here 
             let result = await User.findOne({_id: id})
@@ -234,6 +234,7 @@ const resolver = {
                 const request = {
                     user_id: req._id,
                     username: requested_username,
+                    profile_img: profile_img,
                     request_date: new Date()
                 }
                 result.follow_requests.push(request)
@@ -242,12 +243,14 @@ const resolver = {
                 const request = {
                     user_id: req._id,
                     username: requested_username,
+                    profile_img: profile_img,
                     following_since: new Date()
                 }
                 result.followers.push(request)
                 req.following.push({
                     user_id: result._id,
                     username: result.username,
+                    profile_img: result.profile_img,
                     following_since: new Date()
                 })
                 req.save() 
@@ -258,7 +261,7 @@ const resolver = {
             return result
         }catch(error){}
     },
-    addFollower: async ({username, request_id}) => {
+    addFollower: async ({username, request_id, profile_img}) => {
         try{
             let result = await User.findOne({username: username})
             let requestee = await User.findOne({_id: request_id})
@@ -276,6 +279,7 @@ const resolver = {
             result.followers.push({
                 user_id: request_id,
                 username: requestee.username,
+                profile_img: requestee.profile_img,
                 following_since: date
             })
 
@@ -283,6 +287,7 @@ const resolver = {
             requestee.following.push({
                 user_id: result._id,
                 username: username,
+                profile_img: profile_img,
                 following_since: date 
             })
             result.save()
@@ -465,7 +470,7 @@ const resolver = {
             throw error
         }
     },
-    addComment: async({playlist_id, username, profile_img, comment}) => {
+    addComment: async({playlist_id, username, comment}) => {
         try {
             let user = await User.findOne({username: username})
             let playlist = await Playlist.findOne({_id : playlist_id})

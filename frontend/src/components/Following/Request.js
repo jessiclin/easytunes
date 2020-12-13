@@ -27,7 +27,7 @@ class Request extends Component {
         return (  
             <div className="follower-row">
                 <div className="col">
-                    <img alt="" src={this.state.request.profile_img} class=""></img>
+                    <img alt="" src={this.state.request.profile_img} class="user_icon"></img>
                 </div>
                 <div className="col">
                 <User username = {this.state.request.username} history = {this.state.history}/>
@@ -44,12 +44,12 @@ class Request extends Component {
         let requestBody = {
             query: `
                 mutation{
-                    addFollower(username: "${this.state.username}", request_id: "${this.state.request.user_id}"){
-                   
+                    addFollower(username: "${this.state.username}", request_id: "${this.state.request.user_id}", profile_img: "${this.state.request.profile_img}"){
                             _id
                             follow_requests {
                                 user_id
                                 username
+                                profile_img
                             }
                         
                     }

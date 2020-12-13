@@ -24,6 +24,7 @@ class Following extends Component {
                             following {
                                 user_id
                                 username
+                                profile_img
                             }
                         }
                     }

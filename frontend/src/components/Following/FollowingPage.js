@@ -31,6 +31,7 @@ class FollowingPage extends Component {
                         user {
                             _id
                             username
+                            profile_img
                             joined
                         }
                     }
@@ -126,10 +127,11 @@ class FollowingPage extends Component {
                         {/* Information Bar about the user */}
 
                         <div className="information-row">
-                            <div className="col">
-                                <img alt="" src={this.state.user.profile_img} class=""></img>
-                            </div>
+                            
                             <div className="col text-center">
+                                <div className="col">
+                                    <img alt="" src={this.state.user.profile_img} class="user_icon"></img>
+                                </div>
                                 <h2>{this.state.user.username}                            
                             
 

@@ -22,6 +22,7 @@ class Followers extends Component {
                             followers {
                                 user_id
                                 username
+                                profile_img
                             }
                         }
                     }

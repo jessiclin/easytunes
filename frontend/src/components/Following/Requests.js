@@ -23,6 +23,7 @@ class Requests extends Component {
                             follow_requests {
                                 user_id
                                 username
+                                profile_img
                             }
                         }
                     }
