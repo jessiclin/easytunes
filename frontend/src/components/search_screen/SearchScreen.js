@@ -31,7 +31,7 @@ class SearchScreen extends Component {
                 console.log(data)
                 let searchRes = this.state.searchResults 
                 if (type === 'artists')
-                    searchRes[type] = data.artists.items 
+                    searchRes[type] = data.tracks.items 
                 else if (type === 'songs')
                     searchRes[type] = data.tracks.items 
                 else if (type === 'users')

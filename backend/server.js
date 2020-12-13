@@ -134,7 +134,7 @@ app.use('/v1/search?', async (req, res, next) =>  {
 
     if (req.body.artist) 
         query = "artist:" + req.body.artist 
-        spotifyApi.searchArtists(query)
+        spotifyApi.searchTracks(query)
                 .then(function(data) {
                     res.status(200).send(data.body);
                     next()
@@ -145,7 +145,7 @@ app.use('/v1/search?', async (req, res, next) =>  {
 
     if (req.body.track){
 
-        query = req.body.track 
+        query = "track:" + req.body.track 
         
         await spotifyApi.searchTracks(query)
                     .then(function(data) {
