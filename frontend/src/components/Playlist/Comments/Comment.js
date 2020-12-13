@@ -37,7 +37,7 @@ class Comment extends Component {
                         message 
                         date
                         replies {
-                            username 
+                            username
                             message
                         }
                     }

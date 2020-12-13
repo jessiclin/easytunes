@@ -124,7 +124,11 @@ class FollowingPage extends Component {
 
                     <div className="container-fluid follow-data-container">
                         {/* Information Bar about the user */}
+
                         <div className="information-row">
+                            <div className="col">
+                                <img alt="" src={this.state.user.profile_img} class=""></img>
+                            </div>
                             <div className="col text-center">
                                 <h2>{this.state.user.username}                            
                             

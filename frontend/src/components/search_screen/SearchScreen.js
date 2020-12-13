@@ -79,6 +79,7 @@ class SearchScreen extends Component {
                         user {
                             _id
                             username
+                            profile_img
                             followers {
                                 user_id
                                 username

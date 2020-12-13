@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
     username: {type: String, required: true, unique: true},
+    profile_img: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     joined: {type: Date, required: true},
@@ -29,6 +30,7 @@ const UserSchema = new Schema({
         {
             user_id: {type:Schema.Types.ObjectId, ref: 'User',  required: true},
             username: {type:String, required: true},
+            profile_img: {type: String, required: true},
             following_since: {type:Date, required: true},
         }
     ],
@@ -36,6 +38,7 @@ const UserSchema = new Schema({
         {
             user_id: {type:Schema.Types.ObjectId, ref: 'User', required: true},   
             username: {type:String, required: true},
+            profile_img: {type: String, required: true},
             following_since: {type:Date, required: true},
         }
     ],   
@@ -43,6 +46,7 @@ const UserSchema = new Schema({
         {
             user_id: {type:Schema.Types.ObjectId, ref: 'User',required: true},
             username: {type:String, required: true},
+            profile_img: {type: String, required: true},
             request_date: {type:Date, required: true},
         }
     ], 
