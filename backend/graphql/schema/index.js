@@ -135,8 +135,8 @@ type RootMutation {
     deleteSong(playlist_id: ID!, song_id: ID!, index: Int!): SongRef
     addSong(songInput: SongInput!, playlist_id: ID!): Playlist
     updatePlaylist(id: ID!, playlist: PlaylistInput!): Playlist
-    addRequest(id: ID!, requested_username: String!): User
-    addFollower(username: String!, request_id: ID!): User
+    addRequest(id: ID!, requested_username: String!, profile_img: String!): User
+    addFollower(username: String!, request_id: ID!, profile_img: String!): User
     removeFollower(username: String!, follower_id: ID!): User
     unFollow(username: String!, following_id: ID!): User
     addSavedPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist

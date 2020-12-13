@@ -27,10 +27,12 @@ class UserCard extends Component {
                             follow_requests {
                                 user_id
                                 username
+                                profile_img
                             }
                             followers {
                                 user_id 
                                 username
+                                profile_img
                             }
                         }
                     }
@@ -111,16 +113,19 @@ class UserCard extends Component {
         let requestBody = {
             query: `
                 mutation {
-                    addRequest(id: "${this.state.user.user._id}", requested_username: "${this.props.sessionUser}"){
+                    addRequest(id: "${this.state.user.user._id}", requested_username: "${this.props.sessionUser}", profile_img: "${this.state.user.user.profile_img}"){
                             _id
                             username
+                            profile_img
                             followers {
                                 user_id
                                 username
+                                profile_img
                             }
                             follow_requests {
                                 user_id 
                                 username
+                                profile_img
                             }
 
                     }
@@ -167,7 +172,7 @@ class UserCard extends Component {
             <div>
                 <div className='card z-depth-0 text search_card'>
                     <div className="col s1">
-                        <img alt = "playlist_img" src={this.props.user.user.profile_img} class="user_picture"></img>
+                        <img alt = "user_img" src={this.state.user.user.profile_img} class="user_picture"></img>
                     </div>
                     <div className='card-content col s3 user-button'>
                         <button onClick = {this.toUser}><span className='card-title'>{this.state.user.user.username}</span> </button>
