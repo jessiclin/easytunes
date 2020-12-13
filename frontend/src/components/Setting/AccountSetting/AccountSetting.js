@@ -29,6 +29,21 @@ class AccountSetting extends Component {
             <div className="user-settings-container">
             <div className="settings-header">Account</div>
             <div className="user-settings-content">
+                <h5>Profile Picture</h5>
+                <h6>This is the picture associated with your profile.</h6>
+                <div className='user-setting-info'>
+                    Upload Playlist Photo
+                    <div>
+                        <input
+                            type="file"
+                            id="photo-input"
+                            accept="image/*"
+                        />
+                    </div>
+                </div>
+                {/* <Update text = {"Update Picture"} original = {this.state.user.username} onChange = {this.onChange}/> */}
+            </div>
+            <div className="user-settings-content">
                 <h5>Email</h5>
                 <h6> This is the email associated with your account</h6>
                 <div className="user-setting-info">

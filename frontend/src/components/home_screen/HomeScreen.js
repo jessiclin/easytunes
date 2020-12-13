@@ -61,7 +61,7 @@ class HomeScreen extends Component {
                           getPlaylistByID(id : "${data.current_playlist_id}"){
                             _id
                             name
-                            img
+                            playlist_img
                             total_duration
                             songs {
                               song_id

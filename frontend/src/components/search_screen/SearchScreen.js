@@ -59,6 +59,7 @@ class SearchScreen extends Component {
                         username
                         likes
                         total_duration 
+                        playlist_img
                         songs {
                             song_id 
                             name

@@ -59,7 +59,8 @@ class Profile extends Component {
                             username
                             public
                             likes
-                            total_duration 
+                            total_duration
+                            playlist_img 
                             songs {
                                 song_id
                                 song_uri
@@ -119,7 +120,7 @@ class Profile extends Component {
                     <div className="information-row">
                         <div className="col text-center">
                             <div className="">
-                                <img alt = "playlist_img" src={this.state.profileUserInfo.profile_img} class="user_picture"></img>
+                                <img alt="playlist_img" src={this.state.profileUserInfo.profile_img} class="user_picture"></img>
                             </div>
                             <h2>{this.state.profileUsername}                            
                              
