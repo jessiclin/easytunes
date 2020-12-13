@@ -26,6 +26,9 @@ class Follower extends Component {
         return (  
             <div className="follower-row">
                     <div className="col">
+                        <img alt="" src={this.state.follower.profile_img} class=""></img>
+                    </div>
+                    <div className="col">
                         {/* <button onClick = {toUser}>{follower.username}</button> */}
                         <User username = {this.state.follower.username} history = {this.state.history}/>
                     </div>

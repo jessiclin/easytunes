@@ -48,11 +48,13 @@ class Playlist extends Component {
                         comments {
                             _id
                             username
+                            profile_img
                             date
                             message
                             replies {
                                 _id
                                 username
+                                profile_img
                                 date
                                 message
                             }

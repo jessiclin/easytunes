@@ -104,6 +104,9 @@ class UserComment extends Component {
             <>
             {/* Username */}
             <div className="row username-row">
+                {/* <div className="">
+                    <img alt = "playlist_img" src={this.props.profile_img} class="user_picture"></img>
+                </div> */}
                 {this.props.username}
                 {this.props.username === this.props.sessionUser ?
                     <button onClick ={this.handleEditVisibility} className = "delete-button"> Edit </button>

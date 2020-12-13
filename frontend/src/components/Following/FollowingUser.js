@@ -23,6 +23,9 @@ class FollowingUser extends Component {
         return (  
             <div className="follower-row">
                     <div className="col">
+                        <img alt="" src={this.state.following.profile_img} class=""></img>
+                    </div>
+                    <div className="col">
                       <User username = {this.state.following.username} history ={this.props.history} />
                     </div>
                     <div className="col">

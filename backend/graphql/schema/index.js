@@ -13,12 +13,14 @@ type SongRef {
 type ReplyRef {
     _id: ID!
     username: String!
+    profile_img: String!
     date: String!
     message: String!
 }
 type CommentRef {
     _id: ID!
     username: String!
+    profile_img: String!
     date: String!
     message: String!
     replies:  [ReplyRef!]!
@@ -40,6 +42,7 @@ type Playlist {
 type UserRef {
     user_id: ID!
     username: String!
+    profile_img: String!
     following_since: String!
 }
 
@@ -63,6 +66,7 @@ type User {
     email: String
     password: String
     username: String!
+    profile_img: String!
     joined: String!
     url: String!
     default_public_saved_playlist: Boolean!
