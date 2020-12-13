@@ -15,13 +15,16 @@ class PlaylistCard extends Component {
         return (
             <div>
                 <div className='card z-depth-0 text search_card'>
+                    <div className="card-content col s1">
+                        <img alt = "playlist_img" src={'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'} class="song_picture"></img>
+                    </div>
                     <div className='card-content col s3 playlist-button'>
                         <button  onClick={this.toPlaylist}><span className='card-title'>{this.state.playlist.name}</span></button>
                         </div>
                     <div className='card-content col s3'>
                         <span className='card-title'>{this.state.playlist.username}</span>
                     </div>
-                    <div className='card-content col s3'>
+                    <div className='card-content col s1'>
                         <span className='card-title'>{this.state.playlist.likes}</span>
                     </div>
                     <div className='card-content col s3'>

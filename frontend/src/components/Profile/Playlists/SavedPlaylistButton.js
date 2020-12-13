@@ -41,6 +41,7 @@ class SavedPlaylistButton extends Component {
                             name
                             song_uri
                             artists
+                            song_img
                         }
                             username
                             likes
@@ -50,6 +51,7 @@ class SavedPlaylistButton extends Component {
                                 name
                                 song_uri
                                 artists
+                                song_img
                             }
                     }
                 }
