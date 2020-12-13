@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 
 class Comment extends Component {
+    constructor(props){
+        super(props)
+        this.commentEl = React.createRef()
+    }
     state = {  
         buttonsVisible: false,
-        text : ""
     }
 
-    onChange = (event) => {
-        this.setState({text: event.target.value})
-    }
 
     setVisible = () => {
         console.log("BUTTONS VISIBLE")
@@ -26,18 +26,18 @@ class Comment extends Component {
     }
 
     handleSubmit = () => {
+        console.log(this.commentEl.current.value)
         let requestBody = {
             query: `
             mutation {
-                addComment(playlist_id: "${this.props.playlist_id}", username : "${this.props.username}", comment: "${this.state.text}"){
-                
+                addComment(playlist_id: "${this.props.playlist_id}", username : "${this.props.username}", comment: "${this.commentEl.current.value}"){
                     comments {
                         _id
-                        username 
+                        user_id
                         message 
                         date
                         replies {
-                            username
+                            user_id
                             message
                         }
                     }
@@ -59,9 +59,10 @@ class Comment extends Component {
         })
         .then (data => {
           //  this.props.setState({comments : data.data.addComment.comments})
-          
+          console.log(data)
           this.props.stateChange(data.data.addComment.comments)
-          this.setState({buttonsVisible: false, text: ""})
+          this.commentEl.current.value = ""
+          this.setState({buttonsVisible: false}, function () {console.log(this.state)})
             
         })
         .catch(err => {
@@ -71,7 +72,7 @@ class Comment extends Component {
     render() { 
         return (  
             <>
-            <textarea id = "comment-input" className="comment-text" type="text" placeholder="Add a Comment" onChange = {this.onChange} onFocus = {this.setVisible} onBlur = {this.handleBlur}/>
+            <textarea id = "comment-input" className="comment-text" type="text" ref = {this.commentEl} placeholder="Add a Comment" onFocus = {this.setVisible} onBlur = {this.handleBlur}/>
             {
                 this.state.buttonsVisible === true ? 
                 <>
