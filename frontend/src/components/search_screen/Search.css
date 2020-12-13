@@ -1,5 +1,6 @@
 .text {
     flex-direction: row;
+    
 }
 .button {
     margin-left: 1%;
@@ -7,7 +8,8 @@
 }
 
 .search-results-container {
-    margin-top: 60px
+    margin-top: 60px;
+
 }
 
 .add-song-box {

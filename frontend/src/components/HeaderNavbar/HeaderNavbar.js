@@ -258,7 +258,7 @@ class HeaderNavbar extends Component {
               // })}
             
             position="static" 
-            style={{ background: '#2E3B55' }}>
+            style={{ background: '#5472d3' }}>
                 <Toolbar>
                 <IconButton
                   color="inherit"
