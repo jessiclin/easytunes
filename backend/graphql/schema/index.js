@@ -12,14 +12,14 @@ type SongRef {
 }
 type ReplyRef {
     _id: ID!
-    username: String!
+    user_id: ID!
     profile_img: String!
     date: String!
     message: String!
 }
 type CommentRef {
     _id: ID!
-    username: String!
+    user_id: ID!
     profile_img: String!
     date: String!
     message: String!
@@ -122,6 +122,7 @@ type RootQuery {
     searchUsers(username: String!): [User_Playlists!]!
     searchPlaylists(name: String!): [Playlist!]!
     getUserByUsername(username: String!): User_Playlists!
+    getUserById(user_id : ID!): User!
     getUserByEmail(email: String!) : User_Playlists!
     login(email: String!, password: String!) : AuthData!
     getUserPlaylists(username: String!) : [Playlist!]!
@@ -151,14 +152,14 @@ type RootMutation {
     updateEmail(email:String!, new_email:String!): User
     changeUsername(username: String!, new_username:String!): User
     changePassword(username: String!, new_password:String!): User
-    deleteComment(playlist_id: ID!, username: String!, index: Int!): Playlist
+    deleteComment(playlist_id: ID!, user_id: ID!, index: Int!): Playlist
     changeSavedPlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
     changePlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
     changeVerifyFollowDef(_id: ID!, def: Boolean!): User 
     like_unlikePlaylist(username: String!, playlist_id: ID!, playlist_name: String!): User
     resetPassword(email: String!, new_password: String!): User
-    addReply(username: String!, message: String!, playlist_id: ID!, comment_index: Int!): Playlist
-    editComment(username: String!, message: String!, playlist_id: ID!, comment_index: Int!): Playlist
+    addReply(user_id: ID!, message: String!, playlist_id: ID!, comment_index: Int!): Playlist
+    editComment(user_id: ID!, message: String!, playlist_id: ID!, comment_index: Int!): Playlist
 }
 
 schema {

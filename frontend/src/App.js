@@ -114,11 +114,14 @@ class App extends Component {
     return [uris, song]
   }
 
-  onPlaylistChange = (playlist) => {
+  onPlaylistChange = (playlist, song) => {
     let uris = []
-    let result = [uris, playlist.songs[0]]
+    let result = [uris]
+    let offset = 0
     if (playlist){
       uris = playlist.songs.map((song,i) => {
+        if (song.song_uri === song.song_uri)  
+          offset = i
         return song.song_uri
       })
       result[0] = uris
@@ -129,10 +132,11 @@ class App extends Component {
 
   }
   console.log("PLAYLIST CHANGE APP.JS")
+  result.push(playlist.songs[offset])
     if (!this.state.play || !this.state.playlist)
-      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0, needsUpdate:true}, function() {console.log(this.state)})
+      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:true}, function() {console.log(this.state)})
     else 
-      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0, needsUpdate:false}, function() {console.log(this.state)})
+      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:false}, function() {console.log(this.state)})
   }
 
   onShuffleChange = () => {

@@ -47,12 +47,12 @@ class Playlist extends Component {
                         public 
                         comments {
                             _id
-                            username
+                            user_id
                             date
                             message
                             replies {
                                 _id
-                                username
+                                user_id
                                 date
                                 message
                             }
