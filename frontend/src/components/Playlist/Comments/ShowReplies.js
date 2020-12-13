@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { BsFillCaretUpFill, BsFillCaretDownFill} from 'react-icons/bs'
+import ShowReplyCard from './ShowReplyCard'
+
 class ShowReplies extends Component {
     state = {  
         repliesVisible: false 
@@ -8,13 +10,13 @@ class ShowReplies extends Component {
     toggleVisibility = () => {
         this.setState({repliesVisible : !this.state.repliesVisible})
     }
+
+    
     render() { 
         let res = this.props.replies.map(function(reply, j){
             return (
-                <li key = {reply.username + j}>
-                    <div className="username-row">{reply.username}</div>
-                    <div className="comment-row">{reply.message}</div>
-                    
+                <li key = {reply.user_id + j}>
+                    <ShowReplyCard user_id = {reply.user_id} message = {reply.message} />
                 </li>
             )
         }, this)

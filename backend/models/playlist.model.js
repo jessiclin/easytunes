@@ -6,7 +6,7 @@ const PlaylistSchema = new Schema({
     user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
     username: {type: String, required: true},
     name: {type:String, required:true},
-    img: {type:String, default: ""},
+    playlist_img: {type:String, required: true},
     date_created: {type: Date, required:true},
     total_duration: {type: Number, default: 0},
     public: {type: Boolean, default: false},
@@ -14,14 +14,13 @@ const PlaylistSchema = new Schema({
     comments: [
         {
             user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
-            username: {type: String, required: true},
             //profile_img: {type: String, required: true},
             date: {type: Date, required: true},
             message: {type: String, required: true},
             replies: [
                 {
                     user_id: {type: Schema.Types.ObjectId, ref: 'User', required:true},
-                    username: {type: String, required: true},
+    
                     //profile_img: {type: String, required: true},
                     date: {type: Date, required: true},
                     message: {type: String, required: true},

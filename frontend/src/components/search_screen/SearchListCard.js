@@ -25,7 +25,7 @@ class SearchListCard extends Component {
         return (
             <>
             {this.state.type === "track" ? this.renderSong() : 
-            this.state.type === "artist" ? this.renderArtist(): 
+            this.state.type === "artist" ? this.renderSong(): 
             this.state.type === "playlist" ? <PlaylistCard playlist = {this.state.item} sessionUser = {this.props.username} history = {this.props.history}/>:
             <UserCard user = {this.state.item} sessionUser = {this.props.username} history = {this.props.history}/>}
             </>

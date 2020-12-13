@@ -31,7 +31,7 @@ class SearchScreen extends Component {
                 console.log(data)
                 let searchRes = this.state.searchResults 
                 if (type === 'artists')
-                    searchRes[type] = data.artists.items 
+                    searchRes[type] = data.tracks.items 
                 else if (type === 'songs')
                     searchRes[type] = data.tracks.items 
                 else if (type === 'users')
@@ -59,6 +59,7 @@ class SearchScreen extends Component {
                         username
                         likes
                         total_duration 
+                        playlist_img
                         songs {
                             song_id 
                             name
