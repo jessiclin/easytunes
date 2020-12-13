@@ -80,6 +80,7 @@ class SearchList extends Component {
                 {users ? 
                 <>
                     <div className='row'>
+                        <div className='col s3'></div>
                         <div className='col s3'>User</div>
                         <div className='col s3'>Followers</div>
                         <div className='col s3'>Playlists</div>

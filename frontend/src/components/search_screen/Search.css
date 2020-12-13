@@ -33,9 +33,11 @@
     border-radius: 100%;
 }
 
-.song_picture {
+.song_picture,
+.user_picture {
     height: 64px;
     width: 64px;
+    margin: 1%;
 }
 
 .search_card:hover {
