@@ -29,7 +29,7 @@ type Playlist {
     _id: ID!
     username: String!
     name: String!
-    img: String!
+    playlist_img: String!
     date_created: String!
     public: Boolean!
     total_duration: Int!
@@ -50,7 +50,7 @@ type Saved {
     playlist_id: ID!
     username: String!
     name: String!
-    img: String!
+    playlist_img: String!
     date_created: String!
     total_duration: Int!
     likes: Int!
@@ -111,7 +111,7 @@ input SongInput {
 
 input PlaylistInput{
     name: String!
-    img: String!
+    playlist_img: String!
     public: Boolean!
     total_duration: Int!
     likes: Int!
