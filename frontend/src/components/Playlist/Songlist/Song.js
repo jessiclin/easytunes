@@ -62,6 +62,7 @@ class Song extends Component {
                                 name 
                                 song_id 
                                 song_uri
+                                song_img
                             }
                             total_duration 
                             username 

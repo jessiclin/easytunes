@@ -59,9 +59,10 @@ class SearchList extends Component {
                     playlists ? 
                     <>
                     <div className='row'>
+                        <div className='col s1'></div>
                         <div className='col s3'>Name</div>
                         <div className='col s3'>Username</div>
-                        <div className='col s3'>Likes</div>
+                        <div className='col s1'>Likes</div>
                         <div className='col s3'>Songs</div>
                         <div className='col s3'></div>
                     </div>

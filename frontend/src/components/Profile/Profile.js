@@ -64,6 +64,7 @@ class Profile extends Component {
                                 song_uri
                                 name
                                 artists
+                                song_img
                             }
                         }
 

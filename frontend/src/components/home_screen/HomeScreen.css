@@ -354,6 +354,8 @@
 .rhap_button-clear:focus:not(:focus-visible) {
   outline: 0;
 }
+.home_card {
+}
 
   
  
