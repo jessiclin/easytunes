@@ -24,6 +24,21 @@ class Login extends Component {
         signUpVisible: !this.props.login
    }
 
+    componentDidMount = () => {
+        if (this.props.username)
+            this.props.history.push('/home')
+        if (this.props.login){
+            document.getElementsByClassName("to-signin-btn")[0].style.borderBottom = "none"
+            document.getElementsByClassName("to-signup-btn")[0].style.borderBottom = "1px solid lightgray";
+            document.getElementsByClassName("to-signin-btn")[0].style.borderRight = "1px solid lightgray"
+        }
+        else {
+            document.getElementsByClassName("to-signup-btn")[0].style.borderBottom = "none"
+            document.getElementsByClassName("to-signin-btn")[0].style.borderBottom = "1px solid lightgray";
+            document.getElementsByClassName("to-signin-btn")[0].style.borderRight = "1px solid lightgray"
+        }
+
+   }
    // Handle rendering sign in or sign up 
     changeView = (event) => {
         const visible = event.target.className
@@ -35,6 +50,7 @@ class Login extends Component {
                 signUpVisible : false
             })
             invisible = "to-signup-btn"
+            this.props.history.push('/login')
         }
         else {
             this.setState({
@@ -42,10 +58,9 @@ class Login extends Component {
                 signUpVisible : true
             })
             invisible = "to-signin-btn"
+            this.props.history.push('/register')
         }
-    
-        console.log(document.getElementsByClassName(visible)[0])
-        console.log(document.getElementsByClassName(invisible)[0])
+
         document.getElementsByClassName(visible)[0].style.borderBottom = "none"
         document.getElementsByClassName(invisible)[0].style.borderBottom = "1px solid lightgray";
     }
@@ -73,7 +88,7 @@ class Login extends Component {
                 <div className="container login-container">
                     <div className="row justify-content-center login-btns">  
                             <button className="to-signin-btn" onClick = {this.changeView} >Sign In</button>
-                            <button className="to-signup-btn" onClick = {this.changeView} style={{borderLeft:"1px solid lightgray", borderBottom:"1px solid lightgray"} }> Sign Up</button>
+                            <button className="to-signup-btn" onClick = {this.changeView}> Sign Up</button>
                     </div>
 
                     {this.state.loginVisible ? <SignIn onUsernameChange = {this.props.onUsernameChange} toHome = {this.toHome} username = {this.props.username}/> : null}
@@ -86,6 +101,5 @@ class Login extends Component {
 }
  
 export default Login;
-
 
 
