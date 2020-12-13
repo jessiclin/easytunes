@@ -23,12 +23,12 @@ class Comments extends Component {
 
     render() {
     
-
         let comments = this.state.comments.map(function(elem, i){
             // One comment, i is index 
+
             return (
-                    <div key = {elem.username + " " + i.toString()}  className="container result-container">
-                        <UserComment username = {elem.username} 
+                    <div key = {elem.user_id + " " + i.toString()}  className="container result-container">
+                        <UserComment user_id = {elem.user_id} 
                             message = {elem.message} 
                             index = {i} 
                             replies = {elem.replies} 

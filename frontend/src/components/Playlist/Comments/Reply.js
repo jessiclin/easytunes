@@ -28,16 +28,16 @@ class Reply extends Component {
         let requestBody = {
             query: `
             mutation {
-                addReply(username:"${this.props.username}", message: "${this.state.text}", playlist_id: "${this.props.playlist_id}", comment_index: ${this.props.commentIndex}){
+                addReply(user_id:"${this.props.user_id}", message: "${this.state.text}", playlist_id: "${this.props.playlist_id}", comment_index: ${this.props.commentIndex}){
 
                     comments {
                         _id
-                        username 
+                        user_id
                         message 
                         date 
                         replies {
                             _id
-                            username 
+                            user_id
                             message
                         }
                     }

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route,} from 'react-router-dom';
 import './App.css';
@@ -13,7 +14,16 @@ import FollowingPage from './components/Following/FollowingPage'
 import Setting from './components/Setting/Setting'
 import HeaderNavbar from './components/HeaderNavbar/HeaderNavbar'
 import PlaylistNavbar from './components/PlaylistNavbar/PlaylistNavbar'
+import Menu from './components/Menu/Menu'
+import { withStyles } from '@material-ui/core/styles';
 // import Navbar from './components/Navbar/Navbar'
+
+
+const useStyles = theme => ({
+  root: {
+    display: 'flex',
+  },
+})
 
 class App extends Component {
 
@@ -104,11 +114,14 @@ class App extends Component {
     return [uris, song]
   }
 
-  onPlaylistChange = (playlist) => {
+  onPlaylistChange = (playlist, song) => {
     let uris = []
-    let result = [uris, playlist.songs[0]]
+    let result = [uris]
+    let offset = 0
     if (playlist){
       uris = playlist.songs.map((song,i) => {
+        if (song.song_uri === song.song_uri)  
+          offset = i
         return song.song_uri
       })
       result[0] = uris
@@ -119,10 +132,11 @@ class App extends Component {
 
   }
   console.log("PLAYLIST CHANGE APP.JS")
+  result.push(playlist.songs[offset])
     if (!this.state.play || !this.state.playlist)
-      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0, needsUpdate:true}, function() {console.log(this.state)})
+      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:true}, function() {console.log(this.state)})
     else 
-      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: 0, needsUpdate:false}, function() {console.log(this.state)})
+      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:false}, function() {console.log(this.state)})
   }
 
   onShuffleChange = () => {
@@ -149,87 +163,102 @@ class App extends Component {
     this.setState({atHome : false})
   }
 
-  render() {
 
+  
+  render() {
+    const {classes} = this.props
     return (
       <BrowserRouter>
-        <div className="App">
+        <div className="App"> 
+        <div className={this.state.username ? classes.root : null}>
+            {this.state.username ? 
+            <Route render = {(props) => 
+              <Menu {...props} username = {this.state.username} onUsernameChange = {this.onUsernameChange}/>
+              // <HeaderNavbar {...props} username= {this.state.username} onUsernameChange = {this.onUsernameChange}/> 
+            }/>
+            :  null}
 
-        {this.state.username ? 
-         <Route render = {(props) => 
-          <HeaderNavbar {...props} username= {this.state.username} onUsernameChange = {this.onUsernameChange}/> 
-         }/>
-        :  null}
+            
 
+            <Switch>
+              <Route exact path='/' 
+                render = {(props) => (
+                  <Home {...props} username = {this.state.username} />
+                )}
+                /> 
+              {/* <Route exact path='/' component = {Home}/> */}
 
-          
-          <Switch>
-            <Route exact path='/' 
-              render = {(props) => (
-                <Home {...props} username = {this.state.username} />
-              )}
+              <Route exact path='/login' 
+                render = {(props) => (
+                  <LoginScreen {...props} username = {this.state.username} login = {true} onUsernameChange={this.onUsernameChange} />
+                )}
+                /> 
+
+              <Route exact path='/register' 
+                render = {(props) => (
+                  <LoginScreen {...props} username = {this.state.username} login = {false} onUsernameChange={this.onUsernameChange} />
+                )}
+              />
+
+              <Route exact path='/forgotpassword' component={ResetPasswordScreen}/>
+
+              <Route exact path='/home' 
+                render = {(props) => (
+                  <HomeScreen {...props} 
+                    username = {this.state.username} 
+                    access_token = {this.state.access_token}
+                    current_playlist = {this.state.current_playlist}
+                    current_song = {this.state.current_song}/>
+                )}
+              />
+
+              <Route exact path='/searchq=:query/type=:type' 
+                render = {(props) => (
+                <SearchScreen {...props} username = {this.state.username} results = {this.state.results}/> 
+              )}/>
+
+              <Route exact path='/:username/followers' 
+                render = {(props => (
+                  <FollowingPage {...props} username = {this.state.username} state = "followers"/>
+                ))}
+              />
+
+              <Route exact path='/:username/following' 
+                render = {(props => (
+                  <FollowingPage {...props} username = {this.state.username} state = "following" />
+                ))}
+              />
+
+              <Route exact path='/:username/requests' 
+                render = {(props => (
+                  <FollowingPage {...props} username = {this.state.username} state = "requests" />
+                ))}
+              />
+
+              <Route exact path='/:username/playlist=:playlistid'
+                render = {(props) => (
+                  <Playlist {...props} 
+                    username = {this.state.username}
+                    play = {this.state.play}
+                    onPlayChange = {this.onPlayChange}
+                    onPlaylistChange = {this.onPlaylistChange}
+                    onSongChange = {this.onSongChange}
+                    current_playlist = {this.state.current_playlist}
+                    current_song = {this.state.current_song}
+                    shuffle= {this.shuffle}
+                  />
+                )}
               /> 
-            {/* <Route exact path='/' component = {Home}/> */}
 
-            <Route exact path='/login' 
-              render = {(props) => (
-                <LoginScreen {...props} username = {this.state.username} login = {true} onUsernameChange={this.onUsernameChange} />
-              )}
-              /> 
+              <Route exact path='/:username/settings'
+                render = {(props) => (
+                  <Setting {...props} username = {this.state.username} onUsernameChange = {this.onUsernameChange}/>
+                )}
+              />
 
-            <Route exact path='/register' 
-              render = {(props) => (
-                <LoginScreen {...props} username = {this.state.username} login = {false} onUsernameChange={this.onUsernameChange} />
-              )}
-            />
-
-            <Route exact path='/forgotpassword' component={ResetPasswordScreen}/>
-
-            <Route exact path='/home' 
-              render = {(props) => (
-                <HomeScreen {...props} 
-                  username = {this.state.username} 
-                  access_token = {this.state.access_token}
-                  current_playlist = {this.state.current_playlist}
-                  current_song = {this.state.current_song}/>
-              )}
-            />
-
-            <Route exact path='/searchq=:query/type=:type' 
-              render = {(props) => (
-              <SearchScreen {...props} username = {this.state.username} results = {this.state.results}/> 
-            )}/>
-
-            <Route exact path='/:username/followers' 
-              render = {(props => (
-                <FollowingPage {...props} username = {this.state.username} />
-              ))}
-            />
-
-            <Route exact path='/:username/playlist=:playlistid'
-              render = {(props) => (
-                <Playlist {...props} 
-                  username = {this.state.username}
-                  play = {this.state.play}
-                  onPlayChange = {this.onPlayChange}
-                  onPlaylistChange = {this.onPlaylistChange}
-                  onSongChange = {this.onSongChange}
-                  current_playlist = {this.state.current_playlist}
-                  current_song = {this.state.current_song}
-                  shuffle= {this.shuffle}
-                />
-              )}
-            /> 
-
-            <Route exact path='/:username/settings'
-              render = {(props) => (
-                <Setting {...props} username = {this.state.username} onUsernameChange = {this.onUsernameChange}/>
-              )}
-            />
-
-            <Route exact path='/:username'
-              render = {(props) => (
-                <Profile {...props} 
+              <Route exact path='/:username'
+                render = {(props) => (
+                  <Profile {...props} 
                   username = {this.state.username} 
                   play = {this.state.play} 
                   onPlayChange = {this.onPlayChange} 
@@ -237,45 +266,53 @@ class App extends Component {
                   current_playlist = {this.state.current_playlist}
                   shuffle= {this.shuffle}
                 />
-              )}
-            />
+                  // <Profile {...props} 
+                  //   username = {this.state.username} 
+                  //   play = {this.state.play} 
+                  //   onPlayChange = {this.onPlayChange} 
+                  //   onPlaylistChange = {this.onPlaylistChange}
+                  //   current_playlist = {this.state.current_playlist}
+                  //   shuffle= {this.shuffle}
+                  // />
+                )}
+              />
+              
+              
+              {/* <Route path='/:userid/following' component={Following}/> */}
+              
+              {/* <Route path='/:any' component={HomeScreen} /> */}
+            </Switch>
+            {this.state.username ? 
+            <>
             
-            
-            {/* <Route path='/:userid/following' component={Following}/> */}
-            
-            {/* <Route path='/:any' component={HomeScreen} /> */}
-          </Switch>
-          {this.state.username ? 
-          <>
-          
-            <Route render = {(props) => 
-              <PlaylistNavbar {...props} 
-                          username= {this.state.username} 
-                            play = {this.state.play} 
-                            onPlayChange = {this.onPlayChange} 
-                            onPlaylistChange = {this.onPlaylistChange}
-                            onSongChange = {this.onSongChange}
-                            onShuffleChange = {this.onShuffleChange}
-                            playlist = {this.state.uris}
-                            current_song = {this.state.current_song}
-                            access_token = {this.state.access_token}
-                            offset = {this.state.offset}
-                            shuffle= {this.state.shuffle}
-                            shufflePlaylist = {this.shufflePlaylist}
-                            needsUpdate = {this.state.needsUpdate}
-                            updated = {this.updated}
+              <Route render = {(props) => 
+                <PlaylistNavbar {...props} 
+                            username= {this.state.username} 
+                              play = {this.state.play} 
+                              onPlayChange = {this.onPlayChange} 
+                              onPlaylistChange = {this.onPlaylistChange}
+                              onSongChange = {this.onSongChange}
+                              onShuffleChange = {this.onShuffleChange}
+                              playlist = {this.state.uris}
+                              current_song = {this.state.current_song}
+                              access_token = {this.state.access_token}
+                              offset = {this.state.offset}
+                              shuffle= {this.state.shuffle}
+                              shufflePlaylist = {this.shufflePlaylist}
+                              needsUpdate = {this.state.needsUpdate}
+                              updated = {this.updated}
 
-              />   
-            
-            }/>
-            </>
-        :  null}
+                />   
+              
+              }/>
+              </>
+          :  null}
 
-
+          </div>
         </div>
       </BrowserRouter>
     );
   }
 }
 
-export default App
+export default withStyles(useStyles)(App)

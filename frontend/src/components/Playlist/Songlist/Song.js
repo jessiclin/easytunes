@@ -96,6 +96,7 @@ class Song extends Component {
             this.props.onPlayChange(!this.props.play)
         // Different Song 
         else {
+            console.log("SONG ON SONG CHANGE")
             this.props.onSongChange(this.state.song.song_id)
         }
             

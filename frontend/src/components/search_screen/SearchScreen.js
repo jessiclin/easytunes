@@ -73,6 +73,7 @@ class SearchScreen extends Component {
 
     // Handle getting search results for users 
     fetchUsers = (last, query) => {
+        console.log(query)
         let requestBody = {
             query: `
                 query {
@@ -126,10 +127,10 @@ class SearchScreen extends Component {
             }, () => {
                 const type = this.state.searchType;
                 const query = this.state.searchQuery;
-                console.log(type, query, this.state.loading, this.props.match.params.type, this.props.match.params.query)
+                // console.log(type, query, this.state.loading, this.props.match.params.type, this.props.match.params.query)
                 if (type === 'artists' || type === 'songs')
                 this.fetchSpotify(type,query, true)    
-                else if (type === 'user')
+                else if (type === 'users')
                     this.fetchUsers(true, query)
                 else if (type === 'playlists')
                     this.fetchPlaylists(true, query)
@@ -147,15 +148,18 @@ class SearchScreen extends Component {
 
     // Handles the search page when the user first enters 
     componentDidMount = () => {
+
         if (!this.props.username)
             this.props.history.push('/login')
         if (!this.state.loading){
+           
             this.setState({loading: true})
             const type = this.state.searchType;
             const query = this.state.searchQuery;
+            console.log(type)
             if (type === 'artists' || type === 'songs')
             this.fetchSpotify(type, query, true)    
-            else if (type === 'user')
+            else if (type === 'users')
                 this.fetchUsers(true, query)
             else if (type === 'playlists')
                 this.fetchPlaylists(true, query)
