@@ -145,6 +145,7 @@ type RootMutation {
     forkPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist
     changePlaylistPrivacy(id: ID!, privacy: Boolean!): Playlist 
     changePlaylistName(id: ID!, name: String!): Playlist 
+    changePlaylistImg(id: ID!, img: String!): Playlist
     removeAllSongs(id: ID!): Playlist
     moveSongUp(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
     moveSongDown(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
