@@ -3,7 +3,6 @@ import User from '../../models/user.model.js'
 import jwt from 'jsonwebtoken'
 import Playlist from '../../models/playlist.model.js';
 import request from 'request';
-//const nodemailer = require('nodemailer');
 import nodemailer from 'nodemailer';
 const saltRounds = 10;
 const resolver = {
@@ -102,7 +101,8 @@ const resolver = {
                 name: name, 
                 username: username,
                 date_created: new Date(),
-                public: user.default_public_playlist
+                public: user.default_public_playlist,
+                playlist_img: 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'
             })
 
             const playlists = await Playlist.find({username : username})
@@ -402,7 +402,8 @@ const resolver = {
                     username: username,
                     date_created: new Date(),
                     total_duration: playlist.total_duration, 
-                    songs: playlist.songs
+                    songs: playlist.songs,
+                    playlist_img: 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'
                 })
 
                 const result = await new_playlist.save()

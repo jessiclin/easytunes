@@ -16,7 +16,8 @@ class PlaylistSetting extends Component {
         playlist : this.props.playlist,
         save : false,
         edit: this.props.editing,
-        public:this.props.playlist.public
+        public:this.props.playlist.public,
+        playlist_img: this.props.playlist.playlist_img
     }
 
     // Changes the edit status 
@@ -60,6 +61,24 @@ class PlaylistSetting extends Component {
         this.setState({playlist: playlist})
     }
 
+    Post = (e) => {
+        e.preventDefault();
+        const file = document.getElementById("photo-input").files;
+        const formData = new FormData();
+
+        formData.append("img", file[0]);
+
+        fetch("http://localhost:5000/", {
+            method: "POST",
+            body: formData
+            }).then(r => {
+            console.log(r);
+        });
+
+        document.getElementById("img").setAttribute("src", `http://localhost:5000/${file[0].name}`);
+        console.log(file[0]);
+    }
+
     render(){
         return (
             <>
@@ -76,6 +95,34 @@ class PlaylistSetting extends Component {
                     Playlist Name 
                     <input type="text" disabled = {!this.state.edit} defaultValue={this.state.playlist.name} required onChange={this.changeName}/>
                 </div>
+                {this.state.edit ?
+                <div className='photo_input'>
+                    Upload Playlist Photo
+                    <div className="">
+                        <div className="custom-file">
+                            <input
+                                type="file"
+                                id="photo-input"
+                                accept="image/*"
+                            />
+                        </div>    
+                        </div>
+                            <button type="button" className="btn btn-primary" onClick={this.Post}>
+                                Upload
+                            </button>
+                            <img
+                                id="img"
+                                style={{
+                                    display: "block",
+                                    height: "100px",
+                                    width: "100px",
+                                    "margin-top": "5px",
+                                }}
+                            >
+                            </img>
+                        </div>
+                : null
+                }
 
                 <div className="settings-row">
                     {this.state.edit? 
@@ -86,7 +133,6 @@ class PlaylistSetting extends Component {
                         :
                         <button onClick = {this.handleEditClick}>Edit </button>
                     }
-  
                     <button className="delete-btn">Delete</button>
                 </div>
             </>
