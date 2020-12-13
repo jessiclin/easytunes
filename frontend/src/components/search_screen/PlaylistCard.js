@@ -35,7 +35,7 @@ class PlaylistCard extends Component {
                     
                 {
                     this.props.sessionUser !== this.state.playlist.username ? 
-                        <div className='card-content col s3 '>
+                        <div className='card-content col s2 '>
                             <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button>
                         </div>
                     : <div className='card-content col s3 '>

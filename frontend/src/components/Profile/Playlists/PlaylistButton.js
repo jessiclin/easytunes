@@ -120,7 +120,7 @@ class PlaylistButton extends Component {
         return (
             <div className="playlist-row">
                 <div className="col">
-                <img alt = "playlist_img" src={'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'} class="song_picture"></img>
+                    <img alt = "playlist_img" src={'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'} class="song_picture"></img>
                 </div>
 
                 <div className="col text-left">

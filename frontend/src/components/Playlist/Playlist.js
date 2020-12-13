@@ -301,6 +301,9 @@ class Playlist extends Component {
                             </div>
 
                             <div className="col text-center align-self-left playlist-col">
+                                <div className="col">
+                                    <img alt = "playlist_img" src={'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'} class="song_picture"></img>
+                                </div>
                                 <h2>{this.state.playlistInfo.name} {this.state.playlistInfo.public ? <AiFillEye size={24}/> : <AiFillEyeInvisible size={24}/>}</h2>
 
                                 <h5> Playlist By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
