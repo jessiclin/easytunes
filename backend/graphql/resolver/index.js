@@ -435,6 +435,17 @@ const resolver = {
 
         }
     },
+    changePlaylistImg: async ({id, img}) => {
+        try {
+            const playlist = await Playlist.findOne({_id: id})
+            
+            playlist.playlist_img = img
+            playlist.save()
+            return {...result._doc}
+        } catch(error){
+
+        }
+    },
     removeAllSongs: async ({id}) => {
         try {
             console.log("REMOVE ALL SONGS")

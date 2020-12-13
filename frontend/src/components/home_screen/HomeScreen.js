@@ -154,7 +154,7 @@ class HomeScreen extends Component {
                         </div>
 
                     <div className="image-container">
-                        <img src={this.props.current_playlist ? this.props.current_song.song_img : 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'}  alt="" class="home_card"/>
+                        <img src={this.props.current_playlist ? this.props.current_playlist.playlist_img : 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'}  alt="" class="home_card"/>
                     </div>
                     
                     <div className="container-fluid text-center song-info-row">

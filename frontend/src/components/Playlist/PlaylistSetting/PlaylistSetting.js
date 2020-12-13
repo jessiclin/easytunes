@@ -74,8 +74,9 @@ class PlaylistSetting extends Component {
             }).then(r => {
             console.log(r);
         });
-
-        document.getElementById("img").setAttribute("src", `http://localhost:5000/${file[0].name}`);
+        let playlist = this.state.playlist
+        playlist.playlist_img = `http://localhost:5000/${file[0].name}`
+        this.setState({playlist : playlist})
         console.log(file[0]);
     }
 
@@ -118,6 +119,7 @@ class PlaylistSetting extends Component {
                                     width: "100px",
                                     "margin-top": "5px",
                                 }}
+                                src={this.state.playlist.playlist_img}
                             >
                             </img>
                         </div>
