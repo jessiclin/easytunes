@@ -79,7 +79,7 @@ class Reset extends Component {
                     <div className="row justify-content-center">
                         <div className="col-sm-12 cred">        
                             Please enter your email address.
-                            <div class="error-message-reset">
+                            <div className="error-message-reset">
                                 {this.state.errorMess}
                             </div>
                             <div className="input-group">

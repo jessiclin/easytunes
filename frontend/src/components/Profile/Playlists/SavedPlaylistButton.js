@@ -35,6 +35,7 @@ class SavedPlaylistButton extends Component {
                         _id
                         name
                         username
+                        playlist_img
                         likes 
                         songs {
                             song_id
@@ -45,7 +46,8 @@ class SavedPlaylistButton extends Component {
                         }
                             username
                             likes
-                            total_duration 
+                            total_duration
+                            playlist_img 
                             songs {
                                 song_id
                                 name

@@ -78,6 +78,7 @@ class PlaylistButton extends Component {
                                 likes 
                                 public
                                 total_duration
+                                playlist_img
                                 songs {
                                     song_id
                                     song_uri
