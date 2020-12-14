@@ -77,7 +77,6 @@ class PlaylistSetting extends Component {
         })
         
     }
-
     // Change privacy setting of the playlist (Edit mode)
     // NOTE: Does not update privacy setting in the database 
     changePrivacy = () => {

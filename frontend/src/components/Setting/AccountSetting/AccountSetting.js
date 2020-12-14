@@ -104,8 +104,8 @@ class AccountSetting extends Component {
                             id="img"
                             style={{
                                 display: "block",
-                                height: "200px",
-                                width: "200px",
+                                height: "10%",
+                                width: "10%",
                                 "margin-top": "5px",
                             }}
                             src={this.state.user.profile_img}

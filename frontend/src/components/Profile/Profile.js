@@ -176,13 +176,13 @@ class Profile extends Component {
                                 <Grid xs item align="center">
                                     <Button id = "playlists-btn" onClick = {this.changeView} className = {this.state.showMyPlaylists ? classes.buttonFocus : classes.buttonNotFocus}> 
                                         { this.state.profileUsername === this.props.username ? 
-                                            "My Playlists" :
-                                            "Playlists"
+                                            "My Mixtapes" :
+                                            "Mixtapes"
                                         }
                                     </Button>
                                 </Grid>
                                 <Grid xs item align="center">
-                                    <Button id = "saved-playlists-btn" onClick = {this.changeView} className = {this.state.showSavedPlaylists ? classes.buttonFocus : classes.buttonNotFocus}> Saved Playlists </Button>
+                                    <Button id = "saved-playlists-btn" onClick = {this.changeView} className = {this.state.showSavedPlaylists ? classes.buttonFocus : classes.buttonNotFocus}> Saved Mixtapes </Button>
                                 </Grid>
    
                             </Grid>
