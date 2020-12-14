@@ -28,12 +28,63 @@
 }
 
 .settings-row .delete-btn {
-  background-color: #faed26;
-  color: black;
   border: none;
-  outline: none;
+  outline: none; 
+    margin-right: 20px;
+    margin-left: 10px;
+    min-width: 100px; 
+    height: 40px;
+    border-radius: 5px;
+    font-size: medium;
+    background-color:white;
+    border: 1px solid lightgray;
+    color: black;
+  
 }
 
+.settings-row .cancel-btn {
+  border: none;
+  outline: none; 
+    margin-right: 20px;
+    margin-left: 10px;
+    min-width: 100px; 
+    height: 40px;
+    border-radius: 5px;
+    font-size: medium;
+    background-color: white;
+    border: 1px solid lightgray;
+    color: black;
+  
+}
+
+.settings-row .save-btn {
+
+  border: none;
+  outline: none; 
+    margin-right: 20px;
+    margin-left: 10px;
+    min-width: 100px; 
+    height: 40px;
+    border-radius: 5px;
+    font-size: medium;
+    background-color: #004CB2;
+    border: 1px solid #004CB2;
+    color: white;
+  
+}
+
+.settings-row .save-btn:focus, .settings-row .cancel-btn:focus, .settings-row .delete-btn:focus {
+  outline:"none"
+}
+.settings-row .save-btn:hover {
+  background-color: #001eb2;
+  border: #001eb2
+}
+.settings-row .cancel-btn:hover, .settings-row .delete-btn:hover{
+  background-color: lightgray;
+  border: lightgray;
+  color: white
+} 
 .playlist-name-input{
   width: 100px
 }

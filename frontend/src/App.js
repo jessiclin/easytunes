@@ -1,4 +1,5 @@
 
+
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route,} from 'react-router-dom';
 import './App.css';
@@ -114,13 +115,13 @@ class App extends Component {
     return [uris, song]
   }
 
-  onPlaylistChange = (playlist, song) => {
+  onPlaylistChange = (playlist, s) => {
     let uris = []
     let result = [uris]
     let offset = 0
     if (playlist){
       uris = playlist.songs.map((song,i) => {
-        if (song.song_uri === song.song_uri)  
+        if (song.song_uri === s.song_uri)  
           offset = i
         return song.song_uri
       })
@@ -133,6 +134,7 @@ class App extends Component {
   }
   console.log("PLAYLIST CHANGE APP.JS")
   result.push(playlist.songs[offset])
+  console.log(result)
     if (!this.state.play || !this.state.playlist)
       this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:true}, function() {console.log(this.state)})
     else 
@@ -282,18 +284,21 @@ class App extends Component {
                   current_playlist = {this.state.current_playlist}
                   shuffle= {this.shuffle}
                 />
-                  // <Profile {...props} 
-                  //   username = {this.state.username} 
-                  //   play = {this.state.play} 
-                  //   onPlayChange = {this.onPlayChange} 
-                  //   onPlaylistChange = {this.onPlaylistChange}
-                  //   current_playlist = {this.state.current_playlist}
-                  //   shuffle= {this.shuffle}
-                  // />
                 )}
               />
               
-              
+              <Route exact path='/:username/saved-playlists'
+                render = {(props) => (
+                  <Profile {...props} 
+                  username = {this.state.username} 
+                  play = {this.state.play} 
+                  onPlayChange = {this.onPlayChange} 
+                  onPlaylistChange = {this.onPlaylistChange}
+                  current_playlist = {this.state.current_playlist}
+                  shuffle= {this.shuffle}
+                />
+                )}
+              />
               {/* <Route path='/:userid/following' component={Following}/> */}
               
               {/* <Route path='/:any' component={HomeScreen} /> */}

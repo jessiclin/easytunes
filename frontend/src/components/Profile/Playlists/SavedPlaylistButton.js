@@ -8,6 +8,14 @@ import {AiFillHeart, AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 
 import {RiPlayListLine} from 'react-icons/ri'
 import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+import DeleteIcon from '@material-ui/icons/Delete'
+import IconButton from '@material-ui/core/IconButton'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogActions from '@material-ui/core/DialogActions'
+import Button from '@material-ui/core/Button'
 // FaRegPauseCircle
 import {FaRegPlayCircle,FaRegPauseCircle} from 'react-icons/fa'
 class SavedPlaylistButton extends Component {
@@ -215,20 +223,34 @@ class SavedPlaylistButton extends Component {
 
                 {
                     this.props.sessionUser === this.state.username ? 
-                    <button className="delete-btn" onClick = {this.setVisible}> 
-                    <AiOutlineDelete size = {24}/>
-                </button> : null
+                        <IconButton onClick={this.setVisible} >
+                            <DeleteIcon fontSize="large"/>
+                        </IconButton>
+                     : null
 
                 }
 
                 {this.state.deleteConfirmVisible ?
-                <div className="delete-playlist-box">
-                    <div>
-                        Delete the Mixtape?
-                    </div>
-                    <button className = "confirm-new-btn" onClick={this.deletePlaylist}> <AiOutlineCheckCircle size = {24}/></button>
-                    <button className = "cancel-new-btn"  onClick={this.setInvisible}> <AiOutlineCloseCircle size = {24}/></button>
-                </div>
+                    <Dialog
+                    open={this.state.deleteConfirmVisible}
+                    keepMounted
+                    onClose={this.setInvisible}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth = {'xs'}
+                    >
+                    <DialogTitle id="alert-dialog-slide-title">{"Delete Saved Playlist: " + this.state.playlist.name + "?"}</DialogTitle>
+                    <DialogActions>
+                    <Button  onClick={this.deletePlaylist} color="primary">
+                        Delete
+                    </Button>
+                    <Button onClick={this.setInvisible} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+                </Dialog>
+
                 : null }
             </div>
         );

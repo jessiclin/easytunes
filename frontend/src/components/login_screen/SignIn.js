@@ -29,6 +29,12 @@ const useStyles = theme => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      "&:hover": {
+        backgroundColor: "#004CB2"
+      },
+      "&:focus" :{
+        backgroundColor: "#004CB2"
+      }
     },
     input: {
       paddingLeft: "10px",
@@ -183,7 +189,7 @@ class SignIn extends Component {
                   ref = {this.passwordEl}
                 />
                 <Button
-                  type="submit"
+                type = 'submit'
                   fullWidth
                   variant="contained"
                   color="primary"

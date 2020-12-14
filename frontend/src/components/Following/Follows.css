@@ -57,8 +57,9 @@ height: 25px
 }
 
 .unfollow-btn:hover {
-  background-color: #faed26;
-  border-color: #faed26;
+  background-color: #004CB2;
+  border-color: #004CB2;
+  color: white
 }
 
 /* .home-navbar {
