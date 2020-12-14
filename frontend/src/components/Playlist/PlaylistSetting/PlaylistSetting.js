@@ -93,12 +93,12 @@ class PlaylistSetting extends Component {
                     
                 </div>
                 <div className="settings-row">
-                    Playlist Name 
+                    Mixtape Name 
                     <input type="text" disabled = {!this.state.edit} defaultValue={this.state.playlist.name} required onChange={this.changeName}/>
                 </div>
                 {this.state.edit ?
                 <div className='photo_input'>
-                    Upload Playlist Photo
+                    Upload Mixtape Photo
                     <div className="">
                         <div className="custom-file">
                             <input

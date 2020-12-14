@@ -224,7 +224,7 @@ class SavedPlaylistButton extends Component {
                 {this.state.deleteConfirmVisible ?
                 <div className="delete-playlist-box">
                     <div>
-                        Delete the playlist?
+                        Delete the Mixtape?
                     </div>
                     <button className = "confirm-new-btn" onClick={this.deletePlaylist}> <AiOutlineCheckCircle size = {24}/></button>
                     <button className = "cancel-new-btn"  onClick={this.setInvisible}> <AiOutlineCloseCircle size = {24}/></button>

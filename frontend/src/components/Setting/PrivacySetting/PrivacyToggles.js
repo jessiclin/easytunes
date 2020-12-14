@@ -97,10 +97,10 @@ class PrivacyToggles extends Component {
         return (  
             <>
             <div className="user-settings-content">
-                <h5>Default Playlist Settings</h5>
+                <h5>Default Mixtape Settings</h5>
 
                 {/* <h6> <Switch value={saved_privacy} onChange={updateSaved}/> Keep saved playlists private</h6> */}
-                <h6> <Switch value={this.state.playlist_privacy} onChange={this.updatePlaylist}/> Keep my playlists private</h6>
+                <h6> <Switch value={this.state.playlist_privacy} onChange={this.updatePlaylist}/> Keep my mixtapes private</h6>
             </div>
 
             <div className="user-settings-content">

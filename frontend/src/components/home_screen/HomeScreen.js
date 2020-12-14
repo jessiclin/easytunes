@@ -146,7 +146,7 @@ class HomeScreen extends Component {
 
                     <div className="container-fluid text-center playlist-info-row">
                               <div className="current-playlist">
-                                CURRENT PLAYLIST
+                                CURRENT MIXTAPE
                               </div>
                               <div className="current-playlist-name">
                                 {this.props.current_playlist ? this.props.current_playlist.name : ""}

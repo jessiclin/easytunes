@@ -87,7 +87,7 @@ class AccountSetting extends Component {
                 <h6>This is the picture associated with your profile.</h6>
                 <div className='user-setting-info'>
                     <div className='photo_input'>
-                        Upload Playlist Photo
+                        Upload Profile Picture
                         <div className="">
                             <div className="custom-file">
                                 <input

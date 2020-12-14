@@ -143,14 +143,14 @@ class Profile extends Component {
                            <button id = "my-playlists-btn" className = "my-playlists-btn" onClick = {this.changeView} style = {{borderBottom : "2px solid #faed26", fontWeight : "bold"}}>  
                                 { 
                                     this.state.profileUsername === this.props.username ? 
-                                        "My Playlists" :
-                                        "Playlists"
+                                        "My Mixtapes" :
+                                        "Mixtapes"
                                 }
                             </button>
                         </div>
 
                         <div className="col">
-                            <button id = "saved-playlists-btn" className = "saved-playlists-btn" onClick = {this.changeView}> Saved Playlists </button>
+                            <button id = "saved-playlists-btn" className = "saved-playlists-btn" onClick = {this.changeView}> Saved Mixtapes </button>
                         </div>
                         
                         {/* <div className="col">

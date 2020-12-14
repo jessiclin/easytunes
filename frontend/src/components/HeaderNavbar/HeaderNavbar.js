@@ -311,7 +311,7 @@ class HeaderNavbar extends Component {
                                 <MenuItem value= {"All"}>All</MenuItem>
                                 <MenuItem value= {"Artists"}>Artists</MenuItem>
                                 <MenuItem value= {"Songs"}>Songs</MenuItem>
-                                <MenuItem value= {"Playlists"}>Playlists</MenuItem>
+                                <MenuItem value= {"Playlists"}>Mixtapes</MenuItem>
                                 <MenuItem value= {"Users"}>Users</MenuItem>
                             </Select>
                         </FormControl>

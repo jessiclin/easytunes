@@ -55,7 +55,7 @@ class Home extends Component {
       <Box className={classes.hero}>
         <Box textAlign='center'>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Follow Music Playlists
+          Follow Music Mixtapes
         </Typography>
         <Typography className={classes.title} color="textSecondary">
           Join Conversations
