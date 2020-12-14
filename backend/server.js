@@ -135,13 +135,14 @@ app.use(cors())
 
 
 
-// Search for a track by artist or song name 
+// Search for an artist or song name 
 app.use('/v1/search?', async (req, res, next) =>  {
     let query = "" 
 
+    // Search Artists only 
     if (req.body.artist) 
         query = "artist:" + req.body.artist 
-        spotifyApi.searchTracks(query)
+        spotifyApi.searchArtists(query)
                 .then(function(data) {
                     res.status(200).send(data.body);
                     next()
@@ -150,10 +151,9 @@ app.use('/v1/search?', async (req, res, next) =>  {
                     res.status(400)
                 });
 
+    // Search Tracks only 
     if (req.body.track){
-
         query = "track:" + req.body.track 
-        
         await spotifyApi.searchTracks(query)
                     .then(function(data) {
                         res.status(200).send(data.body)
@@ -166,20 +166,17 @@ app.use('/v1/search?', async (req, res, next) =>  {
 
 })
 
-app.use('/v1/tracks/', async(req, res, next) => {
-    await spotifyApi.getTracks([req.body.track])
-    .then(async (data) =>{
-        //console.log(data.body)
-        //console.log(data.body.tracks[0].external_urls.spotify)
-        //let result = await SpotifyUrl.getPreview(data.body.tracks[0].external_urls.spotify)
-        //console.log(result)
-        res.status(200).send(data.body)
-        next()
-    })
-    .catch(err => {
-        console.log('Something went wrong!', err);
-        res.status(400)
-    })
+app.use('/v1/artist-tracks/', async(req, res, next) => {
+    let query = "artist:" + req.body.artist
+
+    await spotifyApi.searchTracks(query)
+                    .then(function(data) {
+                        res.status(200).send(data.body)
+                        next()
+                    }, function(err) {
+                        console.log('Something went wrong!', err);
+                        res.status(400)
+                    });
 })
 
 

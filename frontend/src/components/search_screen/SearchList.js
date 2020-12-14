@@ -11,6 +11,7 @@ class SearchList extends Component {
 
     
     render() {
+
         const items = this.props.searchList;
         const tracks = items.songs
         const artists = items.artists
@@ -20,7 +21,7 @@ class SearchList extends Component {
         return (
             <div className='section'>
                 {/* Display the tracks */}
-                {tracks || artists ? 
+                {tracks ? 
                     <>
                     <div className='row'>
                         <div className='col s3'>Song</div>
@@ -28,25 +29,31 @@ class SearchList extends Component {
                         <div className='col s3'>Duration</div>
                         <div className='col s3'></div>
                     </div>
-                    {tracks ? 
-                    <>
-                        {tracks && tracks.map(function(item) {
-                            return (
-                                <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username} history = {this.props.history}/>
-                            );}, this)
-                        } </>: 
-                        <>
-                        {artists && artists.map(function(item) {
-                            return (
-                                <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username} history = {this.props.history}/>
-                            );}, this)
-                        }</>
+                    {tracks && tracks.map(function(item) {
+                        return (
+                            <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username} history = {this.props.history}/>
+                        );}, this)
                     }
-                    
                     </>
                     : null
                 }
 
+                {/* Display the artists */}
+                {artists ? 
+                <>
+                <div className='row'>
+                        <div className='col s3'>Artists</div>
+                    </div>
+                    {artists && artists.map(function(item) {
+                    return (
+                        <SearchListCard key = {item.id} item={item} type="artist" username = {this.props.username} history = {this.props.history}/>
+                    );} ,this)
+                     }
+                
+                </>
+                :
+                null
+                }
 
                 {/* Display the playlists */}
                 {
