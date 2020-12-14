@@ -560,6 +560,17 @@ const resolver = {
             throw error
         }
     },
+    changeProfileImg: async ({username, img}) => {
+        try {
+            let user = await User.findOneAndUpdate({username: username}, {
+                profile_img: img
+            },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        } catch(error){
+            console.log(error)
+            throw error
+        }
+    },
     deleteComment: async({playlist_id, user_id, index}) => {
         try {
             let playlist = await Playlist.findOne({_id : playlist_id})
