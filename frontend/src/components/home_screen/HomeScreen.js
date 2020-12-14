@@ -140,30 +140,54 @@ class HomeScreen extends Component {
         console.log(this.props.access_token)
     
         return ( 
-            
+                
                 <div className="container-fluid  user-home-container" ref={this.container}>
                     {/* Home Button and Account Icon */}
+                    <div className="container-child" style={{width: "50%"}}>
+                      <div className="container-fluid text-center">
+                                  <div className="current-playlist">
+                                    CURRENT MIXTAPE
+                                  </div>
+                                  <div className="current-playlist-name">
+                                    {this.props.current_playlist ? this.props.current_playlist.name : ""}
+                                  </div>
+                            </div>
 
-                    <div className="container-fluid text-center playlist-info-row">
-                              <div className="current-playlist">
-                                CURRENT MIXTAPE
-                              </div>
-                              <div className="current-playlist-name">
-                                {this.props.current_playlist ? this.props.current_playlist.name : ""}
-                              </div>
+                        <div className="image-container">
+                            <img src={this.props.current_playlist ? this.props.current_playlist.playlist_img : 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'}  alt="" class="home_card"/>
                         </div>
-
-                    <div className="image-container">
-                        <img src={this.props.current_playlist ? this.props.current_playlist.playlist_img : 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'}  alt="" class="home_card"/>
+                        
+                        <div className="container-fluid text-center song-info-row">
+                            <div className="song-name">
+                                {this.props.current_playlist ? this.props.current_song.name : ""}
+                            </div>
+                            <div className="song-artist">
+                                {this.props.current_playlist ? this.getArtists() : ""}
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div className="container-fluid text-center song-info-row">
-                        <div className="song-name">
-                            {this.props.current_playlist ? this.props.current_song.name : ""}
-                        </div>
-                        <div className="song-artist">
-                            {this.props.current_playlist ? this.getArtists() : ""}
-                        </div>
+                    <div className="container-child" style={{width: "50%"}}>
+                      <div className="container-fluid text-center">
+                                <div className="current-playlist">
+                                  CURRENT MIXTAPE
+                                </div>
+                                <div className="current-playlist-name">
+                                  {this.props.current_playlist ? this.props.current_playlist.name : ""}
+                                </div>
+                          </div>
+
+                      <div className="image-container">
+                          <img src={this.props.current_playlist ? this.props.current_playlist.playlist_img : 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'}  alt="" class="home_card"/>
+                      </div>
+                      
+                      <div className="container-fluid text-center song-info-row">
+                          <div className="song-name">
+                              {this.props.current_playlist ? this.props.current_song.name : ""}
+                          </div>
+                          <div className="song-artist">
+                              {this.props.current_playlist ? this.getArtists() : ""}
+                          </div>
+                      </div>
                     </div>
                     {/* <SpotifyPlayer
                       token= {this.props.access_token}
