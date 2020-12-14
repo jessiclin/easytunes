@@ -208,9 +208,12 @@ class HomeScreen extends Component {
                               <div className='col s3'>Songs</div>
                               <div className='col s3'></div>
                           </div>
+                          {this.state.top_five ?
                           <Home_Playlists playlists = {this.state.top_five} 
-                                history = {this.props.history}
-                        />
+                                history = {this.props.history}/>
+                                :
+                          null }
+                        
                     </div>
                     <div className="container-child" style={{width: "50%"}}>
                       <div className="container-fluid text-center">
