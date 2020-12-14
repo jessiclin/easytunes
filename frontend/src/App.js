@@ -173,7 +173,23 @@ class App extends Component {
         <div className={this.state.username ? classes.root : null}>
             {this.state.username ? 
             <Route render = {(props) => 
-              <Menu {...props} username = {this.state.username} onUsernameChange = {this.onUsernameChange}/>
+              <Menu {...props} 
+                username = {this.state.username} 
+                onUsernameChange = {this.onUsernameChange}
+                play = {this.state.play} 
+                onPlayChange = {this.onPlayChange} 
+                onPlaylistChange = {this.onPlaylistChange}
+                onSongChange = {this.onSongChange}
+                onShuffleChange = {this.onShuffleChange}
+                playlist = {this.state.uris}
+                current_song = {this.state.current_song}
+                access_token = {this.state.access_token}
+                offset = {this.state.offset}
+                shuffle= {this.state.shuffle}
+                shufflePlaylist = {this.shufflePlaylist}
+                needsUpdate = {this.state.needsUpdate}
+                pdated = {this.updated}
+              />
               // <HeaderNavbar {...props} username= {this.state.username} onUsernameChange = {this.onUsernameChange}/> 
             }/>
             :  null}
@@ -282,7 +298,7 @@ class App extends Component {
               
               {/* <Route path='/:any' component={HomeScreen} /> */}
             </Switch>
-            {this.state.username ? 
+            {/* {this.state.username ? 
             <>
             
               <Route render = {(props) => 
@@ -306,7 +322,7 @@ class App extends Component {
               
               }/>
               </>
-          :  null}
+          :  null} */}
 
           </div>
         </div>

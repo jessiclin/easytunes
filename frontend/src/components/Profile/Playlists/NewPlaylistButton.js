@@ -175,17 +175,7 @@ class NewPlaylistButton extends Component {
                     </Button>
                 </DialogActions>
                 </Dialog>
-                
-                    {/* <button className = "add-btn" onClick = {this.setVisible}> <IoMdAddCircleOutline size = {24}/> </button> */}
-                    {/* {this.state.popupVisible ? 
-                    <div className="new-playlist-box">
-                       Playlist Name
-                       <div className = "error-box"> {this.state.error} </div>
-                        <input type="text" required onChange={this.inputOnChange}/>
-                        <button className = "confirm-new-btn" onClick={this.createNewPlaylist}> <AiOutlineCheckCircle size = {24}/></button>
-                        <button className = "cancel-new-btn"  onClick={this.setInvisible}> <AiOutlineCloseCircle size = {24}/></button>
-                    </div>
-                    : null} */}
+
                 </>
         );
     }

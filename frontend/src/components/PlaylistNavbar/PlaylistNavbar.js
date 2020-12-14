@@ -5,10 +5,16 @@
 
 import React, { Component } from 'react'
 import './PlaylistNavbar.css'
-
+import {withStyles} from '@material-ui/core/styles'
 import SpotifyPlayer from 'react-spotify-web-playback';
+import AppBar from '@material-ui/core/AppBar'
 import './AudioPlayer.css'
 
+const useStyle=theme => ({
+  grow: {
+    flexGrow: 1,
+  },
+})
 class PlaylistNavbar extends Component {    
     handleCallback = ({type, ...state}) => {
 
@@ -30,10 +36,19 @@ class PlaylistNavbar extends Component {
 
     render() {     
       console.log(this.props)
+      const {classes} = this.props
         return ( 
             <>
-                <nav className="navbar fixed-bottom playlist-nav">
-                    <div className="container playlist-nav-container">
+              <div className={classes.grow}>
+              <AppBar 
+              // position="fixed"
+              // className={clsx(classes.appBar, {
+              //   [classes.appBarShift]: this.props.open,
+              // })}
+            
+            position="static" 
+            >
+  
                       {this.props.access_token &&
                               
                             <SpotifyPlayer
@@ -58,11 +73,11 @@ class PlaylistNavbar extends Component {
                           
                       }
                     {/* <button className="shuffle" onClick = {this.shuffle}> Shuffle </button>  */}
-                    </div>
-                </nav>
+              </AppBar>
+              </div>
             </>
         );
     }
 }
  
-export default PlaylistNavbar;
+export default withStyles(useStyle)(PlaylistNavbar);
