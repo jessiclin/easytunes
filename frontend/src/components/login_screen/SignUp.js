@@ -34,6 +34,10 @@ const useStyles= theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  input: {
+    paddingLeft: "10px",
+    paddingRight: "10px"
+  }
 });
 
 
@@ -126,29 +130,29 @@ class SignUp extends Component {
                                         }
                                         else {
                                           // Load the data in 
-                                       //  this.state.username = result.data.createUser.username
+                                         this.state.username = result.data.createUser.username
                                           console.log(result)
-                                          // this.onUsernameChange(this.state.username)
-                                          // localStorage.setItem("username", this.state.username);
-                                          // fetch('http://localhost:5000/authorization', {
-                                          //     method: 'POST',
+                                          this.onUsernameChange(this.state.username)
+                                          localStorage.setItem("username", this.state.username);
+                                          fetch('http://localhost:5000/authorization', {
+                                              method: 'POST',
                               
-                                          //     headers: {
-                                          //         'content-type': 'application/json'
-                                          //     }
-                                          //     })
-                                          //     .then(res => {
-                                          //         if (res.status !== 200 && res.status !== 201) 
-                                          //             throw new Error('Playlist not found');
-                                          //         return res.json()
-                                          //     })
-                                          //     .then(data => {
-                                          //         console.log(data)
-                                          //         window.location.replace(data)
-                                          //     })
-                                          //     .catch(err => {
-                                          //         console.log(err);
-                                          //     });
+                                              headers: {
+                                                  'content-type': 'application/json'
+                                              }
+                                              })
+                                              .then(res => {
+                                                  if (res.status !== 200 && res.status !== 201) 
+                                                      throw new Error('Playlist not found');
+                                                  return res.json()
+                                              })
+                                              .then(data => {
+                                                  console.log(data)
+                                                  window.location.replace(data)
+                                              })
+                                              .catch(err => {
+                                                  console.log(err);
+                                              });
                                           } 
                                         
                                    
@@ -182,6 +186,9 @@ class SignUp extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                InputProps={{
+                    className: classes.input,
+                  }}
                 variant="outlined"
                 required
                 fullWidth
@@ -193,6 +200,9 @@ class SignUp extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputProps={{
+                    className: classes.input,
+                  }}
                 variant="outlined"
                 required
                 fullWidth
@@ -205,6 +215,9 @@ class SignUp extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputProps={{
+                    className: classes.input,
+                  }}
                 variant="outlined"
                 required
                 fullWidth
@@ -217,6 +230,9 @@ class SignUp extends Component {
             </Grid>
             <Grid item xs={12}>
             <TextField
+                InputProps={{
+                    className: classes.input,
+                  }}
                 variant="outlined"
                 required
                 fullWidth
