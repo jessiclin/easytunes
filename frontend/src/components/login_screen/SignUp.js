@@ -33,6 +33,12 @@ const useStyles= theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    "&:hover": {
+      backgroundColor: "#004CB2"
+    },
+    "&:focus" :{
+      backgroundColor: "#004CB2"
+    }
   },
   input: {
     paddingLeft: "10px",
@@ -246,6 +252,7 @@ class SignUp extends Component {
             </Grid>
           </Grid>
           <Button
+          type = 'submit'
             fullWidth
             variant="contained"
             color="primary"

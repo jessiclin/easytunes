@@ -18,9 +18,12 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 const useStyle = theme => ({
-    deleteButton: {
-
+    deleteBtn :{
+        '&:focus':{
+            outline:"none"
+        }
     }
 })
 class PlaylistButton extends Component {
@@ -48,7 +51,7 @@ class PlaylistButton extends Component {
 
     // Go to the playlist page 
     toPlaylist = () => {
-        this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/playlist='+ this.state.playlist._id)
+        this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/mixtape='+ this.state.playlist._id)
     }
 
     // Delete the playlist 
@@ -129,7 +132,7 @@ class PlaylistButton extends Component {
     
     render() { 
         const playlist = this.state.playlist 
-
+        const {classes} = this.props
         return (
             <div className="playlist-row">
                 <div className="col">
@@ -147,7 +150,7 @@ class PlaylistButton extends Component {
                 </div>
 
                 <div className="col text-left">
-                    {this.state.username === playlist.username ? <><AiFillHeart id={playlist._id} size = {24}/> {playlist.likes} </>:
+                    {this.state.username === playlist.username ? <><ThumbUpAltIcon id={playlist._id} size = {24}/> {playlist.likes} </>:
                     <>{playlist.username}</>}
                 </div>
 
@@ -161,7 +164,7 @@ class PlaylistButton extends Component {
                             : <FaRegPlayCircle onClick = {this.handlePlay} size = {30}/>
                         }
                     </>
-                        : null
+                        : <FaRegPlayCircle disabled={true} style={{color : "gray"}}size = {30}/>
                     }
                     
                     
@@ -169,8 +172,8 @@ class PlaylistButton extends Component {
 
                 {
                     this.props.sessionUser === playlist.username ? 
-                        <IconButton onClick={this.setVisible} >
-                            <DeleteIcon ontSize="large"/>
+                        <IconButton className = {classes.deleteBtn} onClick={this.setVisible} >
+                            <DeleteIcon fontSize="large"/>
                         </IconButton>
                      : null
 
@@ -213,7 +216,7 @@ class PlaylistButton extends Component {
         // If changing playlist 
         else {
             console.log("Change playlist")
-            this.props.onPlaylistChange(this.state.playlist)
+            this.props.onPlaylistChange(this.state.playlist, this.state.playlist.songs[0])
         }
             
     }

@@ -193,7 +193,7 @@ class HeaderNavbar extends Component {
         open={Boolean(this.state.anchorEl)}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.toPlaylists}>Playlist</MenuItem>
+        <MenuItem onClick={this.toPlaylists}>Mixtapes</MenuItem>
         <MenuItem onClick={this.toFollowers}>Followers</MenuItem>
         <MenuItem onClick={this.toSettings}>Settings</MenuItem>
         <MenuItem onClick={this.toLogOut}>Logout</MenuItem>
@@ -258,7 +258,7 @@ class HeaderNavbar extends Component {
               // })}
             
             position="static" 
-            style={{ background: '#5472d3', zIndex: 2 }}>
+            style={{ background: '#5472d3' }}>
                 <Toolbar>
                 <IconButton
                   color="inherit"
@@ -311,7 +311,7 @@ class HeaderNavbar extends Component {
                                 <MenuItem value= {"All"}>All</MenuItem>
                                 <MenuItem value= {"Artists"}>Artists</MenuItem>
                                 <MenuItem value= {"Songs"}>Songs</MenuItem>
-                                <MenuItem value= {"Playlists"}>Mixtapes</MenuItem>
+                                <MenuItem value= {"Mixtapes"}>Mixtapes</MenuItem>
                                 <MenuItem value= {"Users"}>Users</MenuItem>
                             </Select>
                         </FormControl>

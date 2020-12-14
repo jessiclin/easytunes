@@ -37,9 +37,8 @@
 
 .song_picture,
 .user_picture {
-    height: 64px;
-    width: 64px;
-    margin: 1%;
+    height: 80px;
+    width: 80px;
 }
 
 .search_card:hover {

@@ -6,8 +6,35 @@ import React, { Component } from 'react'
 import Followers from './Followers'
 import Following from './Following'
 import Requests from './Requests'
+import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
+import Button from '@material-ui/core/Button'
+import {withStyles} from '@material-ui/core/styles'
 import './Follows.css'
 
+const useStyle = theme => ({
+    buttonFocus : {
+        borderRadius: "0",
+        width: "100%",
+        strokeLinecap: "round",
+        border: "none",
+        '&:focus' :{
+            outline: "none"
+        },
+        borderBottom : "2px solid #004CB2",
+        fontWeight: "bold"
+    },
+    buttonNotFocus :{
+        width: "100%",
+        border: "none",
+        '&:focus' :{
+            outline: "none"
+        },
+    },
+    container: {
+        padding : theme.spacing(0,0,0,0)
+    }
+})
 class FollowingPage extends Component {
 
     state = {  
@@ -52,10 +79,17 @@ class FollowingPage extends Component {
                 return res.json()
             })
             .then(data => {
-
+                const location = this.props.history.location.pathname.split('/')[2]
+                const followers = location === "followers" 
+                const following = location === "following" 
+                const requests = location === "requests" 
+                console.log(followers, following, requests)
                 this.setState({
                     user : data.data.getUserByUsername.user,
-                    loading: false 
+                    showFollowers: followers,
+                    showFollowing: following,
+                    showRequests: requests,
+                    loading: false ,
                 })
             })
             .catch(error => {
@@ -65,44 +99,19 @@ class FollowingPage extends Component {
 
     // Handle rendering followers, following, or requests 
     changeView = (event) => {
-        let invisible = [];
-        const visible = event.target.className
-        if (visible === "followers-btn"){
-            this.setState({
-                showFollowers: true,
-                showFollowing: false,
-                showRequests: false
-            })
-            invisible.push("following-btn")
-            invisible.push("requests-btn")
+        console.log(event.target)
+        if (event.currentTarget.id === 'followers-btn'){
+            this.setState({showFollowers : true, showFollowing:false, showRequests:false})
+            this.props.history.push('/' + this.state.user.username+ "/followers")
         }
-        else if (visible === "following-btn"){
-            this.setState({
-                showFollowers: false,
-                showFollowing: true,
-                showRequests: false
-            })
-
-            invisible.push("requests-btn")
-            invisible.push("followers-btn")
+        else if (event.currentTarget.id === 'following-btn'){
+            this.setState({showFollowers : false, showFollowing:true, showRequests:false})
+            this.props.history.push('/' + this.state.user.username + "/following")
         }
         else {
-            this.setState({
-                showFollowers: false,
-                showFollowing: false,
-                showRequests: true
-            })
-            invisible.push("following-btn")
-            invisible.push("followers-btn")
-
-        }
-  
-        document.getElementById(visible).style.borderBottom = "3px solid #faed26"
-        document.getElementById(invisible[0]).style.borderBottom = "none";
-        document.getElementById(invisible[1]).style.borderBottom = "none";
-        document.getElementById(visible).style.fontWeight = "bold"
-        document.getElementById(invisible[0]).style.fontWeight = "normal"
-        document.getElementById(invisible[1]).style.fontWeight = "normal"        
+            this.setState({showFollowers : false, showFollowing:false, showRequests:true})
+            this.props.history.push('/' + this.state.user.username + "/requests")
+        }       
     }
 
     // Get the user's account creation date 
@@ -117,7 +126,7 @@ class FollowingPage extends Component {
     render() { 
         if (this.state.loading)
             return (<> </>)
-        
+        const {classes} = this.props
         return (  
             <>
                 <div className="container-fluid followers-container">
@@ -130,7 +139,7 @@ class FollowingPage extends Component {
                             
                             <div className="col text-center">
                                 <div className="col">
-                                    <img alt="" src={this.state.user.profile_img} class="user_icon"></img>
+                                    <img alt="" src={this.state.user.profile_img} className="user_icon"></img>
                                 </div>
                                 <h2>{this.state.user.username}                            
                             
@@ -141,7 +150,26 @@ class FollowingPage extends Component {
                         </div>
                      
                         <div className="navigation-row">
-                            <div className="col">
+                            <Container className = {classes.container}> 
+                                <Grid container>
+                                    <Grid xs item align="center">
+                                        <Button id = "followers-btn" onClick = {this.changeView} className = {this.state.showFollowers ? classes.buttonFocus : classes.buttonNotFocus}> 
+                                            Followers
+                                        </Button>
+                                    </Grid>
+                                    <Grid xs item align="center">
+                                        <Button id = "following-btn" onClick = {this.changeView} className = {this.state.showFollowing? classes.buttonFocus : classes.buttonNotFocus}> 
+                                            Following
+                                        </Button>
+                                    </Grid>
+                                    <Grid xs item align="center">
+                                        <Button id = "requests-btn" onClick = {this.changeView} className = {this.state.showRequests ? classes.buttonFocus : classes.buttonNotFocus}> 
+                                            Requests
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Container>
+                            {/* <div className="col">
                             <button id = "followers-btn" className = "followers-btn" onClick = {this.changeView} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}}>  Followers </button>
                             </div>
 
@@ -151,7 +179,7 @@ class FollowingPage extends Component {
                             
                             <div className="col">
                             <button id = "requests-btn" className = "requests-btn" onClick = {this.changeView}> Requests </button>
-                            </div>
+                            </div> */}
                         </div>
 
                         {this.state.showFollowers ? <Followers username = {this.state.user.username} history = {this.props.history}/>: null}
@@ -166,4 +194,4 @@ class FollowingPage extends Component {
     }
 }
  
-export default FollowingPage;
+export default withStyles(useStyle)(FollowingPage);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BsChevronDown } from 'react-icons/bs'
 import SearchListCard from './SearchListCard'
 
 class ArtistCard extends Component {
@@ -46,9 +47,7 @@ class ArtistCard extends Component {
                 </div>
                 
                 <div className='card-content col s3'>
-                    {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
-                    
-                    {/* <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button> */}
+                    <BsChevronDown  size={24}/>
                 </div>
                 
             </div>

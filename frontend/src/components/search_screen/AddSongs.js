@@ -274,7 +274,7 @@ class AddSong extends Component {
         return ( 
             <div>
       <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-        Add Song to Mixtape
+        Add Song to Playlist
       </Button>
 
       <Dialog
@@ -290,7 +290,7 @@ class AddSong extends Component {
         
         {!this.state.createNew ?
             <>
-                <DialogTitle id="alert-dialog-slide-title">{"Add Song to Mixtape"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Add Song to Playlist"}</DialogTitle>
                 {
                     this.state.playlists.map(playlist => {
                         return (
@@ -305,7 +305,7 @@ class AddSong extends Component {
         
                 <DialogActions>
                     <Button  onClick={this.openNew} color="primary">
-                        New Mixtape
+                        New Playlist
                     </Button>
                     <Button onClick={this.handleClose} color="primary">
                         Cancel
@@ -325,7 +325,7 @@ class AddSong extends Component {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="Mixtape Name"
+                        label="Playlist Name"
                         type="text"
                         fullWidth
                         ref = {this.nameEl}
@@ -349,5 +349,3 @@ class AddSong extends Component {
 }
  
 export default withStyles(useStyles)(AddSong);
-
-

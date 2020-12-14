@@ -5,8 +5,38 @@
 
 import React, { Component } from 'react'
 import './PlaylistSetting.css'
-
+import Button from '@material-ui/core/Button'
+import {withStyles} from '@material-ui/core/styles'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogActions from '@material-ui/core/DialogActions'
 // For Rendering the Settings section of a playlist
+
+const useStyle = theme => ({
+    privacyButton :{
+        background: "#696969",
+        '&:focus': {
+            outline: "none"
+        },
+
+        backgroundColor: '#FFF',
+        color: '#FFF',
+        "&:hover": {
+            backgroundColor: "#696969"
+          }
+    },
+    editSaveButton :{
+        '&:focus': {
+            outline: "none"
+        },
+
+        "&:hover": {
+            backgroundColor: "#696969"
+          }
+    },
+})
 class PlaylistSetting extends Component {
     constructor(props){
         super(props)
@@ -17,7 +47,8 @@ class PlaylistSetting extends Component {
         save : false,
         edit: this.props.editing,
         public:this.props.playlist.public,
-        playlist_img: this.props.playlist.playlist_img
+        playlist_img: this.props.playlist.playlist_img,
+        deleteConfirmVisible: false
     }
 
     // Changes the edit status 
@@ -60,6 +91,45 @@ class PlaylistSetting extends Component {
         playlist.name = event.target.value 
         this.setState({playlist: playlist})
     }
+    confirmDelete = () => {
+        this.setState({deleteConfirmVisible: true})
+    }
+    deleteConfirmVisibleClose = () => {
+        this.setState({deleteConfirmVisible: false})
+    }
+    handleDelete = () => {
+        // this.setInvisible()
+        // Delete the playlist 
+        let requestBody = {
+            query: `
+                mutation {
+                    deletePlaylist (id : "${this.props.playlist_id}") {
+                        _id 
+                    }
+                }
+            `
+        }
+
+        // Delete the playlist 
+        fetch('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) 
+                    throw new Error('Failed');
+                return res.json()
+            })
+            .then(result => {
+               this.props.history.push('/' + this.props.username)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
     Post = (e) => {
         e.preventDefault();
@@ -81,11 +151,14 @@ class PlaylistSetting extends Component {
     }
 
     render(){
+        const {classes} = this.props
+  
         return (
             <>
                 <div className="settings-row">
                     {this.state.edit ? 
-                    <button onClick={this.changePrivacy}>{this.state.public ? "Public" : "Private"}</button>
+                    <Button onClick={this.changePrivacy} className = {classes.privacyButton}> {this.state.public ? "Public" : "Private"} </Button>
+               
                     : 
                     null
                     }
@@ -93,12 +166,12 @@ class PlaylistSetting extends Component {
                     
                 </div>
                 <div className="settings-row">
-                    Mixtape Name 
+                    Playlist Name 
                     <input type="text" disabled = {!this.state.edit} defaultValue={this.state.playlist.name} required onChange={this.changeName}/>
                 </div>
                 {this.state.edit ?
                 <div className='photo_input'>
-                    Upload Mixtape Photo
+                    Upload Playlist Photo
                     <div className="">
                         <div className="custom-file">
                             <input
@@ -115,8 +188,8 @@ class PlaylistSetting extends Component {
                                 id="img"
                                 style={{
                                     display: "block",
-                                    height: "100px",
-                                    width: "100px",
+                                    height: "200px",
+                                    width: "200px",
                                     "margin-top": "5px",
                                 }}
                                 src={this.state.playlist.playlist_img}
@@ -129,17 +202,42 @@ class PlaylistSetting extends Component {
                 <div className="settings-row">
                     {this.state.edit? 
                         <>
-                        <button onClick={this.handleSave}> Save </button>
-                        <button onClick={this.handleCancel}> Cancel </button>
+                        <button className ="save-btn" onClick={this.handleSave}> Save </button>
+                        <button className ="cancel-btn" onClick={this.handleCancel}> Cancel </button>
                         </>
                         :
-                        <button onClick = {this.handleEditClick}>Edit </button>
+                        <button className ="save-btn" onClick = {this.handleEditClick}>Edit </button>
                     }
-                    <button className="delete-btn">Delete</button>
+                    <button className="delete-btn" onClick = {this.confirmDelete}>Delete</button>
                 </div>
+
+                {this.state.deleteConfirmVisible ? 
+                    <Dialog
+                    open={this.state.deleteConfirmVisible}
+                    keepMounted
+                    onClose={this.deleteConfirmVisibleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth = {'sm'}
+                >
+                    <DialogTitle id="alert-dialog-slide-title">{"Delete Playlist: " + this.state.playlist.name + "?"}</DialogTitle>
+
+                    <DialogActions>
+                    <Button  onClick={this.handleDelete} color="primary">
+                        Delete
+                    </Button>
+                    <Button onClick={this.deleteConfirmVisibleClose} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+                </Dialog>
+                : null
+
+                }
             </>
         );
     }
 }
  
-export default PlaylistSetting;
+export default withStyles(useStyle)(PlaylistSetting);

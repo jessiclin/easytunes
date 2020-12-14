@@ -64,7 +64,7 @@ class SearchList extends Component {
                     playlists ? 
                     <>
                     <div className="row">
-                        <h3 className="col s1">Mixtapes</h3>
+                        <h3 className="col s1">Playlists</h3>
                     </div>
                     <div className='row'>
                         <div className='col s1'></div>
@@ -94,7 +94,7 @@ class SearchList extends Component {
                         <div className='col s3'></div>
                         <div className='col s3'>User</div>
                         <div className='col s3'>Followers</div>
-                        <div className='col s3'>Mixtapes</div>
+                        <div className='col s3'>Playlists</div>
                         <div className='col s3'></div>
                     </div>
                     {users && users.map(function(item) {

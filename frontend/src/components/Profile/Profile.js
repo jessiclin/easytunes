@@ -8,9 +8,36 @@ import {RiUserFollowLine, RiUserAddLine} from 'react-icons/ri'
 import Playlists from './Playlists/Playlists'
 // import UploadedSongs from './UploadedSongs/UploadedSongs'
 import SavedPlaylists from './Playlists/SavedPlaylists'
+import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
+import Button from '@material-ui/core/Button'
+import {withStyles} from '@material-ui/core/styles'
 import './Profile.css'
 
 
+const useStyle = theme => ({
+    buttonFocus : {
+        borderRadius: "0",
+        width: "100%",
+        strokeLinecap: "round",
+        border: "none",
+        '&:focus' :{
+            outline: "none"
+        },
+        borderBottom : "2px solid #004CB2",
+        fontWeight: "bold"
+    },
+    buttonNotFocus :{
+        width: "100%",
+        border: "none",
+        '&:focus' :{
+            outline: "none"
+        },
+    },
+    container: {
+        padding : theme.spacing(0,0,0,0)
+    }
+})
 class Profile extends Component {
     state = { 
         showSavedPlaylists: false,
@@ -91,13 +118,17 @@ class Profile extends Component {
                 data = data.data.getUserByUsername
                 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 const date = new Date(parseInt(data.user.joined))
+                const showMyPlaylists = this.props.history.location.pathname.split('/').length === 2 ? true : false
+                
                 this.setState({
                     profileUserInfo: data.user,
                     profileFollowers: data.user.followers, 
                     profilePlaylists: data.playlists,
                     profileSavedPlaylists: data.user.saved_playlists,
                     profileAccountCreationDate: months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
-                    loading: false
+                    loading: false,
+                    showMyPlaylists: showMyPlaylists,
+                    showSavedPlaylists: !showMyPlaylists
                 })        
             
             })
@@ -108,7 +139,7 @@ class Profile extends Component {
     }
     
     render() { 
-
+        const {classes} = this.props
 
         if (this.state.loading)
             return (<> </>);
@@ -139,23 +170,24 @@ class Profile extends Component {
                     
                     {/* Navigation bar between "My Playlist" and "Saved Playlists" */}
                     <div className="navigation-row">
-                        <div className="col">
-                           <button id = "my-playlists-btn" className = "my-playlists-btn" onClick = {this.changeView} style = {{borderBottom : "2px solid #faed26", fontWeight : "bold"}}>  
-                                { 
-                                    this.state.profileUsername === this.props.username ? 
-                                        "My Mixtapes" :
-                                        "Mixtapes"
-                                }
-                            </button>
-                        </div>
+        
+                        <Container className = {classes.container}> 
+                            <Grid container>
+                                <Grid xs item align="center">
+                                    <Button id = "playlists-btn" onClick = {this.changeView} className = {this.state.showMyPlaylists ? classes.buttonFocus : classes.buttonNotFocus}> 
+                                        { this.state.profileUsername === this.props.username ? 
+                                            "My Mixtapes" :
+                                            "Mixtapes"
+                                        }
+                                    </Button>
+                                </Grid>
+                                <Grid xs item align="center">
+                                    <Button id = "saved-playlists-btn" onClick = {this.changeView} className = {this.state.showSavedPlaylists ? classes.buttonFocus : classes.buttonNotFocus}> Saved Mixtapes </Button>
+                                </Grid>
+   
+                            </Grid>
+                        </Container>
 
-                        <div className="col">
-                            <button id = "saved-playlists-btn" className = "saved-playlists-btn" onClick = {this.changeView}> Saved Mixtapes </button>
-                        </div>
-                        
-                        {/* <div className="col">
-                        <button id = "uploaded-songs-btn" className = "uploaded-songs-btn" onClick = {this.changeView}> Uploaded Songs </button>
-                        </div> */}
                     </div>
 
                     {/* Renders "My Playlist" and "Saved Playlists" */}
@@ -204,45 +236,16 @@ class Profile extends Component {
 
     // Handle displaying playlists, saved playlists, or uploaded songs 
     changeView = (event) => {
-        let invisible = []
-        const visible = event.target.className
-        if (visible === "my-playlists-btn"){
-            this.setState({
-                showSavedPlaylists: false,
-                showMyPlaylists: true,
-                showUploadedSongs: false,
-            })
-          //  invisible.push("uploaded-songs-btn")
-            invisible.push("saved-playlists-btn")
-        }
-        else if (visible === "saved-playlists-btn"){
-            this.setState({
-                showSavedPlaylists:true,
-                showMyPlaylists: false,
-                showUploadedSongs: false,
-            })
 
-         //   invisible.push("uploaded-songs-btn")
-            invisible.push("my-playlists-btn")
+        if (event.currentTarget.id === 'playlists-btn'){
+            this.setState({showMyPlaylists : true, showSavedPlaylists:false})
+            this.props.history.push('/' + this.state.profileUsername)
         }
         else {
-            this.setState({
-                showSavedPlaylists: false,
-                showMyPlaylists: false,
-                showUploadedSongs: true,
-            })
-            invisible.push("saved-playlists-btn")
-            invisible.push("my-playlists-btn")
-
+            this.setState({showMyPlaylists : false, showSavedPlaylists:true})
+            this.props.history.push('/' + this.state.profileUsername + '/saved-mixtapes')
         }
-        document.getElementById(invisible[0]).style.borderBottom = "none";
-     //   document.getElementById(invisible[1]).style.borderBottom= "none"
-        document.getElementById(visible).style.borderBottom = "2px solid #faed26";
-        document.getElementById(invisible[0]).style.fontWeight = "normal"
-       // document.getElementById(invisible[1]).style.fontWeight = "normal"
-        document.getElementById(visible).style.fontWeight = "bold"
     }
-    
 }
  
-export default Profile;
+export default withStyles(useStyle)(Profile);

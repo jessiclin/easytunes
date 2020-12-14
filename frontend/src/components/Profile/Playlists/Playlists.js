@@ -48,7 +48,7 @@ class Playlists extends Component {
             {playlists}
             { this.state.sessionUser === this.state.user.username ?
                 <div className="add-new">
-                    <NewPlaylistButton text = {"Mixtape Name"} username = {this.state.user.username} user_id = {this.state.user._id} setPlaylists = {this.setPlaylists}/>
+                    <NewPlaylistButton text = {"Playlist Name"} username = {this.state.user.username} user_id = {this.state.user._id} setPlaylists = {this.setPlaylists}/>
                 </div>  : null
             }
             </>

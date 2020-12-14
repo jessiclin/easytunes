@@ -63,6 +63,7 @@ class PlaylistNavbar extends Component {
                                 activeColor: '#fff',
                                 bgColor: '#333',
                                 color: '#fff',
+                                errorColor: 'fff',
                                 loaderColor: '#fff',
                                 sliderColor: '#1cb954',
                                 trackArtistColor: '#d9d9d9',

@@ -9,13 +9,51 @@ import Songlist from './Songlist/Songlist'
 import Comments from './Comments/Comments'
 import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
 import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
-
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogActions from '@material-ui/core/DialogActions'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
+import {withStyles} from '@material-ui/core/styles'
 import './Playlist.css'
-
+import {FaRegPauseCircle, FaRegPlayCircle} from 'react-icons/fa'
 import { FaShare } from 'react-icons/fa'
 
-class Playlist extends Component {
 
+const useStyle = theme => ({
+    buttonFocus : {
+        borderRadius: "0",
+        width: "100%",
+        strokeLinecap: "round",
+        border: "none",
+        '&:focus' :{
+            outline: "none"
+        },
+        borderBottom : "2px solid #004CB2",
+        fontWeight: "bold"
+    },
+    buttonNotFocus :{
+        width: "100%",
+        border: "none",
+        '&:focus' :{
+            outline: "none"
+        },
+    },
+    container: {
+        padding : theme.spacing(0,0,0,0)
+    }
+})
+class Playlist extends Component {
+    constructor(props) {
+        super(props)
+        this.nameEl = React.createRef()
+    }
     state = {
         songsVisible : true,
         commentsVisible : false,
@@ -26,7 +64,6 @@ class Playlist extends Component {
         loading: true,
         editing: false,
         forkPopupVisible: false,
-        fork_playlist_name: "",
         error : "",
         liked: false 
     }
@@ -185,11 +222,11 @@ class Playlist extends Component {
                         song_img: song.song_img
                     }))
                 })
-                console.log(this.state.fork_playlist_name)
+                let name =this.nameEl.current.children[1].children[0].value.trim()
                 requestBody = {
                     query: `
                         mutation {
-                            forkPlaylist (username : "${this.props.username}", playlist_id : "${this.state.playlistId}", name: "${this.state.fork_playlist_name}") {
+                            forkPlaylist (username : "${this.props.username}", playlist_id : "${this.state.playlistId}", name: "${name}") {
                                 _id 
                             }
                         }
@@ -233,9 +270,7 @@ class Playlist extends Component {
         this.setState({forkPopupVisible : false})
     }
 
-    forkInputOnChange = (event) => {
-        this.setState({fork_playlist_name : event.target.value})
-    }
+
     handleLike = () => {
         let requestBody = {
             query: `
@@ -277,6 +312,7 @@ class Playlist extends Component {
 
             if (this.state.loading)
                 return (<> </>);
+                const {classes} = this.props
             function User ({username, history}){
                 function toUserProfile(){
                     history.history.push('/' + username)
@@ -295,7 +331,10 @@ class Playlist extends Component {
                         <div className="information-row">
                             <div className="col text-center align-self-center playlist-col">
                                 <div className="likes">
-                                    {this.state.liked ? <AiFillHeart onClick = {this.handleLike} size={34}  style={{color: "red"}}/> : <AiFillHeart onClick = {this.handleLike}size={34} />} 
+                                    {this.state.liked ? 
+                                        <ThumbUpAltIcon fontSize ="large" onClick = {this.handleLike}/>
+                                     : 
+                                        <ThumbUpAltOutlinedIcon onClick = {this.handleLike} fontSize ="large" />} 
                                     
                                     {this.state.playlistInfo.likes} 
                                 </div>
@@ -310,9 +349,29 @@ class Playlist extends Component {
                                 <h5> Mixtape By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
                                 <div>{this.state.playlistInfo.total_duration < 3600 ? "0 hr " + (this.state.playlistInfo.total_duration < 600 ? "0" + Math.floor(this.state.playlistInfo.total_duration/60) + " min": Math.floor(this.state.playlistInfo.total_duration/60) + " min") :
                 (Math.floor(this.state.playlistInfo.total_duration/3600) + " hr " + (this.state.playlistInfo.total_duration%3600 < 600 ? "0" + Math.floor(this.state.playlistInfo.total_duration/60) + " min": Math.floor(this.state.playlistInfo.total_duration/60) + " min"))}</div>
+                            
                             </div>
+                            {/* { this.state.playlistInfo.songs.length > 0 ?
+                                <>
+                                    { this.props.play && this.props.current_playlist.name === this.state.playlistInfo.name? 
+                                        <FaRegPauseCircle onClick = {this.handlePlay} size = {30}/>
+                                        : <FaRegPlayCircle onClick = {this.handlePlay} size = {30}/>
+                                    }
+                                </>
+                        : null
+                    } */}
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
+                                     { this.state.playlistInfo.songs.length > 0 ?
+                                <>
+                                    { this.props.play && this.props.current_playlist.name === this.state.playlistInfo.name? 
+                                        <FaRegPauseCircle className = "playlist-play-btn text-center align-self-center" onClick = {this.handlePlay} size = {34}/>
+                                        : <FaRegPlayCircle className = "playlist-play-btn text-center align-self-center" onClick = {this.handlePlay} size = {34}/>
+                                    }
+                                </>
+                                : null
+                                }
+                                {/* <FaRegPauseCircle className = "playlist-play-btn" onClick = {this.handlePlay} size = {30}/> */}
                                     <FaShare size={34} className="share" onClick={() => {navigator.clipboard.writeText(window.location.href)}}/> 
 
                                     
@@ -320,14 +379,40 @@ class Playlist extends Component {
                                 </div>
                             </div>
                             {this.state.forkPopupVisible ? 
- 
-                                <div className="fork-playlist-box">
-                                    Mixtape Name
-                                    <div className = "error-box"> {this.state.error} </div>
-                                    <input type="text" required onChange={this.forkInputOnChange}/>
-                                    <button className = "confirm-new-btn" onClick={this.forkPlaylist}> <AiOutlineCheckCircle size = {24}/></button>
-                                    <button className = "cancel-new-btn"  onClick={this.setForkInvisible}> <AiOutlineCloseCircle size = {24}/></button>
-                                </div>
+                 <Dialog
+                 open={this.state.forkPopupVisible}
+                 keepMounted
+                 onClose={this.setForkInvisible}
+                 aria-labelledby="alert-dialog-slide-title"
+                 aria-describedby="alert-dialog-slide-description"
+                 fullWidth={true}
+                 maxWidth = {'sm'}
+             >
+                 <DialogTitle id="alert-dialog-slide-title">{"Fork Mixtape: " + this.state.playlistInfo.name}</DialogTitle>
+                 <DialogContent>
+                 {this.state.error ?
+                     <DialogContentText> {this.state.error} </DialogContentText> : null
+                 }
+                 <TextField
+                     autoFocus
+                     margin="dense"
+                     id="name"
+                     label="Mixtape Name"
+                     type="text"
+                     fullWidth
+                     ref = {this.nameEl}
+                 />
+                 </DialogContent>
+                 <DialogActions>
+                 <Button  onClick={this.forkPlaylist} color="primary">
+                     Fork
+                 </Button>
+                 <Button onClick={this.setForkInvisible} color="primary">
+                     Close
+                 </Button>
+             </DialogActions>
+             </Dialog>
+
                                 :
                                 null
                                 }
@@ -337,27 +422,44 @@ class Playlist extends Component {
                         {/* Songs, Likes and Comments, Settings Navbar */}
                         {this.state.playlistInfo.username === this.props.username ? 
                             <div className="navigation-row">
-                                <div className="col text-center playlist-col">
-                                    <button id = "songs-btn" className = "songs-btn" onClick = {this.changeView} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}} > Songs </button>
-                                </div>
-
-                                <div className="col text-center playlist-col">
-                                        <button id = "comments-btn" className = "comments-btn" onClick = {this.changeView}> Comments </button> 
-                                </div>
-
-                                <div className="col text-center playlist-col">
-                                        <button id = "settings-btn" className = "settings-btn"onClick = {this.changeView}> Settings </button> 
-                                </div>
+                                <Container className = {classes.container}> 
+                                <Grid container>
+                                    <Grid xs item align="center">
+                                        <Button id = "songs-btn" onClick = {this.changeView} className = {this.state.songsVisible ? classes.buttonFocus : classes.buttonNotFocus}> 
+                                            Songs
+                                        </Button>
+                                    </Grid>
+                                    <Grid xs item align="center">
+                                        <Button id = "comments-btn" onClick = {this.changeView} className = {this.state.commentsVisible? classes.buttonFocus : classes.buttonNotFocus}> 
+                                            Comments
+                                        </Button>
+                                    </Grid>
+                                    <Grid xs item align="center">
+                                        <Button id = "settings-btn" onClick = {this.changeView} className = {this.state.settingsVisible ? classes.buttonFocus : classes.buttonNotFocus}> 
+                                           Settings
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Container>
                             </div> : 
-                            <div className="row navigation-row">
-                                <div className="col text-center playlist-col">
-                                    <button id = "songs-btn" className = "songs-btn" onClick = {this.changeView} style = {{borderBottom : "3px solid #faed26", fontWeight : "bold"}}> Songs </button>
-                                </div>
-        
-                                <div className="col text-center playlist-col">
-                                        <button id = "comments-btn" className = "comments-btn" onClick = {this.changeView}> Comments </button> 
-                                </div>
-                            </div>             
+                            <div className="navigation-row">
+                            <Container className = {classes.container}> 
+                            <Grid container>
+                                <Grid xs item align="center">
+                                    <Button id = "songs-btn" onClick = {this.changeView} className = {this.state.songsVisible ? classes.buttonFocus : classes.buttonNotFocus}> 
+                                        Songs
+                                    </Button>
+                                </Grid>
+                                <Grid xs item align="center">
+                                    <Button id = "comments-btn" onClick = {this.changeView} className = {this.state.commentsVisible? classes.buttonFocus : classes.buttonNotFocus}> 
+                                        Comments
+                                    </Button>
+                                </Grid>
+    
+                            </Grid>
+                        </Container>
+                        </div> 
+    
                         }
 
                         {/* Render "Songs", "Comments", "Settings" */}
@@ -374,7 +476,13 @@ class Playlist extends Component {
                                                     /> 
                         : null}
                         {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments} username = {this.props.username} playlist_id = {this.state.playlistId}  /> : null}
-                        {this.state.settingsVisible ? <PlaylistSetting playlist = {this.state.playlistInfo} editing= {this.state.editing} onChange = {this.onChange}/> : null}
+                        {this.state.settingsVisible ? 
+                            <PlaylistSetting username = {this.props.username} 
+                                    history = {this.props.history}
+                                    playlist_id = {this.state.playlistId} 
+                                    playlist = {this.state.playlistInfo} 
+                                    editing= {this.state.editing} 
+                                    onChange = {this.onChange}/> : null}
                         <div className = "row blank-space"> </div>
                     </div>
   
@@ -382,7 +490,19 @@ class Playlist extends Component {
                 
             );
         }
-
+        handlePlay = async () => {
+            // If pausing current playlist 
+            if (this.props.current_playlist !== null && this.props.current_playlist.name === this.state.playlistInfo.name)
+                this.props.onPlayChange(!this.props.play) 
+            // If changing playlist 
+            else {
+                console.log("Change playlist")
+                let playlists = this.state.playlistInfo
+                playlists["_id"] = this.state.playlistId
+                this.props.onPlaylistChange(playlists, this.state.playlistInfo.songs[0])
+            }
+                
+        }
         // Update the playlist after edit 
         onChange = async (type, obj) => {
             if (type === "playlist") {
@@ -546,51 +666,21 @@ class Playlist extends Component {
         }
 
         changeView = (event) => {
-            let invisible = [];
-            const visible = event.target.className
-            if (visible === "songs-btn"){
-                this.setState({
-                    songsVisible: true,
-                    commentsVisible: false,
-                    settingsVisible: false
-                })
-                invisible.push("comments-btn")
-                invisible.push("settings-btn")
+            console.log(event.target)
+            if (event.currentTarget.id === 'songs-btn'){
+                this.setState({songsVisible : true, commentsVisible:false, settingsVisible:false})
+               // this.props.history.push('/' + this.state.user.username+ "/followers")
             }
-            else if (visible === "comments-btn"){
-                this.setState({
-                    songsVisible: false,
-                    commentsVisible: true,
-                    settingsVisible: false
-                })
-    
-                invisible.push("songs-btn")
-                invisible.push("settings-btn")
+            else if (event.currentTarget.id === 'comments-btn'){
+                this.setState({songsVisible : false, commentsVisible:true, settingsVisible:false})
+               // this.props.history.push('/' + this.state.user.username + "/following")
             }
             else {
-                this.setState({
-                    songsVisible: false,
-                    commentsVisible: false,
-                    settingsVisible: true
-                })
-                invisible.push("songs-btn")
-                invisible.push("comments-btn")
-    
-            }
-      
-            document.getElementById(visible).style.borderBottom = "3px solid #faed26"
-            document.getElementById(visible).style.fontWeight = "bold"
-            try {
-                document.getElementById(invisible[0]).style.borderBottom = "none";
-                document.getElementById(invisible[0]).style.fontWeight = "normal"
-            }catch{}
-            try {
-                document.getElementById(invisible[1]).style.borderBottom = "none";
-                document.getElementById(invisible[1]).style.fontWeight = "normal"  
-            } catch {}
-            
+                this.setState({songsVisible : false, commentsVisible:false, settingsVisible:true})
+               // this.props.history.push('/' + this.state.user.username + "/requests")
+            }       
         }
 
 }
  
-export default Playlist;
+export default withStyles(useStyle)(Playlist);

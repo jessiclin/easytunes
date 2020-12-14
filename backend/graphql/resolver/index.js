@@ -113,7 +113,7 @@ const resolver = {
             })
 
             if (usedName)
-                throw new Error("You have another playlist of the same name")
+                throw new Error("You have another mixtape of the same name")
             else {
                 const result = await playlist.save()
                 return { ...result._doc }
