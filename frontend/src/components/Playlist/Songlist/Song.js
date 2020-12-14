@@ -104,6 +104,7 @@ class Song extends Component {
     }
 
     render() { 
+        console.log(this.props.current_song,  this.props.current_playlist )
 
         return (  
             <div className="row song-row">

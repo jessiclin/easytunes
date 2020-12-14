@@ -258,7 +258,7 @@ class HeaderNavbar extends Component {
               // })}
             
             position="static" 
-            style={{ background: '#5472d3', zIndex: 2 }}>
+            style={{ background: '#5472d3' }}>
                 <Toolbar>
                 <IconButton
                   color="inherit"
@@ -311,7 +311,7 @@ class HeaderNavbar extends Component {
                                 <MenuItem value= {"All"}>All</MenuItem>
                                 <MenuItem value= {"Artists"}>Artists</MenuItem>
                                 <MenuItem value= {"Songs"}>Songs</MenuItem>
-                                <MenuItem value= {"Playlists"}>Mixtapes</MenuItem>
+                                <MenuItem value= {"Playlists"}>Playlists</MenuItem>
                                 <MenuItem value= {"Users"}>Users</MenuItem>
                             </Select>
                         </FormControl>

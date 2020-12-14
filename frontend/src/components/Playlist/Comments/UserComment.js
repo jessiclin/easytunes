@@ -180,4 +180,3 @@ class UserComment extends Component {
 }
  
 export default UserComment;
-

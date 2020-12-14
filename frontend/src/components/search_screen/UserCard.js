@@ -166,30 +166,36 @@ class UserCard extends Component {
         if (this.state.loading)
             return (<> </>);
         // Do not show in the search results if it's the user that's logged in 
-        if (this.props.sessionUser === this.state.user.user.username)
-            return (<> </>);
+        // if (this.props.sessionUser === this.state.user.user.username)
+        //     return (<> </>);
         return(
             <div>
                 <div className='card z-depth-0 text search_card'>
-                    <div className="col s1">
+                    <div className="col s1" onClick = {this.toUser}>
                         <img alt = "user_img" src={this.state.user.user.profile_img} class="user_picture"></img>
                     </div>
-                    <div className='card-content col s3 user-button'>
-                        <button onClick = {this.toUser}><span className='card-title'>{this.state.user.user.username}</span> </button>
+                    <div className='card-content col s3 user-button' onClick = {this.toUser}>
+                        <button><span className='card-title'>{this.state.user.user.username}</span> </button>
                     </div>
-                    <div className='card-content col s3'>
+                    <div className='card-content col s3' onClick = {this.toUser}>
                         <span className='card-title'>{this.state.user.user.followers.length}</span>
                     </div>
-                    <div className='card-content col s3'>
+                    <div className='card-content col s3' onClick = {this.toUser}> 
                         <span className='card-title'>{this.state.user.playlists.length}</span>
                     </div>
 
                     <div className='card-content col s3 user-follow-info'>
-                        {this.userRequestedFollow() ?  <RiUserSharedLine size= {24}/> : 
+                        {this.state.user.user.username !== this.props.sessionUser ?
+                                <>
+                                {this.userRequestedFollow() ?  <RiUserSharedLine size= {24}/> : 
                          this.userFollowing() ? <RiUserFollowLine size= {24}/> : 
                          this.searchedRequestedFollow() ? <RiUserReceivedLine size= {24}/>:
                          <button onClick={this.sendRequest}> <RiUserAddLine size= {24}/> </button>
                         }
+                                </>
+                                : null
+                        }
+                        
                     </div>
                 </div>
             </div>

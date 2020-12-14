@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 class Login extends Component {
     state = {
         loginVisible: this.props.login,
-        signUpVisible: !this.props.login
+        signUpVisible: !this.props.login,
    }
 
     componentDidMount = () => {
@@ -101,5 +101,4 @@ class Login extends Component {
 }
  
 export default Login;
-
 
