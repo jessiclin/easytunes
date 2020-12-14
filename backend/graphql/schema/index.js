@@ -92,7 +92,6 @@ type AuthData {
 
 input UserInput {
     email: String!
-    profile_img: String!
     password: String!
     username: String!
     url: String!

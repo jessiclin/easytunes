@@ -284,6 +284,8 @@ class AddSong extends Component {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
         className = {classes.dialog}
+        fullWidth={true}
+        maxWidth = {'sm'}
       >
         
         {!this.state.createNew ?
