@@ -193,7 +193,7 @@ class HeaderNavbar extends Component {
         open={Boolean(this.state.anchorEl)}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.toPlaylists}>Playlist</MenuItem>
+        <MenuItem onClick={this.toPlaylists}>Mixtapes</MenuItem>
         <MenuItem onClick={this.toFollowers}>Followers</MenuItem>
         <MenuItem onClick={this.toSettings}>Settings</MenuItem>
         <MenuItem onClick={this.toLogOut}>Logout</MenuItem>

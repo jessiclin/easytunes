@@ -161,7 +161,7 @@ class PlaylistButton extends Component {
                             : <FaRegPlayCircle onClick = {this.handlePlay} size = {30}/>
                         }
                     </>
-                        : null
+                        : <FaRegPlayCircle disabled={true} style={{color : "gray"}}size = {30}/>
                     }
                     
                     

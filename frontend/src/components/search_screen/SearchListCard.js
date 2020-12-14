@@ -54,17 +54,17 @@ class SearchListCard extends Component {
 
         return (
             <div>
-                <div className='card z-depth-0 text search_card'>
-                <div className='card-content col s2'>
-                        {this.state.item.album.images[0] ? <img alt = "" src={this.state.item.album.images[0].url} class="song_picture"></img> : <img alt = "" src='https://cdn3.iconfinder.com/data/icons/social-media-circle-flat-1/1024/itunes-01-01-512.png' class="song_picture"></img>}
+                <div className='row card z-depth-0 text search_card'>
+                <div className='card-content col s1'>
+                        {this.state.item.album.images[0] ? <img alt = "song_image" src={this.state.item.album.images[0].url} class="song_picture"></img> : <img alt = "song_image" src='https://cdn3.iconfinder.com/data/icons/social-media-circle-flat-1/1024/itunes-01-01-512.png' class="song_picture"></img>}
                     </div>
-                    <div className='card-content col s3'>
+                    <div className='card-content col s5'>
                         <span className='card-title'>{this.state.item.name}</span>
                     </div>
-                    <div className='card-content col s3'>
+                    <div className='card-content col s4'>
                         <span className='card-title'>{artistNames}</span>
                     </div>
-                    <div className='card-content col s3'>
+                    <div className='card-content col s1'>
                         <span className='card-title'>{songLength < 60 ? "0:" + (songLength < 10 ? "0" + songLength: songLength) :
                 (Math.floor(songLength/60) + ":" + (songLength%60 < 10 ? "0" + songLength%60 : songLength%60))}</span>
                     </div>

@@ -198,7 +198,7 @@ class Menu extends Component {
         <List>
             <ListItem button key={"Playlists"} onClick = {this.toPlaylists}>
               <ListItemIcon> <SubscriptionsIcon/></ListItemIcon>
-              <ListItemText primary={"Playlists"} />
+              <ListItemText primary={"Mixtapes"} />
             </ListItem>
 
             <ListItem button key={"Followers"} onClick = {this.toFollowers}>
