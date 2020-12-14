@@ -437,6 +437,17 @@ const resolver = {
 
         }
     },
+    changePlaylistImg: async ({id, img}) => {
+        try {
+            const playlist = await Playlist.findOne({_id: id})
+            
+            playlist.playlist_img = img
+            playlist.save()
+            return {...result._doc}
+        } catch(error){
+
+        }
+    },
     removeAllSongs: async ({id}) => {
         try {
             console.log("REMOVE ALL SONGS")
@@ -544,6 +555,17 @@ const resolver = {
             const hashed = await bcrypt.hash(new_password, saltRounds)
             let user = await User.findOneAndUpdate({username: username}, {
                 password: hashed
+            },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        } catch(error){
+            console.log(error)
+            throw error
+        }
+    },
+    changeProfileImg: async ({username, img}) => {
+        try {
+            let user = await User.findOneAndUpdate({username: username}, {
+                profile_img: img
             },{useFindAndModify: false, new: true})
             return {...user._doc}
         } catch(error){

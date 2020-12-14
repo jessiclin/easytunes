@@ -14,7 +14,7 @@ class AccountSetting extends Component {
         let user = this.state.user 
         if (type === "Update Email")
             user.email = value 
-        else {
+        else if (type === "Update Username") {
             user.username = value 
             localStorage.setItem("username", value);
             
@@ -23,6 +23,60 @@ class AccountSetting extends Component {
         }
         this.setState({user : user})
     }
+
+    Post = (e) => {
+        e.preventDefault();
+        const file = document.getElementById("photo-input").files;
+        const formData = new FormData();
+
+        formData.append("img", file[0]);
+
+        fetch("http://localhost:5000/", {
+            method: "POST",
+            body: formData
+            }).then(r => {
+            console.log(r);
+        });
+        let user = this.state.user
+        user.profile_img = `http://localhost:5000/${file[0].name}`
+        this.setState({user : user})
+        console.log(file[0]);
+    }
+
+    updateProfileImg = () => {
+        let user = this.state.user
+        let requestBody = {
+            query: `
+                mutation {
+                    changeProfileImg(username: "${user.username}", img: "${user.profile_img}"){
+                        _id
+                    }
+                }
+            `
+        }
+
+        this.fetch(requestBody)
+    }
+
+    fetch = (requestBody) => {
+        fetch('http://localhost:5000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) 
+                    throw new Error('User not found');
+                return res.json()
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }
+
     render() { 
         console.log(this.props.user)
         return (  
@@ -32,16 +86,34 @@ class AccountSetting extends Component {
                 <h5>Profile Picture</h5>
                 <h6>This is the picture associated with your profile.</h6>
                 <div className='user-setting-info'>
-                    Upload Playlist Photo
-                    <div>
-                        <input
-                            type="file"
-                            id="photo-input"
-                            accept="image/*"
-                        />
+                    <div className='photo_input'>
+                        Upload Playlist Photo
+                        <div className="">
+                            <div className="custom-file">
+                                <input
+                                    type="file"
+                                    id="photo-input"
+                                    accept="image/*"
+                                />
+                            </div>    
+                        </div>
+                        <button type="button" className="btn btn-primary" onClick={this.Post}>
+                            Upload
+                        </button>
+                        <img
+                            id="img"
+                            style={{
+                                display: "block",
+                                height: "100px",
+                                width: "100px",
+                                "margin-top": "5px",
+                            }}
+                            src={this.state.user.profile_img}
+                        >
+                        </img>
                     </div>
                 </div>
-                {/* <Update text = {"Update Picture"} original = {this.state.user.username} onChange = {this.onChange}/> */}
+                <button className = "user-settings-content-btn" onClick={this.updateProfileImg}>Update Image</button>
             </div>
             <div className="user-settings-content">
                 <h5>Email</h5>
