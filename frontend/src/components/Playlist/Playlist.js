@@ -346,7 +346,7 @@ class Playlist extends Component {
                                 </div>
                                 <h2>{this.state.playlistInfo.name} {this.state.playlistInfo.public ? <AiFillEye size={24}/> : <AiFillEyeInvisible size={24}/>}</h2>
 
-                                <h5> Playlist By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
+                                <h5> Mixtape By: <User username = {this.state.playlistInfo.username} history = {this.props} /> </h5>
                                 <div>{this.state.playlistInfo.total_duration < 3600 ? "0 hr " + (this.state.playlistInfo.total_duration < 600 ? "0" + Math.floor(this.state.playlistInfo.total_duration/60) + " min": Math.floor(this.state.playlistInfo.total_duration/60) + " min") :
                 (Math.floor(this.state.playlistInfo.total_duration/3600) + " hr " + (this.state.playlistInfo.total_duration%3600 < 600 ? "0" + Math.floor(this.state.playlistInfo.total_duration/60) + " min": Math.floor(this.state.playlistInfo.total_duration/60) + " min"))}</div>
                             

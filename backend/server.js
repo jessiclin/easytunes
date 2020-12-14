@@ -214,7 +214,7 @@ conn.once("open", () => {
 
 // Create storage engine
 const storage = new GridFsStorage({
-  url: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@easytunes.q6gty.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
+  url: process.env.MONGO_URI,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
