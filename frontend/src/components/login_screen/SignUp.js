@@ -67,7 +67,9 @@ class SignUp extends Component {
             const username = this.usernameEl.current.children[1].children[0].value;
             const confirm = this.confirmEl.current.children[1].children[0].value;
             const userUrl = "easytunes.com/" + username;
+            console.log(email, password, username, confirm, userUrl)
             if (email.trim().length === 0 || password.trim().length === 0 || username.trim().length === 0 || confirm.trim().length === 0){
+                console.log("Fill out all inputs")
                 this.setErrmess("Fill out all inputs")
                 return;
             }
@@ -108,44 +110,47 @@ class SignUp extends Component {
                                         }
                                     })
                                     .then(res => {
-                                        
+                                  
                                         // if (res.status !== 200 && res.status !== 201) 
                                         //     throw new Error('Failed!');
                                         
                                         return res.json();
                                     })
                                     .then(result => {
+                                      console.log(result)
                                         if (result.errors) {
                                             if (/.*email.*/.test(result.errors[0].message))
                                                 throw new Error('Email already in use')
                                             if (/.*username.*/.test(result.errors[0].message))
                                                 throw new Error('Username already in use')
                                         }
-    
-                                        // Load the data in 
-                                        this.state.username = result.data.createUser.username
-    
-                                        this.onUsernameChange(this.state.username)
-                                        localStorage.setItem("username", this.state.username);
-                                        fetch('http://localhost:5000/authorization', {
-                                            method: 'POST',
-                            
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                            })
-                                            .then(res => {
-                                                if (res.status !== 200 && res.status !== 201) 
-                                                    throw new Error('Playlist not found');
-                                                return res.json()
-                                            })
-                                            .then(data => {
-                                                console.log(data)
-                                                window.location.replace(data)
-                                            })
-                                            .catch(err => {
-                                                console.log(err);
-                                            });
+                                        else {
+                                          // Load the data in 
+                                       //  this.state.username = result.data.createUser.username
+                                          console.log(result)
+                                          // this.onUsernameChange(this.state.username)
+                                          // localStorage.setItem("username", this.state.username);
+                                          // fetch('http://localhost:5000/authorization', {
+                                          //     method: 'POST',
+                              
+                                          //     headers: {
+                                          //         'content-type': 'application/json'
+                                          //     }
+                                          //     })
+                                          //     .then(res => {
+                                          //         if (res.status !== 200 && res.status !== 201) 
+                                          //             throw new Error('Playlist not found');
+                                          //         return res.json()
+                                          //     })
+                                          //     .then(data => {
+                                          //         console.log(data)
+                                          //         window.location.replace(data)
+                                          //     })
+                                          //     .catch(err => {
+                                          //         console.log(err);
+                                          //     });
+                                          } 
+                                        
                                    
                                     })
                                     .catch(err => {
@@ -158,7 +163,7 @@ class SignUp extends Component {
     render() { 
       
         const {classes}  = this.props; 
-        console.log(classes)
+        console.log(this.state.errorMess)
         return (
             <Container component="main" maxWidth="xs">
 
@@ -170,6 +175,9 @@ class SignUp extends Component {
         <Typography component="h1" variant="h5" >
           Sign up
         </Typography>
+        {this.state.errorMess !== null ? 
+        <Typography> {this.state.errorMess}</Typography> : null
+        }
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>

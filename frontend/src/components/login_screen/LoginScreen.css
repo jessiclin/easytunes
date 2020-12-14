@@ -3,6 +3,7 @@
 .login-container {
   box-shadow: 5px 0px 10px lightgray;
   background: transparent;
+  height: 550px;
 }
 /* Sign In Option on Top */
 .login-btns {

@@ -50,7 +50,7 @@ class SignIn extends Component {
     }
 
     state = {
-        errorMess : null
+        error : null
     }
     
     setErrmess = (err) => {
@@ -115,7 +115,7 @@ class SignIn extends Component {
                                         })
                                         .then(res => {
                                             if (res.status !== 200 && res.status !== 201) 
-                                                throw new Error('Playlist not found');
+                                                throw new Error('Authorization Failed');
                                             return res.json()
                                         })
                                         .then(data => {
@@ -128,7 +128,8 @@ class SignIn extends Component {
                                   //  this.toHome()
                                 })
                                 .catch(err => {
-                                    console.log(err);
+                                    this.setState({error: err.message})
+                                    console.log(err.message);
                                 });
     }
 
@@ -145,6 +146,11 @@ class SignIn extends Component {
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
+              {this.state.error !== null ? 
+              <Typography>
+              {this.state.error}
+            </Typography> : null
+              }
               <form className={classes.form} noValidate>
                 <TextField
                   InputProps={{
