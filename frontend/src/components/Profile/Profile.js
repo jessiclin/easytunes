@@ -81,11 +81,13 @@ class Profile extends Component {
                 'content-type': 'application/json'
             }})
             .then(res => {
+             
                 if (res.status !== 200 && res.status !== 201)
-                    throw new Error ('Failed')
+                    throw new Error ("Failed")
                 return res.json()
             })
             .then(data => {
+                
                 data = data.data.getUserByUsername
                 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 const date = new Date(parseInt(data.user.joined))

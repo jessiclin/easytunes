@@ -17,6 +17,7 @@ class AddSong extends Component {
     // Fetch the user's playlist 
     componentDidMount = () => {
         this.setState({loading: true})
+
         let requestBody = {
             query: `
                 query {

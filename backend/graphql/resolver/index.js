@@ -53,13 +53,14 @@ const resolver = {
     // Get one User 
     getUserByUsername: async ({username}) => {
         try {
+       
             const user = await User.findOne({ username: username})
             // console.log(user)
             if (user === null)
                 throw new Error (`${username} not found`)
             
             const playlists = await Playlist.find({user_id: user._id})
-
+            // console.log({user: { ...user._doc, password: null, _id: user.id}, playlists : playlists.map(playlist => {return {...playlist._doc}}) })
             return {user: { ...user._doc, password: null, _id: user.id}, playlists : playlists.map(playlist => {return {...playlist._doc}}) }
 
         } catch (err) {
@@ -138,6 +139,7 @@ const resolver = {
     },
     getPlaylistByID: async ({id}) => {
         try{
+            console.log("HERE")
             const playlist = await Playlist.findOne({_id : id})
             // console.log(playlist)
             return {...playlist._doc}

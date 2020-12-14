@@ -8,6 +8,7 @@ import './Search.css'
 import AddSong from './AddSongs'
 import UserCard from './UserCard'
 import PlaylistCard from './PlaylistCard'
+import ArtistCard from './ArtistCard'
 class SearchListCard extends Component {
     state = {
         item : this.props.item,
@@ -25,7 +26,7 @@ class SearchListCard extends Component {
         return (
             <>
             {this.state.type === "track" ? this.renderSong() : 
-            this.state.type === "artist" ? this.renderSong(): 
+            this.state.type === "artist" ? this.renderArtist(): 
             this.state.type === "playlist" ? <PlaylistCard playlist = {this.state.item} sessionUser = {this.props.username} history = {this.props.history}/>:
             <UserCard user = {this.state.item} sessionUser = {this.props.username} history = {this.props.history}/>}
             </>
@@ -34,23 +35,9 @@ class SearchListCard extends Component {
 
 
     renderArtist(){
+        
         return(
-            <div>
-                <div className='card z-depth-0 text search_card'>
-                    <div className='card-content col s3'>
-                        {this.state.item.images[0] ? <img alt = "" src={this.state.item.images[0].url} class="artist_picture"></img> : <img alt = "" src='https://cdn3.iconfinder.com/data/icons/social-media-circle-flat-1/1024/itunes-01-01-512.png' class="artist_picture"></img>}
-                    </div>
-                    <div className='card-content col s3'>
-                        <span className='card-title'>{this.state.item.name}</span>
-                    </div>
-                    
-                    <div className='card-content col s3'>
-                        {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
-                        
-                        {/* <button className="btn-floating black button" onClick={this.handleAddToPlaylist}><i className='material-icons'>add_circle</i></button> */}
-                    </div>
-                </div>
-            </div>
+            <ArtistCard item = {this.state.item}  username={this.props.username} history = {this.props.history}/>
         );
     }
 
