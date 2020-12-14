@@ -23,6 +23,7 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import { palette } from '@material-ui/system';
+import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar'
 const drawerWidth = 240;
 
 const useStyles = theme => ({
@@ -89,6 +90,10 @@ const useStyles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  bottomAppBar: {
+    top: 'auto',
+    bottom: 0,
   },
 });
 
@@ -216,6 +221,31 @@ class Menu extends Component {
         </List>
       </Drawer>
 
+      <AppBar 
+        position = "fixed" 
+        className={clsx(classes.bottomAppBar, {
+          [classes.appBarShift]: this.state.open,
+        })}
+      >
+        <PlaylistNavbar 
+                            username= {this.props.username} 
+                              play = {this.props.play} 
+                              onPlayChange = {this.props.onPlayChange} 
+                              onPlaylistChange = {this.props.onPlaylistChange}
+                              onSongChange = {this.props.onSongChange}
+                              onShuffleChange = {this.props.onShuffleChange}
+                              playlist = {this.props.playlist}
+                              current_song = {this.props.current_song}
+                              access_token = {this.props.access_token}
+                              offset = {this.props.offset}
+                              shuffle= {this.props.shuffle}
+                              shufflePlaylist = {this.props.shufflePlaylist}
+                              needsUpdate = {this.props.needsUpdate}
+                              updated = {this.props.updated}
+
+        />   
+      </AppBar>
+      
       </>
     );
   }

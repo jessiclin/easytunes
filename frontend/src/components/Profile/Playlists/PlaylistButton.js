@@ -200,13 +200,7 @@ class PlaylistButton extends Component {
                 </Dialog>
 
                     </>
-                // <div className="delete-playlist-box">
-                //     <div>
-                //         Delete the playlist?
-                //     </div>
-                //     <button className = "confirm-new-btn" onClick={this.deletePlaylist}> <AiOutlineCheckCircle size = {24}/></button>
-                //     <button className = "cancel-new-btn"  onClick={this.setInvisible}> <AiOutlineCloseCircle size = {24}/></button>
-                // </div>
+ 
                 : null }
             </div>
         );
