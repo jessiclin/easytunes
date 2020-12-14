@@ -107,7 +107,7 @@ class Playlist extends Component {
                 }
             `
         }
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -137,7 +137,7 @@ class Playlist extends Component {
                     `
                 }
                 
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                             method: 'POST',
                             body: JSON.stringify(requestBody),
                             headers: {
@@ -197,7 +197,7 @@ class Playlist extends Component {
             `
         }
         //find user id
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -234,7 +234,7 @@ class Playlist extends Component {
                 }
                 console.log("requesting")
                 // Create the playlist 
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                     method: 'POST',
                     body: JSON.stringify(requestBody),
                     headers: {
@@ -281,7 +281,7 @@ class Playlist extends Component {
                 }
             `
         }
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
                             method: 'POST',
                             body: JSON.stringify(requestBody),
                             headers: {
@@ -589,7 +589,7 @@ class Playlist extends Component {
                         }
                     `
                 }
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
@@ -626,7 +626,7 @@ class Playlist extends Component {
                         }
                     `
                 }
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
@@ -647,7 +647,7 @@ class Playlist extends Component {
              });
         }
         fetch = (requestBody) => {
-            fetch('http://localhost:5000/graphql', {
+            fetch('https://easytunes.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {

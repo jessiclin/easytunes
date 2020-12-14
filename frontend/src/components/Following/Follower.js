@@ -58,7 +58,7 @@ class Follower extends Component {
             `
         }
         
-        fetch("http://localhost:5000/graphql", {
+        fetch("https://easytunes.herokuapp.com/graphql", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {

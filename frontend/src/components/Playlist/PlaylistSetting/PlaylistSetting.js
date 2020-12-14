@@ -111,7 +111,7 @@ class PlaylistSetting extends Component {
         }
 
         // Delete the playlist 
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -138,14 +138,14 @@ class PlaylistSetting extends Component {
 
         formData.append("img", file[0]);
 
-        fetch("http://localhost:5000/", {
+        fetch("https://easytunes.herokuapp.com/", {
             method: "POST",
             body: formData
             }).then(r => {
             console.log(r);
         });
         let playlist = this.state.playlist
-        playlist.playlist_img = `http://localhost:5000/${file[0].name}`
+        playlist.playlist_img = `https://easytunes.herokuapp.com/${file[0].name}`
         this.setState({playlist : playlist})
         console.log(file[0]);
     }

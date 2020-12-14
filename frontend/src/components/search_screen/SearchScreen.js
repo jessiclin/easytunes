@@ -68,7 +68,7 @@ class SearchScreen extends Component {
                 }
             `
         }
-        this.fetchData(requestBody, 'playlists', 'http://localhost:5000/graphql', last)
+        this.fetchData(requestBody, 'playlists', 'https://easytunes.herokuapp.com/graphql', last)
     }
 
     // Handle getting search results for users 
@@ -100,7 +100,7 @@ class SearchScreen extends Component {
                 }
                 `
             }
-        this.fetchData(requestBody, 'users', 'http://localhost:5000/graphql', last)
+        this.fetchData(requestBody, 'users', 'https://easytunes.herokuapp.com/graphql', last)
     }
 
     // Handle getting songs and artists search results 
@@ -112,7 +112,7 @@ class SearchScreen extends Component {
         else 
             requestBody = { track: query}
             
-        this.fetchData(requestBody, type, 'http://localhost:5000/v1/search?', last)
+        this.fetchData(requestBody, type, 'https://easytunes.herokuapp.com/v1/search?', last)
     }
 
     // Updates the search page if the user searches for something else 

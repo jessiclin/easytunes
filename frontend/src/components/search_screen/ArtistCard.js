@@ -11,7 +11,7 @@ class ArtistCard extends Component {
 
     componentDidMount = () => {
         let requestBody = { artist: this.props.item.name}
-        fetch("http://localhost:5000/v1/artist-tracks/", {
+        fetch("https://easytunes.herokuapp.com/v1/artist-tracks/", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {

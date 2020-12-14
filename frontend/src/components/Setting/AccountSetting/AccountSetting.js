@@ -31,14 +31,14 @@ class AccountSetting extends Component {
 
         formData.append("img", file[0]);
 
-        fetch("http://localhost:5000/", {
+        fetch("https://easytunes.herokuapp.com/", {
             method: "POST",
             body: formData
             }).then(r => {
             console.log(r);
         });
         let user = this.state.user
-        user.profile_img = `http://localhost:5000/${file[0].name}`
+        user.profile_img = `https://easytunes.herokuapp.com/${file[0].name}`
         this.setState({user : user})
         console.log(file[0]);
     }
@@ -59,7 +59,7 @@ class AccountSetting extends Component {
     }
 
     fetch = (requestBody) => {
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {

@@ -50,7 +50,7 @@ class App extends Component {
   }
 
   getAccesstoken = async () => {
-    return await fetch('http://localhost:5000/access-token', {
+    return await fetch('https://easytunes.herokuapp.com/access-token', {
                     method: 'POST',
                     headers: {
                     'content-type': 'application/json'
