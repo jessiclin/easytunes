@@ -77,6 +77,7 @@ class Setting extends Component {
                             user {
                                 _id
                             username 
+                            profile_img
                             default_public_saved_playlist
                             default_public_playlist
                             verify_requests

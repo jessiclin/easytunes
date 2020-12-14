@@ -23,7 +23,11 @@ class SearchList extends Component {
                 {/* Display the tracks */}
                 {tracks ? 
                     <>
+                    <div className="row">
+                        <h3 className="col s1">Songs</h3>
+                    </div>
                     <div className='row'>
+                        <div className='col s3'></div>
                         <div className='col s3'>Song</div>
                         <div className='col s3'>Artist</div>
                         <div className='col s3'>Duration</div>
@@ -59,6 +63,9 @@ class SearchList extends Component {
                 {
                     playlists ? 
                     <>
+                    <div className="row">
+                        <h3 className="col s1">Playlists</h3>
+                    </div>
                     <div className='row'>
                         <div className='col s1'></div>
                         <div className='col s3'>Name</div>
@@ -80,6 +87,9 @@ class SearchList extends Component {
                 {/* Display the Users */}
                 {users ? 
                 <>
+                <div className="row">
+                        <h3 className="col s1">Users</h3>
+                    </div>
                     <div className='row'>
                         <div className='col s3'></div>
                         <div className='col s3'>User</div>

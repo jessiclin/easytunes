@@ -22,6 +22,7 @@ import GroupIcon from "@material-ui/icons/Group"
 import SettingsIcon from '@material-ui/icons/Settings'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
+import { palette } from '@material-ui/system';
 const drawerWidth = 240;
 
 const useStyles = theme => ({
@@ -34,6 +35,7 @@ const useStyles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -42,6 +44,7 @@ const useStyles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    
   },
   menuButton: {
     marginRight: 36,
@@ -53,15 +56,18 @@ const useStyles = theme => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    
   },
   drawerOpen: {
     width: drawerWidth,
+    background: '#5472d3',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen,   
     }),
   },
   drawerClose: {
+    background: '#5472d3',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -151,10 +157,9 @@ class Menu extends Component {
     const {classes} = this.props
     return (  
       <>
-    
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="fixed" 
         className={clsx(classes.appBar, {
           [classes.appBarShift]: this.state.open,
         })}

@@ -13,14 +13,12 @@ type SongRef {
 type ReplyRef {
     _id: ID!
     user_id: ID!
-    profile_img: String!
     date: String!
     message: String!
 }
 type CommentRef {
     _id: ID!
     user_id: ID!
-    profile_img: String!
     date: String!
     message: String!
     replies:  [ReplyRef!]!
@@ -94,6 +92,7 @@ type AuthData {
 
 input UserInput {
     email: String!
+    profile_img: String!
     password: String!
     username: String!
     url: String!
@@ -145,6 +144,7 @@ type RootMutation {
     forkPlaylist(username: String!, playlist_id: ID!, name: String!): Playlist
     changePlaylistPrivacy(id: ID!, privacy: Boolean!): Playlist 
     changePlaylistName(id: ID!, name: String!): Playlist 
+    changePlaylistImg(id: ID!, img: String!): Playlist
     removeAllSongs(id: ID!): Playlist
     moveSongUp(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
     moveSongDown(playlist_id: ID!, song_id: ID!, index: Int!): Playlist
@@ -152,6 +152,7 @@ type RootMutation {
     updateEmail(email:String!, new_email:String!): User
     changeUsername(username: String!, new_username:String!): User
     changePassword(username: String!, new_password:String!): User
+    changeProfileImg(username: String!, img: String!): User
     deleteComment(playlist_id: ID!, user_id: ID!, index: Int!): Playlist
     changeSavedPlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
     changePlaylistPrivacyDef(_id: ID!, def: Boolean!): User 
