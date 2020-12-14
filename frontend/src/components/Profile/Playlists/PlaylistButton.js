@@ -191,7 +191,7 @@ class PlaylistButton extends Component {
                             fullWidth={true}
                             maxWidth = {'xs'}
                         >
-                    <DialogTitle id="alert-dialog-slide-title">{"Delete Mixtape: " + this.state.playlist.name + "?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-slide-title">{"Delete Playlist: " + this.state.playlist.name + "?"}</DialogTitle>
                     <DialogActions>
                     <Button  onClick={this.deletePlaylist} color="primary">
                         Delete

@@ -315,7 +315,7 @@ class AddSong extends Component {
             </>
             :
             <>
-                <DialogTitle id="alert-dialog-slide-title">{"Add Song to New Mixtape"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Add Song to New Playlist"}</DialogTitle>
                 <DialogContent>
                     {this.state.error ?
                         <DialogContentText> {this.state.error} </DialogContentText> : null

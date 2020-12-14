@@ -151,7 +151,7 @@ class NewPlaylistButton extends Component {
                     fullWidth={true}
                     maxWidth = {'sm'}
                 >
-                    <DialogTitle id="alert-dialog-slide-title">{"Create New Mixtape"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-slide-title">{"Create New Playlist"}</DialogTitle>
                     <DialogContent>
                     {this.state.error ?
                         <DialogContentText> {this.state.error} </DialogContentText> : null
@@ -160,7 +160,7 @@ class NewPlaylistButton extends Component {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="Mixtape Name"
+                        label="Playlist Name"
                         type="text"
                         fullWidth
                         ref = {this.nameEl}
