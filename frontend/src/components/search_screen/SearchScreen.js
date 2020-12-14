@@ -132,7 +132,7 @@ class SearchScreen extends Component {
                 this.fetchSpotify(type,query, true)    
                 else if (type === 'users')
                     this.fetchUsers(true, query)
-                else if (type === 'playlists')
+                else if (type === 'mixtapes')
                     this.fetchPlaylists(true, query)
                 else if (type === 'all' ){
                     this.fetchSpotify('artists',query, false) 
@@ -161,7 +161,7 @@ class SearchScreen extends Component {
             this.fetchSpotify(type, query, true)    
             else if (type === 'users')
                 this.fetchUsers(true, query)
-            else if (type === 'playlists')
+            else if (type === 'mixtapes')
                 this.fetchPlaylists(true, query)
             else if (type === 'all' ){
                 this.fetchSpotify('artists', query, false) 

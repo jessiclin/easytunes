@@ -129,6 +129,7 @@ async function newToken() {
 // refresh when token expires 
 setInterval(newToken, 1000 * 60 * 60);
 
+app.use(express.static('public'))
 // For querying MongoDB Database 
 app.use(bodyParser.json());
 app.use(cors())
@@ -192,11 +193,11 @@ app.use('/graphql', graphqlHTTP.graphqlHTTP({
 
 const PORT = 5000
 
-const conn = mongoose.createConnection(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@easytunes.q6gty.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`)
+const conn = mongoose.createConnection(process.env.MONGO_URI)
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@easytunes.q6gty.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT || PORT, () => {
         console.log(`Server listening on port: ${PORT}`)
     })
 })
@@ -213,7 +214,7 @@ conn.once("open", () => {
 
 // Create storage engine
 const storage = new GridFsStorage({
-  url: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@easytunes.q6gty.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
+  url: process.env.MONGO_URI,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {

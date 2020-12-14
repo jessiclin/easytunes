@@ -253,7 +253,7 @@ class App extends Component {
                 ))}
               />
 
-              <Route exact path='/:username/playlist=:playlistid'
+              <Route exact path='/:username/mixtape=:playlistid'
                 render = {(props) => (
                   <Playlist {...props} 
                     username = {this.state.username}
@@ -287,7 +287,7 @@ class App extends Component {
                 )}
               />
               
-              <Route exact path='/:username/saved-playlists'
+              <Route exact path='/:username/saved-mixtapes'
                 render = {(props) => (
                   <Profile {...props} 
                   username = {this.state.username} 

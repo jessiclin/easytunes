@@ -165,12 +165,12 @@ class PlaylistSetting extends Component {
                     
                 </div>
                 <div className="settings-row">
-                    Playlist Name 
+                    Mixtape Name 
                     <input type="text" disabled = {!this.state.edit} defaultValue={this.state.playlist.name} required onChange={this.changeName}/>
                 </div>
                 {this.state.edit ?
                 <div className='photo_input'>
-                    Upload Playlist Photo
+                    Upload Mixtape Photo
                     <div className="">
                         <div className="custom-file">
                             <input
@@ -220,7 +220,7 @@ class PlaylistSetting extends Component {
                     fullWidth={true}
                     maxWidth = {'sm'}
                 >
-                    <DialogTitle id="alert-dialog-slide-title">{"Delete Playlist: " + this.state.playlist.name + "?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-slide-title">{"Delete Mixtape: " + this.state.playlist.name + "?"}</DialogTitle>
 
                     <DialogActions>
                     <Button  onClick={this.handleDelete} color="primary">

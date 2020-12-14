@@ -116,7 +116,7 @@ class PlaylistCard extends Component {
 
     // Go to the playlist 
     toPlaylist = () => {
-        this.props.history.push('/' +  this.state.playlist.username + "/playlist=" + this.state.playlist._id)
+        this.props.history.push('/' +  this.state.playlist.username + "/mixtape=" + this.state.playlist._id)
     }
 
     // Add the playlist into the user's saved playlist 

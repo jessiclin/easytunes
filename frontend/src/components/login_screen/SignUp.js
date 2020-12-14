@@ -76,7 +76,7 @@ class SignUp extends Component {
             const password = this.passwordEl.current.children[1].children[0].value;
             const username = this.usernameEl.current.children[1].children[0].value;
             const confirm = this.confirmEl.current.children[1].children[0].value;
-            const userUrl = "easytunes.com/" + username;
+            const userUrl = "easytunes.herokuapp.com" + username;
             console.log(email, password, username, confirm, userUrl)
             if (email.trim().length === 0 || password.trim().length === 0 || username.trim().length === 0 || confirm.trim().length === 0){
                 console.log("Fill out all inputs")

@@ -51,7 +51,7 @@ class PlaylistButton extends Component {
 
     // Go to the playlist page 
     toPlaylist = () => {
-        this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/playlist='+ this.state.playlist._id)
+        this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/mixtape='+ this.state.playlist._id)
     }
 
     // Delete the playlist 

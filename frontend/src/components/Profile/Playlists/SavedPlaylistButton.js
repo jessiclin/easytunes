@@ -101,7 +101,7 @@ class SavedPlaylistButton extends Component {
     }
 
     toPlaylist = () => {
-        this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/playlist='+ this.state.playlist._id)
+        this.state.history.push('/' + encodeURIComponent(this.state.playlist.username) + '/mixtape='+ this.state.playlist._id)
     }
 
     deletePlaylist = () => {
@@ -240,7 +240,7 @@ class SavedPlaylistButton extends Component {
                     fullWidth={true}
                     maxWidth = {'xs'}
                     >
-                    <DialogTitle id="alert-dialog-slide-title">{"Delete Saved Playlist: " + this.state.playlist.name + "?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-slide-title">{"Delete Saved Mixtape: " + this.state.playlist.name + "?"}</DialogTitle>
                     <DialogActions>
                     <Button  onClick={this.deletePlaylist} color="primary">
                         Delete

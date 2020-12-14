@@ -243,7 +243,7 @@ class Profile extends Component {
         }
         else {
             this.setState({showMyPlaylists : false, showSavedPlaylists:true})
-            this.props.history.push('/' + this.state.profileUsername + '/saved-playlists')
+            this.props.history.push('/' + this.state.profileUsername + '/saved-mixtapes')
         }
     }
 }

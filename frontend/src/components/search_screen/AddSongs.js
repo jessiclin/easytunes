@@ -25,6 +25,18 @@ const useStyles = theme => ({
         '&:focus' :{
             outline: "none"
         }
+  },
+  iconButton :{
+    width: "100%",
+    background: "transparent",
+    '&:focus' :{
+        outline: "none"
+    }
+  },
+  button : {
+    '&:focus' :{
+        outline: "none"
+    }
   }
 })
 class AddSong extends Component {
@@ -273,9 +285,11 @@ class AddSong extends Component {
 
         return ( 
             <div>
-      <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-        Add Song to Playlist
-      </Button>
+                <IconButton onClick={this.handleClickOpen} className = {classes.iconButton}> 
+                    <AddCircleIcon  variant="outlined" color="primary"  fontSize="large"/>
+                </IconButton>
+
+  
 
       <Dialog
         open={this.state.open}
@@ -332,10 +346,10 @@ class AddSong extends Component {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button  onClick={this.createAndAdd} color="primary">
+                    <Button  onClick={this.createAndAdd} color="primary" className = {classes.button}> 
                         Create and Add
                     </Button>
-                    <Button onClick={this.closeNew} color="primary">
+                    <Button onClick={this.closeNew} color="primary" className = {classes.button}>
                         Back
                     </Button>
                 </DialogActions>
