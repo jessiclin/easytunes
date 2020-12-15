@@ -30,8 +30,6 @@ class AccountSetting extends Component {
         const formData = new FormData();
 
         formData.append("img", file[0]);
-        console.log(file)
-        console.log(formData.getAll())
         fetch("https://easytunes.herokuapp.com/", {
             method: "POST",
             body: formData
