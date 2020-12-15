@@ -70,7 +70,7 @@ app.get('/callback', function(req, res) {
           spotifyApi.setRefreshToken(data.body['refresh_token']);
          
           //localStorage.setItem("access-token", data.body['access_token'])
-          res.redirect("https://easytunes.herokueapp.com/home")
+          res.redirect("https://easytunes.herokuapp.com/home")
         },
         function(err) {
           console.log('Something went wrong!', err);
