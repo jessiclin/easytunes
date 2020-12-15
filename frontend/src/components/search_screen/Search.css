@@ -20,12 +20,12 @@
 
 }
 
-.user-follow-info button, .user-button button, .playlist-button button {
+.user-button button, .playlist-button button {
     background: transparent;
     border: none
 }
 
-.user-follow-info button:focus, .user-button button:focus, .playlist-button button:focus {
+.user-button button:focus, .playlist-button button:focus {
     outline: none
 }
 
@@ -46,4 +46,45 @@
     border-width: 3px;
     border-color: black;
     cursor: pointer;
+}
+.user-following-info{
+    padding: 0px;
+    margin: 0px
+}
+.user-following-info .following-btn {
+    border: 1px solid;
+    border-radius: 10px;
+    width: 100px;
+    height: 25px;
+    background: "transparent"
+    }
+    
+.user-following-info .following-btn:hover {
+      background-color: #004CB2;
+      border-color: #004CB2;
+      color: white;
+      content: "Unfollow"
+    }
+
+    .requested-btn {
+        border: 1px solid;
+        border-radius: 10px;
+        width: 100px;
+        height: 25px;
+        background:transparent
+        }
+.request-btn {
+        border: 1px solid;
+        border-radius: 10px;
+        width: 100px;
+        height: 25px;
+        background:transparent
+        }
+        .request-btn:hover {
+            background-color: #004CB2;
+            border-color: #004CB2;
+            color: white
+          }
+.request-btn:focus, .requested-btn:focus, .user-following-info .following-btn:focus {
+    outline: "none"
 }

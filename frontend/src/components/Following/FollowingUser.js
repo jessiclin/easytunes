@@ -29,7 +29,7 @@ class FollowingUser extends Component {
                       <User username = {this.state.following.username} history ={this.props.history} />
                     </div>
                     <div className="col">
-                        <button className="unfollow-btn" onClick = {this.unFollow}> Unfollow  <RiUserUnfollowLine/></button>
+                        <button className="unfollow-btn" onClick = {this.unFollow}> Unfollow </button>
                     </div>
                     
                 </div>

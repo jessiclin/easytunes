@@ -175,7 +175,7 @@ class SearchScreen extends Component {
 
     render() {
         
-            
+          
         if (this.state.loading)
             return (<> </>)
 
@@ -186,7 +186,25 @@ class SearchScreen extends Component {
                 <div className="row">
                     <h2 className="col s1">Results</h2>
                 </div>
-                <SearchList searchList={this.state.searchResults} username={this.state.username} history = {this.props.history}/>
+                <SearchList 
+                    searchList={this.state.searchResults} 
+                    username={this.state.username} 
+                    history = {this.props.history}
+                    play = {this.props.play} 
+                    onPlayChange = {this.props.onPlayChange} 
+                    onPlaylistChange = {this.props.onPlaylistChange}
+                    onSongChange = {this.props.onSongChange}
+                    onShuffleChange = {this.onShuffleChange}
+                    playlist = {this.props.uris}
+                    current_song = {this.props.current_song}
+                    access_token = {this.props.access_token}
+                    offset = {this.props.offset}
+                    shuffle= {this.props.shuffle}
+                    shufflePlaylist = {this.props.shufflePlaylist}
+                    needsUpdate = {this.props.needsUpdate}
+                    updated = {this.props.updated}
+                    canUpdate = {this.props.canUpdate}
+                />
                 <div className = "row blank-space"> </div>
             </div> 
             {/* <PlaylistNavbar/> */}

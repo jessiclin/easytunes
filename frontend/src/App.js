@@ -50,23 +50,28 @@ class App extends Component {
   }
 
   getAccesstoken = async () => {
-    return await fetch('https://easytunes.herokuapp.com/access-token', {
-                    method: 'POST',
-                    headers: {
-                    'content-type': 'application/json'
-                    }})
-                .then(res => {
-                    if (res.status !== 200 && res.status !== 201) 
-                        throw new Error('Failed');
-                    return res.json()
-                })
-                .then(result => {
-                  this.setState({access_token : result})
+    if (!localStorage.getItem("access-token"))
+      return await fetch('https://easytunes.herokuapp.com/access-token', {
+                      method: 'POST',
+                      headers: {
+                      'content-type': 'application/json'
+                      }})
+                  .then(res => {
+                      if (res.status !== 200 && res.status !== 201) 
+                          throw new Error('Failed');
+                      return res.json()
+                  })
+                  .then(result => {
+                    localStorage.setItem("access-token", result)
+                    this.setState({access_token : result}, function() {console.log(this.state.access_token)})
 
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+                  })
+                  .catch(err => {
+                      console.log(err);
+                  });
+    else {
+      this.setState({access_token : localStorage.getItem('access-token')})
+    }
   }
 
   onPlayChange = (play) => {
@@ -76,20 +81,28 @@ class App extends Component {
   updated = () => {
     this.setState({needsUpdate: false})
   }
+
   onSongChange = (song_id) => {
     let s = null
     let offset = 0
-    this.state.current_playlist.songs.forEach((song,i) => {
-      if (song.song_id === song_id){
-        s = song
-        offset = i
-      }
-         
-    })
+    if (this.state.current_playlist)
+      this.state.current_playlist.songs.forEach((song,i) => {
+        if (song.song_id === song_id){
+          s = song
+          offset = i
+        }
+          
+      })
     console.log("SONG CHANGE APP.JS")
-    // if (!this.state.play || !this.state.playlist)
-    //   this.setState({current_song: s, play: true, offset:offset, needsUpdate: true}, function() {console.log(this.state)})
-    // else 
+    
+    if (!this.state.current_playlist){
+      this.setState({current_song: s, play: true, offset:offset, needsUpdate: false}, function() {console.log(this.state)})
+      console.log("HERE")
+    }
+      
+    else if (!this.state.play)
+      this.setState({play: true, needsUpdate: true, stored: {playlist: this.state.current_playlist, uris: this.state.uris, song: s, offset: offset}})
+    else 
       this.setState({current_song: s, play: true, offset:offset, needsUpdate: false}, function() {console.log(this.state)})
   }
 
@@ -126,17 +139,26 @@ class App extends Component {
         return song.song_uri
       })
       result[0] = uris
-
+      result.push(playlist.songs[offset])
     if (this.state.shuffle){
       result = this.shufflePlaylist(uris, playlist)
     }
-
+    
   }
+  else {
+    result[0] = [s.uri]
+    result.push(s)
+  }
+
   console.log("PLAYLIST CHANGE APP.JS")
-  result.push(playlist.songs[offset])
-  console.log(result)
-    if (!this.state.play || !this.state.playlist)
-      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:true}, function() {console.log(this.state)})
+  
+  console.log(this.state.current_playlist === null)
+    if (!this.state.current_playlist){
+      this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:false}, function() {console.log(this.state)})
+    }
+    else if (!this.state.play){
+      this.setState({play: true, needsUpdate: true, stored: {playlist: playlist, uris: result[0], song: result[1], offset: offset}})
+    }
     else 
       this.setState({current_playlist : playlist, play : true, uris: result[0], current_song: result[1], offset: offset, needsUpdate:false}, function() {console.log(this.state)})
   }
@@ -165,7 +187,11 @@ class App extends Component {
     this.setState({atHome : false})
   }
 
-
+  canUpdate = () => {
+    const stored = this.state.stored
+    console.log("HERE")
+    this.setState({current_playlist : stored.playlist, uris: stored.uris, current_song: stored.song, offset: stored.offset, needsUpdate:false})
+  }
   
   render() {
     const {classes} = this.props
@@ -190,7 +216,8 @@ class App extends Component {
                 shuffle= {this.state.shuffle}
                 shufflePlaylist = {this.shufflePlaylist}
                 needsUpdate = {this.state.needsUpdate}
-                pdated = {this.updated}
+                updated = {this.updated}
+                canUpdate = {this.canUpdate}
               />
               // <HeaderNavbar {...props} username= {this.state.username} onUsernameChange = {this.onUsernameChange}/> 
             }/>
@@ -232,7 +259,24 @@ class App extends Component {
 
               <Route exact path='/searchq=:query/type=:type' 
                 render = {(props) => (
-                <SearchScreen {...props} username = {this.state.username} results = {this.state.results}/> 
+                <SearchScreen {...props} 
+                  username = {this.state.username} 
+                  results = {this.state.results}
+                  play = {this.state.play} 
+                  onPlayChange = {this.onPlayChange} 
+                  onPlaylistChange = {this.onPlaylistChange}
+                  onSongChange = {this.onSongChange}
+                  onShuffleChange = {this.onShuffleChange}
+                  playlist = {this.state.uris}
+                  current_song = {this.state.current_song}
+                  access_token = {this.state.access_token}
+                  offset = {this.state.offset}
+                  shuffle= {this.state.shuffle}
+                  shufflePlaylist = {this.shufflePlaylist}
+                  needsUpdate = {this.state.needsUpdate}
+                  updated = {this.updated}
+                  canUpdate = {this.canUpdate}
+                /> 
               )}/>
 
               <Route exact path='/:username/followers' 
@@ -299,35 +343,7 @@ class App extends Component {
                 />
                 )}
               />
-              {/* <Route path='/:userid/following' component={Following}/> */}
-              
-              {/* <Route path='/:any' component={HomeScreen} /> */}
             </Switch>
-            {/* {this.state.username ? 
-            <>
-            
-              <Route render = {(props) => 
-                <PlaylistNavbar {...props} 
-                            username= {this.state.username} 
-                              play = {this.state.play} 
-                              onPlayChange = {this.onPlayChange} 
-                              onPlaylistChange = {this.onPlaylistChange}
-                              onSongChange = {this.onSongChange}
-                              onShuffleChange = {this.onShuffleChange}
-                              playlist = {this.state.uris}
-                              current_song = {this.state.current_song}
-                              access_token = {this.state.access_token}
-                              offset = {this.state.offset}
-                              shuffle= {this.state.shuffle}
-                              shufflePlaylist = {this.shufflePlaylist}
-                              needsUpdate = {this.state.needsUpdate}
-                              updated = {this.updated}
-
-                />   
-              
-              }/>
-              </>
-          :  null} */}
 
           </div>
         </div>

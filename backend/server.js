@@ -70,7 +70,7 @@ app.get('/callback', function(req, res) {
           spotifyApi.setRefreshToken(data.body['refresh_token']);
          
           //localStorage.setItem("access-token", data.body['access_token'])
-          res.redirect("https://easytunes.herokuapp.com")
+          res.redirect("https://easytunes.herokueapp.com/home")
         },
         function(err) {
           console.log('Something went wrong!', err);
@@ -207,13 +207,13 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 app.post("/", upload.single("img"), (req, res, err) => {
-  res.send(req.files);
+ res.send(req.files);
 });
 
-app.get("/file_img", (req, res) => {
-  console.log(req.body.filename)
-  gfs.files.findOne({ filename: req.params.req.body.filename }, (err, file) => {
+app.get("/image_file/:filename", (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
+    console.log("Get file")
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: "No file exists"
@@ -224,11 +224,11 @@ app.get("/file_img", (req, res) => {
   });
 });
 
-
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static(__dirname + '/build'));
 app.get("/*", function(req, res) {
+  console.log("GET URL ")
+
   res.sendFile(path.join(__dirname + "/build/index.html"));
 });
-
 

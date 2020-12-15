@@ -33,7 +33,7 @@ class Request extends Component {
                 <User username = {this.state.request.username} history = {this.state.history}/>
                 </div>
                 <div className="col">
-                    <button className="unfollow-btn" onClick = {this.acceptRequest}> Accept <RiUserAddLine/></button>
+                    <button className="unfollow-btn" onClick = {this.acceptRequest}> Accept </button>
                 </div>
             </div>
         );

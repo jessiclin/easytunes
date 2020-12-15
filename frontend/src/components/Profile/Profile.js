@@ -50,6 +50,7 @@ class Profile extends Component {
         profilePlaylists: null,
         profileSavedPlaylists: null,
         loading: true,
+        isHovered: false 
     }
 
     // Get the user information and their playlists 
@@ -137,7 +138,54 @@ class Profile extends Component {
             })
         
     }
-    
+    toggleHover = () => {
+        this.setState({isHovered: !this.state.isHovered})
+    }
+
+    handleUnfollow = () => {
+        console.log(this.state.following)
+        let requestBody = {
+            query: `
+                mutation{
+                    unFollow(username: "${this.props.username}", following_id: "${this.state.profileUserInfo._id}"){
+                   
+                            _id
+                            following {
+                                user_id
+                                username
+                            }
+                        
+                    }
+                }
+            `
+        }
+        
+        fetch("https://easytunes.herokuapp.com/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+                }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201)
+                    throw new Error ('Failed')
+                return res.json()
+            })
+            .then(data => {
+                console.log(data)
+                let profileFollowers = this.state.profileFollowers
+                profileFollowers.forEach((follower,i) => {
+                    if (follower.username === this.props.username){
+                        profileFollowers.splice(i, 1)
+                    }
+                })
+                this.setState({profileFollowers: profileFollowers})
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
     render() { 
         const {classes} = this.props
 
@@ -151,22 +199,36 @@ class Profile extends Component {
                 <div className="container-fluid playlist-data-container">
                     {/* Information Bar about the user */}
                     <div className="information-row">
+                        {/* <div className="col">
+
+                        </div> */}
                         <div className="col text-center">
                             <div className="">
                                 <img alt="playlist_img" src={this.state.profileUserInfo.profile_img} class="user_picture"></img>
                             </div>
                             <h2>{this.state.profileUsername}                            
-                             
+                             <div className ="follow">  
                              {this.state.profileUsername !== this.props.username ?
                                 !this.isFollowing() ? 
-                                <button> <RiUserAddLine size= {24}/> </button> :
-                                <span> <RiUserFollowLine size={24}/></span>
+                                <button className ="following-btn align-self-center"> 
+                                    Follow
+                                </button> 
+                               :
+                                <button className ="following-btn align-self-center"  onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} onClick = {this.handleUnfollow}> 
+                                {this.state.isHovered ? "Unfollow" : "Following"}
+
+                                </button> 
                             : null}
+                             </div>
+                             
 
                             </h2>
                              <h5> User Since: {this.state.profileAccountCreationDate}</h5>
                         </div>
-                    </div>
+                        {/* <div className="col align-self-center"> */}
+
+                        </div>
+                    {/* </div> */}
                     
                     {/* Navigation bar between "My Playlist" and "Saved Playlists" */}
                     <div className="navigation-row">

@@ -8,6 +8,7 @@ import './PlaylistNavbar.css'
 import {withStyles} from '@material-ui/core/styles'
 import SpotifyPlayer from 'react-spotify-web-playback';
 import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
 import './AudioPlayer.css'
 
 const useStyle=theme => ({
@@ -26,6 +27,10 @@ class PlaylistNavbar extends Component {
       }
       if (type === "player_update"){
         console.log("Player Update")
+        console.log(this.props.needsUpdate)
+        if (this.props.needsUpdate){
+          this.props.canUpdate()
+        }
       }
      this.props.onPlayChange(state.isPlaying)
     }
@@ -45,10 +50,10 @@ class PlaylistNavbar extends Component {
               // className={clsx(classes.appBar, {
               //   [classes.appBarShift]: this.props.open,
               // })}
-            
-            position="static" 
-            >
-  
+              
+                position="static" 
+                >
+                  
                       {this.props.access_token &&
                               
                             <SpotifyPlayer
@@ -61,7 +66,7 @@ class PlaylistNavbar extends Component {
                               offset = {this.props.offset}
                               styles={{
                                 activeColor: '#fff',
-                                bgColor: '#333',
+                                bgColor: '#696969',
                                 color: '#fff',
                                 errorColor: 'fff',
                                 loaderColor: '#fff',
@@ -74,6 +79,7 @@ class PlaylistNavbar extends Component {
                           
                       }
                     {/* <button className="shuffle" onClick = {this.shuffle}> Shuffle </button>  */}
+                 
               </AppBar>
               </div>
             </>

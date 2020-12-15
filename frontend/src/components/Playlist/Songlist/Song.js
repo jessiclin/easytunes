@@ -5,6 +5,13 @@
 
 import React, { Component } from 'react'
 import {AiOutlineDelete, AiOutlineArrowUp, AiOutlineArrowDown} from 'react-icons/ai'
+import IconButton from '@material-ui/core/IconButton'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogActions from '@material-ui/core/DialogActions'
+import Button from '@material-ui/core/Button'
 // FaRegPauseCircle
 import {FaRegPlayCircle, FaRegPauseCircle} from 'react-icons/fa'
 class Song extends Component {
@@ -144,18 +151,10 @@ class Song extends Component {
                 :null}
             </div>
             <div className="col song-col text-center">
-                {this.state.editing ? <button className = 'delete-btn' onClick={this.setVisible}> <AiOutlineDelete size = {24}/></button>: null}
+                {this.state.editing ? <button className = 'delete-btn' onClick={this.handleDelete}> <AiOutlineDelete size = {24}/></button>: null}
             </div>
 
-            {this.state.deleteConfirmVisible ?
-                <div className="delete-playlist-box">
-                    <div>
-                        Delete the Song? 
-                    </div>
-                <button className = "confirm-new-btn" onClick={this.handleDelete}> Yes</button>
-                <button className = "cancel-new-btn"  onClick={this.setInvisible}> No</button>
-        </div>
-        : null }
+       
       </div>  
         );
     }

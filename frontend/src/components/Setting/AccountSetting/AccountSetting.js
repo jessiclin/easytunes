@@ -30,7 +30,8 @@ class AccountSetting extends Component {
         const formData = new FormData();
 
         formData.append("img", file[0]);
-
+        console.log(file)
+        console.log(formData.getAll())
         fetch("https://easytunes.herokuapp.com/", {
             method: "POST",
             body: formData
@@ -38,7 +39,7 @@ class AccountSetting extends Component {
             console.log(r);
         });
         let user = this.state.user
-        user.profile_img = `https://easytunes.herokuapp.com/${file[0].name}`
+        user.profile_img = `https://easytunes.herokuapp.com/image_file/${file[0].name}`
         this.setState({user : user})
         console.log(file[0]);
     }

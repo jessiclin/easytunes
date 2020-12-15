@@ -197,3 +197,25 @@
   outline: none
 
 }
+
+.information-row .follow .following-btn {
+  border: 1px solid;
+  border-radius: 10px;
+  width: 100px;
+  height: 25px;
+  background: "transparent";
+  background-color: #004CB2;
+  border-color: #004CB2;
+  color: white;
+  font-size: medium;
+  }
+  
+.information-row .follow .following-btn:hover {
+  background-color: white;
+  border-color: black;
+  color: black
+  }
+
+  .information-row .follow .following-btn:focus {
+    outline:"none"
+    }
