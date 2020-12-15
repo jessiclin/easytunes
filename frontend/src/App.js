@@ -82,10 +82,13 @@ class App extends Component {
     this.setState({needsUpdate: false})
   }
 
+  searchSongChange = (song) => {
+    
+  }
   onSongChange = (song_id) => {
     let s = null
     let offset = 0
-    if (this.state.current_playlist)
+ 
       this.state.current_playlist.songs.forEach((song,i) => {
         if (song.song_id === song_id){
           s = song
@@ -95,11 +98,8 @@ class App extends Component {
       })
     console.log("SONG CHANGE APP.JS")
     
-    if (!this.state.current_playlist){
+    if (!this.state.current_playlist)
       this.setState({current_song: s, play: true, offset:offset, needsUpdate: false}, function() {console.log(this.state)})
-      console.log("HERE")
-    }
-      
     else if (!this.state.play)
       this.setState({play: true, needsUpdate: true, stored: {playlist: this.state.current_playlist, uris: this.state.uris, song: s, offset: offset}})
     else 

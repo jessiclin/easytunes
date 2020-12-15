@@ -304,7 +304,7 @@ class AddSong extends Component {
         
         {!this.state.createNew ?
             <>
-                <DialogTitle id="alert-dialog-slide-title">{"Add Song to Playlist"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Add Song to Mixtape"}</DialogTitle>
                 {
                     this.state.playlists.map(playlist => {
                         return (
@@ -319,7 +319,7 @@ class AddSong extends Component {
         
                 <DialogActions>
                     <Button  onClick={this.openNew} color="primary">
-                        New Playlist
+                        New Mixtape
                     </Button>
                     <Button onClick={this.handleClose} color="primary">
                         Cancel
@@ -329,7 +329,7 @@ class AddSong extends Component {
             </>
             :
             <>
-                <DialogTitle id="alert-dialog-slide-title">{"Add Song to New Playlist"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Add Song to New Mixtape"}</DialogTitle>
                 <DialogContent>
                     {this.state.error ?
                         <DialogContentText> {this.state.error} </DialogContentText> : null
