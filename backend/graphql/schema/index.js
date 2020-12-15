@@ -119,6 +119,7 @@ input PlaylistInput{
 type RootQuery {
     searchUsers(username: String!): [User_Playlists!]!
     searchPlaylists(name: String!): [Playlist!]!
+    topFivePlaylists: [Playlist!]!
     getUserByUsername(username: String!): User_Playlists!
     getUserById(user_id : ID!): User!
     getUserByEmail(email: String!) : User_Playlists!

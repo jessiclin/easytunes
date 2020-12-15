@@ -5,6 +5,7 @@
 import React, {Component } from 'react'
 import '../Navbar/Navbar.css';
 import "./HomeScreen.css"
+import Home_Playlists from './Home_Playlists.js'
 
 class HomeScreen extends Component {
 
@@ -12,7 +13,8 @@ class HomeScreen extends Component {
       loading: true,
       current_playlist: null,
       current_song: null,
-      index: -1
+      index: -1,
+      top_five: null
     }
 
     componentDidMount = () => {
@@ -114,6 +116,57 @@ class HomeScreen extends Component {
             .catch(err => {
                 console.log(err);
             });
+            console.log("loading top five")
+            this.loadTopFive()
+    }
+
+    loadTopFive = () => {
+      console.log("loading top five 2")
+      let requestBody = {
+        query : `
+            query {
+              topFivePlaylists{
+                _id 
+                name 
+                username
+                likes
+                total_duration 
+                playlist_img
+                songs {
+                  song_id
+                  song_uri
+                  name
+                  artists
+                  song_img
+                }
+              }
+            }
+        `
+    }
+    fetch('http://localhost:5000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+            'content-type': 'application/json'
+        }
+        })
+        .then(res => {
+            if (res.status !== 200 && res.status !== 201) 
+                throw new Error('Playlist not found');
+            return res.json()
+        })
+        .then(data => {
+          console.log("loading top five 3")
+          data = data.data.topFivePlaylists
+          console.log(data)
+          
+          this.setState({
+            top_five : data
+          })
+      })
+      .catch(err => {
+          console.log(err);
+      });
     }
     // Redirect to Home when home button is pressed 
     handleHome = () => {
@@ -140,30 +193,50 @@ class HomeScreen extends Component {
         console.log(this.props.access_token)
     
         return ( 
-            
+                
                 <div className="container-fluid  user-home-container" ref={this.container}>
                     {/* Home Button and Account Icon */}
-
-                    <div className="container-fluid text-center playlist-info-row">
-                              <div className="current-playlist">
-                                CURRENT MIXTAPE
-                              </div>
-                              <div className="current-playlist-name">
-                                {this.props.current_playlist ? this.props.current_playlist.name : ""}
-                              </div>
-                        </div>
-
-                    <div className="image-container">
-                        <img src={this.props.current_playlist ? this.props.current_playlist.playlist_img : 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'}  alt="" class="home_card"/>
+                        <div className="container-child" style={{width: "50%", "margin-left": "10px"}}>
+                          <div className="row">
+                              <h3 className="current-playlist">Top Mixtapes</h3>
+                          </div>
+                          <div className='row'>
+                              <div className='col s1'></div>
+                              <div className='col s3'>Name</div>
+                              <div className='col s3'>Username</div>
+                              <div className='col s1'>Likes</div>
+                              <div className='col s3'>Songs</div>
+                              <div className='col s3'></div>
+                          </div>
+                          {this.state.top_five ?
+                          <Home_Playlists playlists = {this.state.top_five} 
+                                history = {this.props.history}/>
+                                :
+                          null }
+                        
                     </div>
-                    
-                    <div className="container-fluid text-center song-info-row">
-                        <div className="song-name">
-                            {this.props.current_playlist ? this.props.current_song.name : ""}
-                        </div>
-                        <div className="song-artist">
-                            {this.props.current_playlist ? this.getArtists() : ""}
-                        </div>
+                    <div className="container-child" style={{width: "50%"}}>
+                      <div className="container-fluid text-center">
+                                <div className="current-playlist">
+                                  CURRENT MIXTAPE
+                                </div>
+                                <div className="current-playlist-name">
+                                  {this.props.current_playlist ? this.props.current_playlist.name : "N/A"}
+                                </div>
+                          </div>
+
+                      <div className="image-container">
+                          <img src={this.props.current_playlist ? this.props.current_playlist.playlist_img : 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=1.0'}  alt="" class="home_card"/>
+                      </div>
+                      
+                      <div className="container-fluid text-center song-info-row">
+                          <div className="song-name">
+                              {this.props.current_playlist ? this.props.current_song.name : "Song Name"}
+                          </div>
+                          <div className="song-artist">
+                              {this.props.current_playlist ? this.getArtists() : "Artist"}
+                          </div>
+                      </div>
                     </div>
                     {/* <SpotifyPlayer
                       token= {this.props.access_token}
