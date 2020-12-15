@@ -8,14 +8,13 @@ import isAuth from './middleware/is-auth.js'
 import SpotifyWebApi from 'spotify-web-api-node'
 import dotenv from 'dotenv'
 import path, { resolve } from 'path'
-const morgan = require('morgan');
 import multer from 'multer'
 import cors from 'cors'
 import GridFsStorage from 'multer-gridfs-storage'
 import Grid from 'gridfs-stream'
 import crypto from 'crypto'
 
-
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 dotenv.config()
 
 const app = express() ;
@@ -101,14 +100,6 @@ async function newToken() {
 
 // refresh when token expires 
 setInterval(newToken, 1000 * 60 * 60);
-
-
-// Serve static content for the app from the "public" directory in the application directory.
-
-app.get(express.static("build"));
-  app.get("/*", function(req, res) {
-    res.sendFile(path.join(path.resolve(), "/build/index.html"));
-  });
 
 // For querying MongoDB Database 
 app.use(bodyParser.json());
@@ -219,8 +210,9 @@ app.post("/", upload.single("img"), (req, res, err) => {
   res.send(req.files);
 });
 
-app.get("/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+app.get("/file_img", (req, res) => {
+  console.log(req.body.filename)
+  gfs.files.findOne({ filename: req.params.req.body.filename }, (err, file) => {
     // Check if file
     if (!file || file.length === 0) {
       return res.status(404).json({
@@ -231,3 +223,12 @@ app.get("/:filename", (req, res) => {
     readstream.pipe(res);
   });
 });
+
+
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static(__dirname + '/build'));
+app.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname + "/build/index.html"));
+});
+
+
