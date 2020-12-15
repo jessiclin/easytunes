@@ -94,6 +94,7 @@ class AccountSetting extends Component {
                                 className="photo-input"
                                 id="inputGroupFile01"
                                 aria-describedby="inputGroupFileAddon01"
+                                accept="image/*"
                                 />
                                 <label className="custom-file-label" htmlFor="inputGroupFile01">
                                 Choose file
