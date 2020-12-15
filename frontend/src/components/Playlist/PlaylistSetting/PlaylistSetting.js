@@ -144,7 +144,7 @@ class PlaylistSetting extends Component {
             console.log(r);
         });
         let playlist = this.state.playlist
-        playlist.playlist_img = `https://easytunes.herokuapp.com/image_file/${file[0].name}`
+        playlist.playlist_img = `https://easytunes.herokuapp.com/${file[0].name}`
         this.setState({playlist : playlist})
         console.log(file[0]);
     }

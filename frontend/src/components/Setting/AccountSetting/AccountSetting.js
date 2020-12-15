@@ -39,7 +39,7 @@ class AccountSetting extends Component {
             console.log(r);
         });
         let user = this.state.user
-        user.profile_img = `https://easytunes.herokuapp.com/image_file/${file[0].name}`
+        user.profile_img = `https://easytunes.herokuapp.com/${file[0].name}`
         this.setState({user : user})
         console.log(file[0]);
     }

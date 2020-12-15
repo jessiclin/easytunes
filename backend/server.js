@@ -210,7 +210,7 @@ app.post("/", upload.single("img"), (req, res, err) => {
  res.send(req.files);
 });
 
-app.get("/image_file/:filename", (req, res) => {
+app.get("/:filename", (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
     console.log("Get file")
