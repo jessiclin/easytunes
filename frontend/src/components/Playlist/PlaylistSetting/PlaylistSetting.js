@@ -171,29 +171,33 @@ class PlaylistSetting extends Component {
                 {this.state.edit ?
                 <div className='photo_input'>
                     Upload Mixtape Photo
-                    <div className="">
-                        <div className="custom-file">
-                            <input
+                    <div className="input-group mb-3">
+                            <div className="custom-file">
+                                <input
                                 type="file"
+                                className="custom-file-input"
                                 id="photo-input"
+                                aria-describedby="inputGroupFileAddon01"
                                 accept="image/*"
-                            />
-                        </div>    
-                        </div>
+                                />
+                                <label className="custom-file-label" htmlFor="inputGroupFile01">
+                                Choose file
+                                </label>
+                            </div>
+                            </div>
                             <button type="button" className="btn btn-primary" onClick={this.Post}>
-                                Upload
+                            Upload
                             </button>
                             <img
-                                id="img"
-                                style={{
-                                    display: "block",
-                                    height: "200px",
-                                    width: "200px",
-                                    "margin-top": "5px",
-                                }}
-                                src={this.state.playlist.playlist_img}
-                            >
-                            </img>
+                            id="img"
+                            style={{
+                                display: "block",
+                                height: "200px",
+                                width: "200px",
+                                "margin-top": "5px",
+                            }}
+                            src={this.state.playlist.playlist_img}
+                            ></img>
                         </div>
                 : null
                 }
