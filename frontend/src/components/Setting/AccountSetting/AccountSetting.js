@@ -91,8 +91,8 @@ class AccountSetting extends Component {
                             <div className="custom-file">
                                 <input
                                 type="file"
-                                className="photo-input"
-                                id="inputGroupFile01"
+                                className="custom-file-input"
+                                id="photo-input"
                                 aria-describedby="inputGroupFileAddon01"
                                 accept="image/*"
                                 />
