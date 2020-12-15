@@ -33,7 +33,7 @@ class Follower extends Component {
                         <User username = {this.state.follower.username} history = {this.state.history}/>
                     </div>
                     <div className="col">
-                        <button className="unfollow-btn" onClick = {this.removeFollower}> Remove  <RiUserUnfollowLine/></button>
+                        <button className="unfollow-btn" onClick = {this.removeFollower}>Remove<RiUserUnfollowLine/></button>
                     </div>
                     
             </div>

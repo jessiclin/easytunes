@@ -201,12 +201,12 @@ class HomeScreen extends Component {
                               <h3 className="current-playlist">Top Mixtapes</h3>
                           </div>
                           <div className='row'>
-                              <div className='col s1'></div>
-                              <div className='col s3'>Name</div>
-                              <div className='col s3'>Username</div>
-                              <div className='col s1'>Likes</div>
-                              <div className='col s3'>Songs</div>
-                              <div className='col s3'></div>
+                              <div className='col s1 current-playlist'></div>
+                              <div className='col s3 current-playlist'>Name</div>
+                              <div className='col s3 current-playlist'>Username</div>
+                              <div className='col s1 current-playlist'>Likes</div>
+                              <div className='col s3 current-playlist'>Songs</div>
+                              <div className='col s3 current-playlist'></div>
                           </div>
                           {this.state.top_five ?
                           <Home_Playlists playlists = {this.state.top_five} 
