@@ -87,29 +87,32 @@ class AccountSetting extends Component {
                 <div className='user-setting-info'>
                     <div className='photo_input'>
                         Upload Profile Picture
-                        <div className="">
+                        <div className="input-group mb-3">
                             <div className="custom-file">
                                 <input
-                                    type="file"
-                                    id="photo-input"
-                                    accept="image/*"
+                                type="file"
+                                className="photo-input"
+                                id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01"
                                 />
-                            </div>    
-                        </div>
-                        <button type="button" className="btn btn-primary" onClick={this.Post}>
+                                <label className="custom-file-label" htmlFor="inputGroupFile01">
+                                Choose file
+                                </label>
+                            </div>
+                            </div>
+                            <button type="button" className="btn btn-primary" onClick={this.Post}>
                             Upload
-                        </button>
-                        <img
+                            </button>
+                            <img
                             id="img"
                             style={{
                                 display: "block",
-                                height: "10%",
-                                width: "10%",
+                                height: "200px",
+                                width: "200px",
                                 "margin-top": "5px",
                             }}
-                            src={this.state.user.profile_img}
-                        >
-                        </img>
+                            src={this.state.playlist.playlist_img}
+                            ></img>
                     </div>
                 </div>
                 <button className = "user-settings-content-btn" onClick={this.updateProfileImg}>Update Image</button>
