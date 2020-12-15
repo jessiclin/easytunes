@@ -10,6 +10,8 @@ import {RiPlayListLine} from 'react-icons/ri'
 import {AiOutlineDelete, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
 // FaRegPauseCircle
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import './HomeScreen.css'
+
 const useStyle = theme => ({
     deleteBtn :{
         '&:focus':{
@@ -37,11 +39,11 @@ class Home_Playlist_Button extends Component {
         const playlist = this.state.playlist 
         const {classes} = this.props
         return (
-            <div className="playlist-row">
-<div className="card-content col s1" onClick={this.toPlaylist}>
+            <div className="playlist-row playlist-button" onClick={this.toPlaylist}>
+<div className="card-content col s1" >
                         <img alt = "playlist_img" src={this.state.playlist.playlist_img} class="song_picture"></img>
                     </div>
-                    <div className='card-content col s3 playlist-button' onClick={this.toPlaylist}>
+                    <div className='card-content col s3' onClick={this.toPlaylist}>
                         <button><span className='card-title'>{this.state.playlist.name}</span></button>
                         </div>
                     <div className='card-content col s3' onClick={this.toPlaylist}> 
@@ -52,8 +54,9 @@ class Home_Playlist_Button extends Component {
                     </div>
                     <div className='card-content col s3'>
                         <span className='card-title'>
-                            {this.state.playlist.songs.length} {this.state.playlist.songs.length === 1 ? "Song" : "Songs"}
+                            {this.state.playlist.songs.length} {this.state.playlist.songs.length === 1 ? "Song " : "Songs "}
                         </span>
+                        {"- "}
                         <span className='card-title'>
                             {this.state.playlist.total_duration < 3600 ? "0 hr " + (this.state.playlist.total_duration < 600 ? "0" + Math.floor(this.state.playlist.total_duration/60) + " min": Math.floor(this.state.playlist.total_duration/60) + " min") :
                             (Math.floor(this.state.playlist.total_duration/3600) + " hr " + (this.state.playlist.total_duration%3600 < 600 ? "0" + Math.floor(this.state.playlist.total_duration/60) + " min": Math.floor(this.state.playlist.total_duration/60) + " min"))}

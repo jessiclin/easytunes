@@ -6,6 +6,8 @@
 import React, { Component } from 'react'
 
 import Home_Playlist_Button from './Home_Playlist_Button'
+import './HomeScreen.css'
+
 
 class Home_Playlists extends Component {
  
