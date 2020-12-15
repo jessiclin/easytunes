@@ -111,7 +111,7 @@ class AccountSetting extends Component {
                                 width: "200px",
                                 "margin-top": "5px",
                             }}
-                            src={this.state.playlist.playlist_img}
+                            src={this.state.profile.profile_img}
                             ></img>
                     </div>
                 </div>
