@@ -82,6 +82,7 @@ class UserComment extends Component {
         })
         .then(data => {
             this.props.updateComments(data.data.deleteComment.comments)
+            this.setState({editVisible: false})
             //this.setState({comments:data.data.deleteComment.comments})
         })
         .catch(err => {
