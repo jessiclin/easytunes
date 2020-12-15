@@ -150,7 +150,7 @@ class Setting extends Component {
                      
                         </Grid>
                         <Grid item xs className ={classes.settingsContent}>
-                            {this.state.showAccount ? <AccountSetting user = {this.state.user} onUsernameChange ={this.props.onUsernameChange} history = {this.props.history}/>: null}
+                            {this.state.showAccount ? <AccountSetting user = {this.state.user} onUsernameChange ={this.onUsernameChange} history = {this.props.history} />: null}
                             {this.state.showPrivacy ? <PrivacySetting user ={this.state.user} onPrivacyChange = {this.onPrivacyChange}/> : null}
                             {this.state.showAdvanced ? <AdvancedSetting user={this.state.user}/> : null}
                         </Grid>
@@ -160,6 +160,16 @@ class Setting extends Component {
         );
     }
 
+    onUsernameChange = (username) => {
+        console.log(username)
+        let user = this.state.user 
+        let url = user.url.split("/")[0]
+        user.url = url + "/" + username
+        this.props.onUsernameChange(username)
+    }
+    onUserChange = (user) => {
+        this.setState({user : user})
+    }
     onPrivacyChange = (type, value) => {
         let user = this.state.user 
         if (type === "playlist")

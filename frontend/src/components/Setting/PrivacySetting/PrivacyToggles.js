@@ -145,4 +145,3 @@ class PrivacyToggles extends Component {
 }
  
 export default PrivacyToggles;
-

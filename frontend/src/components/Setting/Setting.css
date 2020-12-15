@@ -92,7 +92,8 @@
 .user-settings-content-btn:hover{
     background: #004CB2;
     border: #004CB2;
-    outline: none
+    outline: none;
+    color: white
 }
 
 .user-settings-content {

@@ -5,10 +5,19 @@
 
 import React, { Component } from 'react'
 import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import TextField from '@material-ui/core/TextField'
 class Update extends Component {
     constructor(props){
         super(props)
         this.onChange = this.props.onChange
+        this.valueEl = React.createRef()
     }
     state = { 
         visible: false, 
@@ -33,11 +42,12 @@ class Update extends Component {
     }
     handleUpdate = () => {
         let requestBody = ""
+        const value = this.valueEl.current.children[1].children[0].value.trim()
         if (this.state.text === "Update Email"){
             requestBody = {
                 query: `
                     mutation{
-                        updateEmail(email: "${this.state.original}", new_email:"${this.state.new}"){
+                        updateEmail(email: "${this.state.original}", new_email:"${value}"){
                         _id
                         email
                         }
@@ -49,7 +59,7 @@ class Update extends Component {
             requestBody = {
                 query: `
                     mutation{
-                        changeUsername(username: "${this.state.original}", new_username:"${this.state.new}"){
+                        changeUsername(username: "${this.state.original}", new_username:"${value}"){
                         _id
                         email
                         }
@@ -76,8 +86,8 @@ class Update extends Component {
                     if (data.errors)
                         throw new Error (data.errors[0].message)
                    this.setInvisible()
-                   this.onChange(this.state.text, this.state.new)
-                   this.setState({original: this.state.new})
+                   this.onChange(this.state.text, value)
+                   this.setState({original: value})
                 })
                 .catch(error => {
                     console.log(error)
@@ -93,13 +103,44 @@ class Update extends Component {
 
             {
                 this.state.visible ? 
-                    <div className="update-box">
-                        {this.state.text}
-                        <div className="error-box"> {this.state.error} </div>
-                        <input type="text" placeholder = {this.state.original} onChange = {this.handleChange}required/>
-                        <button className = "confirm-change-btn" onClick={this.handleUpdate}> <AiOutlineCheckCircle size = {24}/></button>
-                         <button className = "cancel-change-btn"  onClick={this.setInvisible}> <AiOutlineCloseCircle size = {24}/></button>
-                    </div>
+                <Dialog
+                open={this.state.visible}
+                keepMounted
+                onClose={this.setInvisible}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+   
+                fullWidth={true}
+                maxWidth = {'sm'}
+              >
+                        <DialogTitle id="alert-dialog-slide-title">{this.state.text}</DialogTitle>
+                        <DialogContent>
+                            {this.state.error ?
+                                <DialogContentText> {this.state.error} </DialogContentText> : null
+        
+                            }
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="New Username"
+                                type="text"
+                                placeholder = {this.state.original}
+                                fullWidth
+                                ref = {this.valueEl}
+                            />
+
+                        </DialogContent>
+                        <DialogActions>
+                            <Button  onClick={this.handleUpdate} color="primary" >
+                                Update
+                            </Button>
+                            <Button onClick={this.setInvisible} color="primary"> 
+                                Cancel
+                            </Button>
+                        </DialogActions>
+                        </Dialog>
+
                 :
                 null
             }    

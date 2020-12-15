@@ -30,4 +30,3 @@ class AdvancedSetting extends Component {
 }
  
 export default AdvancedSetting;
-
