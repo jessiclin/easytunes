@@ -112,7 +112,7 @@ class AccountSetting extends Component {
                                 width: "200px",
                                 "margin-top": "5px",
                             }}
-                            src={this.state.profile.profile_img}
+                            src={this.state.user.profile_img}
                             ></img>
                     </div>
                 </div>
