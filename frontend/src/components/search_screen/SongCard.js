@@ -65,14 +65,14 @@ class SongCard extends Component {
                         <span className='card-title'>{songLength < 60 ? "0:" + (songLength < 10 ? "0" + songLength: songLength) :
                 (Math.floor(songLength/60) + ":" + (songLength%60 < 10 ? "0" + songLength%60 : songLength%60))}</span>
                     </div>
-                    <div className="card-content col s1">
+                    {/* <div className="card-content col s1">
                         <IconButton className = {classes.playButton}>
                         {this.props.current_song && this.props.current_song.song_id === this.state.item._id && this.props.play?
                             <FaRegPauseCircle size = {28} onClick = {this.handleSongPlay} /> : 
                             <FaRegPlayCircle size = {28} onClick = {this.handleSongPlay}/>
                         }
                         </IconButton>
-                    </div>
+                    </div> */}
                     <div className='card-content col s1 '>
                         {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
                         <AddSong username ={this.props.username} song = {this.state.item}/>
