@@ -161,7 +161,7 @@ const resolver = {
     topFivePlaylists: async () => {
         try {
             console.log("here")
-            const playlists = await Playlist.find({public : true}).sort({"likes": -1}).limit(5)
+            const playlists = await Playlist.find({public : true}).sort({"likes": -1}).limit(6)
             // console.log(playlists)
             return playlists.map(async playlist => {
                 return {...playlist._doc}
