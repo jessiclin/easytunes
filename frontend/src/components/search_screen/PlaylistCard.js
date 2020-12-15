@@ -7,7 +7,8 @@ import React, { Component } from 'react'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
-
+import BookmarkIcon from '@material-ui/icons/Bookmark'
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder'
 class PlaylistCard extends Component {
     state = { 
         playlist: this.props.playlist,
@@ -30,7 +31,7 @@ class PlaylistCard extends Component {
              `
          }
 
-         fetch("http://localhost:5000/graphql", {
+         fetch("https://easytunes.herokuapp.com/graphql", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -89,16 +90,14 @@ class PlaylistCard extends Component {
                     {!this.state.favorited?
                         <div className='card-content col s2 '>
                             <IconButton onClick = {this.handleFavorite}>
-                                <FavoriteBorderIcon fontSize="large" />
+                                <BookmarkBorderIcon fontSize="large" />
                             </IconButton>
-                            {/* <button className="btn-floating red button" onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
                         </div>
                         : 
                         <div className='card-content col s2 '>
                             <IconButton >
-                                <FavoriteIcon fontSize="large" />
+                                <BookmarkIcon fontSize="large" />
                             </IconButton>
-                            {/* <button onClick={this.handleFavorite}><i className='material-icons'>favorite</i></button> */}
                         </div>
 
                     }
@@ -136,7 +135,7 @@ class PlaylistCard extends Component {
                 }
             `
         }
-        fetch("http://localhost:5000/graphql", {
+        fetch("https://easytunes.herokuapp.com/graphql", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {

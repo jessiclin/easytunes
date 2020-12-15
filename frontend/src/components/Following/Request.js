@@ -33,7 +33,7 @@ class Request extends Component {
                 <User username = {this.state.request.username} history = {this.state.history}/>
                 </div>
                 <div className="col">
-                    <button className="unfollow-btn" onClick = {this.acceptRequest}> Accept <RiUserAddLine/></button>
+                    <button className="unfollow-btn" onClick = {this.acceptRequest}> Accept </button>
                 </div>
             </div>
         );
@@ -57,7 +57,7 @@ class Request extends Component {
             `
         }
         
-        fetch("http://localhost:5000/graphql", {
+        fetch("https://easytunes.herokuapp.com/graphql", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {

@@ -13,6 +13,7 @@ class UserCard extends Component {
         sessionUserRequests: null,
         sessionUserFollowers: null,
         loading: true,
+        isHovered: false
     }
 
     // Get the user 
@@ -40,7 +41,7 @@ class UserCard extends Component {
             `
         }
 
-        fetch("http://localhost:5000/graphql", {
+        fetch("https://easytunes.herokuapp.com/graphql", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -132,7 +133,7 @@ class UserCard extends Component {
                 }
             `
         }
-        fetch("http://localhost:5000/graphql", {
+        fetch("https://easytunes.herokuapp.com/graphql", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -162,6 +163,54 @@ class UserCard extends Component {
         console.log(this.props)
         this.props.history.push('/' +  this.state.user.user.username)
     }
+    toggleHover = () => {
+        this.setState({isHovered: !this.state.isHovered})
+    }
+
+    handleUnfollow = () => {
+        let requestBody = {
+            query: `
+                mutation{
+                    unFollow(username: "${this.props.sessionUser}", following_id: "${this.state.user.user._id}"){
+                   
+                            _id
+                            following {
+                                user_id
+                                username
+                            }
+                        
+                    }
+                }
+            `
+        }
+        
+        fetch("https://easytunes.herokuapp.com/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+                }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201)
+                    throw new Error ('Failed')
+                return res.json()
+            })
+            .then(data => {
+                console.log(data)
+                let profileFollowers = this.state.user.user.followers
+                profileFollowers.forEach((follower,i) => {
+                    if (follower.username === this.props.sessionUser){
+                        profileFollowers.splice(i, 1)
+                    }
+                })
+
+                this.setState({user: this.state.user})
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
     render() { 
         if (this.state.loading)
             return (<> </>);
@@ -171,7 +220,7 @@ class UserCard extends Component {
         return(
             <div>
                 <div className='card z-depth-0 text search_card'>
-                    <div className="col s1" onClick = {this.toUser}>
+                    <div className="col-2 s1" onClick = {this.toUser}>
                         <img alt = "user_img" src={this.state.user.user.profile_img} class="user_picture"></img>
                     </div>
                     <div className='card-content col s3 user-button' onClick = {this.toUser}>
@@ -184,13 +233,22 @@ class UserCard extends Component {
                         <span className='card-title'>{this.state.user.playlists.length}</span>
                     </div>
 
-                    <div className='card-content col s3 user-follow-info'>
+                    <div className=' col-2 s3 user-following-info align-self-center'>
                         {this.state.user.user.username !== this.props.sessionUser ?
                                 <>
-                                {this.userRequestedFollow() ?  <RiUserSharedLine size= {24}/> : 
-                         this.userFollowing() ? <RiUserFollowLine size= {24}/> : 
-                         this.searchedRequestedFollow() ? <RiUserReceivedLine size= {24}/>:
-                         <button onClick={this.sendRequest}> <RiUserAddLine size= {24}/> </button>
+                                {this.userRequestedFollow() ?  
+                                    <button className ="requested-btn align-self-center"> Requested </button> 
+                                    // <RiUserSharedLine size= {24}/> 
+                                : 
+                                    this.userFollowing() ? 
+                                    <button className ="following-btn align-self-center" onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} onClick = {this.handleUnfollow}> {this.state.isHovered ? "Unfollow" : "Following"}</button> 
+                                // <RiUserFollowLine size= {24}/> 
+                                : 
+                                    this.searchedRequestedFollow() ? 
+                                    <button className ="requested-btn"> Pending Request </button> 
+                        //  <RiUserReceivedLine size= {24}/>
+                         :
+                                    <button className ="request-btn align-self-center" onClick={this.sendRequest}> Follow </button>
                         }
                                 </>
                                 : null

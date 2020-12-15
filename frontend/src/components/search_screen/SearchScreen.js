@@ -68,7 +68,7 @@ class SearchScreen extends Component {
                 }
             `
         }
-        this.fetchData(requestBody, 'playlists', 'http://localhost:5000/graphql', last)
+        this.fetchData(requestBody, 'playlists', 'https://easytunes.herokuapp.com/graphql', last)
     }
 
     // Handle getting search results for users 
@@ -100,7 +100,7 @@ class SearchScreen extends Component {
                 }
                 `
             }
-        this.fetchData(requestBody, 'users', 'http://localhost:5000/graphql', last)
+        this.fetchData(requestBody, 'users', 'https://easytunes.herokuapp.com/graphql', last)
     }
 
     // Handle getting songs and artists search results 
@@ -112,7 +112,7 @@ class SearchScreen extends Component {
         else 
             requestBody = { track: query}
             
-        this.fetchData(requestBody, type, 'http://localhost:5000/v1/search?', last)
+        this.fetchData(requestBody, type, 'https://easytunes.herokuapp.com/v1/search?', last)
     }
 
     // Updates the search page if the user searches for something else 
@@ -175,7 +175,7 @@ class SearchScreen extends Component {
 
     render() {
         
-            
+          
         if (this.state.loading)
             return (<> </>)
 
@@ -186,7 +186,25 @@ class SearchScreen extends Component {
                 <div className="row">
                     <h2 className="col s1">Results</h2>
                 </div>
-                <SearchList searchList={this.state.searchResults} username={this.state.username} history = {this.props.history}/>
+                <SearchList 
+                    searchList={this.state.searchResults} 
+                    username={this.state.username} 
+                    history = {this.props.history}
+                    play = {this.props.play} 
+                    onPlayChange = {this.props.onPlayChange} 
+                    onPlaylistChange = {this.props.onPlaylistChange}
+                    onSongChange = {this.props.onSongChange}
+                    onShuffleChange = {this.onShuffleChange}
+                    playlist = {this.props.uris}
+                    current_song = {this.props.current_song}
+                    access_token = {this.props.access_token}
+                    offset = {this.props.offset}
+                    shuffle= {this.props.shuffle}
+                    shufflePlaylist = {this.props.shufflePlaylist}
+                    needsUpdate = {this.props.needsUpdate}
+                    updated = {this.props.updated}
+                    canUpdate = {this.props.canUpdate}
+                />
                 <div className = "row blank-space"> </div>
             </div> 
             {/* <PlaylistNavbar/> */}

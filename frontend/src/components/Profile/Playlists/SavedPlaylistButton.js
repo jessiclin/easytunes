@@ -68,7 +68,7 @@ class SavedPlaylistButton extends Component {
             `
         }
 
-        fetch ('http://localhost:5000/graphql', {
+        fetch ('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -119,7 +119,7 @@ class SavedPlaylistButton extends Component {
         }
 
         // Delete the playlist 
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -149,7 +149,7 @@ class SavedPlaylistButton extends Component {
                     `
                 }
 
-                fetch("http://localhost:5000/graphql", {
+                fetch("https://easytunes.herokuapp.com/graphql", {
                     method: 'POST',
                     body: JSON.stringify(requestBody),
                     headers: {
@@ -210,7 +210,7 @@ class SavedPlaylistButton extends Component {
                 <button className="play-btn">
                 { playlist.songs.length > 0 ?
                         <>
-                        { this.props.play && this.props.current_playlist.name === playlist.name? 
+                        { this.props.play && this.props.current_playlist._id === playlist._id? 
                             <FaRegPauseCircle onClick = {this.handlePlay} size = {30}/>
                             : <FaRegPlayCircle onClick = {this.handlePlay} size = {30}/>
                         }
@@ -258,7 +258,7 @@ class SavedPlaylistButton extends Component {
 
     handlePlay = async () => {
         // If pausing current playlist 
-        if (this.props.current_playlist !== null && this.props.current_playlist.name === this.state.playlist.name)
+        if (this.props.current_playlist !== null && this.props.current_playlist._id === this.state.playlist._id)
             this.props.onPlayChange(!this.props.play) 
         // If changing playlist 
         else {

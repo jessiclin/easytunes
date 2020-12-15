@@ -17,7 +17,7 @@ class SearchList extends Component {
         const artists = items.artists
         const users = items.users
         const playlists = items.playlists
-
+        
         return (
             <div className='section'>
                 {/* Display the tracks */}
@@ -35,7 +35,21 @@ class SearchList extends Component {
                     </div>
                     {tracks && tracks.map(function(item) {
                         return (
-                            <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username} history = {this.props.history}/>
+                            <SearchListCard key = {item.id} item={item} type="track" username = {this.props.username} history = {this.props.history}
+                            play = {this.props.play} 
+                            onPlayChange = {this.props.onPlayChange} 
+                            onPlaylistChange = {this.props.onPlaylistChange}
+                            onSongChange = {this.props.onSongChange}
+                            onShuffleChange = {this.props.onShuffleChange}
+                            playlist = {this.props.uris}
+                            current_song = {this.props.current_song}
+                            access_token = {this.props.access_token}
+                            offset = {this.props.offset}
+                            shuffle= {this.props.shuffle}
+                            shufflePlaylist = {this.props.shufflePlaylist}
+                            needsUpdate = {this.props.needsUpdate}
+                            updated = {this.props.updated}
+                            canUpdate = {this.props.canUpdate}/>
                         );}, this)
                     }
                     </>
@@ -50,7 +64,21 @@ class SearchList extends Component {
                     </div>
                     {artists && artists.map(function(item) {
                     return (
-                        <SearchListCard key = {item.id} item={item} type="artist" username = {this.props.username} history = {this.props.history}/>
+                        <SearchListCard key = {item.id} item={item} type="artist" username = {this.props.username} history = {this.props.history}
+                        play = {this.props.play} 
+                            onPlayChange = {this.props.onPlayChange} 
+                            onPlaylistChange = {this.props.onPlaylistChange}
+                            onSongChange = {this.props.onSongChange}
+                            onShuffleChange = {this.props.onShuffleChange}
+                            playlist = {this.props.uris}
+                            current_song = {this.props.current_song}
+                            access_token = {this.props.access_token}
+                            offset = {this.props.offset}
+                            shuffle= {this.props.shuffle}
+                            shufflePlaylist = {this.props.shufflePlaylist}
+                            needsUpdate = {this.props.needsUpdate}
+                            updated = {this.props.updated}
+                            canUpdate = {this.props.canUpdate}/>
                     );} ,this)
                      }
                 
@@ -77,7 +105,21 @@ class SearchList extends Component {
                     {playlists && playlists.map(function(item) {
                         console.log(item)
                     return (
-                        <SearchListCard key = {item._id} item={item} type="playlist" username = {this.props.username} history = {this.props.history}/>
+                        <SearchListCard key = {item._id} item={item} type="playlist" username = {this.props.username} history = {this.props.history}
+                        play = {this.props.play} 
+                            onPlayChange = {this.props.onPlayChange} 
+                            onPlaylistChange = {this.props.onPlaylistChange}
+                            onSongChange = {this.props.onSongChange}
+                            onShuffleChange = {this.props.onShuffleChange}
+                            playlist = {this.props.uris}
+                            current_song = {this.props.current_song}
+                            access_token = {this.props.access_token}
+                            offset = {this.props.offset}
+                            shuffle= {this.props.shuffle}
+                            shufflePlaylist = {this.props.shufflePlaylist}
+                            needsUpdate = {this.props.needsUpdate}
+                            updated = {this.props.updated}
+                            canUpdate = {this.props.canUpdate}/>
                     );},this)
                     }
                     </> : 
@@ -99,7 +141,27 @@ class SearchList extends Component {
                     </div>
                     {users && users.map(function(item) {
                     return (
-                        <SearchListCard key = {item.user._id} item={item} type="user" username = {this.props.username} history = {this.props.history}/>
+                        <SearchListCard 
+                            key = {item.user._id} 
+                            item={item} 
+                            type="user" 
+                            username = {this.props.username} 
+                            history = {this.props.history}
+                            play = {this.props.play} 
+                            onPlayChange = {this.props.onPlayChange} 
+                            onPlaylistChange = {this.props.onPlaylistChange}
+                            onSongChange = {this.props.onSongChange}
+                            onShuffleChange = {this.props.onShuffleChange}
+                            playlist = {this.props.uris}
+                            current_song = {this.props.current_song}
+                            access_token = {this.props.access_token}
+                            offset = {this.props.offset}
+                            shuffle= {this.props.shuffle}
+                            shufflePlaylist = {this.props.shufflePlaylist}
+                            needsUpdate = {this.props.needsUpdate}
+                            updated = {this.props.updated}
+                            canUpdate = {this.props.canUpdate}
+                        />
                     );},this)
                     }
                 </>

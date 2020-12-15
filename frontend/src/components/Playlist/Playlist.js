@@ -24,7 +24,9 @@ import {withStyles} from '@material-ui/core/styles'
 import './Playlist.css'
 import {FaRegPauseCircle, FaRegPlayCircle} from 'react-icons/fa'
 import { FaShare } from 'react-icons/fa'
-
+import IconButton from '@material-ui/core/IconButton'
+import BookmarkIcon from '@material-ui/icons/Bookmark'
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder'
 
 const useStyle = theme => ({
     buttonFocus : {
@@ -65,7 +67,8 @@ class Playlist extends Component {
         editing: false,
         forkPopupVisible: false,
         error : "",
-        liked: false 
+        liked: false,
+        favorited: null
     }
 
     // Get the playlist 
@@ -107,7 +110,7 @@ class Playlist extends Component {
                 }
             `
         }
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -137,7 +140,7 @@ class Playlist extends Component {
                     `
                 }
                 
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                             method: 'POST',
                             body: JSON.stringify(requestBody),
                             headers: {
@@ -158,13 +161,51 @@ class Playlist extends Component {
                                         liked = true 
                                     
                                 })
-
-                                this.setState({
+                                let requestBody = {
+                                    query: `
+                                       query {
+                                           getUserByUsername(username: "${this.props.username}"){
+                                               user {
+                                                   saved_playlists {
+                                                       playlist_id
+                                                   }
+                                               }
+                                           }
+                                       }
+                                    `
+                                }
+                       
+                                fetch("https://easytunes.herokuapp.com/graphql", {
+                                   method: 'POST',
+                                   body: JSON.stringify(requestBody),
+                                   headers: {
+                                   'content-type': 'application/json'
+                                   }})
+                               .then(res => {
+                                   if (res.status !== 200 && res.status !== 201) 
+                                       throw new Error('Failed');
+                                   return res.json()
+                               })
+                               .then(result => {
+                                   const saved = result.data.getUserByUsername.user.saved_playlists
+                                   console.log("HERE")
+                                   let favorite = false 
+                                   saved.forEach(playlist => {
+                                       if (playlist.playlist_id === this.state.playlistId)
+                                          favorite = true 
+                                   })
+                                   console.log("HERE")
+                                   this.setState({
                                     playlistInfo: playlist,
                                     loading: false,
-                                    liked: liked
-                                })
-        
+                                    liked: liked,
+                                    favorited: favorite
+                                    })
+                               })
+                               .catch(err => {
+                                   console.log(err);
+                               });
+                               
                             })
                             .catch(err => {
                                 console.log(err);
@@ -197,7 +238,7 @@ class Playlist extends Component {
             `
         }
         //find user id
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -234,7 +275,7 @@ class Playlist extends Component {
                 }
                 console.log("requesting")
                 // Create the playlist 
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                     method: 'POST',
                     body: JSON.stringify(requestBody),
                     headers: {
@@ -281,7 +322,7 @@ class Playlist extends Component {
                 }
             `
         }
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
                             method: 'POST',
                             body: JSON.stringify(requestBody),
                             headers: {
@@ -308,11 +349,48 @@ class Playlist extends Component {
                             });
     }
 
+    handleFavorite = () => {
+        let requestBody = {
+            query: `
+                mutation { 
+                    addSavedPlaylist(username: "${this.props.username}", playlist_id: "${this.state.playlistId}", name: "${this.state.playlistInfo.name}"){
+                            _id
+                            name
+                            username
+                            songs {
+                                song_id
+                                name
+                            }
+                    }
+                }
+            `
+        }
+        fetch("https://easytunes.herokuapp.com/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'content-type': 'application/json'
+                }
+            })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201)
+                    throw new Error ('Failed')
+                return res.json()
+            })
+            .then(data => {
+            console.log(data)
+                this.setState({favorited:true})
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
     render() { 
 
             if (this.state.loading)
                 return (<> </>);
                 const {classes} = this.props
+            console.log(this.state.favorited)
             function User ({username, history}){
                 function toUserProfile(){
                     history.history.push('/' + username)
@@ -337,9 +415,27 @@ class Playlist extends Component {
                                         <ThumbUpAltOutlinedIcon onClick = {this.handleLike} fontSize ="large" />} 
                                     
                                     {this.state.playlistInfo.likes} 
-                                </div>
-                            </div>
 
+                                    { this.props.username !== this.state.username ?
+                                    <>
+                                    { !this.state.favorited ? 
+                                        <IconButton onClick = {this.handleFavorite}>
+                                            <BookmarkBorderIcon fontSize="large" />
+                                        </IconButton>
+                                        :  
+                                        <IconButton >
+                                            <BookmarkIcon fontSize="large" />
+                                         </IconButton>
+                                    }
+                                    </>
+                                : null
+                                }
+                                </div>
+                                
+ 
+                                
+                            </div>
+   
                             <div className="col text-center align-self-left playlist-col">
                                 <div className="col">
                                     <img alt="playlist_img" src={this.state.playlistInfo.playlist_img} class="song_picture"></img>
@@ -351,15 +447,7 @@ class Playlist extends Component {
                 (Math.floor(this.state.playlistInfo.total_duration/3600) + " hr " + (this.state.playlistInfo.total_duration%3600 < 600 ? "0" + Math.floor(this.state.playlistInfo.total_duration/60) + " min": Math.floor(this.state.playlistInfo.total_duration/60) + " min"))}</div>
                             
                             </div>
-                            {/* { this.state.playlistInfo.songs.length > 0 ?
-                                <>
-                                    { this.props.play && this.props.current_playlist.name === this.state.playlistInfo.name? 
-                                        <FaRegPauseCircle onClick = {this.handlePlay} size = {30}/>
-                                        : <FaRegPlayCircle onClick = {this.handlePlay} size = {30}/>
-                                    }
-                                </>
-                        : null
-                    } */}
+
                             <div className="col text-center align-self-center playlist-col">
                                 <div>
                                      { this.state.playlistInfo.songs.length > 0 ?
@@ -492,7 +580,7 @@ class Playlist extends Component {
         }
         handlePlay = async () => {
             // If pausing current playlist 
-            if (this.props.current_playlist !== null && this.props.current_playlist.name === this.state.playlistInfo.name)
+            if (this.props.current_playlist !== null && this.props.current_playlist._id === this.state.playlistId)
                 this.props.onPlayChange(!this.props.play) 
             // If changing playlist 
             else {
@@ -589,7 +677,7 @@ class Playlist extends Component {
                         }
                     `
                 }
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
@@ -626,7 +714,7 @@ class Playlist extends Component {
                         }
                     `
                 }
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
@@ -647,7 +735,7 @@ class Playlist extends Component {
              });
         }
         fetch = (requestBody) => {
-            fetch('http://localhost:5000/graphql', {
+            fetch('https://easytunes.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {

@@ -14,45 +14,17 @@ import GridFsStorage from 'multer-gridfs-storage'
 import Grid from 'gridfs-stream'
 import crypto from 'crypto'
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 dotenv.config()
 
 const app = express() ;
-
-// Create the api object with the credentials
-// const spotifyApi = new SpotifyWebApi({
-//   clientId: process.env.CLIENT_ID,
-//   clientSecret: process.env.CLIENT_SECRET
-// });
-
-
-// // Retrieve an access token.
-// async function newToken() {
-//     await spotifyApi.clientCredentialsGrant().then(
-//         function(data) {
-//           console.log('The access token expires in ' + data.body['expires_in']);
-//           console.log('The access token is ' + data.body['access_token']);
-      
-//           // Save the access token so that it's used in future calls
-//           spotifyApi.setAccessToken(data.body['access_token']);
-//         },
-//         function(err) {
-//           console.log('Something went wrong when retrieving an access token', err);
-//         }
-//       );
-// }
-
-
-// newToken()
-
-// // refresh when token expires 
-// setInterval(newToken, 1000 * 60 * 60);
 
 let scopes = ['user-read-private', 'user-read-email', 'streaming', 'user-read-playback-state', 'user-modify-playback-state' ]
 
   var credentials = {
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    redirectUri: 'http://localhost:5000/callback',
+    redirectUri: 'https://easytunes.herokuapp.com/callback',
   };
    
 // Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
@@ -98,7 +70,7 @@ app.get('/callback', function(req, res) {
           spotifyApi.setRefreshToken(data.body['refresh_token']);
          
           //localStorage.setItem("access-token", data.body['access_token'])
-          res.redirect("http://localhost:3000/home")
+          res.redirect("https://easytunes.herokueapp.com/home")
         },
         function(err) {
           console.log('Something went wrong!', err);
@@ -129,12 +101,9 @@ async function newToken() {
 // refresh when token expires 
 setInterval(newToken, 1000 * 60 * 60);
 
-app.use(express.static('public'))
 // For querying MongoDB Database 
 app.use(bodyParser.json());
 app.use(cors())
-
-
 
 // Search for an artist or song name 
 app.use('/v1/search?', async (req, res, next) =>  {
@@ -193,6 +162,10 @@ app.use('/graphql', graphqlHTTP.graphqlHTTP({
 
 const PORT = 5000
 
+// app.get('*', function (req, res) {
+//   const index = path.join( __dirname, '/build/index.html');
+//   res.sendFile(index);
+// });
 const conn = mongoose.createConnection(process.env.MONGO_URI)
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -234,12 +207,13 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 app.post("/", upload.single("img"), (req, res, err) => {
-  res.send(req.files);
+ res.send(req.files);
 });
 
-app.get("/:filename", (req, res) => {
+app.get("/image_file/:filename", (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
+    console.log("Get file")
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: "No file exists"
@@ -249,3 +223,12 @@ app.get("/:filename", (req, res) => {
     readstream.pipe(res);
   });
 });
+
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static(__dirname + '/build'));
+app.get("/*", function(req, res) {
+  console.log("GET URL ")
+
+  res.sendFile(path.join(__dirname + "/build/index.html"));
+});
+

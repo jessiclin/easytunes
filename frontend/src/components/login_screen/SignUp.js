@@ -112,7 +112,7 @@ class SignUp extends Component {
                 `
               };
     
-            await  fetch('http://localhost:5000/graphql', {
+            await  fetch('https://easytunes.herokuapp.com/graphql', {
                                         method: 'POST',
                                         body: JSON.stringify(requestBody),
                                         headers: {
@@ -140,7 +140,7 @@ class SignUp extends Component {
                                           console.log(result)
                                           this.onUsernameChange(this.state.username)
                                           localStorage.setItem("username", this.state.username);
-                                          fetch('http://localhost:5000/authorization', {
+                                          fetch('https://easytunes.herokuapp.com/authorization', {
                                               method: 'POST',
                               
                                               headers: {

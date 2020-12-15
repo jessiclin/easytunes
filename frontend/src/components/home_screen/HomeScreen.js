@@ -35,7 +35,7 @@ class HomeScreen extends Component {
                 }
             `
         }
-        fetch('http://localhost:5000/graphql', {
+        fetch('https://easytunes.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -80,7 +80,7 @@ class HomeScreen extends Component {
 
                 current_song = data.current_song_id
 
-                fetch('http://localhost:5000/graphql', {
+                fetch('https://easytunes.herokuapp.com/graphql', {
                   method: 'POST',
                   body: JSON.stringify(requestBody),
                   headers: {
@@ -143,7 +143,7 @@ class HomeScreen extends Component {
             }
         `
     }
-    fetch('http://localhost:5000/graphql', {
+    fetch('https://easytunes.herokuapp.com/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {

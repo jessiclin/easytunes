@@ -94,7 +94,18 @@ const useStyles = theme => ({
   bottomAppBar: {
     top: 'auto',
     bottom: 0,
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
+  listItemText: {
+    color: "white"
+  },
+  listItemIcon : {
+    color: "white"
+  }
 });
 
 class Menu extends Component {
@@ -159,6 +170,7 @@ class Menu extends Component {
     // this.handleMenuClose()
   }
   render() { 
+    console.log(this.props.needsUpdate)
     const {classes} = this.props
     return (  
       <>
@@ -188,8 +200,8 @@ class Menu extends Component {
         <div className={classes.toolbar}>
           <IconButton onClick={this.handleDrawerClose}  className = {classes.icon}>
             {this.state.open ?
-                <ChevronLeftIcon /> :
-                <ChevronRightIcon /> 
+                <ChevronLeftIcon className = {classes.listItemIcon}/> :
+                <ChevronRightIcon className = {classes.listItemIcon}/> 
             }
            
           </IconButton>
@@ -197,25 +209,25 @@ class Menu extends Component {
         <Divider />
         <List>
             <ListItem button key={"Playlists"} onClick = {this.toPlaylists}>
-              <ListItemIcon> <SubscriptionsIcon/></ListItemIcon>
-              <ListItemText primary={"Mixtapes"} />
+              <ListItemIcon> <SubscriptionsIcon className = {classes.listItemIcon}/></ListItemIcon>
+              <ListItemText className = {classes.listItemText} primary={"Mixtapes"} />
             </ListItem>
 
             <ListItem button key={"Followers"} onClick = {this.toFollowers}>
-              <ListItemIcon><GroupIcon/></ListItemIcon>
-              <ListItemText primary={"Followers"} />
+              <ListItemIcon><GroupIcon className = {classes.listItemIcon}/></ListItemIcon>
+              <ListItemText className = {classes.listItemText} primary={"Followers"} />
             </ListItem>
 
         </List>
         <Divider />
         <List>
           <ListItem button key={"Settings"} onClick = {this.toSettings}>
-            <ListItemIcon> <SettingsIcon/></ListItemIcon>
-            <ListItemText primary={"Settings"} />
+            <ListItemIcon> <SettingsIcon className = {classes.listItemIcon}/></ListItemIcon>
+            <ListItemText className = {classes.listItemText} primary={"Settings"} />
           </ListItem>
           <ListItem button key={"Log Out"} onClick = {this.toLogOut}>
-            <ListItemIcon> <ExitToAppIcon/></ListItemIcon>
-            <ListItemText primary={"Log Out"} />
+            <ListItemIcon> <ExitToAppIcon className = {classes.listItemIcon}/></ListItemIcon>
+            <ListItemText className = {classes.listItemText} primary={"Log Out"} />
           </ListItem>
 
         </List>
@@ -242,6 +254,7 @@ class Menu extends Component {
                               shufflePlaylist = {this.props.shufflePlaylist}
                               needsUpdate = {this.props.needsUpdate}
                               updated = {this.props.updated}
+                              canUpdate = {this.props.canUpdate}
 
         />   
       </AppBar>

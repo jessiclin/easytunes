@@ -29,7 +29,7 @@ class FollowingUser extends Component {
                       <User username = {this.state.following.username} history ={this.props.history} />
                     </div>
                     <div className="col">
-                        <button className="unfollow-btn" onClick = {this.unFollow}> Unfollow  <RiUserUnfollowLine/></button>
+                        <button className="unfollow-btn" onClick = {this.unFollow}> Unfollow </button>
                     </div>
                     
                 </div>
@@ -54,7 +54,7 @@ class FollowingUser extends Component {
             `
         }
         
-        fetch("http://localhost:5000/graphql", {
+        fetch("https://easytunes.herokuapp.com/graphql", {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
