@@ -50,7 +50,10 @@ class App extends Component {
   }
 
   getAccesstoken = async () => {
-    if (!localStorage.getItem("access-token"))
+    console.log(localStorage.getItem("access-token") == null || localStorage.getItem("access-token") == "null")
+    if (localStorage.getItem("access-token") == null || localStorage.getItem("access-token") == "null"){
+
+      console.log("HERE")
       return await fetch('https://easytunes.herokuapp.com/access-token', {
                       method: 'POST',
                       headers: {
@@ -62,13 +65,35 @@ class App extends Component {
                       return res.json()
                   })
                   .then(result => {
+                    console.log(result == null)
+                    if (result == null){
+                      fetch('https://easytunes.herokuapp.com/authorization', {
+                                        method: 'POST',
+                        
+                                        headers: {
+                                            'content-type': 'application/json'
+                                        }
+                                        })
+                                        .then(res => {
+                                            if (res.status !== 200 && res.status !== 201) 
+                                                throw new Error('Authorization Failed');
+                                            return res.json()
+                                        })
+                                        .then(data => {
+                                            console.log(data)
+                                            window.location.replace(data)
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                        });
+                    }
                     localStorage.setItem("access-token", result)
                     this.setState({access_token : result}, function() {console.log(this.state.access_token)})
-
                   })
                   .catch(err => {
                       console.log(err);
                   });
+                }
     else {
       this.setState({access_token : localStorage.getItem('access-token')})
     }
