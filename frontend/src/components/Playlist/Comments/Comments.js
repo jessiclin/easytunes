@@ -15,7 +15,7 @@ class Comments extends Component {
     }  
 
     stateChange = (comment) => {
-
+        this.props.commentStateChange(comment)
         this.setState({comments : comment}, function () {
             console.log(this.state.comments)
         })
