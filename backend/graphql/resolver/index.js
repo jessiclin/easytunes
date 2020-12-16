@@ -682,7 +682,7 @@ const resolver = {
                 from: 'easytunes416@gmail.com',
                 to: email,
                 subject: 'EasyTunes Password Reset Request',
-                html: '<h1><strong>EasyTunes</strong></h1><h2>Your new password is ' + new_password + '</h2><p>Login using the link below and choose your own password in the settings page.</p><p>Thanks for using EasyTunes!</p><p><a href="http://127.0.0.1:3000/login">www.easytunes.com/login</a></p>'
+                html: '<h1><strong>EasyTunes</strong></h1><h2>Your new password is ' + new_password + '</h2><p>Login using the link below and choose your own password in the settings page.</p><p>Thanks for using EasyTunes!</p><p><a href="https://easytunes.herokuapp.com/login">www.easytunes.com/login</a></p>'
             };
             transport.sendMail(message, function(err, info){
                 if(err) {
