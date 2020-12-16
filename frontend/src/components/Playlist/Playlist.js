@@ -563,7 +563,11 @@ class Playlist extends Component {
                                                         current_song = {this.props.current_song}
                                                     /> 
                         : null}
-                        {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments} username = {this.props.username} playlist_id = {this.state.playlistId}  /> : null}
+                        {this.state.commentsVisible ? <Comments comments = {this.state.playlistInfo.comments} 
+                            username = {this.props.username} 
+                            playlist_id = {this.state.playlistId}  
+                            commentStateChange = {this.commentStateChange}
+                            /> : null}
                         {this.state.settingsVisible ? 
                             <PlaylistSetting username = {this.props.username} 
                                     history = {this.props.history}
@@ -590,6 +594,13 @@ class Playlist extends Component {
                 this.props.onPlaylistChange(playlists, this.state.playlistInfo.songs[0])
             }
                 
+        }
+
+        commentStateChange = (comments) => {
+            console.log("COMMENT CHANGE")
+            let playlist = this.state.playlistInfo
+            playlist.comments = comments 
+            this.setState({playlistInfo : playlist})
         }
         // Update the playlist after edit 
         onChange = async (type, obj) => {
