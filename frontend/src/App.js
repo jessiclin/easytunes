@@ -50,10 +50,11 @@ class App extends Component {
   }
 
   getAccesstoken = async () => {
-    console.log(localStorage.getItem("access-token") == null || localStorage.getItem("access-token") == "null")
-    if (localStorage.getItem("access-token") == null || localStorage.getItem("access-token") == "null"){
+    // console.log(localStorage.getItem("access-token") == null || localStorage.getItem("access-token") == "null")
+    // if (sessionStorage.getItem("access-token") == null || sessionStorage.getItem("access-token") == "null"){
 
-      console.log("HERE")
+    //   console.log("HERE")
+    console.log("ACCESS TOKEN")
       return await fetch('https://easytunes.herokuapp.com/access-token', {
                       method: 'POST',
                       headers: {
@@ -87,16 +88,16 @@ class App extends Component {
                                             console.log(err);
                                         });
                     }
-                    localStorage.setItem("access-token", result)
+                    sessionStorage.setItem("access-token", result)
                     this.setState({access_token : result}, function() {console.log(this.state.access_token)})
                   })
                   .catch(err => {
                       console.log(err);
                   });
-                }
-    else {
-      this.setState({access_token : localStorage.getItem('access-token')})
-    }
+    //             }
+    // else {
+    //   this.setState({access_token : sessionStorage.getItem('access-token')})
+    // }
   }
 
   onPlayChange = (play) => {
