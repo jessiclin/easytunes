@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react'
 import SearchList from './SearchList.js'
-import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
+// import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 
 class SearchScreen extends Component {
@@ -180,7 +180,7 @@ class SearchScreen extends Component {
                 </div>
                 <SearchList searchList={this.state.searchResults} username={this.state.username} history = {this.props.history}/>
             </div> 
-            <PlaylistNavbar/>
+            {/* <PlaylistNavbar/> */}
             </>
         );
     }

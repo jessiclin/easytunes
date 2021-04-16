@@ -3,6 +3,8 @@ import User from '../../models/user.model.js'
 import jwt from 'jsonwebtoken'
 import Playlist from '../../models/playlist.model.js';
 import request from 'request';
+//const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 const saltRounds = 10;
 const resolver = {
     // Gets Users 
@@ -612,6 +614,44 @@ const resolver = {
             return {...user._doc}
         }catch(error){
             console.log(error)
+        }
+    },
+    resetPassword: async ({email, new_password}) => {
+        try {
+            const user = await User.findOne({email: email})
+            if (!user)
+                throw new Error('Email not found')
+
+            let transport = nodemailer.createTransport({
+                host: 'smtp.mailtrap.io',
+                port: 2525,
+                auth: {
+                    user: 'dbfdd5243ed8bf',
+                    pass: '83db572868cc4d'
+                }
+            });
+            const message = {
+                from: 'support@easytunes.com',
+                to: email,
+                subject: 'EasyTunes Password Reset Request',
+                html: '<h1><strong>EasyTunes</strong></h1><h2>Your new password is ' + new_password + '</h2><p>Login using the link below and choose your own password in the settings page.</p><p>Thanks for using EasyTunes!</p><p><a href="http://127.0.0.1:3000/login">www.easytunes.com/login</a></p>'
+            };
+            transport.sendMail(message, function(err, info){
+                if(err) {
+                    console.log(err)
+                } else {
+                    console.log(info)
+                }
+            });
+
+            const hashed = await bcrypt.hash(new_password, saltRounds)
+            user = await User.findOneAndUpdate({email: email}, {
+                password: hashed
+            },{useFindAndModify: false, new: true})
+            return {...user._doc}
+        } catch (err) {
+            console.log(err)
+            throw new err
         }
     }
 }

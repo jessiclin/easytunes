@@ -33,7 +33,7 @@ class Update extends Component {
     }
     handleUpdate = () => {
         let requestBody = ""
-        if (this.state.text == "Update Email"){
+        if (this.state.text === "Update Email"){
             requestBody = {
                 query: `
                     mutation{

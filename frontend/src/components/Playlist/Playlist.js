@@ -11,7 +11,7 @@ import PlaylistSetting from './PlaylistSetting/PlaylistSetting'
 import PlaylistNavbar from '../PlaylistNavbar/PlaylistNavbar.js'
 import HeaderNavbar from '../HeaderNavbar/HeaderNavbar'
 import {AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
-import Fork from './Fork.js'
+
 import './Playlist.css'
 
 import { FaShare } from 'react-icons/fa'
