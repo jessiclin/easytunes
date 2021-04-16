@@ -1,10 +1,42 @@
-/** SIGN IN 
- * Component within Login Screen 
- * Handles Signing in 
- */
+import React, { Component } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+//import {Link} from 'react-router-dom';
 
-import React, { Component } from 'react'
-import {Link} from 'react-router-dom';
+
+const useStyles = theme => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: 'blue',
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+    input: {
+      paddingLeft: "10px",
+      paddingRight: "10px"
+    }
+
+  });
+  
 
 class SignIn extends Component {
     constructor(props){
@@ -34,12 +66,11 @@ class SignIn extends Component {
 
     handleSignIn = async (event) => {
         event.preventDefault();
-        const email = this.emailEl.current.value.toLowerCase();
-        const password = this.passwordEl.current.value;
+        const email = this.emailEl.current.children[1].children[0].value.toLowerCase();
+        const password = this.passwordEl.current.children[1].children[0].value;
 
         if (email.trim().length === 0 || password.trim().length === 0)
             return;
-
 
         // Request backened 
         let requestBody = {
@@ -102,40 +133,72 @@ class SignIn extends Component {
     }
 
     render() { 
+        const {classes}  = this.props; 
+
         return (
-            <div>
-                {/* Sign In Inputs */}
-                <div id = "credentials" className="row justify-content-center login-row">  
-                    <div className="col-sm-12 cred">
-                        <div className="error-message justify-content-center"> 
-                            {!this.state.errorMess ? null : "Password and Email do not match"}
-                        </div>
-                        <div className="input-group">
-                            <input className="input" id = "email" ref = {this.emailEl} type="text" placeholder = " " required/>
-                            <label className="label">Email</label>
-                        </div>
-
-                        <div className="input-group">
-                            <input className="input" id = "password" ref = {this.passwordEl} type="password" placeholder = " "  required/>
-                            <label className="label">Password</label>
-                        </div>
-
-                        <Link to='/forgotpassword' className="forgot-password">
-                            Forgot Password?
-                        </Link>
-                       
-                    </div>
-                </div>
-
-                {/* Sign In button */}
-                <div className="row justify-content-center login-row">  
-                    <div className="col-sm-12 login-col">
-                        <button onClick = {this.handleSignIn}> Sign In </button>
-                    </div>
-                </div>
+            <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <form className={classes.form} noValidate>
+                <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  ref = {this.emailEl}
+                />
+                <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}  
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  ref = {this.passwordEl}
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick = {this.handleSignIn}
+                >
+                  Sign In
+                </Button>
+                
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="/forgotpassword" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
             </div>
+          </Container>
         );
     }
 }
  
-export default SignIn;
+export default withStyles(useStyles)(SignIn);
